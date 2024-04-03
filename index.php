@@ -1,7 +1,10 @@
 <?php
 require_once("./templates/header.php");
 ?>
-<body>
-    
-</body>
+<main>
+
+</main>
+<?php
+require_once("./templates/footer.php");
+?>
 </html>
