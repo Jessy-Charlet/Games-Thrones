@@ -1,19 +1,20 @@
-.navContainer{
+.navContainer {
     background-color: black;
     width: 100vw;
     height: 8vh;
     position: relative;
-    display:grid;
-    grid-template-columns: 1fr 1fr;
+    display: grid;
+    grid-template-columns: 55% 1fr 10vh 10vh;
     align-items: center;
-    padding:0;
-    box-shadow: 0 0 10px rgb(0,0,0,0.5);
+    padding: 0;
+    box-shadow: 0 0 20px rgb(0, 0, 0, 0.5);
+    transition: all 200ms;
 
-    .navLeft{
+    .navLeft {
         justify-self: left;
         padding-left: 2vh;
 
-        button{
+        button {
             text-transform: uppercase;
             color: white;
             background-color: transparent;
@@ -22,96 +23,122 @@
             margin: 0;
             line-height: 8vh;
 
-            span{
-                color:darkviolet;
+            span {
+                color: darkviolet;
             }
         }
     }
 
-    .logo{
+    #logo {
         box-sizing: border-box;
-        height: 12vh;
+        height: 14vh;
         background-color: black;
-        border-radius: 45%;
-        padding: 5px;
+        border-radius: 47%;
+        padding: 5px 8px 13px 8px;
         position: absolute;
         top: 0;
         left: 50%;
         translate: -50% 0;
+        transition: all 200ms;
 
-        img{
+        img {
             height: 100%;
         }
     }
 
-    .navRight{
-        justify-self: right;
-        padding-right: 2vw;
-        vertical-align:middle;
-
-        .searchBarContainer{
-            display: inline;
-            height: 8vh;
-            vertical-align: top;
-            padding:0;
-
-            div{
-                display: inline;
-                position: relative;
-
-                #searchBarClose{
-                    position: absolute;
-                    top: 50%;
-                    right: 0.5em;
-                    translate: 0 -50%;
-                }
-            }
-
-            input{
-                box-sizing: border-box;
-                height: 3vh;
-                width: 30vw;
-                border-radius: 10px;
-                margin: 0;
-                padding: 0.2em 1em;
-                border: none;
-                background-color: rgb(50,50,50);
-            }
-
-            button{
-                background-color: transparent;
-                border: none;
-
-                img{
-                    height: 4vh;
-                }
-            }
-        }
-
-        a{
-            position: relative;
-            height: fit-content;
-            width: fit-content;
-            margin: 0 0 0 2vw;
-
-            span{
-                position: absolute;
-                right: -1vh;
-                top: -3vh;
-                background-color: white;
-                color: darkviolet;
-                border-radius: 50%;
-                height: 1em;
-                width: 1em;
-                text-align: center;
-                line-height: 1em;
-                padding:0.2em;
-                font-weight: bold;
-            }
-            img{
-                height: 4vh;
-            }
-        }
-
+    .logoMove {
+        position: absolute;
+        top: 0;
+        left: 25% !important;
     }
+
+    #searchBarContainer {
+        display: block;
+        height: 8vh;
+        width: 100%;
+        padding: 0 1em 0 0;
+        position: relative;
+        align-self:right;
+
+        #searchBar {
+            box-sizing: border-box;
+            height: 4vh;
+            width: 100%;
+            border-radius: 10px;
+            margin: 2vh 0;
+            padding: 0.2em 1em;
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            background-color: rgb(50, 50, 50);
+        }
+        
+        #searchBarClose {
+            position: absolute;
+            text-align: center;
+            top: 50%;
+            right: 1.5em;
+            translate: 0 -50%;
+            transition: all 200ms;
+        }
+
+        #searchBarClose:hover {
+            transform: rotate(90deg);
+        }
+    }
+
+    
+    button {
+        background-color: transparent;
+        border: none;
+        
+        img {
+            height: 4vh;
+            transition: all 200ms;
+        }
+        
+        img:hover {
+            height: 5vh;
+        }
+    }
+    #searchBarOpen {
+        text-align: right;
+        width: 10vh;
+        justify-self: right;
+    }
+    
+    a {
+        position: relative;
+        height: fit-content;
+        width: fit-content;
+        margin: auto;
+
+        span {
+            position: absolute;
+            right: -1vh;
+            top: -0;
+            background-color: white;
+            color: darkviolet;
+            border-radius: 50%;
+            height: 1em;
+            width: 1em;
+            text-align: center;
+            line-height: 1em;
+            padding: 0.2em;
+            font-weight: bold;
+        }
+
+        img {
+            height: 4vh;
+            transition: all 200ms;
+        }
+    }
+
+    a img:hover {
+        height: 5vh;
+    }
+
+}
+.navContainerOpen{
+    grid-template-columns: 35% 1fr 10vh 10vh;
 }
