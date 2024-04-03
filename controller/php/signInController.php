@@ -15,7 +15,7 @@ if ($result){
     session_start();
     $id = $result['id'];
     $_SESSION['user'] = $id;
-    //header('Location: ../../index.php');
+    header('Location: ../../index.php');
 } else {
     echo "Email or password incorrect";
 }
