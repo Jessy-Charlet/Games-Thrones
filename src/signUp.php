@@ -29,14 +29,10 @@ if(isset($_GET['error'])){
 
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S'inscrire</title>
-</head>
-<body>
+<?php
+require_once("./templates/header.php");
+?>
+<main>
     <div class="signUpFormContainer">
         <h1 class="signUpFormTitle">S'inscrire</h1>
         <form id="myForm" method="post" action="../controller/php/signUpController.php" class="signUpForm">
@@ -64,5 +60,8 @@ if(isset($_GET['error'])){
         <p id="errorMessage" class="signUpFormError"></p>
     </div>
     <script src="../controller/js/signUpController.js"></script>
-</body>
+</main>
+    <?php
+require_once("./templates/footer.php");
+?>
 </html>

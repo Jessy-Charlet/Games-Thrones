@@ -6,14 +6,10 @@ if(isset($_GET['password'])){
     $passwordSave = $_GET['password'];
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<?php
+require_once("./templates/header.php");
+?>
+<main>
     <div class="signInFormContainer">
         <h1 class="signInFormTitle">Se connecter</h1>
         <form id="myForm" method="post" action="../controller/php/signInController.php" class="signInForm">
@@ -24,5 +20,8 @@ if(isset($_GET['password'])){
                 <input type="submit">
         </form>
     </div>
-</body>
+</main>
+    <?php
+require_once("./templates/footer.php");
+?>
 </html>

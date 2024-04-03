@@ -22,5 +22,5 @@
             </div>
             <button id="searchBarOpen"><img src="./assets/img/icon_search.png" alt="rechercher" /></button>
             <a href="<!--PAGE DU PANIER-->"><img src="./assets/img/icon_panier.png" alt="Mon panier" /><span>2</span></a>
-            <a href="<!--PAGE DE CONNEXION-->"><img src="./assets/img/icon_user.png" alt="Mon compte" /></a>
+            <a href="./src/signIn.php"><img src="./assets/img/icon_user.png" alt="Mon compte" /></a>
     </header>
