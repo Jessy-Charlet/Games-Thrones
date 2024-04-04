@@ -20,7 +20,7 @@ CREATE TABLE `adress`(
     `adress_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `зostal_code_id` INT NOT NULL,
     `city` VARCHAR(26) NOT NULL,
-    `postal_code` MEDIUMINT NOT NULL AUTO_INCREMENT,
+    `postal_code` MEDIUMINT NOT NULL,
     `adress` TEXT NOT NULL
 );
 CREATE TABLE `customer`(
