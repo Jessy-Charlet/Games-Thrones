@@ -7,7 +7,7 @@ if(isset($_GET['password'])){
 }
 ?>
 <?php
-require_once("./templates/header.php");
+require_once(__DIR__."/../templates/header.php");
 ?>
 <main>
     <div class="signInFormContainer">
@@ -22,6 +22,6 @@ require_once("./templates/header.php");
     </div>
 </main>
     <?php
-require_once("./templates/footer.php");
+require_once(__DIR__."/../templates/footer.php");
 ?>
 </html>

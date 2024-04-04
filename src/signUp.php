@@ -30,7 +30,7 @@ if(isset($_GET['error'])){
 }
 ?>
 <?php
-require_once("./templates/header.php");
+require_once("../templates/header.php");
 ?>
 <main>
     <div class="signUpFormContainer">
@@ -62,6 +62,6 @@ require_once("./templates/header.php");
     <script src="../controller/js/signUpController.js"></script>
 </main>
     <?php
-require_once("./templates/footer.php");
+require_once("../templates/footer.php");
 ?>
 </html>
