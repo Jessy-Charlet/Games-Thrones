@@ -29,13 +29,10 @@ if(isset($_GET['error'])){
 
 }
 ?>
-<?php
-require_once("../templates/header.php");
-?>
 <main>
     <div class="signUpFormContainer">
         <h1 class="signUpFormTitle">S'inscrire</h1>
-        <form id="myForm" method="post" action="../controller/php/signUpController.php" class="signUpForm">
+        <form id="myForm" method="post" action="<?= $router->generate('signUpControllerphp') ?>" class="signUpForm">
             <label for="nameId" class="signUpFormLabel">Nom</label><br>
                 <input type="text" value="<?php if(isset($nameSave)){echo $nameSave;}?>" name="name" id="nameId" class="signUpFormInput" autocomplete="off" ><br><br>
             <label for="firstnameId" class="signUpFormLabel">Prénom</label><br>
@@ -53,15 +50,11 @@ require_once("../templates/header.php");
             <label for="passwordId" class="signUpFormLabel">Mot de passe</label><br>
                 <input type="password" name="password" id="passwordId" class="signUpFormInput" autocomplete="off" ><br><br>
             <label for="passwordConfirmId" class="signUpFormLabel">Confirmer le mot de passe</label><br>
-                <input type="password name="passwordConfirm" id="passwordConfirmId" class="signUpFormInput" autocomplete="off" ><br><br>
+                <input type="password" name="passwordConfirm" id="passwordConfirmId" class="signUpFormInput" autocomplete="off" ><br><br>
             <input type="submit" class="signUpFormSubmit" id="submitBtn" value="S'inscrire"><br>
         </form>
-        <p class="signUpFormLink">Vous avez déjà un compte ? <a href="signIn.php" class="signUpFormLink">Connectez-vous</a></p>
+        <p class="signUpFormLink">Vous avez déjà un compte ? <a href="<?= $router->generate('connexion') ?>" class="signUpFormLink">Connectez-vous</a></p>
         <p id="errorMessage" class="signUpFormError"></p>
     </div>
-    <script src="../controller/js/signUpController.js"></script>
+    <script src="controller/js/signUpController.js"></script>
 </main>
-    <?php
-require_once("../templates/footer.php");
-?>
-</html>

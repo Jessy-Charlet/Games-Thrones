@@ -21,7 +21,8 @@ CREATE TABLE `adress`(
     `зostal_code_id` INT NOT NULL,
     `city` VARCHAR(26) NOT NULL,
     `postal_code` MEDIUMINT NOT NULL AUTO_INCREMENT,
-    `adress` TEXT NOT NULL
+    `adress` TEXT NOT NULL,
+    `customer_id` INT NOT NULL
 );
 CREATE TABLE `customer`(
     `customer_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -30,17 +31,16 @@ CREATE TABLE `customer`(
     `email` VARCHAR(255) NOT NULL,
     `phone` VARCHAR(20) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
-    `shipping_address_id` INT NOT NULL,
     `billing_address_id` INT NOT NULL
 );
-CREATE TABLE `product image`(
+CREATE TABLE `product_image`(
     `product_image_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `product_id` INT NOT NULL,
     `image_url` VARCHAR(255) NOT NULL,
     `is_main_image` VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE `product review`(
+CREATE TABLE `product_review`(
     `product_review_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `customer_id` INT NOT NULL,
     `product_id` INT NOT NULL,

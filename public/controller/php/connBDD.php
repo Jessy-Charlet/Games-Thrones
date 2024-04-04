@@ -3,7 +3,7 @@ class Database{
     private static $servername = 'localhost';
     private static $username = 'root';
     private static $password = '';
-    private static $BDD ='gamesThronesBDDtest';
+    private static $BDD ='boutique';
     private static $conn = null;
 
     public function __construct(){
