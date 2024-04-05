@@ -20,71 +20,9 @@ CREATE TABLE `adress`(
     `adress_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `зostal_code_id` INT NOT NULL,
     `city` VARCHAR(26) NOT NULL,
-<<<<<<< HEAD
-    `postal_code` MEDIUMINT NOT NULL AUTO_INCREMENT,
+    `postal_code` MEDIUMINT NOT NULL,
     `adress` TEXT NOT NULL,
     `customer_id` INT NOT NULL
-=======
-    `postal_code` MEDIUMINT NOT NULL,
-    `adress` TEXT NOT NULL
-);
-CREATE TABLE `customer`(
-    `customer_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `customer_last-name` VARCHAR(255) NOT NULL,
-    `customer_first-name` VARCHAR(255) NOT NULL,
-    `email` VARCHAR(255) NOT NULL,
-    `phone` VARCHAR(20) NOT NULL,
-    `password` VARCHAR(255) NOT NULL,
-    `shipping_address_id` INT NOT NULL,
-    `billing_address_id` INT NOT NULL
-);
-CREATE TABLE `product image`(
-    `product_image_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `product_id` INT NOT NULL,
-    `image_url` VARCHAR(255) NOT NULL,
-    `is_main_image` VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE `product review`(
-    `product_review_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `customer_id` INT NOT NULL,
-    `product_id` INT NOT NULL,
-    `rating` DECIMAL(2, 1) NOT NULL,
-    `review_text` TEXT NOT NULL,
-    `review_date` DATETIME NOT NULL
-);
-CREATE TABLE `product`(
-    `product_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(255) NOT NULL,
-    `category_id` INT NOT NULL,
-    `brand_id` INT NOT NULL,
-    `description` TEXT NOT NULL,
-    `material` VARCHAR(255) NOT NULL,
-    `coleur` VARCHAR(255) NOT NULL,CREATE TABLE `category`(
-    `category_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(255) NOT NULL,
-    `parent_category_id` INT NOT NULL
-);
-CREATE TABLE `order`(
-    `order_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `customer_id` INT NOT NULL,
-    `order_date` DATETIME NOT NULL,
-    `order_status` VARCHAR(255) NOT NULL,
-    `total_price` DECIMAL(10, 2) NOT NULL,
-    `shipping_address_id` INT NOT NULL,
-    `billing_address_id` INT NOT NULL
-);
-CREATE TABLE `brand`(
-    `brand_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(255) NOT NULL
-);
-CREATE TABLE `adress`(
-    `adress_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `зostal_code_id` INT NOT NULL,
-    `city` VARCHAR(26) NOT NULL,
-    `postal_code` MEDIUMINT NOT NULL,
-    `adress` TEXT NOT NULL
->>>>>>> 1f0f46f3bd98c842bd67a79d9fd93a2319608670
 );
 CREATE TABLE `customer`(
     `customer_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
