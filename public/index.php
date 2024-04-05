@@ -10,6 +10,7 @@ $router->map('GET', '/inscription', '/signUp', 'inscription');
 $router->map('POST', '/signUpControllerphp', '../public/controller/php/signUpController', 'signUpControllerphp');
 $router->map('POST', '/signInControllerphp', '../public/controller/php/signInController', 'signInControllerphp');
 $router->map('GET', '/profil', '/profil', 'profil');
+$router->map('POST', '/deconnexion', '../public/controller/php/deconnexion', 'deconnexion');
 
 $match = $router->match();
 

@@ -12,8 +12,7 @@ $sql->execute(
 );
 $result = $sql->fetch(PDO::FETCH_ASSOC);
 if ($result){
-    session_start();
-    $id = $result['id'];
+    $id = $result['customer_id'];
     $_SESSION['user'] = $id;
     header('Location: '.$router->generate('acceuil'));
 } else {

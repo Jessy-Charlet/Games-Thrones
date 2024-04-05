@@ -65,7 +65,9 @@ try {
             'customer_id' => $customerId
         )
     );
-
+    session_start();
+    $_SESSION['user'] = $customerId;
+    header('Location: '.$router->generate('acceuil'));
     // Commit des transactions
     $conn->commit();
 } catch(PDOException $e) {
@@ -73,8 +75,4 @@ try {
     $conn->rollback();
     throw $e;
 }
-session_start();
-$id = $result['id'];
-$_SESSION['user'] = $id;
-header('Location: '.$router->generate('connexion').'?mail='.$mail);
 ?>
