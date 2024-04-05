@@ -10,3 +10,24 @@ body{
 main{
     min-height: 65vh;
 }
+h1{
+    color:#482664;
+    font-size: 1.5em;
+    font-weight: 700;
+    border-bottom: 1px solid #482664;
+}
+h2{
+    color:#482664;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+.corp{
+    box-sizing: border-box;
+    background-color: white;
+    box-shadow: 0 0 50px rgb(0,0,0,0.2);
+    margin: auto;
+    padding: 3em 5em;
+    width: fit-content;
+    max-width: 80vh;
+
+}

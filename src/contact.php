@@ -1,5 +1,6 @@
-<form action="/submit_form.php" method="post">
-    <h2>Formulaire de Contact</h2>
+<section class="corp">
+  <form action="/submit_form.php" method="post">
+    <h1>Formulaire de Contact</h1>
     <label for="nom">Nom complet :</label>
     <input type="text" id="nom" name="nom" required>
 
@@ -33,3 +34,4 @@
     <input type="text" name="courrier" placeholder="Ici chez nous la bas 00000 Ailleurs rue de quelque part" readonly>
 
   </form>
+</section>

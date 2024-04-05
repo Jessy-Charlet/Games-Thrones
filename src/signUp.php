@@ -29,6 +29,7 @@ if(isset($_GET['error'])){
 
 }
 ?>
+<section class="corp">
     <div class="signUpFormContainer">
         <h1 class="signUpFormTitle">S'inscrire</h1>
         <form id="myForm" method="post" action="<?= $router->generate('signUpControllerphp') ?>" class="signUpForm">
@@ -55,4 +56,5 @@ if(isset($_GET['error'])){
         <p class="signUpFormLink">Vous avez déjà un compte ? <a href="<?= $router->generate('connexion') ?>" class="signUpFormLink">Connectez-vous</a></p>
         <p id="errorMessage" class="signUpFormError"></p>
     </div>
+</section>
     <script src="controller/js/signUpController.js"></script>

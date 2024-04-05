@@ -1,3 +1,4 @@
+<section class="corp">
 <h1>Mentions Légales</h1>
 
 <h2>Responsable de la Publication</h2>
@@ -26,3 +27,4 @@ Numéro de téléphone : [Numéro de téléphone de l'hébergeur]</p>
 
 <h2>Contact</h2>
 <p>Si vous avez des questions concernant ces CGU, veuillez nous contacter à l'aide du formulaire que vous trouverez ici : <a href="./contact.php" >Nous contacter</a>.</p>
+</section>

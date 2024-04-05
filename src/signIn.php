@@ -5,6 +5,7 @@ if(isset($_GET['mail'])){
     $mail = '';
 }
 ?>
+<section class="corp">
     <div class="signInFormContainer">
         <h1 class="signInFormTitle">Se connecter</h1>
         <form id="myForm" method="post" action="<?= $router->generate('signInControllerphp') ?>" class="signInForm">
@@ -16,3 +17,4 @@ if(isset($_GET['mail'])){
             <p class="signInFormText">Vous n'avez pas de compte ? <a href="<?= $router->generate('inscription') ?>" class="signInFormLink">Inscrivez-vous</a></p>
         </form>
     </div>
+</section>
