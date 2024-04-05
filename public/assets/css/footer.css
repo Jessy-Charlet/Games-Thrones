@@ -1,0 +1,39 @@
+footer{
+    box-sizing: border-box;
+    height: fit-content;
+    width: 100%;
+    background-color:black;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    color: white;
+    padding: 3em 30vw;
+
+    a{
+        text-decoration: none;
+        display: block;
+        color: white;
+        padding: 0.5em 1em;
+    }
+    a:hover{
+        background-color: #1b1b1b;
+    }
+    div:nth-child(2){
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        justify-items: center;
+        a:hover{
+            background-color: black;
+        }
+    }
+    div:last-child{
+        grid-column: 1 / 3;
+        text-align: center;
+        margin-top: 2em;
+
+    }
+    img{
+        height: 3em;
+    }
+
+}
