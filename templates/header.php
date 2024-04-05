@@ -18,6 +18,7 @@ session_start();
     <link rel="stylesheet" href="./assets/css/global.css?t=<?= time(); ?>">
     <link rel="stylesheet" href="./assets/css/header.css?t=<?= time(); ?>">
     <link rel="stylesheet" href="./assets/css/footer.css?t=<?= time(); ?>">
+    <link rel="stylesheet" href="./assets/css/banner.css?t=<?= time(); ?>">
 </head>
 
 <body>
