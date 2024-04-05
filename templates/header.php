@@ -18,7 +18,7 @@ session_start();
             <button id="shop">Shop <span>></span></button>
             <button id="infos">Infos <span>></span></button>
         </nav>
-        <a href="<?= $router->generate( 'acceuil') ?>" id="logo"><img src="./assets/img/logo_Games_Thrones_nav.png" alt="Logo Games Thrones" /></a>
+        <a href="<?= $router->generate( 'accueil') ?>" id="logo"><img src="./assets/img/logo_Games_Thrones_nav.png" alt="Logo Games Thrones" /></a>
         <div id="searchBarContainer">
             <input type="text" name="searchBar" id="searchBar" placeholder="Chercher un Throne...">
             <button id="searchBarClose">❌</button>
@@ -34,7 +34,7 @@ session_start();
             ?>
     </header>
     <header id="navContainerMobile">
-        <a href="<?= $router->generate( 'acceuil') ?>"><img id="logoMobile" src="./assets/img/logo_Games_Thrones_nav_mobile.png" alt="Logo Games Thrones" /></a>
+        <a href="<?= $router->generate( 'accueil') ?>"><img id="logoMobile" src="./assets/img/logo_Games_Thrones_nav_mobile.png" alt="Logo Games Thrones" /></a>
         <div id="menuBurger">
             <div></div>
             <div></div>

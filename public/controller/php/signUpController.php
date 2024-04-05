@@ -67,7 +67,7 @@ try {
     );
     session_start();
     $_SESSION['user'] = $customerId;
-    header('Location: '.$router->generate('acceuil'));
+    header('Location: '.$router->generate('accueil'));
     // Commit des transactions
     $conn->commit();
 } catch(PDOException $e) {
