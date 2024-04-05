@@ -1,6 +1,8 @@
 $(document).ready(function () {
 
     const mediaQueryList = window.matchMedia("(orientation: landscape)");
+    $("#navShop").hide();
+    $("#navInfos").hide();
 
     /*** Au chargement de la page */
     if (mediaQueryList.matches){
@@ -57,5 +59,18 @@ $(document).ready(function () {
 
     mediaQueryList.addListener(screenTest);
 
+    $("#shop").on("click", function () {
+        $("#shop").toggleClass("active");
+        $("#navShop").slideToggle("fast");
+        $("#infos").removeClass("active");
+        $("#navInfos").slideUp("fast");
+
+    });
+    $("#infos").on("click", function () {
+        $("#infos").toggleClass("active");
+        $("#navInfos").slideToggle("fast");
+        $("#shop").removeClass("active");
+        $("#navShop").slideUp("fast");
+    });
 
 })
