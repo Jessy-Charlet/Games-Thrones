@@ -20,18 +20,12 @@ $match = $router->match();
 
 if(is_array($match)){
     require '../templates/header.php';
-    ?> 
-    <main> 
-        <?php
         if(is_callable($match['target'])){
             call_user_func_array($match['target'], $match['params']);
         }else{
             $params = $match['params'];
             require "../src/{$match['target']}.php";
         }
-        ?>
-    </main>
-    <?php
     require '../templates/footer.php';
 }else{
     echo '404';
