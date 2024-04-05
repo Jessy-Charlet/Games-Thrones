@@ -18,7 +18,7 @@ CREATE TABLE `brand`(
 );
 CREATE TABLE `adress`(
     `adress_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `зostal_code_id` INT NOT NULL,
+    `postal_code_id` INT NOT NULL,
     `city` VARCHAR(26) NOT NULL,
     `postal_code` MEDIUMINT NOT NULL,
     `adress` TEXT NOT NULL,
@@ -31,7 +31,6 @@ CREATE TABLE `customer`(
     `email` VARCHAR(255) NOT NULL,
     `phone` VARCHAR(20) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
-    `billing_address_id` INT NOT NULL
 );
 CREATE TABLE `product_image`(
     `product_image_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -71,7 +70,7 @@ CREATE TABLE `order_item`(
     `vendor_code` VARCHAR(10) NOT NULL
 );
 ALTER TABLE
-    `product review` ADD CONSTRAINT `product review_product_review_id_foreign` FOREIGN KEY(`product_review_id`) REFERENCES `product`(`product_id`);
+    `product_review` ADD CONSTRAINT `product review_product_review_id_foreign` FOREIGN KEY(`product_review_id`) REFERENCES `product`(`product_id`);
 ALTER TABLE
     `order_item` ADD CONSTRAINT `order_item_order_id_foreign` FOREIGN KEY(`order_id`) REFERENCES `order`(`order_id`);
 ALTER TABLE
@@ -93,5 +92,5 @@ ALTER TABLE
 ALTER TABLE
     `customer` ADD CONSTRAINT `customer_billing_address_id_foreign` FOREIGN KEY(`billing_address_id`) REFERENCES `adress`(`adress_id`);
 ALTER TABLE
-    `product review` ADD CONSTRAINT `product review_product_review_id_foreign` FOREIGN KEY(`product_review_id`) REFERENCES `customer`(`customer_id`);
+    `product_review` ADD CONSTRAINT `product review_product_review_id_foreign` FOREIGN KEY(`product_review_id`) REFERENCES `customer`(`customer_id`);
     
