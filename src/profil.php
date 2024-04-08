@@ -21,9 +21,9 @@ $sql->execute(
 );
 $adressData = $sql->fetch(PDO::FETCH_ASSOC);
 ?>
-<section class="corp">
-    <button>Mon compte <span>►</span></button>
-    <div>
+<link rel="stylesheet" href="./assets/css/profil.css?t=<?= time(); ?>">
+    <button class="buttonAcordeon">Mon compte <span>►</span></button>
+    <div class="acordeonContent">
         <button>Informations personnelles <span>►</span></button>
             <div>
                 <form method="post">
@@ -45,6 +45,9 @@ $adressData = $sql->fetch(PDO::FETCH_ASSOC);
                     <input type="password" name="password" id="password">
                     <input type="submit" value="modifier">
                 </form>
+                <form method="post" action="<?= $router->generate('deconnexion') ?>">
+                    <input type="submit" value="Se déconnecter">
+                </form>
             </div>
         <button>Cartes bancaires enregisrtées <span>►</span></button>
             <div>
@@ -59,17 +62,13 @@ $adressData = $sql->fetch(PDO::FETCH_ASSOC);
                 </form>
             </div>
     </div>
-    <button>Mes commandes <span>►</span></button>
-    <div>
+    <button class="buttonAcordeon">Mes commandes <span>►</span></button>
+    <div class="acordeonContent">
         <button>Commandes en cours <span>►</span></button>
             <div>
             </div>
         <button>Historique des commandes <span>►</span></button>
     </div>
-    <button>Mes commantaires <span>►</span></button>
-        <div>
+    <button class="buttonAcordeon">Mes commantaires <span>►</span></button>
+        <div class="acordeonContent">
         </div>
-        <form method="post" action="<?= $router->generate('deconnexion') ?>">
-            <input type="submit" value="Se déconnecter">
-        </form>
-</section>
