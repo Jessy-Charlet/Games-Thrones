@@ -1,3 +1,4 @@
+</main>
 <footer>
     <div>
         <a href="<?= $router->generate('rgpd') ?>">RGPD</a>
