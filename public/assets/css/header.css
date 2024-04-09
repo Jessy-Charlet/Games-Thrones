@@ -15,7 +15,6 @@
     .navLeft {
         justify-self: left;
         padding-left: 2vh;
-        z-index: 30;
 
         button {
             text-transform: uppercase;
@@ -40,7 +39,7 @@
         }
          .active{
             color:black;
-            background-color: #F2F2F2 !important;
+            background-color: white !important;
         }
         .active:after{
             content:"✖";
@@ -51,13 +50,13 @@
         box-sizing: border-box;
         height: 14vh;
         background-color: black;
-        z-index: 20;
         border-radius: 47%;
         padding: 5px 8px 13px 8px;
         position: absolute;
         top: 0;
         left: 50%;
         translate: -50% 0;
+        z-index: 100;
         transition: all 200ms;
 
         img {
@@ -275,10 +274,11 @@
     position: relative;
     box-sizing: border-box;
     width: 100%;
-    background: linear-gradient(355deg, #D9D9D9 , #F2F2F2);
-    box-shadow: 0 0 20px rgb(0, 0, 0, 0.5);
+    background: linear-gradient(355deg, #d1d1d1 , white);
+    box-shadow: 0 10px 10px rgb(0, 0, 0, 0.5);
     padding: 4em 5em 3em 5em;
     justify-items: center;
+    z-index: 16;
     .navContainer{
         border-right:1px solid black;
         a{
@@ -289,7 +289,7 @@
             margin-bottom: 1em;
             width: 80%;
             border-radius: 5px;
-            background-color: #D9D9D9;
+            background-color: white;
             font-size: 0.8em;
         }
         .promotions{

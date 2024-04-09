@@ -1,23 +1,21 @@
-<header class="banner">
-    <div class="slideButton">
-        <button id="bannerButton1">1</button>
-        <button id="bannerButton2">2</button>
-        <button id="bannerButton3">3</button>
+<?php
+include '../templates/banner.php';
+include '../public/controller/php/connBDD.php';
+?>
+<section class="productsGrid">
+<?php
+$sql = $conn->prepare("SELECT image_url FROM product_image");
+$sql->execute();
+$result = $sql->fetch(PDO::FETCH_ASSOC);
+foreach ($result as $url){
+    echo "<a class='product' href='urlProduit'>
+    <img src='../assets/img/products/".$url."' alt='Nom du produit'/>
+    <div class='productName'>Nom du produit</div>
+    <div>
+    <span class='productPrice'>Prix du produit</span>
+    <span class='productRate'>♦♦♦♦♦</span>
     </div>
-    <div class="slideFirst">
-        <div class="slideTitre">
-            <h1>Nouveau Throne</h1>
-            <a>Displonible maintenant</a>
-        </div>
-        <aside>
-            <h2>Vous ne vous en relèverez pas !</h2>
-            <p>blabla marketing... njdfksd jfdfjdsf bjkdsf bjkds
-                dsjn fdsnjf ndsjnf djsnf dsf
-                djksnf jkdsnbfjbdshbfjdsbf jbd fsd
-                dskj djfnsjkd fnbdjsk fbjksdbfj ds
-                dsjsnf jkdsnjf bdh bfhdsbf jbdsjkf bkfds:
-                ds ljdn fjkdsnf</p>
-        </aside>
-    </div>
-
-</header>
+    </a>";
+}
+?>
+</section>

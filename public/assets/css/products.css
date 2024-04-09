@@ -1,0 +1,43 @@
+.productsGrid {
+    width: 80vw;
+    margin: 5em auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    .product {
+        box-sizing: border-box;
+        display: block;
+        width: 100%;
+        padding: 1em;
+        background-color: #F2F2F2;
+        box-shadow: 0 0 20px rgb(0,0,0,0.05);
+        text-decoration: none;
+
+        img {
+            width: 100%;
+        }
+
+        .productName {
+            color: black;
+            font-weight: 500;
+            padding: 0.5em 0;
+        }
+
+        .productPrice {
+            color: #BAA35F;
+            font-size: 1.2em;
+            font-weight: 900;
+            text-align: left;
+        }
+
+        .productRate{
+            text-align: right;
+        }
+
+        > div:nth-child(3){
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+    }
+}
