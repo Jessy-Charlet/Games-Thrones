@@ -2,8 +2,11 @@ main{
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr;
+    gap: 10px;
+    align-items: center;
+    align-content: center;
     justify-items: center;
+    grid-template-columns: 1fr;
 }
 
 .buttonAcordeon{
@@ -13,11 +16,141 @@ main{
     border: none;
     display: grid;
     grid-template-columns: 10fr 1fr;
-    width: 90%;
+    width: 60%;
     height: 10vh;
     border-radius: 20px;
+    font-size: 2em;
+    align-items: center;
+    font-weight: bolder;
+}
+
+.buttonAcrodeonLeftContent{
+    justify-self: self-start;
+    margin-left: 50px;
+}
+
+.buttonAcrodeonRightContent{
+    transition: 0.3s;
+}
+
+.buttonAcrodeonRightContent:hover{
+    font-size: 1.5em;
+    transition: 0.3s;
 }
 
 .acordeonContent{
     display: none;
+    justify-items: center;
+}
+
+.buttonAcordeonIn{
+    border: none;
+    background-color: white;
+    color: rgb(72, 38, 100);
+    border: none;
+    display: grid;
+    grid-template-columns: 10fr 1fr;
+    width: 50%;
+    height: 10vh;
+    border-radius: 20px;
+    font-size: 1.4em;
+    align-items: center;
+    font-weight: bolder;
+}
+
+.acordeonContentIn{
+    display: none;
+    justify-items: center;
+}
+
+.sideBar{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    width: 1%;
+    height: 100%;
+    background-color: rgb(97, 97, 97);
+    border-radius: 50px;
+    align-items: center;
+    justify-items: center;
+    float: left;
+}
+
+.formPersonnalInfos{
+    display: grid;
+    width: 150%;
+    height: 100%;
+    background-color: rgb(239, 239, 239);
+    border-radius: 10px;
+    padding-left: 10%;
+}
+
+.labelForm{
+    color: rgb(72, 38, 100);
+    font-weight:black;
+    font-size: 1.5em;
+}
+
+.inputForm{
+    border: none;
+    background-color: rgb(228, 228, 228);
+    color: rgb(72, 38, 100);
+    border-radius: 5px;
+    height: 4vh;
+}
+
+.inputFormSmall{
+    width: 80%;
+}
+
+.inputFormLarge{
+    width: 90%
+}
+
+.formDiv{
+    display: flex;
+    align-items: end;
+}
+
+.inputSubmit{
+    border: none;
+    background-color: rgb(72, 38, 100);
+    color: white;
+    border-radius: 1px;
+    height: 4vh;
+    width: 80%;
+    display: flex;
+    font-size: 1.5em;
+    align-items: center;
+    justify-content: center;
+}
+
+.formRow1{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.formRow2{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+
+}
+
+.formRow3{
+    display: grid;
+    grid-template-columns: 2fr;
+    gap: 10px;
+}
+
+.formRow4{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.formRow5{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
