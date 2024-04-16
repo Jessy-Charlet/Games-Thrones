@@ -10,11 +10,19 @@ $router->map('GET', '/inscription', '/signUp', 'inscription');
 $router->map('POST', '/signUpControllerphp', '../public/controller/php/signUpController', 'signUpControllerphp');
 $router->map('POST', '/signInControllerphp', '../public/controller/php/signInController', 'signInControllerphp');
 $router->map('GET', '/profil', '/profil', 'profil');
-$router->map('POST', '/deconnexion', '../public/controller/php/deconnexion', 'deconnexion');
+$router->map('GET', '/deconnexion', '../public/controller/php/deconnexion', 'deconnexion');
 $router->map('GET','/cgv','/cgv','cgv');
 $router->map('GET','/rgpd','/rgpd','rgpd');
 $router->map('GET','/mention','/mention','mention');
 $router->map('GET','/contact','/contact','contact');
+$router->map('POST','/update','../public/controller/php/updateController','updateController');
+
+function my_autoloader($class) {
+    include 'controller/php/classes/' . $class . '.class.php';
+}
+
+// Enregistrement de la fonction d'autoload
+spl_autoload_register('my_autoloader');
 
 $match = $router->match();
 

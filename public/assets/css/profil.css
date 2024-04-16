@@ -82,6 +82,7 @@ main{
     background-color: rgb(239, 239, 239);
     border-radius: 10px;
     padding-left: 10%;
+    padding-top: 7%;
 }
 
 .labelForm{
@@ -100,14 +101,17 @@ main{
 
 .inputFormSmall{
     width: 80%;
+    padding-left: 2%;
 }
 
 .inputFormLarge{
-    width: 90%
+    width: 90%;
+    padding-left: 1%;
 }
 
 .formDiv{
-    display: flex;
+    display: grid;
+    height: 10.8vh;
     align-items: end;
 }
 
@@ -122,6 +126,26 @@ main{
     font-size: 1.5em;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+}
+
+.buttonCancel{
+    border: 2px solid rgb(72, 38, 100);
+    background-color: white;
+    color: rgb(72, 38, 100);
+    border-radius: 1px;
+    height: 4vh;
+    width: 80%;
+    display: flex;
+    font-size: 1.5em;
+    align-items: center;
+    justify-content: center;
+}
+
+.containerCancelButton{
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
 }
 
 .formRow1{
@@ -153,4 +177,19 @@ main{
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
+}
+
+.deconnexionButton{
+    border: none;
+    background-color: transparent;
+    color: grey;
+    display: flex;
+    font-size: 1em;
+    text-decoration: underline;
+    float: left;
+    cursor: pointer;
+}
+
+.deconnexionButton:hover{
+    color: rgb(72, 38, 100);
 }
