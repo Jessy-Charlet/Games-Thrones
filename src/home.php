@@ -2,6 +2,7 @@
 include '../templates/banner.php';
 include '../public/controller/php/connBDD.php';
 ?>
+<h2>Les nouveautés<h2>
 <section class="productsGrid">
 <?php
 $sql = $conn->prepare("SELECT image_url FROM product_image");
@@ -13,9 +14,10 @@ foreach ($result as $url){
     <div class='productName'>Nom du produit</div>
     <div>
     <span class='productPrice'>Prix du produit</span>
-    <span class='productRate'>♦♦♦♦♦</span>
+    <span class='productRate'>4.5*</span>
     </div>
     </a>";
 }
 ?>
 </section>
+<h2>Les promotions</h2>
