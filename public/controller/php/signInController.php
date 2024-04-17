@@ -1,8 +1,8 @@
 <?php
-include 'connBDD.php';
-
 $mail = $_POST['email'];
 $password = $_POST['password'];
+
+$conn = Database::connect();
 
 $sql = $conn->prepare("SELECT * FROM customer WHERE email = :mail");
 $sql->execute(

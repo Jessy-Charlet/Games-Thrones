@@ -115,6 +115,13 @@ main{
     align-items: end;
 }
 
+.inputCBDiv{
+    display: grid;
+    grid-template-columns: 10fr 1fr;
+    align-items: center;
+    justify-content: center;
+}
+
 .inputSubmit{
     border: none;
     background-color: rgb(72, 38, 100);
@@ -177,6 +184,11 @@ main{
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
+}
+
+.formRow6{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 .deconnexionButton{

@@ -15,7 +15,7 @@ $router->map('GET','/cgv','/cgv','cgv');
 $router->map('GET','/rgpd','/rgpd','rgpd');
 $router->map('GET','/mention','/mention','mention');
 $router->map('GET','/contact','/contact','contact');
-$router->map('POST','/update','../public/controller/php/updateController','updateController');
+$router->map('GET','/update','../public/controller/php/updateController','updateController');
 
 function my_autoloader($class) {
     include 'controller/php/classes/' . $class . '.class.php';

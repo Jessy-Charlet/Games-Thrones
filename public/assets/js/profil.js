@@ -37,14 +37,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     var form = document.getElementById('personalInfoForm');
-    var name = document.getElementById('nom');
-    var firstname = document.getElementById('prenom');
+    var name = document.getElementById('name');
+    var firstname = document.getElementById('firstname');
     var email = document.getElementById('email');
     var phone = document.getElementById('telephone');
     var address = document.getElementById('adresse');
     var postalCode = document.getElementById('code_postal');
     var city = document.getElementById('ville');
     var password = document.getElementById('password');
+    var personalInfoModif = document.getElementById('personnalInfoModif');
 
     name.disabled = true;
     firstname.disabled = true;

@@ -1,9 +1,8 @@
 <?php
-require '../public/controller/php/connBDD.php';
 
 $id = $_SESSION['user'];
 
-$user = new Crud();
+$user = new CrudUser();
 $userAlldata = $user->getAll($id);
 $userData = $userAlldata['userData'];
 $adressData = $userAlldata['adressData'];
@@ -17,17 +16,17 @@ $adressData = $userAlldata['adressData'];
             <form method="post" class="formPersonnalInfos" id="personalInfoForm">
             <div class="formRow1">
                 <div>
-                    <label for="nom" class="labelForm">Nom</label>
+                    <label for="name" class="labelForm">Nom</label>
                     <br>
-                    <input type="text" name="nom" id="nom" value="<?= $userData['customer_last-name'] ?>" class="inputForm inputFormSmall">
+                    <input type="text" name="name" id="name" value="<?= $userData['customer_last-name'] ?>" class="inputForm inputFormSmall">
                 </div>
                 <div>
-                    <label for="prenom" class="labelForm">Prénom</label>
+                    <label for="firstname" class="labelForm">Prénom</label>
                     <br>
-                    <input type="text" name="prenom" id="prenom" value="<?= $userData['customer_first-name'] ?>" class="inputForm inputFormSmall">
+                    <input type="text" name="firstname" id="firstname" value="<?= $userData['customer_first-name'] ?>" class="inputForm inputFormSmall">
                 </div>
             </div>
-            <div class="formRow2">
+            <div class="formRow1">
                 <div>
                     <label for="email" class="labelForm">Email</label>
                     <br>
@@ -46,7 +45,7 @@ $adressData = $userAlldata['adressData'];
                     <input type="text" name="adresse" id="adresse" value="<?= $adressData['adress'] ?>" class="inputForm inputFormLarge">
                 </div>
             </div>
-            <div class="formRow4">
+            <div class="formRow1">
                 <div>
                     <label for="code_postal" class="labelForm">Code postal</label>
                     <br>
@@ -58,7 +57,7 @@ $adressData = $userAlldata['adressData'];
                     <input type="text" name="ville" id="ville" value="<?= $adressData['city'] ?>" class="inputForm inputFormSmall">
                 </div>
             </div>
-            <div class="formRow5">
+            <div class="formRow1">
                 <div>
                     <label for="password" class="labelForm">Mot de passe</label>
                     <br>
@@ -75,14 +74,28 @@ $adressData = $userAlldata['adressData'];
         </div>
         <button class="buttonAcordeonIn"><span class="buttonAcrodeonLeftContent">Carte bancaires enregistrées</span><span class="buttonAcrodeonRightContent">►</span></button>
         <div class="acordeonContentIn">
-            <form method="post">
-                <label for="numero">Numéro de carte</label>
-                <input type="text" name="numero" id="numero" value="">
-                <label for="date">Date d'expiration</label>
-                <input type="text" name="date" id="date" value="">
-                <label for="crypto">Cryptogramme</label>
-                <input type="text" name="crypto" id="crypto" value="">
-                <input type="submit" value="Enregistrer">
+            <form method="post" class="formPersonnalInfos">
+                <div class="formRow3">
+                    <div>
+                        <label for="numero" class="labelForm">Numéro de carte</label>
+                        <input type="text" name="numero" id="numero" value="" class="inputForm inputFormLarge">
+                    </div>
+                </div>
+                <div class="formRow6">
+                    <div>
+                        <label for="date" class="labelForm">Date d'expiration</label>
+                        <br>
+                        <input type="text" name="date" id="date" value="" class="inputForm inputFormSmall">
+                    </div>
+                    <div>
+                        <label for="crypto" class="labelForm">Cryptogramme</label>
+                        <br>
+                        <input type="text" name="crypto" id="crypto" value="" class="inputForm inputFormSmall">
+                    </div>
+                </div>
+                <div class="inputCBDiv">
+                    <input type="submit" value="Modifier" class="inputSubmit">
+                </div>
             </form>
         </div>
     </div>
@@ -107,33 +120,38 @@ echo "
         window.location.href = '".$router->generate('deconnexion')."';
     });
 
-    var name = document.getElementById('nom');
-    var firstname = document.getElementById('prenom');
+    var errorMessages = document.getElementById('errorMessage');
+
+    var name = document.getElementById('name');
+    var firstname = document.getElementById('firstname');
     var email = document.getElementById('email');
     var phone = document.getElementById('telephone');
-    var addresse = document.getElementById('adresse'); // Corrected variable name
+    var adresse = document.getElementById('adresse'); // Corrected variable name
     var postalCode = document.getElementById('code_postal');
     var city = document.getElementById('ville');
     var password = document.getElementById('password');
     var personalInfoModif = document.getElementById('personnalInfoModif');
+
+    var initialName = name.value;
+    var initialFirstname = firstname.value;
+    var initialEmail = email.value;
+    var initialPhone = phone.value;
+    var initialAdresse = adresse.value;
+    var initialPostalCode = postalCode.value;
+    var initialCity = city.value;
+    var initialPassword = password.value;
     
     personalInfoModif.addEventListener('click', function() {
         if (personalInfoModif.value === 'enregistrer') {
-            if (name.value.trim() === '' || password.value.trim() === '' || confirmPassword.value.trim() === '' || email.value.trim() === '' || phone.value.trim() === '' || adress.value.trim() === '' || firstname.value.trim() === '' || postalCode.value.trim() === '' || city.value.trim() === '') {
+            if (name.value === '' || password.value === '' || email.value === '' || phone.value === '' || adresse.value === '' || firstname.value === '' || postalCode.value === '' || city.value === '') {
                 var errorMessage = 'Please fill in all fields.';
-                errorMessages.innerHTML = errorMessage;
-                return;
-            }
-    
-            if (password !== confirmPassword) {
-                var errorMessage = 'Passwords do not match.';
                 errorMessages.innerHTML = errorMessage;
                 return;
             }
     
             if(phone !== ''){
                 var phoneFormat = /^(\d{2} ){4}\d{2}$/;
-                if (!phoneFormat.test(phone)) {
+                if (!phoneFormat.test(phone.value)) {
                     var errorMessage = 'Phone number format is incorrect. It should be like \"00 00 00 00 00\".';
                     errorMessages.innerHTML = errorMessage;
                     return;
@@ -142,7 +160,7 @@ echo "
     
             if(email !== ''){
                 var emailFormat = /\S+@\S+\.\S+/;
-                if (!emailFormat.test(email)) {
+                if (!emailFormat.test(email.value)) {
                     var errorMessage = 'Email format is incorrect.';
                     errorMessages.innerHTML = errorMessage;
                     return;
@@ -151,7 +169,7 @@ echo "
     
             if(password !== ''){
                 var passwordFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&()!\/.,?;:_]).{6,255}$/;
-                if (!passwordFormat.test(password)) {
+                if (!passwordFormat.test(password.value)) {
                     var errorMessage = 'Password must contain at least one number and one uppercase and lowercase letter, a special character, and at least 6 or more characters.';
                     errorMessages.innerHTML = errorMessage;
                     return;
@@ -160,14 +178,65 @@ echo "
     
             if(postalCode !== ''){
                 var postalCodeFormat = /^\d{5}$/;
-                if (!postalCodeFormat.test(postalCode)) {
+                if (!postalCodeFormat.test(postalCode.value)) {
                     var errorMessage = 'Postal code format is incorrect. It should be 5 digits.';
                     errorMessages.innerHTML = errorMessage;
                     return;
                 }
-
-            window.location.href = '".$router->generate('updateController')."';
             }
+
+            if(initialName != name.value){
+                nameChanged = name.value;
+            }else{
+                nameChanged = initialName;
+            }
+
+            if(initialFirstname != firstname.value){
+                firstnameChanged = firstname.value;
+            }else{
+                firstnameChanged = initialFirstname;
+            }
+
+            if(initialEmail != email.value){
+                emailChanged = email.value;
+            }else{
+                emailChanged = initialEmail;
+            }
+
+            if(initialPhone != phone.value){
+                phoneChanged = phone.value;
+            }else{
+                phoneChanged = initialPhone;
+            }
+
+            if(initialAdresse != adresse.value){
+                adresseChanged = adresse.value;
+            }else{
+                adresseChanged = initialAdresse;
+            }
+
+            if(initialPostalCode != postalCode.value){
+                postalCodeChanged = postalCode.value;
+            }else{
+                postalCodeChanged = initialPostalCode;
+            }
+
+            if(initialCity != city.value){
+                cityChanged = city.value;
+            }else{
+                cityChanged = initialCity;
+            }
+
+            if(initialPassword != password.value){
+                passwordChanged = password.value;
+            }else{
+                passwordChanged = initialPassword;
+            }
+
+
+            window.location.href = '".$router->generate('updateController')."?changeEmail='+emailChanged+'&changePhone='+phoneChanged+'&changePassword='+passwordChanged+'&changeName='+nameChanged+'&changeFirstname='+firstnameChanged+'&changeAdresse='+adresseChanged+'&changePostalCode='+postalCodeChanged+'&changeCity='+cityChanged;
+
+
             name.disabled = true;
             firstname.disabled = true;
             email.disabled = true;

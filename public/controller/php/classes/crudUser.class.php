@@ -1,5 +1,5 @@
 <?php
-class Crud {
+class CrudUser {
     private $customer_id;
     private $lastname;
     private $firstname;
@@ -138,8 +138,7 @@ class Crud {
         return $city;
     }
 
-    // If error when used, change link.
-    public function create(){
+    public function createUser(){
         $passwordHash = password_hash($this->password, PASSWORD_DEFAULT);
         $this->password = $passwordHash;
 
@@ -212,51 +211,74 @@ class Crud {
         }
     }
 
-    public function update($id){
-        $passwordHash = password_hash($this->password, PASSWORD_DEFAULT);
-        $this->password = $passwordHash;
-
+    public function updateUser($id, $isEmailChanged, $isPhoneChanged, $isPasswordChanged, $isAddressChanged, $isNameChanged, $isFirstnameChanged, $isPostalCodeChanged, $isCityChanged){
         $conn = Database::connect();
+        $previous_page_url = $_SERVER['HTTP_REFERER'] ?? '';
+
+        if(isset($isPasswordChanged)){
+            $passwordHash = password_hash($isPasswordChanged, PASSWORD_DEFAULT);
+            $isPasswordChanged = $passwordHash;
+        }
+
+    
+        $sql = $conn->prepare("SELECT email FROM customer WHERE customer_id = :id");
+        $sql->execute(
+            array(
+                'id' => $id
+            )
+        );
+        if($sql->fetch(PDO::FETCH_ASSOC)['email'] != $isEmailChanged){
+            $sql2 = $conn->prepare("SELECT email FROM customer WHERE email = :email");
+            $sql2->execute(
+                array(
+                    'email' => $isEmailChanged
+                )
+            );
+            if($sql2->rowCount() > 0){
+                header('Location: '.$previous_page_url.'?error=mailAlreadyUsed');
+                exit();
+            }
+            $sql2->closeCursor();
+        }
+        $sql->closeCursor();
+    
+
+        $sql = $conn->prepare("SELECT phone FROM customer WHERE customer_id = :id");
+        $sql->execute(
+            array(
+                'id' => $id
+            )
+        );
+        if($sql->fetch(PDO::FETCH_ASSOC)['phone'] != $isPhoneChanged){
+            $sql2 = $conn->prepare("SELECT phone FROM customer WHERE phone = :phone");
+            $sql2->execute(
+                array(
+                    'phone' => $isPhoneChanged
+                )
+            );
+            if($sql2->rowCount() > 0){
+                header('Location: '.$previous_page_url.'?error=phoneAlreadyUsed');
+                exit();
+            }
+            $sql2->closeCursor();
+        }
+        $sql->closeCursor();
         
-        $current_page_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
-        $sql = $conn->prepare("SELECT email FROM customer WHERE email = :email");
-        $sql->execute(
-            array(
-                'email' => $mail
-            )
-        );
-        if($sql->rowCount() > 0){
-            header('Location: '.$current_page_url.'?error=mailAlreadyUsed&name='.$name.'&firstname='.$firstname.'&phone='.$phone.'&adress='.$adress.'&postalCode='.$postalCode.'&city='.$city);
-            exit();
-        }
-        $sql->closeCursor();
-
-        $sql = $conn->prepare("SELECT phone FROM customer WHERE phone = :phone");
-        $sql->execute(
-            array(
-                'phone' => $phone
-            )
-        );
-        if($sql->rowCount() > 0){
-            header('Location: '.$current_page_url.'?error=phoneAlreadyUsed&name='.$name.'&firstname='.$firstname.'&mail='.$mail.'&adress='.$adress.'&postalCode='.$postalCode.'&city='.$city);
-            exit();
-        }
-        $sql->closeCursor();
         try {
             $conn->beginTransaction();
 
             $sql = $conn->prepare("UPDATE customer SET `customer_last-name` = :customer_last_name, `customer_first-name` = :customer_first_name, email = :email, phone = :phone, password = :password WHERE customer_id = :customer_id");
             $sql->execute(
                 array(
-                    'customer_last_name' => $this->lastname,
-                    'customer_first_name' => $this->firstname,
-                    'email' => $this->email,
-                    'phone' => $this->phone,
-                    'password' => $this->password,
+                    'customer_last_name' => $isNameChanged,
+                    'customer_first_name' => $isFirstnameChanged,
+                    'email' => $isEmailChanged,
+                    'phone' => $isPhoneChanged,
+                    'password' => $isPasswordChanged,
                     'customer_id' => $id
                 )
             );
+            $conn->commit();
         } catch(PDOException $e) {
             // En cas d'erreur, annulation des transactions
             $conn->rollback();

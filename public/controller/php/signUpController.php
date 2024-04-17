@@ -1,6 +1,4 @@
 <?php
-include 'connBDD.php';
-
 $name = $_POST['name'];
 $firstname = $_POST['firstname'];
 $mail = $_POST['email'];

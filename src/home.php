@@ -1,10 +1,10 @@
 <?php
 include '../templates/banner.php';
-include '../public/controller/php/connBDD.php';
 ?>
 <h2>Les nouveautés<h2>
 <section class="productsGrid">
 <?php
+$conn = Database::connect();
 $sql = $conn->prepare("SELECT image_url FROM product_image");
 $sql->execute();
 $result = $sql->fetch(PDO::FETCH_ASSOC);
