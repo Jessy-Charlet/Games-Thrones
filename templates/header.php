@@ -72,15 +72,15 @@ session_start();
     <nav id="navInfos">
         <div class="navContainer">
             <div class="navH1">Service client</div>
-            <a href="">Contactez-nous</a>
+            <a href="<?= $router->generate('contact') ?>">Contactez-nous</a>
             <a href="">Foire aux questions</a>
             <a href="">Expédition et livraison</a>
             <a href="">Garantie</a>
         </div>
         <div class="navContainer">
             <div class="navH1">Mentions légales</div>
-            <a href="">RGPD</a>
-            <a href="">CGV</a>
+            <a href="<?= $router->generate('rgpd') ?>">RGPD</a>
+            <a href="<?= $router->generate('cgv') ?>">CGV</a>
         </div>
     </nav>
 
