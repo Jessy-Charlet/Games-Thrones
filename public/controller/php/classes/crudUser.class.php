@@ -267,6 +267,7 @@ class CrudUser {
         try {
             $conn->beginTransaction();
 
+            // Mettre à jour les données de l'utilisateur
             $sql = $conn->prepare("UPDATE customer SET `customer_last-name` = :customer_last_name, `customer_first-name` = :customer_first_name, email = :email, phone = :phone, password = :password WHERE customer_id = :customer_id");
             $sql->execute(
                 array(
@@ -278,6 +279,20 @@ class CrudUser {
                     'customer_id' => $id
                 )
             );
+            $sql->closeCursor();
+
+            // Mettre à jour l'adresse de l'utilisateur
+            $sql = $conn->prepare("UPDATE adress SET city = :city, postal_code = :postal_code, adress = :adress WHERE customer_id = :customer_id");
+            $sql->execute(
+                array(
+                    'city' => $isCityChanged,
+                    'postal_code' => $isPostalCodeChanged,
+                    'adress' => $isAddressChanged,
+                    'customer_id' => $id
+                )
+            );
+            $sql->closeCursor();
+
             $conn->commit();
             header('Location: '.$previous_page_url.'?update=success');
         } catch(PDOException $e) {

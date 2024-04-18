@@ -94,7 +94,7 @@ session_start();
             <div></div>
             <div></div>
         </div>
-        <a href="<?= $router->generate( 'panier') ?>"><img src="./assets/img/icon_panier.png" alt="Mon panier" /><span>2</span></a>
+        <a href="<!--PAGE DU PANIER-->"><img src="./assets/img/icon_panier.png" alt="Mon panier" /><span>2</span></a>
         <?php
         if (isset($_SESSION['user'])) {
         ?>
