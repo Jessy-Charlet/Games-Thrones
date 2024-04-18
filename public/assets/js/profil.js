@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     var form = document.getElementById('personalInfoForm');
-    var name = document.getElementById('name');
+    var name = document.getElementById('nameId');
     var firstname = document.getElementById('firstname');
     var email = document.getElementById('email');
     var phone = document.getElementById('telephone');

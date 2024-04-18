@@ -30,7 +30,4 @@ if(isset($_GET['changeCity'])){
 $id = $_SESSION['user'];
 $user = new CrudUser();
 $user->updateUser($id, $isEmailChanged, $isPhoneChanged, $isPasswordChanged, $isAddressChanged, $isNameChanged, $isFirstnameChanged, $isPostalCodeChanged, $isCityChanged);
-header('Location: '.$router->generate('profil'));
-
-
 ?>

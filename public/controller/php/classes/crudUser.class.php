@@ -213,7 +213,7 @@ class CrudUser {
 
     public function updateUser($id, $isEmailChanged, $isPhoneChanged, $isPasswordChanged, $isAddressChanged, $isNameChanged, $isFirstnameChanged, $isPostalCodeChanged, $isCityChanged){
         $conn = Database::connect();
-        $previous_page_url = $_SERVER['HTTP_REFERER'] ?? '';
+        $previous_page_url = strtok($_SERVER['HTTP_REFERER'] ?? '', '?');
 
         if(isset($isPasswordChanged)){
             $passwordHash = password_hash($isPasswordChanged, PASSWORD_DEFAULT);
@@ -267,6 +267,7 @@ class CrudUser {
         try {
             $conn->beginTransaction();
 
+            // Mettre à jour les données de l'utilisateur
             $sql = $conn->prepare("UPDATE customer SET `customer_last-name` = :customer_last_name, `customer_first-name` = :customer_first_name, email = :email, phone = :phone, password = :password WHERE customer_id = :customer_id");
             $sql->execute(
                 array(
@@ -278,10 +279,26 @@ class CrudUser {
                     'customer_id' => $id
                 )
             );
+            $sql->closeCursor();
+
+            // Mettre à jour l'adresse de l'utilisateur
+            $sql = $conn->prepare("UPDATE adress SET city = :city, postal_code = :postal_code, adress = :adress WHERE customer_id = :customer_id");
+            $sql->execute(
+                array(
+                    'city' => $isCityChanged,
+                    'postal_code' => $isPostalCodeChanged,
+                    'adress' => $isAddressChanged,
+                    'customer_id' => $id
+                )
+            );
+            $sql->closeCursor();
+
             $conn->commit();
+            header('Location: '.$previous_page_url.'?update=success');
         } catch(PDOException $e) {
             // En cas d'erreur, annulation des transactions
             $conn->rollback();
+            header('Location: '.$previous_page_url.'?update=error');
             throw $e;
         }
     }
