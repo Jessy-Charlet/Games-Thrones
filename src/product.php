@@ -404,3 +404,5 @@
             </div>
         </section>
     </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./assets/js/product.js?t=<?= time(); ?>"></script>
