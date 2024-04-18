@@ -4,6 +4,7 @@ require '../vendor/autoload.php';
 $uri = $_SERVER['REQUEST_URI'];
 $router = new AltoRouter();
 
+// Création des routes
 $router->map('GET', '/accueil', '/home', 'accueil');
 $router->map('GET', '/connexion', '/signIn', 'connexion');
 $router->map('GET', '/inscription', '/signUp', 'inscription');
@@ -37,6 +38,7 @@ if(is_array($match)){
     require '../templates/footer.php';
 }else{
     echo '404';
+    // Faire un require ou un include de la page 404, à faire plus tard
 }
 ?>
 </html>

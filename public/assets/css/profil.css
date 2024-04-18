@@ -63,18 +63,6 @@ main{
     justify-items: center;
 }
 
-.sideBar{
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    width: 1%;
-    height: 100%;
-    background-color: rgb(97, 97, 97);
-    border-radius: 50px;
-    align-items: center;
-    justify-items: center;
-    float: left;
-}
-
 .formPersonnalInfos{
     display: grid;
     width: 150%;
@@ -83,6 +71,7 @@ main{
     border-radius: 10px;
     padding-left: 10%;
     padding-top: 7%;
+    margin-bottom: 20px;
 }
 
 .labelForm{
@@ -117,7 +106,7 @@ main{
 
 .inputCBDiv{
     display: grid;
-    grid-template-columns: 10fr 1fr;
+    width: 100%;
     align-items: center;
     justify-content: center;
 }

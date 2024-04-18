@@ -1,24 +1,58 @@
 <?php
-
 $id = $_SESSION['user'];
 
 $user = new CrudUser();
 $userAlldata = $user->getAll($id);
 $userData = $userAlldata['userData'];
 $adressData = $userAlldata['adressData'];
+
+
+if(isset($_GET['update'])){
+    $updateResult = $_GET['update'];
+
+    // Vérifiez s'il y a plusieurs paramètres 'update' dans l'URL
+    if(substr_count($_SERVER['QUERY_STRING'], 'update') > 1){
+        // Supprimez tous les paramètres 'update' sauf un
+        $params = $_GET;
+        unset($params['update']);
+        $url = strtok($_SERVER["REQUEST_URI"], '?');
+        if (!empty($params)) {
+            $url .= '?' . http_build_query($params);
+        }
+        $url .= '&update=' . $updateResult;
+
+        // Redirigez vers l'URL sans les paramètres 'update' en double
+        header("Location: " . $url);
+        exit();
+    }
+    if (!isset($_SESSION['first_load'])){
+        $_SESSION['first_load'] = true;
+    }else{
+        if ($_SESSION['first_load'] == true){
+        // La page a été rechargée
+        $pageActuelle = strtok($_SERVER['REQUEST_URI'], '?');
+        header("Location: $pageActuelle");
+
+        // Réinitialisez la variable de session pour le prochain chargement de la page
+        $_SESSION['first_load'] = false;
+        }else{
+        // La page est chargée pour la première fois
+        $_SESSION['first_load'] = true;
+        }
+    }
+}
 ?>
 <link rel="stylesheet" href="./assets/css/profil.css?t=<?= time(); ?>">
     <button class="buttonAcordeon" id="btn1"><span class="buttonAcrodeonLeftContent">Mon compte</span><span class="buttonAcrodeonRightContent">►</span></button>
     <div class="acordeonContent" id="content1">
         <button class="buttonAcordeonIn"><span class="buttonAcrodeonLeftContent">Informations personnelles</span><span class="buttonAcrodeonRightContent">►</span></button>
         <div class="acordeonContentIn">
-            <!--<div class="sideBar"></div>-->
             <form method="post" class="formPersonnalInfos" id="personalInfoForm">
             <div class="formRow1">
                 <div>
-                    <label for="name" class="labelForm">Nom</label>
+                    <label for="nameId" class="labelForm">Nom</label>
                     <br>
-                    <input type="text" name="name" id="name" value="<?= $userData['customer_last-name'] ?>" class="inputForm inputFormSmall">
+                    <input type="text" name="name" id="nameId" value="<?= $userData['customer_last-name'] ?>" class="inputForm inputFormSmall">
                 </div>
                 <div>
                     <label for="firstname" class="labelForm">Prénom</label>
@@ -68,7 +102,17 @@ $adressData = $userAlldata['adressData'];
                     <div class="containeurCancelButton" id="cancelButtonContainer"></div>
                 </div>
             </div> 
-                <p id="errorMessage"></p>
+                <p id="errorMessage">
+                    <?php
+                    if(isset($updateResult)){
+                        if($updateResult == 'success'){
+                            echo 'Vos informations ont bien été modifiées.';
+                        }else{
+                            echo 'Une erreur est survenue lors de la modification de vos informations.';
+                        }
+                    }
+                    ?>
+                </p>
             </form>
             <button id="deconnexion" class="deconnexionButton">Se déconnecter</button>
         </div>
@@ -103,6 +147,7 @@ $adressData = $userAlldata['adressData'];
     <div class="acordeonContent" id="content2">
         <button class="buttonAcordeonIn"><span class="buttonAcrodeonLeftContent">Commandes en cours</span><span class="buttonAcrodeonRightContent">►</span></button>
         <div class="acordeonContentIn">
+            
         </div>
         <button class="buttonAcordeonIn"><span class="buttonAcrodeonLeftContent">Historique de commandes</span><span class="buttonAcrodeonRightContent">►</span></button>
         <div class="acordeonContentIn">
@@ -122,17 +167,17 @@ echo "
 
     var errorMessages = document.getElementById('errorMessage');
 
-    var name = document.getElementById('name');
+    var nameId = document.getElementById('nameId');
     var firstname = document.getElementById('firstname');
     var email = document.getElementById('email');
     var phone = document.getElementById('telephone');
-    var adresse = document.getElementById('adresse'); // Corrected variable name
+    var adresse = document.getElementById('adresse');
     var postalCode = document.getElementById('code_postal');
     var city = document.getElementById('ville');
     var password = document.getElementById('password');
     var personalInfoModif = document.getElementById('personnalInfoModif');
 
-    var initialName = name.value;
+    var initialnameId = nameId.value || 'defaultName';
     var initialFirstname = firstname.value;
     var initialEmail = email.value;
     var initialPhone = phone.value;
@@ -143,7 +188,7 @@ echo "
     
     personalInfoModif.addEventListener('click', function() {
         if (personalInfoModif.value === 'enregistrer') {
-            if (name.value === '' || password.value === '' || email.value === '' || phone.value === '' || adresse.value === '' || firstname.value === '' || postalCode.value === '' || city.value === '') {
+            if (nameId.value === '' || password.value === '' || email.value === '' || phone.value === '' || adresse.value === '' || firstname.value === '' || postalCode.value === '' || city.value === '') {
                 var errorMessage = 'Please fill in all fields.';
                 errorMessages.innerHTML = errorMessage;
                 return;
@@ -185,10 +230,10 @@ echo "
                 }
             }
 
-            if(initialName != name.value){
-                nameChanged = name.value;
+            if(initialnameId != nameId.value){
+                nameChanged = nameId.value;
             }else{
-                nameChanged = initialName;
+                nameChanged = initialnameId;
             }
 
             if(initialFirstname != firstname.value){
@@ -233,7 +278,6 @@ echo "
                 passwordChanged = initialPassword;
             }
 
-
             window.location.href = '".$router->generate('updateController')."?changeEmail='+emailChanged+'&changePhone='+phoneChanged+'&changePassword='+passwordChanged+'&changeName='+nameChanged+'&changeFirstname='+firstnameChanged+'&changeAdresse='+adresseChanged+'&changePostalCode='+postalCodeChanged+'&changeCity='+cityChanged;
 
 
@@ -241,7 +285,7 @@ echo "
             firstname.disabled = true;
             email.disabled = true;
             phone.disabled = true;
-            address.disabled = true;
+            adresse.disabled = true;
             postalCode.disabled = true;
             city.disabled = true;
             password.disabled = true;

@@ -213,7 +213,7 @@ class CrudUser {
 
     public function updateUser($id, $isEmailChanged, $isPhoneChanged, $isPasswordChanged, $isAddressChanged, $isNameChanged, $isFirstnameChanged, $isPostalCodeChanged, $isCityChanged){
         $conn = Database::connect();
-        $previous_page_url = $_SERVER['HTTP_REFERER'] ?? '';
+        $previous_page_url = strtok($_SERVER['HTTP_REFERER'] ?? '', '?');
 
         if(isset($isPasswordChanged)){
             $passwordHash = password_hash($isPasswordChanged, PASSWORD_DEFAULT);
@@ -279,9 +279,11 @@ class CrudUser {
                 )
             );
             $conn->commit();
+            header('Location: '.$previous_page_url.'?update=success');
         } catch(PDOException $e) {
             // En cas d'erreur, annulation des transactions
             $conn->rollback();
+            header('Location: '.$previous_page_url.'?update=error');
             throw $e;
         }
     }
