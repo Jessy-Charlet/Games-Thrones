@@ -234,6 +234,10 @@ button{
   margin-top: 0;
 }
 
+input.quantity {
+  width: auto;
+}
+
 /*** start Select Wrapper ***/
 
 .selectWrapper {
