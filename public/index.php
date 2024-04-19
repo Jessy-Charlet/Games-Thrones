@@ -20,6 +20,7 @@ $router->map('GET', '/update', '../public/controller/php/updateController', 'upd
 $router->map('GET', '/produit', '/product', 'produit');
 $router->map('GET', '/panier', '/panier', 'panier');
 
+
 function my_autoloader($class)
 {
     include 'controller/php/classes/' . $class . '.class.php';

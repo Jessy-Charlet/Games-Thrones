@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
         postalCode.disabled = false;
         city.disabled = false;
         password.disabled = false;
+        
     
         // Changer le texte du bouton
         personalInfoModif.value = 'enregistrer';

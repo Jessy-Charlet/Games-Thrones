@@ -213,7 +213,7 @@ class CrudUser {
 
     public function updateUser($id, $isEmailChanged, $isPhoneChanged, $isPasswordChanged, $isAddressChanged, $isNameChanged, $isFirstnameChanged, $isPostalCodeChanged, $isCityChanged){
         $conn = Database::connect();
-        $previous_page_url = strtok($_SERVER['HTTP_REFERER'] ?? '', '?');
+        $current_page_url = strtok($_SERVER['REQUEST_URI'] ?? '', '?');
 
         if(isset($isPasswordChanged)){
             $passwordHash = password_hash($isPasswordChanged, PASSWORD_DEFAULT);
@@ -235,7 +235,7 @@ class CrudUser {
                 )
             );
             if($sql2->rowCount() > 0){
-                header('Location: '.$previous_page_url.'?error=mailAlreadyUsed');
+                header('Location: '.$current_page_url.'?error=mailAlreadyUsed');
                 exit();
             }
             $sql2->closeCursor();
@@ -257,7 +257,7 @@ class CrudUser {
                 )
             );
             if($sql2->rowCount() > 0){
-                header('Location: '.$previous_page_url.'?error=phoneAlreadyUsed');
+                header('Location: '.$current_page_url.'?error=phoneAlreadyUsed');
                 exit();
             }
             $sql2->closeCursor();
@@ -294,11 +294,11 @@ class CrudUser {
             $sql->closeCursor();
 
             $conn->commit();
-            header('Location: '.$previous_page_url.'?update=success');
+            header('Location: '.$current_page_url.'?update=success');
         } catch(PDOException $e) {
             // En cas d'erreur, annulation des transactions
             $conn->rollback();
-            header('Location: '.$previous_page_url.'?update=error');
+            header('Location: '.$current_page_url.'?update=error');
             throw $e;
         }
     }
