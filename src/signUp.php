@@ -32,7 +32,7 @@ if(isset($_GET['error'])){
 <section class="corp">
     <div class="signUpFormContainer">
         <h1 class="signUpFormTitle">S'inscrire</h1>
-        <form id="myForm" method="post" action="<?= $router->generate('signUpControllerphp') ?>" class="signUpForm">
+        <form id="myForm" method="post" class="signUpForm">
             <label for="nameId" class="signUpFormLabel">Nom</label><br>
                 <input type="text" value="<?php if(isset($nameSave)){echo $nameSave;}?>" name="name" id="nameId" class="signUpFormInput" autocomplete="off" ><br><br>
             <label for="firstnameId" class="signUpFormLabel">Prénom</label><br>

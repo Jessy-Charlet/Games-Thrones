@@ -138,13 +138,17 @@ class CrudUser {
         return $city;
     }
 
-    public function createUser(){
-        $passwordHash = password_hash($this->password, PASSWORD_DEFAULT);
-        $this->password = $passwordHash;
-
+    public function createUser($name, $firstname, $mail, $phone, $adress, $postalCode, $city, $password){
         $conn = Database::connect();
-        
-        $current_page_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $current_page_url = strtok($_SERVER['REQUEST_URI'] ?? '', '?');
+
+        if(isset($password)){
+            $passwordHash = sodium_crypto_pwhash_str(
+                $password,
+                SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE,  // Nombre d'opérations pour la résistance aux attaques par force brute
+                SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE // Limite de mémoire pour la résistance aux attaques par force brute
+            );
+        }
 
         $sql = $conn->prepare("SELECT email FROM customer WHERE email = :email");
         $sql->execute(
@@ -169,41 +173,55 @@ class CrudUser {
             exit();
         }
         $sql->closeCursor();
+
         try {
             $conn->beginTransaction();
-        
+
             // Insertion du client
             $insertCustomer = $conn->prepare("INSERT INTO customer (`customer_last-name`, `customer_first-name`, email, phone, password) VALUES (:customer_last_name, :customer_first_name, :email, :phone, :password)");
             $insertCustomer->execute(
                 array(
-                    'customer_last_name' => $this->lastname,
-                    'customer_first_name' => $this->firstname,
-                    'email' => $this->email,
-                    'phone' => $this->phone,
-                    'password' => $this->password
+                    'customer_last_name' => $name,
+                    'customer_first_name' => $firstname,
+                    'email' => $mail,
+                    'phone' => $phone,
+                    'password' => $passwordHash
                 )
             );
-        
+
             // Récupération de l'ID du client inséré
             $customerId = $conn->lastInsertId();
-        
+            $sql = $conn->prepare("SELECT customer_first-name FROM customer WHERE customer_id = :id");
+            $sql->execute(
+                array(
+                    'id' => $customerId
+                )
+            );
+            $firstName = $sql->fetch(PDO::FETCH_ASSOC)['customer_first-name'];
+
             // Insertion de l'adresse
             $insertAddress = $conn->prepare("INSERT INTO adress (city, postal_code, adress, customer_id, postal_code_id) 
                                             SELECT :city, :postal_code, :adress, :customer_id, postal_code_id 
                                             FROM postal_code WHERE postal_code = :postal_code");
             $insertAddress->execute(
                 array(
-                    'city' => $this->city,
-                    'postal_code' => $this->postal_code,
-                    'adress' => $this->adress,
+                    'city' => $city,
+                    'postal_code' => $postalCode,
+                    'adress' => $adress,
                     'customer_id' => $customerId
                 )
             );
-            session_start();
             $_SESSION['user'] = $customerId;
-            header('Location: '.$router->generate('accueil'));
+            $_SESSION['userFirstName'] = $firstname;
             // Commit des transactions
             $conn->commit();
+            /*
+            *
+            *
+            *   mettre lien pour redirection sur accueil ici ou autre part
+            *
+            *
+            */
         } catch(PDOException $e) {
             // En cas d'erreur, annulation des transactions
             $conn->rollback();
@@ -215,8 +233,13 @@ class CrudUser {
         $conn = Database::connect();
         $current_page_url = strtok($_SERVER['REQUEST_URI'] ?? '', '?');
 
+
         if(isset($isPasswordChanged)){
-            $passwordHash = password_hash($isPasswordChanged, PASSWORD_DEFAULT);
+            $passwordHash = sodium_crypto_pwhash_str(
+                $isPasswordChanged,
+                SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE,  // Nombre d'opérations pour la résistance aux attaques par force brute
+                SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE // Limite de mémoire pour la résistance aux attaques par force brute
+            );
             $isPasswordChanged = $passwordHash;
         }
 
@@ -263,7 +286,7 @@ class CrudUser {
             $sql2->closeCursor();
         }
         $sql->closeCursor();
-        
+
         try {
             $conn->beginTransaction();
 
@@ -294,11 +317,9 @@ class CrudUser {
             $sql->closeCursor();
 
             $conn->commit();
-            //header('Location: '.$current_page_url.'?update=success');
         } catch(PDOException $e) {
             // En cas d'erreur, annulation des transactions
             $conn->rollback();
-            //header('Location: '.$current_page_url.'?update=error');
             throw $e;
         }
     }
@@ -321,5 +342,34 @@ class CrudUser {
                 'customer_id' => $this->customer_id
             )
         );
+    }
+
+    public function connectionUser($mail, $password){
+        $conn = Database::connect();
+
+        try{
+            $conn->beginTransaction();
+
+
+            $sql = $conn->prepare("SELECT * FROM customer WHERE email = :mail AND password = :password");
+            $sql->execute(
+                array(
+                    'mail' => $mail,
+                    'password' => $password
+                )
+            );
+            $result = $sql->fetch(PDO::FETCH_ASSOC);
+            if ($result){
+                $id = $result['customer_id'];
+                $firstName = $result['customer_first-name'];
+                $_SESSION['user'] = $id;
+                $_SESSION['userFirstName'] = $firstName;
+                $conn->commit();
+            }
+        }catch(PDOException $e) {
+            // En cas d'erreur, annulation des transactions
+            $conn->rollback();
+            throw $e;
+        }
     }
 }

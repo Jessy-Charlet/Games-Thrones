@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        document.getElementById('myForm').submit();
+
+        window.location.href = '/signUpControllerphp';
     });
 });

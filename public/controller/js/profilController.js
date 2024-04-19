@@ -46,7 +46,7 @@ personalInfoModif.addEventListener('click', function() {
         }
 
         if(password !== ''){
-            var passwordFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&()!\/.,?;:_]).{6,255}$/;
+            var passwordFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&()!\/.,?;:_~"#`^@°%ù!§]).{6,255}$/;
             if (!passwordFormat.test(password.value)) {
                 var errorMessage = 'Password must contain at least one number and one uppercase and lowercase letter, a special character, and at least 6 or more characters.';
                 errorMessages.innerHTML = errorMessage;
@@ -108,7 +108,7 @@ personalInfoModif.addEventListener('click', function() {
             }
         }
 
-
+// multipart/form-data
         fetch('controller/php/profilController.php', {
             method: 'POST',
             headers: {
@@ -122,8 +122,12 @@ personalInfoModif.addEventListener('click', function() {
             }
             return response.text();
         })
-        .then(data => console.log('Success!', data))
-        .catch(error => console.log('There was an error!', error));
+        .then(data => 
+            self.location = 'profil?update=success'
+        )
+        .catch(error => 
+            self.location = 'profil?update=error'
+        );
 
         nameId.disabled = true;
         firstname.disabled = true;

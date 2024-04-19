@@ -108,9 +108,9 @@ if(isset($_GET['update'])){
                     <?php
                     if(isset($updateResult)){
                         if($updateResult == 'success'){
-                            echo 'Vos informations ont bien été modifiées.';
+                            ?><p class="updateResult">Vos informations ont bien été modifiées.</p><?php
                         }else{
-                            echo 'Une erreur est survenue lors de la modification de vos informations.';
+                            ?><p class="updateResult">Une erreur est survenue lors de la modification de vos informations.</p><?php
                         }
                     }
                     ?>

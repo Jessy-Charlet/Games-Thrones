@@ -21,3 +21,7 @@ foreach ($result as $url){
 ?>
 </section>
 <h2>Les promotions</h2>
+<?php
+if(isset($_GET['errorSignUp'])){
+    echo "<div class='error'>Erreur lors de l'inscription</div>";
+}
