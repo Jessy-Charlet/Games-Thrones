@@ -6,7 +6,7 @@ $router = new AltoRouter();
 
 // Création des routes
 // route de page affichée
-$router->map('GET', '/accueil', '/home', 'accueil');
+$router->map('GET', '/', '/home', 'accueil');
 $router->map('GET', '/connexion', '/signIn', 'connexion');
 $router->map('GET', '/inscription', '/signUp', 'inscription');
 $router->map('GET', '/profil', '/profil', 'profil');
