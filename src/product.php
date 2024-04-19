@@ -68,7 +68,7 @@ $stock = 10;
                                         <p>Couleur:</p>
                                     </div>
                                     <div>
-                                        <p>Blanc</p>
+                                        <p>Arc En Ciel</p>
                                     </div>
                                     <div>
                                         <p>Materiaux:</p>
