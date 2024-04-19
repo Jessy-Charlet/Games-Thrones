@@ -1,5 +1,12 @@
 <?php
+session_start();
+include 'classes/CrudUser.class.php';
+include 'classes/Database.class.php';
+
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+    $isEmailChanged = $isPhoneChanged = $isPasswordChanged = $isAddressChanged = $isNameChanged = $isFirstnameChanged = $isPostalCodeChanged = $isCityChanged = null;
+
     if(isset($_POST['changeEmail'])){
         $isEmailChanged = $_POST['changeEmail'];
     }

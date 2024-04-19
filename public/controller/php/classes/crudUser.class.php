@@ -294,11 +294,11 @@ class CrudUser {
             $sql->closeCursor();
 
             $conn->commit();
-            header('Location: '.$current_page_url.'?update=success');
+            //header('Location: '.$current_page_url.'?update=success');
         } catch(PDOException $e) {
             // En cas d'erreur, annulation des transactions
             $conn->rollback();
-            header('Location: '.$current_page_url.'?update=error');
+            //header('Location: '.$current_page_url.'?update=error');
             throw $e;
         }
     }

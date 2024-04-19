@@ -116,7 +116,7 @@ if(isset($_GET['update'])){
                     ?>
                 </p>
             </form>
-            <button id="deconnexion" class="deconnexionButton">Se déconnecter</button>
+            <a href="<?= $router->generate('deconnexion');  ?>" class="deconnexionButton">Se déconnecter</a>
         </div>
         <button class="buttonAcordeonIn"><span class="buttonAcrodeonLeftContent">Carte bancaires enregistrées</span><span class="buttonAcrodeonRightContent">►</span></button>
         <div class="acordeonContentIn">
@@ -162,9 +162,3 @@ if(isset($_GET['update'])){
     </div>
 <script src="./assets/js/profil.js?t=<?= time(); ?>"></script>
 <script src="./controller/js/profilController.js?t=<?= time(); ?>"></script>
-<script>
-    document.getElementById('deconnexion').addEventListener('click', (event) => {
-        event.preventDefault();
-        window.location.href = '<?php $router->generate('deconnexion') ?>';
-    });
-</script>
