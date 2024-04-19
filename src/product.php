@@ -44,9 +44,10 @@ $stock = 10;
                     </div>
                 </div>
                 <div class="rightSide">
+                <!--*****************************************************-->
                     <div class="descriptionTop">
                         <h1 class="productTitle">Nom du produit</h1>
-                        <p>123456</p>
+                        <p>réf: 123456</p>
                         <div class="productInfo">
                             <div class="productInfoLeft">
                                 <div class="rating-result">
@@ -83,18 +84,17 @@ $stock = 10;
                                     <label for="Stock">Stock</label><br>
                                     <input type="int" class="stock" name="stock" value="<?php echo $stock; ?>" readonly />
                                 </p>-->
-
                                 <p class="quantity">
                                     <label for="quantity">Quantité</label><br>
                                     <input type="number" class="quantity" name="quantity" min="1" max="<?php echo $stock; ?>" value="<?php echo $quantity; ?>">
                                 </p>
-
                                 <button class="basketButton" type="submit">
                                     <span>Ajouter au panier</span> <img src="./images/icon_panier.png" alt="">
                                 </button>
                             </div>
                         </div>
                     </div>
+                    <!--************************************************-->
                     <div class="descriptBotton">
                         <h3 class="descriptTitle">A propos de cet article</h3>
                         <div>
