@@ -79,7 +79,7 @@ button{
 }
 
 .slick-next {
-  background: url("./images/Expand_down.svg") 0 0 / 100% no-repeat;
+  background: url("./assets/img/product/Expand_down.svg") 0 0 / 100% no-repeat;
   object-fit: cover;
 }
 
@@ -123,7 +123,7 @@ button{
 .productBenefits {
   display: grid;
   gap: 2em;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   padding: 8vh 0 0 0;
 }
 
@@ -636,5 +636,8 @@ button{
   .productInfo {
     display: flex;
     flex-direction: column;
+  }
+  .productBenefits{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

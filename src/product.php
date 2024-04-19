@@ -7,35 +7,35 @@
                             <div class="slider">
                                 <ul>
                                     <li id="Photo1">
-                                        <img class="sliderPhoto" src="./images/image_16.png" alt="Chaise gaming">
+                                        <img class="sliderPhoto" src="./assets/img/products/chaise_licorne.jpg" alt="Chaise gaming">
                                     </li>
                                     <li id="Photo2">
-                                        <img class="sliderPhoto" src="./images/image_16.png" alt="Chaise gaming">
+                                        <img class="sliderPhoto" src="./assets/img/products/chaise_licorne.jpg" alt="Chaise gaming">
                                     </li>
                                     <li id="Photo3">
-                                        <img class="sliderPhoto" src="images/image_16.png" alt="Chaise gaming">
+                                        <img class="sliderPhoto" src="./assets/img/products/chaise_licorne.jpg" alt="Chaise gaming">
                                     </li>
                                     <li id="Photo4">
-                                        <img class="sliderPhoto" src="images/image_16.png" alt="Chaise gaming">
+                                        <img class="sliderPhoto" src="./assets/img/products/chaise_licorne.jpg" alt="Chaise gaming">
                                     </li>
                                 </ul>
                             </div>
                             <div class="imageActuelle">
-                                <img class="imageMain" src="./images/image_16.png" alt="Chaise gaming">
+                                <img class="imageMain" src="./assets/img/products/chaise_licorne.jpg" alt="Chaise gaming">
                             </div>
                             <div class="sliderDots"></div>
                         </div>
                         <div class="productBenefits">
                             <div class="benefitsItem">
-                                <img class="benefitsItemImg" src="./images/guarantee.png" alt="Guarantee">
+                                <img class="benefitsItemImg" src="./assets/img/product/guarantee.png" alt="Guarantee">
                                 <p class="benefitsItemText">GARANTIE</p>
                             </div>
                             <div class="benefitsItem">
-                                <img class="benefitsItemImg" src="./images/shipped.png" alt="Car with free shipping">
+                                <img class="benefitsItemImg" src="./assets/img/product/shipped.png" alt="Car with free shipping">
                                 <p class="benefitsItemText">LIVRAISON GRATUITE</p>
                             </div>
                             <div class="benefitsItem">
-                                <img class="benefitsItemImg" src="./images/return-box.png" alt="">
+                                <img class="benefitsItemImg" src="./assets/img/product/return-box.png" alt="">
                                 <p class="benefitsItemText">RETOUR SOUS 14 JOURS</p>
                             </div>
                         </div>
@@ -149,7 +149,7 @@
                     <div class="card">
                         <div class="cardTop">
                             <a href="#">
-                                <img class="cardImg" src="images/image_18.png" alt="">
+                                <img class="cardImg" src="./assets/img/products/chaise_licorne.jpg" alt="">
                             </a>
                         </div>
                         <div class="cardBottom">
@@ -169,7 +169,7 @@
                     <div class="card">
                         <div class="cardTop">
                             <a href="#">
-                                <img class="cardImg" src="images/image_18.png" alt="">
+                                <img class="cardImg" src="./assets/img/products/chaise_licorne.jpg" alt="">
                             </a>
                         </div>
                         <div class="cardBottom">
@@ -189,7 +189,7 @@
                     <div class="card">
                         <div class="cardTop">
                             <a href="#">
-                                <img class="cardImg" src="images/image_18.png" alt="">
+                                <img class="cardImg" src="./assets/img/products/chaise_licorne.jpg" alt="">
                             </a>
                         </div>
                         <div class="cardBottom">
@@ -209,7 +209,7 @@
                     <div class="card">
                         <div class="cardTop">
                             <a href="#">
-                                <img class="cardImg" src="images/image_18.png" alt="">
+                                <img class="cardImg" src="./assets/img/products/chaise_licorne.jpg" alt="">
                             </a>
                         </div>
                         <div class="cardBottom">
@@ -229,7 +229,7 @@
                     <div class="card">
                         <div class="cardTop">
                             <a href="#">
-                                <img class="cardImg" src="images/image_18.png" alt="">
+                                <img class="cardImg" src="./assets/img/products/chaise_licorne.jpg" alt="">
                             </a>
                         </div>
                         <div class="cardBottom">
@@ -249,7 +249,7 @@
                     <div class="card">
                         <div class="cardTop">
                             <a href="#">
-                                <img class="cardImg" src="images/image_18.png" alt="">
+                                <img class="cardImg" src="./assets/img/products/chaise_licorne.jpg" alt="">
                             </a>
                         </div>
                         <div class="cardBottom">
@@ -405,4 +405,6 @@
         </section>
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
     <script src="./assets/js/product.js?t=<?= time(); ?>"></script>

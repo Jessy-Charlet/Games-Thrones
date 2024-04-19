@@ -18,7 +18,6 @@ $router->map('GET', '/mention', '/mention', 'mention');
 $router->map('GET', '/contact', '/contact', 'contact');
 $router->map('GET', '/update', '../public/controller/php/updateController', 'updateController');
 $router->map('GET', '/produit', '/product', 'produit');
-$router->map('GET', '/404', '/404', '404');
 
 
 function my_autoloader($class)

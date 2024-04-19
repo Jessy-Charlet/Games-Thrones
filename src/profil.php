@@ -12,6 +12,7 @@ if(isset($_GET['update'])){
 
     // Vérifiez s'il y a plusieurs paramètres 'update' dans l'URL
     if(substr_count($_SERVER['QUERY_STRING'], 'update') > 1){
+
         // Supprimez tous les paramètres 'update' sauf un
         $params = $_GET;
         unset($params['update']);
@@ -38,6 +39,7 @@ if(isset($_GET['update'])){
         }else{
         // La page est chargée pour la première fois
         $_SESSION['first_load'] = true;
+        
         }
     }
 }
@@ -147,7 +149,9 @@ if(isset($_GET['update'])){
     <div class="acordeonContent" id="content2">
         <button class="buttonAcordeonIn"><span class="buttonAcrodeonLeftContent">Commandes en cours</span><span class="buttonAcrodeonRightContent">►</span></button>
         <div class="acordeonContentIn">
-            
+            <div id="commandeContainer">
+                
+            </div>
         </div>
         <button class="buttonAcordeonIn"><span class="buttonAcrodeonLeftContent">Historique de commandes</span><span class="buttonAcrodeonRightContent">►</span></button>
         <div class="acordeonContentIn">
@@ -157,141 +161,7 @@ if(isset($_GET['update'])){
     <div class="acordeonContent" id="content3">
     </div>
 <script src="./assets/js/profil.js?t=<?= time(); ?>"></script>
+<script src="./controller/js/profilController.js?t=<?= time(); ?>"></script>
 <?php
-echo "
-<script>
-    document.getElementById('deconnexion').addEventListener('click', (event) => {
-        event.preventDefault();
-        window.location.href = '".$router->generate('deconnexion')."';
-    });
-
-    var errorMessages = document.getElementById('errorMessage');
-
-    var nameId = document.getElementById('nameId');
-    var firstname = document.getElementById('firstname');
-    var email = document.getElementById('email');
-    var phone = document.getElementById('telephone');
-    var adresse = document.getElementById('adresse');
-    var postalCode = document.getElementById('code_postal');
-    var city = document.getElementById('ville');
-    var password = document.getElementById('password');
-    var personalInfoModif = document.getElementById('personnalInfoModif');
-
-    var initialnameId = nameId.value || 'defaultName';
-    var initialFirstname = firstname.value;
-    var initialEmail = email.value;
-    var initialPhone = phone.value;
-    var initialAdresse = adresse.value;
-    var initialPostalCode = postalCode.value;
-    var initialCity = city.value;
-    var initialPassword = password.value;
-    
-    personalInfoModif.addEventListener('click', function() {
-        if (personalInfoModif.value === 'enregistrer') {
-            if (nameId.value === '' || password.value === '' || email.value === '' || phone.value === '' || adresse.value === '' || firstname.value === '' || postalCode.value === '' || city.value === '') {
-                var errorMessage = 'Please fill in all fields.';
-                errorMessages.innerHTML = errorMessage;
-                return;
-            }
-    
-            if(phone !== ''){
-                var phoneFormat = /^(\d{2} ){4}\d{2}$/;
-                if (!phoneFormat.test(phone.value)) {
-                    var errorMessage = 'Phone number format is incorrect. It should be like \"00 00 00 00 00\".';
-                    errorMessages.innerHTML = errorMessage;
-                    return;
-                }
-            }
-    
-            if(email !== ''){
-                var emailFormat = /\S+@\S+\.\S+/;
-                if (!emailFormat.test(email.value)) {
-                    var errorMessage = 'Email format is incorrect.';
-                    errorMessages.innerHTML = errorMessage;
-                    return;
-                }
-            }
-    
-            if(password !== ''){
-                var passwordFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&()!\/.,?;:_]).{6,255}$/;
-                if (!passwordFormat.test(password.value)) {
-                    var errorMessage = 'Password must contain at least one number and one uppercase and lowercase letter, a special character, and at least 6 or more characters.';
-                    errorMessages.innerHTML = errorMessage;
-                    return;
-                }
-            }
-    
-            if(postalCode !== ''){
-                var postalCodeFormat = /^\d{5}$/;
-                if (!postalCodeFormat.test(postalCode.value)) {
-                    var errorMessage = 'Postal code format is incorrect. It should be 5 digits.';
-                    errorMessages.innerHTML = errorMessage;
-                    return;
-                }
-            }
-
-            if(initialnameId != nameId.value){
-                nameChanged = nameId.value;
-            }else{
-                nameChanged = initialnameId;
-            }
-
-            if(initialFirstname != firstname.value){
-                firstnameChanged = firstname.value;
-            }else{
-                firstnameChanged = initialFirstname;
-            }
-
-            if(initialEmail != email.value){
-                emailChanged = email.value;
-            }else{
-                emailChanged = initialEmail;
-            }
-
-            if(initialPhone != phone.value){
-                phoneChanged = phone.value;
-            }else{
-                phoneChanged = initialPhone;
-            }
-
-            if(initialAdresse != adresse.value){
-                adresseChanged = adresse.value;
-            }else{
-                adresseChanged = initialAdresse;
-            }
-
-            if(initialPostalCode != postalCode.value){
-                postalCodeChanged = postalCode.value;
-            }else{
-                postalCodeChanged = initialPostalCode;
-            }
-
-            if(initialCity != city.value){
-                cityChanged = city.value;
-            }else{
-                cityChanged = initialCity;
-            }
-
-            if(initialPassword != password.value){
-                passwordChanged = password.value;
-            }else{
-                passwordChanged = initialPassword;
-            }
-
-            window.location.href = '".$router->generate('updateController')."?changeEmail='+emailChanged+'&changePhone='+phoneChanged+'&changePassword='+passwordChanged+'&changeName='+nameChanged+'&changeFirstname='+firstnameChanged+'&changeAdresse='+adresseChanged+'&changePostalCode='+postalCodeChanged+'&changeCity='+cityChanged;
-
-
-            name.disabled = true;
-            firstname.disabled = true;
-            email.disabled = true;
-            phone.disabled = true;
-            adresse.disabled = true;
-            postalCode.disabled = true;
-            city.disabled = true;
-            password.disabled = true;
-            personalInfoModif.value = 'modifier';            
-        }
-    });
-</script>
-";
+include 'controller/php/profilController.php';
 ?>
