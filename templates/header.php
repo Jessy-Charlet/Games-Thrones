@@ -13,7 +13,11 @@ session_start();
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
 
     <link rel="stylesheet" href="./assets/css/global.css?t=<?= time(); ?>">
     <link rel="stylesheet" href="./assets/css/header.css?t=<?= time(); ?>">
@@ -30,7 +34,8 @@ session_start();
             <button id="shop">Shop </button>
             <button id="infos">Infos </button>
         </nav>
-        <a href="<?= $router->generate( 'accueil') ?>" id="logo"><img src="./assets/img/logo_Games_Thrones_nav.png" alt="Logo Games Thrones" /></a>
+        <a href="<?= $router->generate('accueil') ?>" id="logo"><img src="./assets/img/logo_Games_Thrones_nav.png"
+                alt="Logo Games Thrones" /></a>
         <div id="searchBarContainer">
             <input type="text" name="searchBar" id="searchBar" placeholder="Chercher un Throne...">
             <button id="searchBarClose">❌</button>
@@ -40,13 +45,13 @@ session_start();
         <a href="<!--PAGE DU PANIER-->"><img src="./assets/img/icon_panier.png" alt="Mon panier" /><span>2</span></a>
         <?php
         if (isset($_SESSION['user'])) {
-        ?>
+            ?>
             <a href="<?= $router->generate('profil') ?>"><img src="./assets/img/icon_user.png" alt="Mon compte" /></a>
-        <?php
+            <?php
         } else {
-        ?>
+            ?>
             <a href="<?= $router->generate('connexion') ?>"><img src="./assets/img/icon_user.png" alt="Me connecter" /></a>
-        <?php
+            <?php
         }
         ?>
     </header>
@@ -89,7 +94,8 @@ session_start();
 
     <!-- Menu Mobile -->
     <header id="navContainerMobile">
-        <a href="<?= $router->generate( 'accueil') ?>"><img id="logoMobile" src="./assets/img/logo_Games_Thrones_nav_mobile.png" alt="Logo Games Thrones" /></a>
+        <a href="<?= $router->generate('accueil') ?>"><img id="logoMobile"
+                src="./assets/img/logo_Games_Thrones_nav_mobile.png" alt="Logo Games Thrones" /></a>
         <div id="menuBurger">
             <div></div>
             <div></div>
@@ -98,13 +104,13 @@ session_start();
         <a href="<!--PAGE DU PANIER-->"><img src="./assets/img/icon_panier.png" alt="Mon panier" /><span>2</span></a>
         <?php
         if (isset($_SESSION['user'])) {
-        ?>
+            ?>
             <a href="<?= $router->generate('profil') ?>"><img src="./assets/img/icon_user.png" alt="Mon compte" /></a>
-        <?php
+            <?php
         } else {
-        ?>
+            ?>
             <a href="<?= $router->generate('connexion') ?>"><img src="./assets/img/icon_user.png" alt="Me connecter" /></a>
-        <?php
+            <?php
         }
         ?>
     </header>
