@@ -78,15 +78,15 @@ $stock = 10;
                                     </div>
                                 </div>
                             </div>
-                            <div class="productAdd">    
-                             <!--<p class="availability">
+                            <div class="productAdd">
+                                <!--<p class="availability">
                                     <label for="Stock">Stock</label><br>
                                     <input type="int" class="stock" name="stock" value="<?php echo $stock; ?>" readonly />
                                 </p>-->
 
                                 <p class="quantity">
                                     <label for="quantity">Quantité</label><br>
-                                    <input type="number" class="quantity" name="quantity" min="0" max="<?php echo $stock; ?>" value="<?php echo $quantity; ?>">
+                                    <input type="number" class="quantity" name="quantity" min="1" max="<?php echo $stock; ?>" value="<?php echo $quantity; ?>">
                                 </p>
 
                                 <button class="basketButton" type="submit">
