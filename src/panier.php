@@ -1,5 +1,4 @@
 <?php
-session_start(); // Démarrage de la session
 
 // Vérifier si le panier est vide ou non
 if(!isset($_SESSION['panier']) || empty($_SESSION['panier'])) {
