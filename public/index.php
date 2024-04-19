@@ -22,7 +22,6 @@ $router->map('GET', '/panier', '/panier', 'panier');
 // route de page de traitement
 $router->map('POST', '/signUpControllerphp', '../public/controller/php/signUpController', 'signUpControllerphp');
 $router->map('POST', '/signInControllerphp', '../public/controller/php/signInController', 'signInControllerphp');
-$router->map('GET', '/update', '../public/controller/php/updateController', 'updateController');
 $router->map('GET', '/deconnexion', '../public/controller/php/deconnexion', 'deconnexion');
 $router->map('POST', '/profilControllerphp', '../public/controller/php/profilController', 'profilControllerphp');
 

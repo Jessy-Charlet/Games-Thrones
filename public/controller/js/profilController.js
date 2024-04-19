@@ -109,21 +109,21 @@ personalInfoModif.addEventListener('click', function() {
         }
 
 
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'controller/php/profilController.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send(queryString);
-        xhr.onload = function() {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                console.log('Success!', xhr.responseText);
-            } else {
-                console.log('The request failed!');
+        fetch('controller/php/profilController.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: queryString
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        };
-        
-        xhr.onerror = function() {
-            console.log('There was an error!');
-        };
+            return response.text();
+        })
+        .then(data => console.log('Success!', data))
+        .catch(error => console.log('There was an error!', error));
 
         nameId.disabled = true;
         firstname.disabled = true;

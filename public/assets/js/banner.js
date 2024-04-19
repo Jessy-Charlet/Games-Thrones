@@ -26,11 +26,9 @@ $(document).ready(function () {
         })
         for (i = i; i <= nbrSlide; i++) {
             Slide(i);
-            console.log(i);
             if (i >= nbrSlide) {
                 i = 0;
             }
-            console.log(i);
             await sleep(4000);
         }
     }
