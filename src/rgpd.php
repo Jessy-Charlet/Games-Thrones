@@ -25,5 +25,5 @@
 <p>Si nous décidons de modifier notre politique de confidentialité, nous publierons ces modifications sur cette page.</p>
 
 <h2>Contact</h2>
-<p>Si vous avez des questions concernant ces CGU, veuillez nous contacter à l'aide du formulaire que vous trouverez ici : <a href="./contact.php" >Nous contacter</a>.</p>
+<p>Si vous avez des questions concernant ces CGU, veuillez nous contacter à l'aide du formulaire que vous trouverez ici : <a href="<?= $router->generate('contact') ?>">Nous contacter</a>.</p>
 </section>

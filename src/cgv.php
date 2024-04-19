@@ -22,5 +22,5 @@
 <p>[Votre entreprise] se réserve le droit de modifier ces CGU à tout moment. Les modifications entreront en vigueur dès leur publication sur le site. Il est de votre responsabilité de consulter régulièrement ces CGU pour prendre connaissance des éventuelles modifications.</p>
 
 <h2>Contact</h2>
-<p>Si vous avez des questions concernant ces CGU, veuillez nous contacter à l'aide du formulaire que vous trouverez ici : <a href="./contact.php" >Nous contacter</a>.</p>
+<p>Si vous avez des questions concernant ces CGU, veuillez nous contacter à l'aide du formulaire que vous trouverez ici : <a href="<?= $router->generate('contact') ?>">Nous contacter</a>.</p>
 </section>
