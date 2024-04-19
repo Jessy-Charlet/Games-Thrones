@@ -18,6 +18,7 @@ $router->map('GET', '/mention', '/mention', 'mention');
 $router->map('GET', '/contact', '/contact', 'contact');
 $router->map('GET', '/update', '../public/controller/php/updateController', 'updateController');
 $router->map('GET', '/produit', '/product', 'produit');
+$router->map('GET', '/404', '/404', '404');
 
 
 function my_autoloader($class)
@@ -40,8 +41,7 @@ if (is_array($match)) {
     }
     require '../templates/footer.php';
 } else {
-    echo '404';
-    // Faire un require ou un include de la page 404, à faire plus tard
+    header("location:".$router->generate('404')."");
 }
 ?>
 
