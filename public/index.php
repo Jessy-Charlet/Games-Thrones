@@ -12,13 +12,10 @@ $router->map('POST', '/signUpControllerphp', '../public/controller/php/signUpCon
 $router->map('POST', '/signInControllerphp', '../public/controller/php/signInController', 'signInControllerphp');
 $router->map('GET', '/profil', '/profil', 'profil');
 $router->map('GET', '/deconnexion', '../public/controller/php/deconnexion', 'deconnexion');
-$router->map('GET', '/cgv', '/cgv', 'cgv');
-$router->map('GET', '/rgpd', '/rgpd', 'rgpd');
-$router->map('GET', '/mention', '/mention', 'mention');
-$router->map('GET', '/contact', '/contact', 'contact');
-$router->map('GET', '/update', '../public/controller/php/updateController', 'updateController');
-$router->map('GET', '/produit', '/product', 'produit');
-
+$router->map('GET','/cgv','/cgv','cgv');
+$router->map('GET','/rgpd','/rgpd','rgpd');
+$router->map('GET','/mention','/mention','mention');
+$router->map('GET','/contact','/contact','contact');
 
 function my_autoloader($class)
 {
