@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:3306
--- Généré le : ven. 05 avr. 2024 à 13:53
--- Version du serveur : 8.0.30
--- Version de PHP : 8.1.10
+-- Host: localhost:3306
+-- Generation Time: Apr 19, 2024 at 01:47 PM
+-- Server version: 8.0.30
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `boutique`
+-- Database: `boutique`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `adress`
+-- Table structure for table `adress`
 --
 
 CREATE TABLE `adress` (
@@ -32,12 +32,12 @@ CREATE TABLE `adress` (
   `postal_code_id` int NOT NULL,
   `city` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `postal_code` mediumint NOT NULL,
-  `adress` text COLLATE utf8mb4_general_ci NOT NULL,
+  `adress` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `customer_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `adress`
+-- Dumping data for table `adress`
 --
 
 INSERT INTO `adress` (`adress_id`, `postal_code_id`, `city`, `postal_code`, `adress`, `customer_id`) VALUES
@@ -80,43 +80,43 @@ INSERT INTO `adress` (`adress_id`, `postal_code_id`, `city`, `postal_code`, `adr
 -- --------------------------------------------------------
 
 --
--- Structure de la table `brand`
+-- Table structure for table `brand`
 --
 
 CREATE TABLE `brand` (
   `brand_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `category`
+-- Table structure for table `category`
 --
 
 CREATE TABLE `category` (
   `category_id` int UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `parent_category_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `customer`
+-- Table structure for table `customer`
 --
 
 CREATE TABLE `customer` (
   `customer_id` int UNSIGNED NOT NULL,
-  `customer_last-name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `customer_first-name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `phone` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+  `customer_last-name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `customer_first-name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `customer`
+-- Dumping data for table `customer`
 --
 
 INSERT INTO `customer` (`customer_id`, `customer_last-name`, `customer_first-name`, `email`, `phone`, `password`) VALUES
@@ -131,14 +131,14 @@ INSERT INTO `customer` (`customer_id`, `customer_last-name`, `customer_first-nam
 -- --------------------------------------------------------
 
 --
--- Structure de la table `order`
+-- Table structure for table `order`
 --
 
 CREATE TABLE `order` (
   `order_id` int UNSIGNED NOT NULL,
   `customer_id` int NOT NULL,
   `order_date` datetime NOT NULL,
-  `order_status` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `order_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `total_price` decimal(10,2) NOT NULL,
   `shipping_address_id` int NOT NULL,
   `billing_address_id` int NOT NULL
@@ -147,7 +147,7 @@ CREATE TABLE `order` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `order_item`
+-- Table structure for table `order_item`
 --
 
 CREATE TABLE `order_item` (
@@ -156,13 +156,13 @@ CREATE TABLE `order_item` (
   `product_id` int NOT NULL,
   `quantity` int NOT NULL DEFAULT '1',
   `price` decimal(10,2) NOT NULL,
-  `vendor_code` varchar(10) COLLATE utf8mb4_general_ci NOT NULL
+  `vendor_code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `postal_code`
+-- Table structure for table `postal_code`
 --
 
 CREATE TABLE `postal_code` (
@@ -174,7 +174,7 @@ CREATE TABLE `postal_code` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
 
 --
--- Déchargement des données de la table `postal_code`
+-- Dumping data for table `postal_code`
 --
 
 INSERT INTO `postal_code` (`postal_code_id`, `city`, `postal_code`, `department`, `INSEE`) VALUES
@@ -43404,41 +43404,45 @@ INSERT INTO `postal_code` (`postal_code_id`, `city`, `postal_code`, `department`
 -- --------------------------------------------------------
 
 --
--- Structure de la table `product`
+-- Table structure for table `product`
 --
 
 CREATE TABLE `product` (
   `product_id` int UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `category_id` int NOT NULL,
-  `brand_id` int NOT NULL,
-  `description` text COLLATE utf8mb4_general_ci NOT NULL,
-  `material` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `coleur` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `brand` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `material` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `coleur` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `stock` int NOT NULL,
   `average_rating` decimal(2,1) NOT NULL,
   `number_of_ratings` int NOT NULL,
-  `vendor_code` varchar(10) COLLATE utf8mb4_general_ci NOT NULL
+  `vendor_code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `Image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`product_id`, `name`, `category_id`, `brand`, `description`, `material`, `coleur`, `price`, `stock`, `average_rating`, `number_of_ratings`, `vendor_code`, `Image`) VALUES
+(1, 'Chaise de jeu ergonomique avec repose-pieds', 1, 'ProGamer', 'La chaise gaming  est dotée d\'un support lombaire amovible, qui peut protéger efficacement la colonne vertébrale et le cou. L\'oreiller lombaire avec fonction de massage produit plus de 20000 vibrations par heure pour soulager efficacement la fatigue pendant un travail ou un gaming. L\'oreiller lombaire a un câble USB pour se connecter à la prise de courant. L\'interrupteur sur le cordon vous permet d\'activer et de désactiver la fonction de massagePOSTURE CONFORTABLE - Il s\'agit d\'une véritable chaise gamer pour les passionnés de gamers! Ce chaise gaming massante offre un soutien total de la tête aux pieds. L\'angle du dossier peut être facilement ajusté de 90° à 135°. Le repose-pieds, l\'appui-tête et l\'oreiller lombaire vous permettent de vous allonger en attendant que votre fête soit enfin en ligne. Le dossier et les accoudoirs sont entièrement rembourrés de éponge pour fournir un soutien adéquat pour la colonne vertébrale et les coudesREMBOURRÉ - Le dossier et les accoudoirs sont en éponge entièrement élastique et ne se déforment pas, vous pouvez donc profiter longtemps de cette siege gaming. La selle est en éponge de 8 cm d\'épaisseur qui offre une densité d\'assise constante pour les longues sessions. Le cuir PU perforé avec un aspect fibre de carbone assure la respirabilité pour les joueurs à long terme. Nos chaise gaming massage avec motif en V de l\'appui-tête au soutien lombaire, symbolisant la victoire', 'Cuir PU', 'Rouge', '249.99', 50, '0.0', 0, 'CHS-WD-001', ''),
+(2, 'Chaise de gaming haute performance', 1, 'ProGamer', 'Confort similaire au canapé : le coussin d\'assise de cette chaise de jeu est composé de ressorts ensachés et de mousse moulée qui assurent la même élasticité et le même confort qu\'un canapé. Les ressorts répartissent mieux la pression sur le coussin d\'assise et rendent la conduite plus confortable et ergonomique.Tissu hautement respirant : le matériau de surface de la chaise de jeu est composé d\'un tissu en maille hautement respirant avec une bonne dissipation de la chaleur. Même en été chaud, vous ne vous sentirez pas étouffé lorsque vous êtes assis sur la chaise. En outre, ce tissu est plus élastique et le corps est soutenu lorsque vous êtes assis, ce qui permet un travail plus efficace.[Garantie de haute qualité] Nous avons amélioré la fixation du dossier de cette table de jeu et de cette chaise. Le dossier est fixé avec des plaques en acier et résiste aux chocs de plus de 300 livres. Les vis de fixation ont une forme triangulaire, ce qui améliore considérablement la stabilité du dossier.', 'Mesh respirant', 'Vert', '199.99', 30, '0.0', 0, 'CHS-DS-002', ''),
+(3, 'Chaise de jeu racing style avec support lombaire', 1, 'SpeedMaster', 'La chaise gaming  est dotée d\'un support lombaire amovible, qui peut protéger efficacement la colonne vertébrale et le cou. L\'oreiller lombaire avec fonction de massage produit plus de 20000 vibrations par heure pour soulager efficacement la fatigue pendant un travail ou un gaming. L\'oreiller lombaire a un câble USB pour se connecter à la prise de courant. L\'interrupteur sur le cordon vous permet d\'activer et de désactiver la fonction de massagePOSTURE CONFORTABLE - Il s\'agit d\'une véritable chaise gamer pour les passionnés de gamers! Ce chaise gaming massante offre un soutien total de la tête aux pieds. L\'angle du dossier peut être facilement ajusté de 90° à 135°. Le repose-pieds, l\'appui-tête et l\'oreiller lombaire vous permettent de vous allonger en attendant que votre fête soit enfin en ligne. Le dossier et les accoudoirs sont entièrement rembourrés de éponge pour fournir un soutien adéquat pour la colonne vertébrale et les coudesREMBOURRÉ - Le dossier et les accoudoirs sont en éponge entièrement élastique et ne se déforment pas, vous pouvez donc profiter longtemps de cette siege gaming. La selle est en éponge de 8 cm d\'épaisseur qui offre une densité d\'assise constante pour les longues sessions. Le cuir PU perforé avec un aspect fibre de carbone assure la respirabilité pour les joueurs à long terme. Nos chaise gaming massage avec motif en V de l\'appui-tête au soutien lombaire, symbolisant la victoire', 'Cuir PU', 'Noir', '179.99', 40, '0.0', 0, 'CHS-DS-003', ''),
+(4, 'Chaise de gaming XL pour les joueurs sérieux', 1, 'EliteGamer', 'Confort similaire au canapé : le coussin d\'assise de cette chaise de jeu est composé de ressorts ensachés et de mousse moulée qui assurent la même élasticité et le même confort qu\'un canapé. Les ressorts répartissent mieux la pression sur le coussin d\'assise et rendent la conduite plus confortable et ergonomique.Tissu hautement respirant : le matériau de surface de la chaise de jeu est composé d\'un tissu en maille hautement respirant avec une bonne dissipation de la chaleur. Même en été chaud, vous ne vous sentirez pas étouffé lorsque vous êtes assis sur la chaise. En outre, ce tissu est plus élastique et le corps est soutenu lorsque vous êtes assis, ce qui permet un travail plus efficace.[Garantie de haute qualité] Nous avons amélioré la fixation du dossier de cette table de jeu et de cette chaise. Le dossier est fixé avec des plaques en acier et résiste aux chocs de plus de 300 livres. Les vis de fixation ont une forme triangulaire, ce qui améliore considérablement la stabilité du dossier.', 'Cuir PU', 'Noir', '299.99', 20, '0.0', 0, 'CHS-DS-004', ''),
+(5, 'Chaise de bureau gaming professionnelle', 1, 'MasterGamer', 'La chaise gaming  est dotée d\'un support lombaire amovible, qui peut protéger efficacement la colonne vertébrale et le cou. L\'oreiller lombaire avec fonction de massage produit plus de 20000 vibrations par heure pour soulager efficacement la fatigue pendant un travail ou un gaming. L\'oreiller lombaire a un câble USB pour se connecter à la prise de courant. L\'interrupteur sur le cordon vous permet d\'activer et de désactiver la fonction de massagePOSTURE CONFORTABLE - Il s\'agit d\'une véritable chaise gamer pour les passionnés de gamers! Ce chaise gaming massante offre un soutien total de la tête aux pieds. L\'angle du dossier peut être facilement ajusté de 90° à 135°. Le repose-pieds, l\'appui-tête et l\'oreiller lombaire vous permettent de vous allonger en attendant que votre fête soit enfin en ligne. Le dossier et les accoudoirs sont entièrement rembourrés de éponge pour fournir un soutien adéquat pour la colonne vertébrale et les coudesREMBOURRÉ - Le dossier et les accoudoirs sont en éponge entièrement élastique et ne se déforment pas, vous pouvez donc profiter longtemps de cette siege gaming. La selle est en éponge de 8 cm d\'épaisseur qui offre une densité d\'assise constante pour les longues sessions. Le cuir PU perforé avec un aspect fibre de carbone assure la respirabilité pour les joueurs à long terme. Nos chaise gaming massage avec motif en V de l\'appui-tête au soutien lombaire, symbolisant la victoire', 'Mesh respirant', 'Gris', '229.99', 25, '0.0', 0, 'CHS-DS-005', ''),
+(6, 'Chaise de jeu convertible en lit', 1, 'DreamGamer', 'Confort similaire au canapé : le coussin d\'assise de cette chaise de jeu est composé de ressorts ensachés et de mousse moulée qui assurent la même élasticité et le même confort qu\'un canapé. Les ressorts répartissent mieux la pression sur le coussin d\'assise et rendent la conduite plus confortable et ergonomique.Tissu hautement respirant : le matériau de surface de la chaise de jeu est composé d\'un tissu en maille hautement respirant avec une bonne dissipation de la chaleur. Même en été chaud, vous ne vous sentirez pas étouffé lorsque vous êtes assis sur la chaise. En outre, ce tissu est plus élastique et le corps est soutenu lorsque vous êtes assis, ce qui permet un travail plus efficace.[Garantie de haute qualité] Nous avons amélioré la fixation du dossier de cette table de jeu et de cette chaise. Le dossier est fixé avec des plaques en acier et résiste aux chocs de plus de 300 livres. Les vis de fixation ont une forme triangulaire, ce qui améliore considérablement la stabilité du dossier.', 'Tissu', 'Gris', '349.99', 15, '0.0', 0, 'CHS-DS-006', ''),
+(7, 'Chaise de gaming rétro avec design vintage', 1, 'RetroGamer', '【Plus professionnel】 Conçu pour les joueurs. Le dossier ergonomique peut fournir un bon soutien à la colonne vertébrale du joueur, ce qui peut réduire efficacement la pression sur votre dos et votre cou, vous permettant de vous sentir moins fatigué pendant les longues sessions de jeu.【Plus flexible】 Cette fauteuil gamer de jeu dispose d\'une hauteur réglable de 8 cm et d\'un angle d\'inclinaison de 90° à 135° afin que vous puissiez facilement trouver la position assise qui vous convient. L\'angle de pivotement de 360° vous permet de vous déplacer librement.【Des matériaux de meilleure qualité】 Le coussin, le dossier, le coussin lombaire et l\'appui-tête de la siege gamer de jeu sont tous fabriqués avec un rembourrage en mousse haute densité, et le cuir synthétique durable est facile à nettoyer et résistant à la déformation. Le ressort à gaz haut de gamme peut facilement supporter 120 kg.', 'Vinyle', 'Rouge', '189.99', 35, '0.0', 0, 'CHS-DS-007', ''),
+(8, 'Chaise de gaming camouflage', 1, 'AdventureGame', 'Confort similaire au canapé : le coussin d\'assise de cette chaise de jeu est composé de ressorts ensachés et de mousse moulée qui assurent la même élasticité et le même confort qu\'un canapé. Les ressorts répartissent mieux la pression sur le coussin d\'assise et rendent la conduite plus confortable et ergonomique.Tissu hautement respirant : le matériau de surface de la chaise de jeu est composé d\'un tissu en maille hautement respirant avec une bonne dissipation de la chaleur. Même en été chaud, vous ne vous sentirez pas étouffé lorsque vous êtes assis sur la chaise. En outre, ce tissu est plus élastique et le corps est soutenu lorsque vous êtes assis, ce qui permet un travail plus efficace.[Garantie de haute qualité] Nous avons amélioré la fixation du dossier de cette table de jeu et de cette chaise. Le dossier est fixé avec des plaques en acier et résiste aux chocs de plus de 300 livres. Les vis de fixation ont une forme triangulaire, ce qui améliore considérablement la stabilité du dossier.', 'Cuir PU', 'Vert', '209.99', 15, '0.0', 0, 'CHS-DS-008', ''),
+(9, 'Chaise de jeu design futuriste', 1, 'FuturaGamer', 'La chaise gaming  est dotée d\'un support lombaire amovible, qui peut protéger efficacement la colonne vertébrale et le cou. L\'oreiller lombaire avec fonction de massage produit plus de 20000 vibrations par heure pour soulager efficacement la fatigue pendant un travail ou un gaming. L\'oreiller lombaire a un câble USB pour se connecter à la prise de courant. L\'interrupteur sur le cordon vous permet d\'activer et de désactiver la fonction de massagePOSTURE CONFORTABLE - Il s\'agit d\'une véritable chaise gamer pour les passionnés de gamers! Ce chaise gaming massante offre un soutien total de la tête aux pieds. L\'angle du dossier peut être facilement ajusté de 90° à 135°. Le repose-pieds, l\'appui-tête et l\'oreiller lombaire vous permettent de vous allonger en attendant que votre fête soit enfin en ligne. Le dossier et les accoudoirs sont entièrement rembourrés de éponge pour fournir un soutien adéquat pour la colonne vertébrale et les coudesREMBOURRÉ - Le dossier et les accoudoirs sont en éponge entièrement élastique et ne se déforment pas, vous pouvez donc profiter longtemps de cette siege gaming. La selle est en éponge de 8 cm d\'épaisseur qui offre une densité d\'assise constante pour les longues sessions. Le cuir PU perforé avec un aspect fibre de carbone assure la respirabilité pour les joueurs à long terme. Nos chaise gaming massage avec motif en V de l\'appui-tête au soutien lombaire, symbolisant la victoire', 'Cuir PU', 'Noir', '399.99', 15, '0.0', 0, 'CHS-DS-009', ''),
+(10, 'Chaise de gaming avec système de massage intégré', 1, 'RelaxGamer', '【Plus professionnel】 Conçu pour les joueurs. Le dossier ergonomique peut fournir un bon soutien à la colonne vertébrale du joueur, ce qui peut réduire efficacement la pression sur votre dos et votre cou, vous permettant de vous sentir moins fatigué pendant les longues sessions de jeu.【Plus flexible】 Cette fauteuil gamer de jeu dispose d\'une hauteur réglable de 8 cm et d\'un angle d\'inclinaison de 90° à 135° afin que vous puissiez facilement trouver la position assise qui vous convient. L\'angle de pivotement de 360° vous permet de vous déplacer librement.【Des matériaux de meilleure qualité】 Le coussin, le dossier, le coussin lombaire et l\'appui-tête de la siege gamer de jeu sont tous fabriqués avec un rembourrage en mousse haute densité, et le cuir synthétique durable est facile à nettoyer et résistant à la déformation. Le ressort à gaz haut de gamme peut facilement supporter 120 kg.', 'Cuir PU', 'Noir', '299.99', 20, '0.0', 0, 'CHS-DS-010', '');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `product image`
---
-
-CREATE TABLE `product image` (
-  `product_image_id` int UNSIGNED NOT NULL,
-  `product_id` int NOT NULL,
-  `image_url` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `is_main_image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `product review`
+-- Table structure for table `product review`
 --
 
 CREATE TABLE `product review` (
@@ -43446,27 +43450,14 @@ CREATE TABLE `product review` (
   `customer_id` int NOT NULL,
   `product_id` int NOT NULL,
   `rating` decimal(2,1) NOT NULL,
-  `review_text` text COLLATE utf8mb4_general_ci NOT NULL,
+  `review_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `review_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `product_image`
---
-
-CREATE TABLE `product_image` (
-  `product_image_id` int UNSIGNED NOT NULL,
-  `product_id` int NOT NULL,
-  `image_url` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `is_main_image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `product_review`
+-- Table structure for table `product_review`
 --
 
 CREATE TABLE `product_review` (
@@ -43474,169 +43465,145 @@ CREATE TABLE `product_review` (
   `customer_id` int NOT NULL,
   `product_id` int NOT NULL,
   `rating` decimal(2,1) NOT NULL,
-  `review_text` text COLLATE utf8mb4_general_ci NOT NULL,
+  `review_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `review_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Index pour les tables déchargées
+-- Indexes for dumped tables
 --
 
 --
--- Index pour la table `adress`
+-- Indexes for table `adress`
 --
 ALTER TABLE `adress`
   ADD PRIMARY KEY (`adress_id`);
 
 --
--- Index pour la table `brand`
+-- Indexes for table `brand`
 --
 ALTER TABLE `brand`
   ADD PRIMARY KEY (`brand_id`);
 
 --
--- Index pour la table `category`
+-- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`category_id`);
 
 --
--- Index pour la table `customer`
+-- Indexes for table `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`customer_id`);
 
 --
--- Index pour la table `order`
+-- Indexes for table `order`
 --
 ALTER TABLE `order`
   ADD PRIMARY KEY (`order_id`);
 
 --
--- Index pour la table `order_item`
+-- Indexes for table `order_item`
 --
 ALTER TABLE `order_item`
   ADD PRIMARY KEY (`order_item_id`);
 
 --
--- Index pour la table `postal_code`
+-- Indexes for table `postal_code`
 --
 ALTER TABLE `postal_code`
   ADD PRIMARY KEY (`postal_code_id`),
   ADD KEY `Codepos` (`postal_code`);
 
 --
--- Index pour la table `product`
+-- Indexes for table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`product_id`);
 
 --
--- Index pour la table `product image`
---
-ALTER TABLE `product image`
-  ADD PRIMARY KEY (`product_image_id`);
-
---
--- Index pour la table `product review`
+-- Indexes for table `product review`
 --
 ALTER TABLE `product review`
   ADD PRIMARY KEY (`product_review_id`);
 
 --
--- Index pour la table `product_image`
---
-ALTER TABLE `product_image`
-  ADD PRIMARY KEY (`product_image_id`);
-
---
--- Index pour la table `product_review`
+-- Indexes for table `product_review`
 --
 ALTER TABLE `product_review`
   ADD PRIMARY KEY (`product_review_id`);
 
 --
--- AUTO_INCREMENT pour les tables déchargées
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT pour la table `adress`
+-- AUTO_INCREMENT for table `adress`
 --
 ALTER TABLE `adress`
   MODIFY `adress_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
--- AUTO_INCREMENT pour la table `brand`
+-- AUTO_INCREMENT for table `brand`
 --
 ALTER TABLE `brand`
   MODIFY `brand_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `category`
+-- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `category_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `customer`
+-- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
   MODIFY `customer_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT pour la table `order`
+-- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
   MODIFY `order_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `order_item`
+-- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
   MODIFY `order_item_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `postal_code`
+-- AUTO_INCREMENT for table `postal_code`
 --
 ALTER TABLE `postal_code`
   MODIFY `postal_code_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43182;
 
 --
--- AUTO_INCREMENT pour la table `product`
+-- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT pour la table `product image`
---
-ALTER TABLE `product image`
-  MODIFY `product_image_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `product review`
+-- AUTO_INCREMENT for table `product review`
 --
 ALTER TABLE `product review`
   MODIFY `product_review_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `product_image`
---
-ALTER TABLE `product_image`
-  MODIFY `product_image_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `product_review`
+-- AUTO_INCREMENT for table `product_review`
 --
 ALTER TABLE `product_review`
   MODIFY `product_review_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- Contraintes pour les tables déchargées
+-- Constraints for dumped tables
 --
 
 --
--- Contraintes pour la table `product review`
+-- Constraints for table `product review`
 --
 ALTER TABLE `product review`
   ADD CONSTRAINT `product review_product_review_id_foreign` FOREIGN KEY (`product_review_id`) REFERENCES `product` (`product_id`);
