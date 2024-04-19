@@ -29,7 +29,7 @@ $(document).ready(function () {
             if (i >= nbrSlide) {
                 i = 0;
             }
-            await sleep(4000);
+            await sleep(6000);
         }
     }
 

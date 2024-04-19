@@ -13,7 +13,9 @@ $sql->execute(
 $result = $sql->fetch(PDO::FETCH_ASSOC);
 if ($result){
     $id = $result['customer_id'];
+    $firstName = $result['customer_first-name'];
     $_SESSION['user'] = $id;
+    $_SESSION['userFirstName'] = $firstName;
     header('Location: '.$router->generate('accueil'));
 } else {
     echo "Email or password incorrect";

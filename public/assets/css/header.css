@@ -146,6 +146,22 @@
             font-weight: bold;
         }
 
+        div {
+            position: absolute;
+            right: 50%;
+            bottom: -0;
+            background-color: white;
+            color: #482664;
+            border-radius: 0.5em;
+            height: 1em;
+            width: fit-content;
+            text-align: center;
+            line-height: 1em;
+            padding: 0.2em;
+            font-weight: bold;
+            translate: 50% 50%;
+        }
+
         img {
             height: 4vh;
             transition: all 200ms;

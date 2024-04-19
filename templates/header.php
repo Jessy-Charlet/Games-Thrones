@@ -46,11 +46,12 @@ session_start();
         <?php
         if (isset($_SESSION['user'])) {
             ?>
-            <a href="<?= $router->generate('profil') ?>"><img src="./assets/img/icon_user.png" alt="Mon compte" /></a>
+            <a href="<?= $router->generate('profil') ?>"><img src="./assets/img/icon_user.png" alt="Mon compte" />
+            <div><?=$_SESSION['userFirstName']?></div></a>
             <?php
         } else {
             ?>
-            <a href="<?= $router->generate('connexion') ?>"><img src="./assets/img/icon_user.png" alt="Me connecter" /></a>
+            <a href="<?= $router->generate('connexion') ?>"><img src="./assets/img/icon_user.png" alt="Me connecter" />
             <?php
         }
         ?>
