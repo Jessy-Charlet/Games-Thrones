@@ -43414,7 +43414,7 @@ CREATE TABLE `product` (
   `brand_id` int NOT NULL,
   `description` text COLLATE utf8mb4_general_ci NOT NULL,
   `material` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `coleur` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `color` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `stock` int NOT NULL,
   `average_rating` decimal(2,1) NOT NULL,

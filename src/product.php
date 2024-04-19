@@ -65,10 +65,10 @@
                                             <p>Couleur:</p>
                                         </div>
                                         <div>
-                                            <p>Blanc:</p>
+                                            <p>Blanc</p>
                                         </div>
                                         <div>
-                                            <p>Materiu:</p>
+                                            <p>Materiaux:</p>
                                         </div>
                                         <div>
                                             <p>Cuir</p>
