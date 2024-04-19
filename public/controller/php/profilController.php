@@ -1,9 +1,3 @@
-<script>
-    document.getElementById('deconnexion').addEventListener('click', (event) => {
-        event.preventDefault();
-        window.location.href = '<?php $router->generate('deconnexion') ?>';
-    });
-</script>
 <?php
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(isset($_POST['changeEmail'])){

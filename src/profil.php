@@ -162,6 +162,9 @@ if(isset($_GET['update'])){
     </div>
 <script src="./assets/js/profil.js?t=<?= time(); ?>"></script>
 <script src="./controller/js/profilController.js?t=<?= time(); ?>"></script>
-<?php
-include 'controller/php/profilController.php';
-?>
+<script>
+    document.getElementById('deconnexion').addEventListener('click', (event) => {
+        event.preventDefault();
+        window.location.href = '<?php $router->generate('deconnexion') ?>';
+    });
+</script>

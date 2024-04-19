@@ -63,59 +63,56 @@ personalInfoModif.addEventListener('click', function() {
             }
         }
 
-        if(initialnameId != nameId.value){
-            nameChanged = nameId.value;
-        }else{
-            nameChanged = initialnameId;
+        function isChangeValueChanged(initialValue, newValue){
+            if(initialValue != newValue){
+                return newValue;
+            }else{
+                return initialValue;
+            }
         }
 
-        if(initialFirstname != firstname.value){
-            firstnameChanged = firstname.value;
-        }else{
-            firstnameChanged = initialFirstname;
-        }
+        var initialValues = {
+            nameId: 'defaultName',
+            firstname: '',
+            email: '',
+            phone: '',
+            adresse: '',
+            postalCode: '',
+            city: '',
+            password: ''
+        };
+        
+        var newValues = {
+            nameId: document.getElementById('nameId').value,
+            firstname: document.getElementById('firstname').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('telephone').value,
+            adresse: document.getElementById('adresse').value,
+            postalCode: document.getElementById('code_postal').value,
+            city: document.getElementById('ville').value,
+            password: document.getElementById('password').value
+        };
 
-        if(initialEmail != email.value){
-            emailChanged = email.value;
-        }else{
-            emailChanged = initialEmail;
-        }
 
-        if(initialPhone != phone.value){
-            phoneChanged = phone.value;
-        }else{
-            phoneChanged = initialPhone;
-        }
+        var changedValues = {};
 
-        if(initialAdresse != adresse.value){
-            adresseChanged = adresse.value;
-        }else{
-            adresseChanged = initialAdresse;
+        for (var key in initialValues) {
+            if (initialValues.hasOwnProperty(key)) {
+                changedValues[key] = isChangeValueChanged(initialValues[key], newValues[key]);
+            }
         }
-
-        if(initialPostalCode != postalCode.value){
-            postalCodeChanged = postalCode.value;
-        }else{
-            postalCodeChanged = initialPostalCode;
-        }
-
-        if(initialCity != city.value){
-            cityChanged = city.value;
-        }else{
-            cityChanged = initialCity;
-        }
-
-        if(initialPassword != password.value){
-            passwordChanged = password.value;
-        }else{
-            passwordChanged = initialPassword;
+        var queryString = '';
+        for (var key in changedValues) {
+            if (changedValues.hasOwnProperty(key)) {
+                queryString += '&' + key + '=' + encodeURIComponent(changedValues[key]);
+            }
         }
 
 
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', '../controller/profilController.php', true);
+        xhr.open('POST', 'controller/php/profilController.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send('changeEmail=' + emailChanged + '&changePhone=' + phoneChanged + '&changePassword=' + passwordChanged + '&changeAdresse=' + adresseChanged + '&changeName=' + nameChanged + '&changeFirstname=' + firstnameChanged + '&changePostalCode=' + postalCodeChanged + '&changeCity=' + cityChanged);
+        xhr.send(queryString);
         xhr.onload = function() {
             if (xhr.status >= 200 && xhr.status < 300) {
                 console.log('Success!', xhr.responseText);

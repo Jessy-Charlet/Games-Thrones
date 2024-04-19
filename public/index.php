@@ -5,21 +5,26 @@ $uri = $_SERVER['REQUEST_URI'];
 $router = new AltoRouter();
 
 // Création des routes
+// route de page affichée
 $router->map('GET', '/accueil', '/home', 'accueil');
 $router->map('GET', '/connexion', '/signIn', 'connexion');
 $router->map('GET', '/inscription', '/signUp', 'inscription');
-$router->map('POST', '/signUpControllerphp', '../public/controller/php/signUpController', 'signUpControllerphp');
-$router->map('POST', '/signInControllerphp', '../public/controller/php/signInController', 'signInControllerphp');
 $router->map('GET', '/profil', '/profil', 'profil');
-$router->map('GET', '/deconnexion', '../public/controller/php/deconnexion', 'deconnexion');
 $router->map('GET', '/cgv', '/cgv', 'cgv');
 $router->map('GET', '/rgpd', '/rgpd', 'rgpd');
 $router->map('GET', '/mention', '/mention', 'mention');
 $router->map('GET', '/contact', '/contact', 'contact');
-$router->map('GET', '/update', '../public/controller/php/updateController', 'updateController');
 $router->map('GET', '/produit', '/product', 'produit');
 $router->map('GET', '/404', '/404', '404');
 $router->map('GET', '/panier', '/panier', 'panier');
+
+
+// route de page de traitement
+$router->map('POST', '/signUpControllerphp', '../public/controller/php/signUpController', 'signUpControllerphp');
+$router->map('POST', '/signInControllerphp', '../public/controller/php/signInController', 'signInControllerphp');
+$router->map('GET', '/update', '../public/controller/php/updateController', 'updateController');
+$router->map('GET', '/deconnexion', '../public/controller/php/deconnexion', 'deconnexion');
+$router->map('POST', '/profilControllerphp', '../public/controller/php/profilController', 'profilControllerphp');
 
 
 function my_autoloader($class)
