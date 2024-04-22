@@ -5,16 +5,16 @@ include '../templates/banner.php';
 <section class="productsGrid">
 <?php
 $conn = Database::connect();
-$sql = $conn->prepare("SELECT image_url FROM product_image");
+$sql = $conn->prepare("SELECT * FROM product");
 $sql->execute();
 $result = $sql->fetch(PDO::FETCH_ASSOC);
-foreach ($result as $url){
+foreach ($result as $res[]){
+    var_dump($res);
     echo "<a class='product' href='urlProduit'>
-    <img src='../assets/img/products/".$url."' alt='Nom du produit'/>
-    <div class='productName'>Nom du produit</div>
+    <div class='productName'>".$res[1]."</div>
     <div>
-    <span class='productPrice'>Prix du produit</span>
-    <span class='productRate'>4.5*</span>
+    <span class='productPrice'>".$res[7]."</span>
+    <span class='productRate'>".$res[9]."</span>
     </div>
     </a>";
 }
