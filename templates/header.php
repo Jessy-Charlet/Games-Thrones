@@ -11,6 +11,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Games Thrones</title>
 
+    <link rel="icon" type="image/png" href="./assets/img/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -25,6 +26,7 @@ session_start();
     <link rel="stylesheet" href="./assets/css/banner.css?t=<?= time(); ?>">
     <link rel="stylesheet" href="./assets/css/product.css?t=<?= time(); ?>">
     <link rel="stylesheet" href="./assets/css/products.css?t=<?= time(); ?>">
+
 </head>
 
 <body>
@@ -42,15 +44,16 @@ session_start();
         </div>
         <!-- -->
         <button id="searchBarOpen"><img src="./assets/img/icon_search.png" alt="rechercher" /></button>
-        <a href="<!--PAGE DU PANIER-->"><img src="./assets/img/icon_panier.png" alt="Mon panier" /><span>2</span></a>
+        <a href="<?= $router->generate('panier') ?>"><img src="./assets/img/icon_panier.png" alt="Mon panier" /><span>2</span></a>
         <?php
         if (isset($_SESSION['user'])) {
             ?>
-            <a href="<?= $router->generate('profil') ?>"><img src="./assets/img/icon_user.png" alt="Mon compte" /></a>
+            <a href="<?= $router->generate('profil') ?>"><img src="./assets/img/icon_user.png" alt="Mon compte" />
+            <div><?=$_SESSION['userFirstName']?></div></a>
             <?php
         } else {
             ?>
-            <a href="<?= $router->generate('connexion') ?>"><img src="./assets/img/icon_user.png" alt="Me connecter" /></a>
+            <a href="<?= $router->generate('connexion') ?>"><img src="./assets/img/icon_user.png" alt="Me connecter" />
             <?php
         }
         ?>
@@ -91,6 +94,13 @@ session_start();
     </nav>
 
 
+    <!-- Menu slide recherche -->
+    <nav id="navSearch">
+        <div class="navContainer">
+            <p>Aucun résultat...</p>
+        </div>
+    </nav>
+
 
     <!-- Menu Mobile -->
     <header id="navContainerMobile">
@@ -101,7 +111,7 @@ session_start();
             <div></div>
             <div></div>
         </div>
-        <a href="<!--PAGE DU PANIER-->"><img src="./assets/img/icon_panier.png" alt="Mon panier" /><span>2</span></a>
+        <a href="<?= $router->generate('panier') ?>"><img src="./assets/img/icon_panier.png" alt="Mon panier" /><span>2</span></a>
         <?php
         if (isset($_SESSION['user'])) {
             ?>

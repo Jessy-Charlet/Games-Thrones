@@ -227,10 +227,15 @@ button{
   justify-self: end;
 }
 
-.vailability {
+.availability,
+.quantity {
   font-size: 1.5em;
   color: #baa35f;
   margin-top: 0;
+}
+
+input.quantity {
+  width: auto;
 }
 
 /*** start Select Wrapper ***/

@@ -1,33 +1,96 @@
-body{
+body {
     margin: 0;
     padding: 0;
-    background-color: rgb(230,230,230);
+    background-color: rgb(230, 230, 230);
     position: relative;
     min-height: 100vh;
     max-width: 100%;
     font-family: "Roboto", sans-serif;
 }
-main{
+
+main {
     min-height: 65vh;
 }
-h1{
-    color:#482664;
+
+h1 {
+    color: #482664;
     font-size: 1.5em;
     font-weight: 700;
     border-bottom: 1px solid #482664;
 }
-h2{
-    color:#482664;
+
+h2 {
+    color: #482664;
     font-size: 1.2em;
     font-weight: 500;
 }
-.corp{
+
+.corp {
     box-sizing: border-box;
     background-color: white;
-    box-shadow: 0 0 50px rgb(0,0,0,0.2);
+    box-shadow: 0 0 50px rgb(0, 0, 0, 0.2);
     margin: auto;
     padding: 3em 5em;
     width: fit-content;
     max-width: 80vh;
 
+}
+
+
+/*** Error 404 ***/
+
+.error404 {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 15%;
+    height: fit-content;
+    background: linear-gradient(90deg, #f1f2f6, #dddddd);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 3fr 1fr 2fr;
+    justify-items: center;
+    align-items: center;
+
+    h2 {
+        font-weight: 900;
+        font-size: 500%;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+
+        span {
+            display: block;
+            font-size: 150%;
+        }
+    }
+
+    img {
+        height: 80%;
+        grid-column: 1/2;
+        grid-row: 1/4;
+    }
+
+    a {
+        color: white;
+        background-color: #482664;
+        padding: 1em 2em;
+        border-radius: 15px;
+    }
+    p{
+        text-align: center;
+        span{
+            display: block;
+            font-size: 200%;
+            color:#482664;
+            font-weight: 900;
+        }
+    }
+
+}
+
+
+@media (orientation: portrait) {
+    main {
+        padding: 8vh 0 0 0;
+    }
 }

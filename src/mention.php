@@ -26,5 +26,5 @@ Numéro de téléphone : [Numéro de téléphone de l'hébergeur]</p>
 <p>[Votre entreprise] s'efforce de mettre à jour le contenu du site et de fournir des informations précises. Cependant, [Votre entreprise] ne peut garantir l'exactitude, la complétude et l'actualité des informations diffusées sur le site.</p>
 
 <h2>Contact</h2>
-<p>Si vous avez des questions concernant ces CGU, veuillez nous contacter à l'aide du formulaire que vous trouverez ici : <a href="./contact.php" >Nous contacter</a>.</p>
+<p>Si vous avez des questions concernant ces CGU, veuillez nous contacter à l'aide du formulaire que vous trouverez ici : <a href="<?= $router->generate('contact') ?>">Nous contacter</a>.</p>
 </section>

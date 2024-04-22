@@ -1,7 +1,7 @@
 .banner {
     box-sizing: border-box;
     width: 100%;
-    height: 600px;
+    height: 92vh;
     position: relative;
     box-shadow: 0 0 20px rgb(0, 0, 0, 0.5);
     background-color: black;
@@ -36,15 +36,14 @@
 
     .slide {
         width: 100%;
-        height: 600px;
-        position: relative;
+        height: 92vh;
         position: absolute;
         left: 0;
         top:0;
 
         aside {
             display: block;
-            width: 20vw;
+            width: 25vw;
             padding: 1em;
             background-color: rgb(0, 0, 0, 0.6);
             border-radius: 1em;
@@ -62,7 +61,7 @@
         }
         .slideTitre{
             box-sizing: border-box;
-            width: 20vw;
+            width: 25vw;
             height: fit-content;
             position: absolute;
             top: 20%;
@@ -90,13 +89,43 @@
         background-size: cover;
     }
     #slide2{
-        background-image: url("../img/header_chaise.jpg");
+        background-image: url("../img/header_chaise_2.jpg");
         background-position: center;
         background-size: cover;
     }
     #slide3{
-        background-image: url("../img/header_chaise.jpg");
+        background-image: url("../img/header_chaise_3.jpg");
         background-position: center;
         background-size: cover;
     }
+}
+
+
+@media (orientation: portrait) {
+    .banner {
+        height: 84vh;
+        .slide {
+            height: 84vh;
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr;
+            aside {
+                box-sizing: border-box;
+                border-radius: 0;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: fit-content;
+                overflow: hidden;
+                h2 {
+                }
+            }
+            .slideTitre{
+                position: absolute;
+                top: 50vh ;
+                right: 0;
+                width: 100%;
+            }
+        }
+  }
 }

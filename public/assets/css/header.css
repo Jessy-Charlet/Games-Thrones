@@ -8,9 +8,8 @@
     grid-template-columns: 55% 1fr 10vh 10vh;
     align-items: center;
     padding: 0;
-    box-shadow: 0 0 20px rgb(0, 0, 0, 0.5);
     transition: all 200ms;
-    z-index: 15;
+    z-index: 17;
 
     .navLeft {
         justify-self: left;
@@ -146,6 +145,22 @@
             font-weight: bold;
         }
 
+        div {
+            position: absolute;
+            right: 50%;
+            bottom: -0;
+            background-color: white;
+            color: #482664;
+            border-radius: 0.5em;
+            height: 1em;
+            width: fit-content;
+            text-align: center;
+            line-height: 1em;
+            padding: 0.2em;
+            font-weight: bold;
+            translate: 50% 50%;
+        }
+
         img {
             height: 4vh;
             transition: all 200ms;
@@ -202,7 +217,7 @@
         grid-template-columns: repeat(4,1fr);
         width: 100%;
         height: 8vh;
-        position: absolute;
+        position: fixed;
         bottom: 0;
         left: 0;
         background-color: black;
@@ -270,14 +285,17 @@
 
 
 
-#navShop, #navInfos{
+#navShop, #navInfos, #navSearch{
     position: relative;
     box-sizing: border-box;
     width: 100%;
     background: linear-gradient(355deg, #d1d1d1 , white);
-    box-shadow: 0 10px 10px rgb(0, 0, 0, 0.5);
+    border-bottom: 5px solid black;
     padding: 4em 5em 3em 5em;
     justify-items: center;
+    position: absolute;
+    top: 8vh;
+    left: 0;
     z-index: 16;
     .navContainer{
         border-right:1px solid black;
