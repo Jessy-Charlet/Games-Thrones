@@ -230,7 +230,7 @@ foreach ($products as $productInfo) {
         <div class="container">
             <h3 class="similarProductsTitle">Produits liés à cet article</h3>
             <div class="similarProductscontent">
-                <?php foreach ($productObjects as $product): ?>
+                <?php foreach ($productObjects as $product) : ?>
                     <div class="card">
                         <div class="cardTop">
                             <a href="#">
@@ -385,7 +385,7 @@ foreach ($products as $productInfo) {
             </div>
         </div>
     </section>
-</main>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-<script src="./assets/js/product.js?t=<?= time(); ?>"></script>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="./assets/js/product.js?t=<?= time(); ?>"></script>
