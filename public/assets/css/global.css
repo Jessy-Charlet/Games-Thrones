@@ -87,3 +87,10 @@ h2 {
     }
 
 }
+
+
+@media (orientation: portrait) {
+    main {
+        padding: 8vh 0 0 0;
+    }
+}
