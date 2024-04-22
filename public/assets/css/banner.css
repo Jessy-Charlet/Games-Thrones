@@ -1,7 +1,7 @@
 .banner {
     box-sizing: border-box;
     width: 100%;
-    height: 600px;
+    height: 92vh;
     position: relative;
     box-shadow: 0 0 20px rgb(0, 0, 0, 0.5);
     background-color: black;
@@ -36,7 +36,7 @@
 
     .slide {
         width: 100%;
-        height: 600px;
+        height: 92vh;
         position: absolute;
         left: 0;
         top:0;
@@ -103,24 +103,26 @@
 
 @media (orientation: portrait) {
     .banner {
+        height: 84vh;
         .slide {
+            height: 84vh;
             display: grid;
             grid-template-rows: 1fr 1fr 1fr;
             aside {
                 box-sizing: border-box;
                 border-radius: 0;
                 position: absolute;
-                top: 350px;
+                top: 0;
                 left: 0;
                 width: 100%;
-                height: 170px;
+                height: fit-content;
                 overflow: hidden;
                 h2 {
                 }
             }
             .slideTitre{
                 position: absolute;
-                top: 0 ;
+                top: 50vh ;
                 right: 0;
                 width: 100%;
             }
