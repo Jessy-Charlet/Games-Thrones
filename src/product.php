@@ -1,6 +1,136 @@
 <?php
-$stock = 10;
+
+
+$conn = Database::connect();
+
+try {
+    $stmt = $conn->prepare("SELECT * FROM product");
+    $stmt->execute();
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Erreur de connexion à la base de données: " . $e->getMessage();
+}
+$conn = null;
+
+
+class Product
+{
+    private $product_id;
+    private $name;
+    private $brand;
+    private $color;
+    private $material;
+    private $price;
+    private $stock;
+    private $average_rating;
+    private $description;
+
+    public function __construct($product_id, $name, $brand, $color, $material, $price, $stock, $average_rating, $description)
+    {
+        $this->product_id = $product_id;
+        $this->name = $name;
+        $this->brand = $brand;
+        $this->color = $color;
+        $this->material = $material;
+        $this->price = $price;
+        $this->stock = $stock;
+        $this->average_rating = $average_rating;
+        $this->description = $description;
+    }
+
+    public function getProductId()
+    {
+        return $this->product_id;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    public function getMaterial()
+    {
+        return $this->material;
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function getStock()
+    {
+        return $this->stock;
+    }
+
+    public function getAverageRating()
+    {
+        return $this->average_rating;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    // Mutateurs (setters)
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    public function setStock($stock)
+    {
+        $this->stock = $stock;
+    }
+
+    // Méthodes supplémentaires
+    public function isAvailable()
+    {
+        return $this->stock > 0;
+    }
+
+    public function displayDetails()
+    {
+        echo "Product: {$this->name}\n";
+        echo "Brand: {$this->brand}\n";
+        echo "Color: {$this->color}\n";
+        echo "Material: {$this->material}\n";
+        echo "Price: \${$this->price}\n";
+        echo "Stock: {$this->stock}\n";
+        echo "Rating: {$this->average_rating}\n";
+        echo "Description: {$this->description}\n";
+    }
+}
+
+$productObjects = [];
+foreach ($products as $productInfo) {
+    $product = new Product(
+        $productInfo['product_id'],
+        $productInfo['name'],
+        $productInfo['brand'],
+        $productInfo['color'],
+        $productInfo['material'],
+        $productInfo['price'],
+        $productInfo['stock'],
+        $productInfo['average_rating'],
+        $productInfo['description']
+    );
+    $productObjects[] = $product;
+}
 ?>
+
+
 <main>
     <section id="description">
         <div class="container">
@@ -44,49 +174,41 @@ $stock = 10;
                     </div>
                 </div>
                 <div class="rightSide">
-                <!--*****************************************************-->
+                    <!--*****************************************************-->
                     <div class="descriptionTop">
-                        <h1 class="productTitle">Nom du produit</h1>
-                        <p>réf: 123456</p>
+                        <h1 class="productTitle"><?php echo  "{$product->getName()}</>"; ?></h1>
+                        <?php echo  "<p id='deco'>Réf: {$product->getProductId()}</p>"; ?>
                         <div class="productInfo">
                             <div class="productInfoLeft">
                                 <div class="rating-result">
-                                    <span class="active"></span>
-                                    <span class="active"></span>
-                                    <span class="active"></span>
-                                    <span class="active"></span>
-                                    <span class="active"></span>
+                                    <?php echo  "<h2 id='deco'>{$product->getAverageRating()}</h2>"; ?>
                                 </div>
-                                <p class="prisInfo"><span>436</span>€</p>
+                                <p class="prisInfo"><span><?php echo "{$product->getPrice()}$</>"; ?></span></p>
                                 <div class="attributesInfo">
                                     <div>
                                         <p>Marque:</p>
                                     </div>
                                     <div>
-                                        <p>GTPLAYER</p>
+                                        <?php echo "<p>{$product->getBrand()}</p>" ?>
                                     </div>
                                     <div>
                                         <p>Couleur:</p>
                                     </div>
                                     <div>
-                                        <p>Arc En Ciel</p>
+                                        <?php echo "<p>{$product->getColor()}</p>" ?>
                                     </div>
                                     <div>
                                         <p>Materiaux:</p>
                                     </div>
                                     <div>
-                                        <p>Cuir</p>
+                                        <?php echo "<p>{$product->getMaterial()}</p>" ?>
                                     </div>
                                 </div>
                             </div>
                             <div class="productAdd">
-                                <!--<p class="availability">
-                                    <label for="Stock">Stock</label><br>
-                                    <input type="int" class="stock" name="stock" value="<?php echo $stock; ?>" readonly />
-                                </p>-->
                                 <p class="quantity">
                                     <label for="quantity">Quantité</label><br>
-                                    <input type="number" class="quantity" name="quantity" min="1" max="<?php echo $stock; ?>" value="<?php echo $quantity; ?>">
+                                    <input type="number" class="quantity" name="quantity" min="1" max="<?php echo $product->getStock(); ?>" value="<?php echo $quantity; ?>">
                                 </p>
                                 <button class="basketButton" type="submit">
                                     <span>Ajouter au panier</span> <img src="./images/icon_panier.png" alt="">
@@ -94,43 +216,10 @@ $stock = 10;
                             </div>
                         </div>
                     </div>
-                    <!--************************************************-->
                     <div class="descriptBotton">
                         <h3 class="descriptTitle">A propos de cet article</h3>
                         <div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt
-                                ut labore et dolore magna
-                                aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo consequat. Duis
-                                aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                                nulla
-                                pariatur. Excepteur sint
-                                occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                                est
-                                laborum.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt
-                                ut labore et dolore magna
-                                aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo consequat. Duis
-                                aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                                nulla
-                                pariatur. Excepteur sint
-                                occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                                est
-                                laborum.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt
-                                ut labore et dolore magna
-                                aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo consequat. Duis
-                                aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                                nulla
-                                pariatur. Excepteur sint
-                                occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                                est
-                                laborum.</p>
+                            <?php echo "<p>{$product->getDescription()}</p>" ?>
                         </div>
                     </div>
                 </div>
@@ -148,15 +237,11 @@ $stock = 10;
                         </a>
                     </div>
                     <div class="cardBottom">
-                        <a href="#" class="cardTitle">Nom du produit</a>
+                        <a href="#" class="cardTitle"><?php echo  "<h1>{$product->getName()}</h1>"; ?></a>
                         <div class="priceRating">
-                            <div class="cardPrice cardPrice--common">436 <span>€</span></div>
+                            <div class="cardPrice cardPrice--common"><?php echo  "<p id='deco'>Prix:{$product->getPrice()}$</p>"; ?></div>
                             <div class="rating-mini">
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
+                                <?php echo  "<h2 id='deco'>{$product->getAverageRating()}</h2>"; ?>
                             </div>
                         </div>
                     </div>
@@ -168,15 +253,11 @@ $stock = 10;
                         </a>
                     </div>
                     <div class="cardBottom">
-                        <a href="#" class="cardTitle">Nom du produit</a>
+                        <a href="#" class="cardTitle"><?php echo  "<h1>{$product->getName()}</h1>"; ?></a>
                         <div class="priceRating">
-                            <div class="cardPrice cardPrice--common">436 <span>€</span></div>
+                            <div class="cardPrice cardPrice--common"><?php echo  "<p id='deco'>Prix:{$product->getPrice()}$</p>"; ?></div>
                             <div class="rating-mini">
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
+                                <?php echo  "<h2 id='deco'>{$product->getAverageRating()}</h2>"; ?>
                             </div>
                         </div>
                     </div>
@@ -187,81 +268,82 @@ $stock = 10;
                             <img class="cardImg" src="./assets/img/products/chaise_licorne.jpg" alt="">
                         </a>
                     </div>
-                    <div class="cardBottom">
-                        <a href="#" class="cardTitle">Nom du produit</a>
-                        <div class="priceRating">
-                            <div class="cardPrice cardPrice--common">436 <span>€</span></div>
-                            <div class="rating-mini">
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="cardTop">
-                        <a href="#">
-                            <img class="cardImg" src="./assets/img/products/chaise_licorne.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="cardBottom">
-                        <a href="#" class="cardTitle">Nom du produit</a>
-                        <div class="priceRating">
-                            <div class="cardPrice cardPrice--common">436 <span>€</span></div>
-                            <div class="rating-mini">
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="cardTop">
-                        <a href="#">
-                            <img class="cardImg" src="./assets/img/products/chaise_licorne.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="cardBottom">
-                        <a href="#" class="cardTitle">Nom du produit</a>
-                        <div class="priceRating">
-                            <div class="cardPrice cardPrice--common">436 <span>€</span></div>
-                            <div class="rating-mini">
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="cardTop">
-                        <a href="#">
-                            <img class="cardImg" src="./assets/img/products/chaise_licorne.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="cardBottom">
-                        <a href="#" class="cardTitle">Nom du produit</a>
-                        <div class="priceRating">
-                            <div class="cardPrice cardPrice--common">436 <span>€</span></div>
-                            <div class="rating-mini">
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
-                                <span class="active"></span>
-                            </div>
+                <div class="cardBottom">
+                    <a href="#" class="cardTitle"><?php echo  "<h1>{$product->getName()}</h1>"; ?></a>
+                    <div class="priceRating">
+                        <div class="cardPrice cardPrice--common"><?php echo  "<p id='deco'>Prix:{$product->getPrice()}$</p>"; ?></div>
+                        <div class="rating-mini">
+                            <?php echo  "<h2 id='deco'>{$product->getAverageRating()}</h2>"; ?>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="cardTop">
+                    <a href="#">
+                        <img class="cardImg" src="./assets/img/products/chaise_licorne.jpg" alt="">
+                    </a>
+                </div>
+                <div class="cardBottom">
+                    <a href="#" class="cardTitle"><?php echo  "<h1>{$product->getName()}</h1>"; ?></a>
+                    <div class="priceRating">
+                        <div class="cardPrice cardPrice--common"><?php echo  "<p id='deco'>Prix:{$product->getPrice()}$</p>"; ?></div>
+                        <div class="rating-mini">
+                            <?php echo  "<h2 id='deco'>{$product->getAverageRating()}</h2>"; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="cardTop">
+                    <a href="#">
+                        <img class="cardImg" src="./assets/img/products/chaise_licorne.jpg" alt="">
+                    </a>
+                </div>
+                <div class="cardBottom">
+                    <a href="#" class="cardTitle"><?php echo  "<h1>{$product->getName()}</h1>"; ?></a>
+                    <div class="priceRating">
+                        <div class="cardPrice cardPrice--common"><?php echo  "<p id='deco'>Prix:{$product->getPrice()}$</p>"; ?></div>
+                        <div class="rating-mini">
+                            <?php echo  "<h2 id='deco'>{$product->getAverageRating()}</h2>"; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="cardTop">
+                    <a href="#">
+                        <img class="cardImg" src="./assets/img/products/chaise_licorne.jpg" alt="">
+                    </a>
+                </div>
+            <div class="cardBottom">
+                <a href="#" class="cardTitle"><?php echo  "<h1>{$product->getName()}</h1>"; ?></a>
+                <div class="priceRating">
+                    <div class="cardPrice cardPrice--common"><?php echo  "<p id='deco'>Prix:{$product->getPrice()}$</p>"; ?></div>
+                    <div class="rating-mini">
+                        <?php echo  "<h2 id='deco'>{$product->getAverageRating()}</h2>"; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+                <div class="cardTop">
+                    <a href="#">
+                        <img class="cardImg" src="./assets/img/products/chaise_licorne.jpg" alt="">
+                    </a>
+                </div>
+            <div class="cardBottom">
+                <a href="#" class="cardTitle"><?php echo  "<h1>{$product->getName()}</h1>"; ?></a>
+                <div class="priceRating">
+                    <div class="cardPrice cardPrice--common"><?php echo  "<p id='deco'>Prix:{$product->getPrice()}$</p>"; ?></div>
+                    <div class="rating-mini">
+                        <?php echo  "<h2 id='deco'>{$product->getAverageRating()}</h2>"; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
         </div>
     </section>
     <section id="Commentaires">
