@@ -37,8 +37,8 @@
             $product_name = $row["name"];    
             $image_data = $row["image"];
             $price = $row["price"];
-            $rating = $row["rating"];
 
+            $rating = $row["average_rating"];
             $image_info = json_decode($image_data, true);
             $image_src = isset($image_info['main_image']) ? ".//" . $image_info['main_image'] : "";
           
@@ -72,18 +72,6 @@
 
     mysqli_close($conn);
 
-
-    function calculateAverageRating($product_id, $conn)
-    {
-        $sql = "SELECT AVG(rating) AS average_rating FROM reviews WHERE prod_id = ?";
-        $sth = mysqli_prepare($conn, $sql);
-        $sth->bind_param('i', $product_id);
-        $sth->execute();
-        $result = $sth->get_result();
-        $row = $result->fetch_assoc();
-        return $row['average_rating'];
-    }
-    mysqli_close($conn);
     ?>
 </body>
 
