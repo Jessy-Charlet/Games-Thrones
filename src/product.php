@@ -131,7 +131,7 @@ foreach ($products as $productInfo) {
 ?>
 
 
-<>
+<main>
     <section id="description">
         <div class="container">
             <div class="cartForm">
@@ -237,8 +237,11 @@ foreach ($products as $productInfo) {
                                 <img class="cardImg" src="./assets/img/products/chaise_licorne.jpg" alt="<?php echo $product->getName(); ?>">
                             </a>
                         </div>
+                        <!--**************************************-->
                         <div class="cardBottom">
-                            <a href="#" class="cardTitle"><?php echo "{$product->getName()}"; ?></a>
+                            <a href="#productDetails" class="productLink" data-product-id="<?php echo $product->getProductId(); ?>">
+                                <?php echo $product->getName(); ?>
+                            </a>
                             <div class="priceRating">
                                 <div class="cardPrice cardPrice--common"><?php echo "{$product->getPrice()}$"; ?></div>
                                 <div class="rating-mini">
