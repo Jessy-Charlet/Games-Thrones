@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        /*
         if(phone !== ''){
             var phoneFormat = /^(\d{2} ){4}\d{2}$/;
             if (!phoneFormat.test(phone)) {
@@ -42,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 errorMessages.innerHTML = errorMessage;
                 return;
             }
-        }
+        }*/
 
         if(email !== ''){
             var emailFormat = /\S+@\S+\.\S+/;
