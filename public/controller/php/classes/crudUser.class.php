@@ -11,17 +11,20 @@ class CrudUser {
     private $password;
 
 
-    public function getCustomer_id($customer_id){
-        $conn = Database::connect();
-        $sql = $conn->prepare("SELECT customer_id FROM customer WHERE customer_id = :customer_id");
-        $sql->execute(
-            array(
-                'customer_id' => $customer_id
-            )
-        );
-        $customer_id = $sql->fetch(PDO::FETCH_ASSOC);
-        $this->customer_id = $customer_id;
-        return $customer_id;
+    public function setCustomer_id($newId){
+        $this->customer_id = $newId;
+    }
+
+    public function setFirstname($newFirstname){
+        $this->firstname = $newFirstname;
+    }
+
+    public function getCustomer_id(){
+        return $this->customer_id;
+    }
+
+    public function getFirstname(){
+        return $this->firstname;
     }
 
     public function getAll($id){
@@ -60,18 +63,6 @@ class CrudUser {
         return $name;
     }
 
-    public function getFirstname($customer_id){
-        $conn = Database::connect();
-        $sql = $conn->prepare("SELECT `customer_first-name` FROM customer WHERE customer_id = :customer_id");
-        $sql->execute(
-            array(
-                'customer_id' => $customer_id
-            )
-        );
-        $firstname = $sql->fetch(PDO::FETCH_ASSOC);
-        $this->firstname = $firstname;
-        return $firstname;
-    }
 
     public function getEmail($customer_id){
         $conn = Database::connect();
@@ -186,7 +177,18 @@ class CrudUser {
         
             // Récupération de l'ID du client inséré
             $customerId = $conn->lastInsertId();
+<<<<<<< Updated upstream
         
+=======
+            $sql = $conn->prepare("SELECT `customer_first-name` FROM customer WHERE customer_id = :id");
+            $sql->execute(
+                array(
+                    'id' => $customerId
+                )
+            );
+            $firstName = $sql->fetch(PDO::FETCH_ASSOC)['customer_first-name'];
+
+>>>>>>> Stashed changes
             // Insertion de l'adresse
             $insertAddress = $conn->prepare("INSERT INTO adress (city, postal_code, adress, customer_id, postal_code_id) 
                                             SELECT :city, :postal_code, :adress, :customer_id, postal_code_id 
@@ -199,9 +201,15 @@ class CrudUser {
                     'customer_id' => $customerId
                 )
             );
+<<<<<<< Updated upstream
             session_start();
             $_SESSION['user'] = $customerId;
             header('Location: '.$router->generate('accueil'));
+=======
+
+            $this->setCustomer_id($customerId);
+            $this->setFirstname($firstName);
+>>>>>>> Stashed changes
             // Commit des transactions
             $conn->commit();
         } catch(PDOException $e) {
@@ -322,4 +330,46 @@ class CrudUser {
             )
         );
     }
+<<<<<<< Updated upstream
+=======
+
+    public function connectionUser(string $mail, string $password){
+        $conn = Database::connect();
+
+        if(isset($password)){
+            $passwordHash = sodium_crypto_pwhash_str(
+                $password,
+                SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE,  // Nombre d'opérations pour la résistance aux attaques par force brute
+                SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE // Limite de mémoire pour la résistance aux attaques par force brute
+            );
+            $password = $passwordHash;
+        }
+
+        try{
+            $conn->beginTransaction();
+
+
+            $sql = $conn->prepare("SELECT * FROM customer WHERE email = :mail AND password = :password");
+            $sql->execute(
+                array(
+                    'mail' => $mail,
+                    'password' => $password
+                )
+            );
+            $result = $sql->fetch(PDO::FETCH_ASSOC);
+            if ($result){
+                $id = $result['customer_id'];
+                $firstName = $result['customer_first-name'];
+                $_SESSION['user'] = $id;
+                $_SESSION['userFirstName'] = $firstName;
+                $conn->commit();
+                return array('id' => $id, 'firstName' => $firstName);
+            }
+        }catch(PDOException $e) {
+            // En cas d'erreur, annulation des transactions
+            $conn->rollback();
+            throw $e;
+        }
+    }
+>>>>>>> Stashed changes
 }
