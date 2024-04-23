@@ -1,6 +1,6 @@
-<?php
+<?php 
+Class Product
 
-class Product
 {
     private $product_id;
     private $name;
@@ -11,8 +11,9 @@ class Product
     private $stock;
     private $average_rating;
     private $description;
+    private $image;
 
-    public function __construct($product_id, $name, $brand, $color, $material, $price, $stock, $average_rating, $description)
+    public function __construct($product_id, $name, $brand, $color, $material, $price, $stock, $average_rating, $description, $image)
     {
         $this->product_id = $product_id;
         $this->name = $name;
@@ -23,6 +24,7 @@ class Product
         $this->stock = $stock;
         $this->average_rating = $average_rating;
         $this->description = $description;
+        $this->image = $image;
     }
 
     public function getProductId()
@@ -69,6 +71,11 @@ class Product
     {
         return $this->description;
     }
+    
+    public function getImage()
+    {
+        return $this->image;
+    }
 
     // Mutateurs (setters)
     public function setPrice($price)
@@ -89,6 +96,7 @@ class Product
 
     public function displayDetails()
     {
+        echo "productId: {$this->product_id}\n";
         echo "Product: {$this->name}\n";
         echo "Brand: {$this->brand}\n";
         echo "Color: {$this->color}\n";
@@ -97,6 +105,7 @@ class Product
         echo "Stock: {$this->stock}\n";
         echo "Rating: {$this->average_rating}\n";
         echo "Description: {$this->description}\n";
+        echo "Image: {$this->image}\n";
     }
 }
 
@@ -111,7 +120,8 @@ foreach ($products as $productInfo) {
         $productInfo['price'],
         $productInfo['stock'],
         $productInfo['average_rating'],
-        $productInfo['description']
+        $productInfo['description'],
+        $productInfo['images']
     );
     $productObjects[] = $product;
 }
