@@ -1,19 +1,28 @@
 <?php
 
+$product_id = $_GET["id"]; 
 
 $conn = Database::connect();
 
-try {
-    $stmt = $conn->prepare("SELECT * FROM product");
-    $stmt->execute();
-    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    echo "Erreur de connexion à la base de données: " . $e->getMessage();
+if (empty($product_id)) {
+    echo "Erreur : L'ID du produit est vide.";
+} else {
+    try {
+        $stmt = $conn->prepare("SELECT * FROM product WHERE product_id = ?");
+        $stmt->execute([$product_id]);
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (empty($products)) {
+            echo "Aucun produit trouvé avec l'ID spécifié.";
+        } else {
+
+        }
+    } catch (PDOException $e) {
+        echo "Erreur de connexion à la base de données: " . $e->getMessage();
+    }
 }
 
 $conn = null;
-
-
 
 class Product
 {
@@ -264,7 +273,7 @@ $productId = $product->getProductId();
             </div>
         </div>
     </section>
-    <!-- <section id="Commentaires">
+  <section id="Commentaires">
         <div class="container">
             <h3 class="reviewTitle">Commentaires</h3>
             <form class="reviewForm" method="post" action="">
@@ -398,7 +407,6 @@ $productId = $product->getProductId();
             </div>
         </div>
     </section>
-                -->
 </main>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
