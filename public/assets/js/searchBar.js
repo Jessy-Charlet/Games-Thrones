@@ -117,7 +117,7 @@ async function afficherProduits(recherche) {
                 titleElement.textContent = products[i]["name"];
                 // Lien du produit
                 const urlElement = document.createElement('a');
-                urlElement.href = `<?= $router->generate('produit') ?>?id=${products[i]["product_id"]}`;
+                urlElement.href = `/produit?id=${products[i]["product_id"]}`;
                 // Image du produit
                 console.log(urlElement.href);
                 const imageElement = document.createElement('img');
