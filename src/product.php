@@ -151,6 +151,7 @@ foreach ($products as $productInfo) {
 }
 
 $productId = $product->getProductId();
+$quantity = 1;
 
 ?>
 
