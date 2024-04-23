@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         fetch("http://localhost:8080/controller/php/signInController.php", requestOptions)
             .then(response => response.text())
-            .then(() => {
+            .then((body) => {
                 window.location.href = '/';
             })
             .catch(error => 

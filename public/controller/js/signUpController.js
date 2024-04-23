@@ -92,7 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         fetch("http://localhost:8080/controller/php/signUpController.php", requestOptions)
             .then(response => response.text())
-            .then(() => {
+            .then((body) => {
+                console.log(body)
                 window.location.href = '/';
             })
             .catch(error => 

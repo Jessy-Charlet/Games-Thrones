@@ -1,6 +1,9 @@
 <?php
-
-$product_id = $_GET["id"]; 
+if(isset($_GET["id"])){
+    $product_id = $_GET["id"]; 
+} else {
+    $product_id = 2; 
+}
 
 $conn = Database::connect();
 

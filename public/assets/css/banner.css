@@ -5,6 +5,8 @@
     position: relative;
     box-shadow: 0 0 20px rgb(0, 0, 0, 0.5);
     background-color: black;
+    border-bottom: 5px solid black;
+
 
     .slideButton {
         z-index: 12;
