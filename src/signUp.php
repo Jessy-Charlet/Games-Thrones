@@ -4,6 +4,8 @@ if(isset($_GET['error'])){
         echo '<p class="signUpFormError">L\'adresse mail est déjà utilisée</p>';
     }elseif($_GET['error'] == 'phoneAlreadyUsed'){
         echo '<p class="signUpFormError">Le numéro de téléphone est déjà utilisé</p>';
+    }elseif($_GET['error'] == "UnexpectedError"){
+        echo '<p class="signUpFormError">Une erreur inattendue est survenue</p>';
     }
     if(isset($_GET['name'])){
         $nameSave = $_GET['name'];
@@ -28,6 +30,7 @@ if(isset($_GET['error'])){
     }
 
 }
+
 ?>
 <section class="corp">
     <div class="signUpFormContainer">
