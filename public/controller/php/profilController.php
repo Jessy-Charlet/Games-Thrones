@@ -32,6 +32,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $isCityChanged = $_POST['changeCity'];
     }
     $id = $_SESSION['user'];
+    
     $user = new CrudUser();
     $user->updateUser($id, $isEmailChanged, $isPhoneChanged, $isPasswordChanged, $isAddressChanged, $isNameChanged, $isFirstnameChanged, $isPostalCodeChanged, $isCityChanged);
 }

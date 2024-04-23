@@ -1,4 +1,8 @@
 <?php
+if(!isset($_SESSION['user'])){
+    header('Location: '.$router->generate('connexion'));
+    exit();
+}else{
 $id = $_SESSION['user'];
 
 $user = new CrudUser();
@@ -162,3 +166,6 @@ if(isset($_GET['update'])){
     </div>
 <script src="./assets/js/profil.js?t=<?= time(); ?>"></script>
 <script src="./controller/js/profilController.js?t=<?= time(); ?>"></script>
+<?php
+}
+?>

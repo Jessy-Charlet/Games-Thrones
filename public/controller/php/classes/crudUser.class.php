@@ -214,27 +214,22 @@ class CrudUser {
         }
     }
 
-    public function updateUser($id, $isEmailChanged, $isPhoneChanged, $isPasswordChanged, $isAddressChanged, $isNameChanged, $isFirstnameChanged, $isPostalCodeChanged, $isCityChanged){
+    public function updateUser(int $id, $mail, $phone, $password, $adress, string $name, string $firstname, int $postalCode, string $city){
         $conn = Database::connect();
         $current_page_url = strtok($_SERVER['REQUEST_URI'] ?? '', '?');
 
-        if(isset($isPasswordChanged)){
-            $passwordHash = password_hash($isPasswordChanged, PASSWORD_DEFAULT);
-            $isPasswordChanged = $passwordHash;
-        }
-
-    
-        $sql = $conn->prepare("SELECT email FROM customer WHERE customer_id = :id");
+        $sql = $conn->prepare("SELECT email, phone, password FROM customer WHERE customer_id = :id");
         $sql->execute(
             array(
                 'id' => $id
             )
         );
-        if($sql->fetch(PDO::FETCH_ASSOC)['email'] != $isEmailChanged){
+
+        if($sql->fetch(PDO::FETCH_ASSOC)['email'] != $mail){
             $sql2 = $conn->prepare("SELECT email FROM customer WHERE email = :email");
             $sql2->execute(
                 array(
-                    'email' => $isEmailChanged
+                    'email' => $mail
                 )
             );
             if($sql2->rowCount() > 0){
@@ -242,21 +237,11 @@ class CrudUser {
                 exit();
             }
             $sql2->closeCursor();
-        }
-        $sql->closeCursor();
-    
-
-        $sql = $conn->prepare("SELECT phone FROM customer WHERE customer_id = :id");
-        $sql->execute(
-            array(
-                'id' => $id
-            )
-        );
-        if($sql->fetch(PDO::FETCH_ASSOC)['phone'] != $isPhoneChanged){
+        }elseif($sql->fetch(PDO::FETCH_ASSOC)['phone'] != $phone){
             $sql2 = $conn->prepare("SELECT phone FROM customer WHERE phone = :phone");
             $sql2->execute(
                 array(
-                    'phone' => $isPhoneChanged
+                    'phone' => $phone
                 )
             );
             if($sql2->rowCount() > 0){
@@ -264,48 +249,53 @@ class CrudUser {
                 exit();
             }
             $sql2->closeCursor();
-        }
-        $sql->closeCursor();
-        
-        try {
-            $conn->beginTransaction();
+        }elseif(sodium_crypto_pwhash_str_verify($sql->fetch(PDO::FETCH_ASSOC)['password'], $password)){
+            header('Location: '.$current_page_url.'?error=passwordNotValid');
+            exit();
+        }else{
+            try {
+                $conn->beginTransaction();
+    
+                // Mettre à jour les données de l'utilisateur
+                $sql = $conn->prepare("UPDATE customer SET `customer_last-name` = :customer_last_name, `customer_first-name` = :customer_first_name, email = :email, phone = :phone, password = :password WHERE customer_id = :customer_id");
+                $sql->execute(
+                    array(
+                        'customer_last_name' => $isNameChanged,
+                        'customer_first_name' => $isFirstnameChanged,
+                        'email' => $isEmailChanged,
+                        'phone' => $isPhoneChanged,
+                        'password' => $isPasswordChanged,
+                        'customer_id' => $id
+                    )
+                );
+                $sql->closeCursor();
+    
+                // Mettre à jour l'adresse de l'utilisateur
+                $sql = $conn->prepare("UPDATE adress SET city = :city, postal_code = :postal_code, adress = :adress WHERE customer_id = :customer_id");
+                $sql->execute(
+                    array(
+                        'city' => $isCityChanged,
+                        'postal_code' => $isPostalCodeChanged,
+                        'adress' => $isAddressChanged,
+                        'customer_id' => $id
+                    )
+                );
+                $sql->closeCursor();
+    
+                $this->firstname = $firstName;
+    
+                $conn->commit();
+                //header('Location: '.$current_page_url.'?update=success');
+            } catch(PDOException $e) {
+                // En cas d'erreur, annulation des transactions
+                $conn->rollback();
+                //header('Location: '.$current_page_url.'?update=error');
+                throw $e;
+            }
+        }  
 
-            // Mettre à jour les données de l'utilisateur
-            $sql = $conn->prepare("UPDATE customer SET `customer_last-name` = :customer_last_name, `customer_first-name` = :customer_first_name, email = :email, phone = :phone, password = :password WHERE customer_id = :customer_id");
-            $sql->execute(
-                array(
-                    'customer_last_name' => $isNameChanged,
-                    'customer_first_name' => $isFirstnameChanged,
-                    'email' => $isEmailChanged,
-                    'phone' => $isPhoneChanged,
-                    'password' => $isPasswordChanged,
-                    'customer_id' => $id
-                )
-            );
-            $sql->closeCursor();
-
-            // Mettre à jour l'adresse de l'utilisateur
-            $sql = $conn->prepare("UPDATE adress SET city = :city, postal_code = :postal_code, adress = :adress WHERE customer_id = :customer_id");
-            $sql->execute(
-                array(
-                    'city' => $isCityChanged,
-                    'postal_code' => $isPostalCodeChanged,
-                    'adress' => $isAddressChanged,
-                    'customer_id' => $id
-                )
-            );
-            $sql->closeCursor();
-
-            $conn->commit();
-            //header('Location: '.$current_page_url.'?update=success');
-        } catch(PDOException $e) {
-            // En cas d'erreur, annulation des transactions
-            $conn->rollback();
-            //header('Location: '.$current_page_url.'?update=error');
-            throw $e;
-        }
     }
-
+    
     public function delete($customer_id, $password){
         $conn = Database::connect();
         $sql = $conn->prepare("DELETE FROM customer WHERE customer_id = :customer_id AND password = :password");
