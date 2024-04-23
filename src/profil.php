@@ -97,7 +97,7 @@ if(isset($_GET['update'])){
                 <div>
                     <label for="password" class="labelForm">Mot de passe</label>
                     <br>
-                    <input type="password" name="password" id="password" class="inputForm inputFormSmall">
+                    <input type="password" name="password" id="password" class="inputForm inputFormSmall" autocomplete="off">
                 </div>
                 <div class="formDiv">
                     <input type="submit" value="modifier" id="personnalInfoModif" class="inputSubmit">

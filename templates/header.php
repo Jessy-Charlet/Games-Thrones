@@ -51,7 +51,7 @@ session_start();
             <a href="<?= $router->generate('profil') ?>"><img src="./assets/img/icon_user.png" alt="Mon compte" />
             <div><?=$_SESSION['userFirstName']?></div></a>
             <?php
-        } else {
+        } elseif(!isset($_SESSION['user'])){
             ?>
             <a href="<?= $router->generate('connexion') ?>"><img src="./assets/img/icon_user.png" alt="Me connecter" />
             <?php

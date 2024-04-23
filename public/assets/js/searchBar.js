@@ -64,6 +64,7 @@ $(document).ready(function () {
 
     mediaQueryList.addListener(screenTest);
 
+    /*** Menu de gauche */
     $("#shop").on("click", function () {
         $("#shop").toggleClass("active");
         $("#navShop").slideToggle("fast");
@@ -82,10 +83,9 @@ $(document).ready(function () {
 
 })
 
-
 $('#searchBar').on({
     keyup: function () {
-        autocompltetion("#searchBar", "autocompleteResults");
+     //   autocompltetion("#searchBar", "autocompleteResults");
     },
     focusin: function () {
         $("#navSearch").slideDown("fast");
@@ -97,6 +97,49 @@ $('#searchBar').on({
 })
 
 
+async function afficherProduits(recherche) {
+    const reponse = await fetch('../controller/php/recherche.php');
+    const products = await reponse.json();
+    let liste = []
+    console.log(recherche);
+    for(var i= 0; i < products.length; i++){
+        let name = $("#navSearch").html(products[i]["name"]);
+        if(name == recherche){
+
+
+
+
+            const listItem = document.createElement('li');
+
+            // Titre du film
+            const titleElement = document.createElement('h3');
+            titleElement.textContent = movie.title;
+    
+            // Lien 
+            const urlElement = document.createElement('a');
+            urlElement.href = `./details.php?id=${movie.id}`;
+    
+    
+            // Image du film
+            const imageElement = document.createElement('img');
+            const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+            imageElement.src = imageUrl;
+            imageElement.alt = movie.title;
+    
+    
+    
+            // Note du film
+            const ratingElement = document.createElement('span');
+            ratingElement.textContent = parseFloat(movie.vote_average).toFixed(1);
+    
+            // Ajouter les éléments à la liste
+            listItem.appendChild(urlElement);
+            urlElement.appendChild(imageElement);
+            listItem.appendChild(titleElement);
+            listItem.appendChild(ratingElement);
+    
+            movieList.appendChild(listItem);
+            x++;
 
 
 
@@ -104,108 +147,13 @@ $('#searchBar').on({
 
 
 
-
-
-
-
-var availableTags = [];
-fetch('recherche.php')
-  .then(response => response.json())
-  .then(data => {
-    data.forEach(product => {
-      availableTags.push(product.name);
-    });
-  })
-  .catch(error => console.error('Erreur lors de la récupération des utilisateurs:', error));
-
-
-
-
-$(function () {
-  $("#searchBar").autocomplete({
-    source: availableTags
-  });
-});
-
-
-
-
-
-
-
-
-/*
-
-
-// Fonction pour obtenir les données de l'API TMDB
-async function fetchProduit(recherche, cible, nombre) {
-    try {
-        const response = await fetch(recherche);
-        const data = await response.json();
-        var x = 0;
-
-        // Afficher les films dans la liste avec les images
-        data.results.forEach(movie => {
-            if (x != nombre) {
-                const listItem = document.createElement('li');
-
-                // Titre du film
-                const titleElement = document.createElement('h3');
-                titleElement.textContent = movie.title;
-
-                // Lien 
-                const urlElement = document.createElement('a');
-                urlElement.href = `./details.php?id=${movie.id}`;
-
-
-                // Image du film
-                const imageElement = document.createElement('img');
-                const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-                imageElement.src = imageUrl;
-                imageElement.alt = movie.title;
-
-
-
-                // Note du film
-                const ratingElement = document.createElement('span');
-                ratingElement.textContent = parseFloat(movie.vote_average).toFixed(1);
-
-                // Ajouter les éléments à la liste
-                listItem.appendChild(urlElement);
-                urlElement.appendChild(imageElement);
-                listItem.appendChild(titleElement);
-                listItem.appendChild(ratingElement);
-
-                movieList.appendChild(listItem);
-                x++;
-            } else {
-                return;
-            }
-
-        });
-    } catch (error) {
-        console.error('Erreur lors de la récupération des données:', error.message);
-    }
+            
+        };
+    };
+    return products;
 }
 
-
-// Appeler la fonction pour récupérer les films
-fetchMovies(filmPopulaire, "movieList");
-*/
-
-/*** Barre de recherche */
-/*
-// function autocompletion
-function autocompltetion(menu, cible) {
-    var filmRecherche = `https://api.themoviedb.org/3/search/${sessionStorage.getItem('mode')}`;
-    var query = $(menu).val();
-
-    if (query.length > 0) {
-        var filmR = filmRecherche + '?api_key=' + apiKey + '&query=' + query;
-
-        fetchMovies(filmR, cible, 20);
-    } else {
-        cible.innerHTML = 'Aucun résultat...';
-    }
-}
-// menu PC*/
+$("#searchBar").on("keyup", function(){
+    let recherche = $(this).val();
+    afficherProduits(recherche);
+})

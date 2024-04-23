@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if(password !== ''){
-            var passwordFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&()!\/.,?;:_]).{6,255}$/;
+            var passwordFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&()!\/.,?;:_+=}{é~"#'-|è`\\ç^à@£$¤*µù%§<>°]).{6,255}$/;
             if (!passwordFormat.test(password)) {
                 var errorMessage = 'Password must contain at least one number and one uppercase and lowercase letter, a special character, and at least 6 or more characters.';
                 errorMessages.innerHTML = errorMessage;
@@ -71,6 +71,29 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        document.getElementById('myForm').submit();
+
+
+        const formdata = new FormData();
+        formdata.append('name', name);
+        formdata.append('firstname', firstname);
+        formdata.append('email', email);
+        formdata.append('phone', phone);
+        formdata.append('adress', adress);
+        formdata.append('postalCode', postalCode);
+        formdata.append('city', city);
+        formdata.append('password', password);
+
+        const requestOptions = {
+            method: "POST",
+            header: "Content-Type: application/form-data",
+            body: formdata
+        };
+
+        fetch("http://localhost:8080/controller/php/signUpController.php", requestOptions)
+            .then(response => response.text())
+            .then(() => {
+                window.location.href = '/';
+            })
+            .catch(error => console.log("error", error));
     });
 });
