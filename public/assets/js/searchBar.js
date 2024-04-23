@@ -85,7 +85,8 @@ $(document).ready(function () {
 
 $('#searchBar').on({
     keyup: function () {
-     //   autocompltetion("#searchBar", "autocompleteResults");
+        let recherche = $(this).val();
+        afficherProduits(recherche);
     },
     focusin: function () {
         $("#navSearch").slideDown("fast");
@@ -98,62 +99,51 @@ $('#searchBar').on({
 
 
 async function afficherProduits(recherche) {
-    const reponse = await fetch('../controller/php/recherche.php');
-    const products = await reponse.json();
-    let liste = []
-    console.log(recherche);
-    for(var i= 0; i < products.length; i++){
-        let name = $("#navSearch").html(products[i]["name"]);
-        if(name == recherche){
+    if (recherche != "") {
 
+        const reponse = await fetch('../controller/php/recherche.php');
+        const products = await reponse.json();
+        const liste = document.createElement('div');
+        liste.classList.add("productsGrid");
+        for (var i = 0; i < products.length; i++) {
+            if (products[i]["name"].toLowerCase().includes(recherche) == true) {
+                // Container
+                const listItem = document.createElement('div');
+                listItem.classList.add("product");
+                // Nom du produit
+                const titleElement = document.createElement('div');
+                listItem.classList.add("productName");
+                titleElement.textContent = products[i]["name"];
+                // Lien du produit
+                const urlElement = document.createElement('a');
+                urlElement.href = `<?= $router->generate('produit') ?>?id=${products[i]["product_id"]}`;
+                // Image du produit
+                console.log(urlElement.href);
+                const imageElement = document.createElement('img');
+                const productImages = JSON.parse(products[i]["images"]);
+                const imageUrl = productImages["main_image"];
+                imageElement.src = imageUrl;
+                imageElement.alt = products[i]["name"];
+                // Prix du produit
+                const priceElement = document.createElement('div');
+                priceElement.classList.add("productPrice");
+                priceElement.textContent = products[i]["price"];
+                // Note du produit
+                const ratingElement = document.createElement('span');
+                ratingElement.classList.add("productPrice");
+                ratingElement.textContent = parseFloat(products[i]["price"]).toFixed(1);
 
-
-
-            const listItem = document.createElement('li');
-
-            // Titre du film
-            const titleElement = document.createElement('h3');
-            titleElement.textContent = movie.title;
-    
-            // Lien 
-            const urlElement = document.createElement('a');
-            urlElement.href = `./details.php?id=${movie.id}`;
-    
-    
-            // Image du film
-            const imageElement = document.createElement('img');
-            const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-            imageElement.src = imageUrl;
-            imageElement.alt = movie.title;
-    
-    
-    
-            // Note du film
-            const ratingElement = document.createElement('span');
-            ratingElement.textContent = parseFloat(movie.vote_average).toFixed(1);
-    
-            // Ajouter les éléments à la liste
-            listItem.appendChild(urlElement);
-            urlElement.appendChild(imageElement);
-            listItem.appendChild(titleElement);
-            listItem.appendChild(ratingElement);
-    
-            movieList.appendChild(listItem);
-            x++;
-
-
-
-
-
-
-
-            
+                // Ajouter les éléments à la liste
+                listItem.appendChild(urlElement);
+                urlElement.appendChild(imageElement);
+                listItem.appendChild(titleElement);
+                listItem.appendChild(ratingElement);
+                liste.appendChild(listItem);
+            };
         };
-    };
-    return products;
+        $("#navSearch").html(liste);
+    } else {
+        $("#navSearch").html("Aucun résultat...");
+    }
 }
 
-$("#searchBar").on("keyup", function(){
-    let recherche = $(this).val();
-    afficherProduits(recherche);
-})

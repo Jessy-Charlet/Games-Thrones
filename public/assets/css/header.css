@@ -181,6 +181,61 @@
 }
 
 
+#navShop, #navInfos, #navSearch{
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    background: linear-gradient(355deg, #d1d1d1 , white);
+    border-bottom: 5px solid black;
+    padding: 4em 5vw 2vh 5vw;
+    justify-items: center;
+    position: absolute;
+    top: 8vh;
+    left: 0;
+    z-index: 16;
+    .navContainer{
+        border-right:1px solid black;
+        a{
+            text-transform: uppercase;
+            display: block;
+            text-decoration: none;
+            padding: 0.5em 1em;
+            margin-bottom: 1em;
+            width: 80%;
+            border-radius: 5px;
+            background-color: white;
+            font-size: 0.8em;
+        }
+        .promotions{
+            background-color: red;
+            color: white;
+            font-weight: bold;
+        }
+        .navH1{
+            font-size: 1.3em;
+            text-transform: uppercase;
+            margin-bottom: 1em;
+            font-weight: 600;
+            color: #482664;
+        }
+    }
+    .navContainer:last-child{
+        border-right: none;
+    }
+}
+
+#navShop{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 1em;
+}
+#navInfos{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1em;
+}
+
+
 @media (orientation: portrait) {
     #navContainer {
         grid-template-columns: 1fr;
@@ -279,62 +334,8 @@
         }
     
     }
-
-
-}
-
-
-
-#navShop, #navInfos, #navSearch{
-    position: relative;
-    box-sizing: border-box;
-    width: 100%;
-    background: linear-gradient(355deg, #d1d1d1 , white);
-    border-bottom: 5px solid black;
-    padding: 4em 5em 3em 5em;
-    justify-items: center;
-    position: absolute;
-    top: 8vh;
-    left: 0;
-    z-index: 16;
-    .navContainer{
-        border-right:1px solid black;
-        a{
-            text-transform: uppercase;
-            display: block;
-            text-decoration: none;
-            padding: 0.5em 1em;
-            margin-bottom: 1em;
-            width: 80%;
-            border-radius: 5px;
-            background-color: white;
-            font-size: 0.8em;
-        }
-        .promotions{
-            background-color: red;
-            color: white;
-            font-weight: bold;
-        }
-        .navH1{
-            font-size: 1.3em;
-            text-transform: uppercase;
-            margin-bottom: 1em;
-            font-weight: 600;
-            color: #482664;
-        }
+    #navShop, #navInfos, #navSearch{
+        padding: 2vh 5vw ;
     }
-    .navContainer:last-child{
-        border-right: none;
-    }
-}
 
-#navShop{
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    gap: 1em;
-}
-#navInfos{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1em;
 }

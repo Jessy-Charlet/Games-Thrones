@@ -1,8 +1,10 @@
 .productsGrid {
-    width: 80vw;
-    margin: 5em auto;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    gap:2vw;
 
     .product {
         box-sizing: border-box;
@@ -39,5 +41,11 @@
             grid-template-columns: 1fr 1fr;
         }
 
+    }
+}
+
+@media (orientation: portrait) {
+    .productsGrid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }

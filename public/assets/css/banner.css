@@ -7,7 +7,7 @@
     background-color: black;
 
     .slideButton {
-        z-index: 50;
+        z-index: 12;
         position: absolute;
         bottom: 2em;
         left: 50%;
