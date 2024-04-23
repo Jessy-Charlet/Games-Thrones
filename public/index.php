@@ -25,7 +25,6 @@ $router->map('POST', '/signInControllerphp', '../public/controller/php/signInCon
 $router->map('GET', '/deconnexion', '../public/controller/php/deconnexion', 'deconnexion');
 $router->map('POST', '/profilControllerphp', '../public/controller/php/profilController', 'profilControllerphp');
 
-
 function my_autoloader($class)
 {
     include 'controller/php/classes/' . $class . '.class.php';
