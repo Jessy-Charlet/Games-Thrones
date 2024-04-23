@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Apr 22, 2024 at 11:42 AM
--- Server version: 8.0.30
--- PHP Version: 8.1.10
+-- Hôte : localhost:3306
+-- Généré le : mar. 23 avr. 2024 à 12:31
+-- Version du serveur : 8.0.30
+-- Version de PHP : 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `boutique`
+-- Base de données : `boutique`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `adress`
+-- Structure de la table `adress`
 --
 
 CREATE TABLE `adress` (
@@ -37,15 +37,11 @@ CREATE TABLE `adress` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `adress`
+-- Déchargement des données de la table `adress`
 --
 
 INSERT INTO `adress` (`adress_id`, `postal_code_id`, `city`, `postal_code`, `adress`, `customer_id`) VALUES
-(1, 40101, 'Solliès-pont', 83210, 'azedqsdfisdf', 2),
-(2, 40138, 'Solliès-pont', 83210, 'azedqsdfisdf', 2),
-(3, 40214, 'Solliès-pont', 83210, 'azedqsdfisdf', 2),
-(4, 40215, 'Solliès-pont', 83210, 'azedqsdfisdf', 2),
-(5, 40216, 'Solliès-pont', 83210, 'azedqsdfisdf', 2),
+(1, 40101, 'Solliès-pont', 83210, 'adresse de M. Ma Ma', 2),
 (8, 40101, 'sdfsdf', 83210, 'efsdf', 3),
 (9, 40138, 'sdfsdf', 83210, 'efsdf', 3),
 (10, 40214, 'sdfsdf', 83210, 'efsdf', 3),
@@ -75,12 +71,62 @@ INSERT INTO `adress` (`adress_id`, `postal_code_id`, `city`, `postal_code`, `adr
 (42, 40138, 'srgxdf', 83210, 'etgdf', 8),
 (43, 40214, 'srgxdf', 83210, 'etgdf', 8),
 (44, 40215, 'srgxdf', 83210, 'etgdf', 8),
-(45, 40216, 'srgxdf', 83210, 'etgdf', 8);
+(45, 40216, 'srgxdf', 83210, 'etgdf', 8),
+(67, 40101, 'Solliès-pont', 83210, '294 chemin de sauvebonne', 13),
+(68, 40138, 'Solliès-pont', 83210, '294 chemin de sauvebonne', 13),
+(69, 40214, 'Solliès-pont', 83210, '294 chemin de sauvebonne', 13),
+(70, 40215, 'Solliès-pont', 83210, '294 chemin de sauvebonne', 13),
+(71, 40216, 'Solliès-pont', 83210, '294 chemin de sauvebonne', 13),
+(432, 40101, 'sdfdsf', 83210, 'sdf', 76),
+(433, 40138, 'sdfdsf', 83210, 'sdf', 76),
+(434, 40214, 'sdfdsf', 83210, 'sdf', 76),
+(435, 40215, 'sdfdsf', 83210, 'sdf', 76),
+(436, 40216, 'sdfdsf', 83210, 'sdf', 76),
+(439, 40101, 'sdfsd', 83210, 'sdfdsf', 77),
+(440, 40138, 'sdfsd', 83210, 'sdfdsf', 77),
+(441, 40214, 'sdfsd', 83210, 'sdfdsf', 77),
+(442, 40215, 'sdfsd', 83210, 'sdfdsf', 77),
+(443, 40216, 'sdfsd', 83210, 'sdfdsf', 77),
+(446, 40101, 'sdfsdf', 83210, 'sdsd', 78),
+(447, 40138, 'sdfsdf', 83210, 'sdsd', 78),
+(448, 40214, 'sdfsdf', 83210, 'sdsd', 78),
+(449, 40215, 'sdfsdf', 83210, 'sdsd', 78),
+(450, 40216, 'sdfsdf', 83210, 'sdsd', 78),
+(453, 40101, 'sdgsdg', 83210, 'sdgsdg', 79),
+(454, 40138, 'sdgsdg', 83210, 'sdgsdg', 79),
+(455, 40214, 'sdgsdg', 83210, 'sdgsdg', 79),
+(456, 40215, 'sdgsdg', 83210, 'sdgsdg', 79),
+(457, 40216, 'sdgsdg', 83210, 'sdgsdg', 79),
+(458, 40101, 'sfgfg', 83210, 'qdgsfg', 80),
+(459, 40138, 'sfgfg', 83210, 'qdgsfg', 80),
+(460, 40214, 'sfgfg', 83210, 'qdgsfg', 80),
+(461, 40215, 'sfgfg', 83210, 'qdgsfg', 80),
+(462, 40216, 'sfgfg', 83210, 'qdgsfg', 80),
+(472, 40101, 'dsdgsg', 83210, 'sdsdg', 82),
+(473, 40138, 'dsdgsg', 83210, 'sdsdg', 82),
+(474, 40214, 'dsdgsg', 83210, 'sdsdg', 82),
+(475, 40215, 'dsdgsg', 83210, 'sdsdg', 82),
+(476, 40216, 'dsdgsg', 83210, 'sdsdg', 82),
+(479, 40101, 'sfgsfg', 83210, 'sdgxfg', 83),
+(480, 40138, 'sfgsfg', 83210, 'sdgxfg', 83),
+(481, 40214, 'sfgsfg', 83210, 'sdgxfg', 83),
+(482, 40215, 'sfgsfg', 83210, 'sdgxfg', 83),
+(483, 40216, 'sfgsfg', 83210, 'sdgxfg', 83),
+(486, 40101, 'srgsfg', 83210, 'sfgsfg', 84),
+(487, 40138, 'srgsfg', 83210, 'sfgsfg', 84),
+(488, 40214, 'srgsfg', 83210, 'sfgsfg', 84),
+(489, 40215, 'srgsfg', 83210, 'sfgsfg', 84),
+(490, 40216, 'srgsfg', 83210, 'sfgsfg', 84),
+(491, 40101, 'sfgdfg', 83210, 'sdgsfg', 85),
+(492, 40138, 'sfgdfg', 83210, 'sdgsfg', 85),
+(493, 40214, 'sfgdfg', 83210, 'sdgsfg', 85),
+(494, 40215, 'sfgdfg', 83210, 'sdgsfg', 85),
+(495, 40216, 'sfgdfg', 83210, 'sdgsfg', 85);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `brand`
+-- Structure de la table `brand`
 --
 
 CREATE TABLE `brand` (
@@ -91,7 +137,7 @@ CREATE TABLE `brand` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category`
+-- Structure de la table `category`
 --
 
 CREATE TABLE `category` (
@@ -103,7 +149,7 @@ CREATE TABLE `category` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer`
+-- Structure de la table `customer`
 --
 
 CREATE TABLE `customer` (
@@ -116,22 +162,24 @@ CREATE TABLE `customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `customer`
+-- Déchargement des données de la table `customer`
 --
 
 INSERT INTO `customer` (`customer_id`, `customer_last-name`, `customer_first-name`, `email`, `phone`, `password`) VALUES
-(2, 'a', 'a', 'a@a.a', '01 23 45 67 89', '$2y$10$HY8QTVsosdRyxztpw2qO0OH/xgZIy8oWFGlcoiDzpyqg4m2x2U06.'),
-(3, 'a', 'a', 'z@z.z', '00 00 00 00 00', '$2y$10$Z.CY4hnnTnb/8zgdUQ/oWusjk6A2cfZgtri3oNQVRUn2q79TrKc9i'),
-(4, 'a', 'a', 'e@e.e', '99 99 99 99 99', '$2y$10$24Atk.VMGdB.2lKrZw6tZ.WxPEtNTqDQhYzIkqd5VYn.MZ1xvyjc6'),
-(5, 't', 't', 't@t.t', '98 74 56 32 10', '$2y$10$k9jkmU4cifdBviF7W55gHeKVusNXiFmoHm/mD7ocMyobIJDxKISJe'),
-(6, 'x', 'x', 'x@x.x', '44 44 44 44 44', '$2y$10$LqFZ8UoO2q5GnQ1cP/Xr9OMQ3K4ZVfp5zks09RBdUhkdxBbTpX.YG'),
-(7, 'd', 'd', 'd@d.d', '66 66 66 66 66', '$2y$10$BlTqAlPgE1FfK1hH193BsOQHUwmVz4tMetCalsTQBDYf1f2Mb2bS6'),
-(8, 'a', 'a', 'a@a.t', '22 22 22 22 22', '$2y$10$5PnRRQin0LdWYpae5G0Rye1CkUYkzTCyzlzkPY7Dm6tNoHavtMUim');
+(13, 'Lebrun', 'Ismael', 'ismael.lebrun@admin.com', '06 37 57 14 31', '$argon2id$v=19$m=65536,t=2,p=1$QD3XkIyx7YMji2Vx7qtEFg$9GGrHy0X/WWj7D++KWN78O9uITsn/JehxUNwk1NUX98'),
+(77, 'a', 'a', 'a@a.a', '00 00 00 00 00', '$argon2id$v=19$m=65536,t=2,p=1$UDbPzS/NznD/aPaE2ivO6A$BrIvGA2cZ3CgV0kuOm2qqLXQDUa2tj7GsldgOSpCP/8'),
+(78, 'b', 'b', 'b@b.b', '11 11 11 11 11', '$argon2id$v=19$m=65536,t=2,p=1$nzsIHHwkH1v5QkYF155TNw$GwjaNCHOAgFulLvcZ6dmElf6O1Am47Ko0M4iq6XGXss'),
+(79, 'c', 'c', 'c@c.c', '22 22 22 22 22', '$argon2id$v=19$m=65536,t=2,p=1$4a09dsg83uyvUmP1xYRoDw$WTOgo22nM49Baq0hN1k6Gk2Zr+gBCWx7hxntI4TDT0U'),
+(80, 'd', 'd', 'd@d.d', '33 33 33 33 33', '$argon2id$v=19$m=65536,t=2,p=1$d3aEG4Q0m71KFVIsZOaVuA$JZ6MSBRXiNZAo88O7U9HRcw3JcGtvhIqLOrusicnwI4'),
+(82, 'e', 'e', 'e@e.e', '44 44 44 44 44', '$argon2id$v=19$m=65536,t=2,p=1$fXKQfHvZRwQ+O5ZxcpjcRw$t9W4ZPkrYhUT4dikG82dTwyUx+qPJ4BaSPvGGDfrHm8'),
+(83, 'f', 'f', 'f@f.f', '55 55 55 55 55', '$argon2id$v=19$m=65536,t=2,p=1$dnN6MQr/DiZcoboDnIjUEw$751Q7GNko7ulXC0H8Ji3oIjZI+99r6P3GLKK6QOmpDo'),
+(84, 'g', 'g', 'g@g.g', '66 66 66 66 66', '$argon2id$v=19$m=65536,t=2,p=1$2nYQJhzBvLiUTYsfoq4bJg$5fNhDJG9gM0HEkp4xotwBhybDUuY0qrSZUuHEXj+wK4'),
+(85, 'h', 'h', 'h@h.h', '77 77 77 77 77', '$argon2id$v=19$m=65536,t=2,p=1$Drg7JifoJQiHq3+Gq4SGAQ$76Ius1rlYIP2dYAz1uii5jevW8u7fQi+iIFrfOrqajc');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order`
+-- Structure de la table `order`
 --
 
 CREATE TABLE `order` (
@@ -147,7 +195,7 @@ CREATE TABLE `order` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_item`
+-- Structure de la table `order_item`
 --
 
 CREATE TABLE `order_item` (
@@ -162,7 +210,7 @@ CREATE TABLE `order_item` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `postal_code`
+-- Structure de la table `postal_code`
 --
 
 CREATE TABLE `postal_code` (
@@ -174,7 +222,7 @@ CREATE TABLE `postal_code` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
 
 --
--- Dumping data for table `postal_code`
+-- Déchargement des données de la table `postal_code`
 --
 
 INSERT INTO `postal_code` (`postal_code_id`, `city`, `postal_code`, `department`, `INSEE`) VALUES
@@ -43404,45 +43452,45 @@ INSERT INTO `postal_code` (`postal_code_id`, `city`, `postal_code`, `department`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product`
+-- Structure de la table `product`
 --
 
 CREATE TABLE `product` (
   `product_id` int UNSIGNED NOT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `category_id` int NOT NULL,
-  `brand_id` int NOT NULL,
-  `description` text COLLATE utf8mb4_general_ci NOT NULL,
-  `material` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `coleur` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `brand` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `material` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `stock` int NOT NULL,
   `average_rating` decimal(2,1) NOT NULL,
   `number_of_ratings` int NOT NULL,
   `vendor_code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `image` varchar(350) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
+  `images` varchar(350) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `product`
+-- Déchargement des données de la table `product`
 --
 
-INSERT INTO `product` (`product_id`, `name`, `category_id`, `brand`, `description`, `material`, `color`, `price`, `stock`, `average_rating`, `number_of_ratings`, `vendor_code`, `image`) VALUES
-(1, 'Chaise de jeu ergonomique avec repose-pieds', 1, 'ProGamer', 'La chaise gaming  est dotée d\'un support lombaire amovible, qui peut protéger efficacement la colonne vertébrale et le cou. L\'oreiller lombaire avec fonction de massage produit plus de 20000 vibrations par heure pour soulager efficacement la fatigue pendant un travail ou un gaming. L\'oreiller lombaire a un câble USB pour se connecter à la prise de courant. L\'interrupteur sur le cordon vous permet d\'activer et de désactiver la fonction de massagePOSTURE CONFORTABLE - Il s\'agit d\'une véritable chaise gamer pour les passionnés de gamers! Ce chaise gaming massante offre un soutien total de la tête aux pieds. L\'angle du dossier peut être facilement ajusté de 90° à 135°. Le repose-pieds, l\'appui-tête et l\'oreiller lombaire vous permettent de vous allonger en attendant que votre fête soit enfin en ligne. Le dossier et les accoudoirs sont entièrement rembourrés de éponge pour fournir un soutien adéquat pour la colonne vertébrale et les coudesREMBOURRÉ - Le dossier et les accoudoirs sont en éponge entièrement élastique et ne se déforment pas, vous pouvez donc profiter longtemps de cette siege gaming. La selle est en éponge de 8 cm d\'épaisseur qui offre une densité d\'assise constante pour les longues sessions. Le cuir PU perforé avec un aspect fibre de carbone assure la respirabilité pour les joueurs à long terme. Nos chaise gaming massage avec motif en V de l\'appui-tête au soutien lombaire, symbolisant la victoire', 'Cuir PU', 'Rouge', '249.99', 50, '0.0', 0, 'CHS-WD-001', '{\r\n  \"main_image\": \"/assets/img/products/product_1_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_1_image_1.jpg\",\r\n    \"/assets/img/products/product_1_image_2.jpg\"\r\n  ]\r\n}'),
-(2, 'Chaise de gaming haute performance', 1, 'ProGamer', 'Confort similaire au canapé : le coussin d\'assise de cette chaise de jeu est composé de ressorts ensachés et de mousse moulée qui assurent la même élasticité et le même confort qu\'un canapé. Les ressorts répartissent mieux la pression sur le coussin d\'assise et rendent la conduite plus confortable et ergonomique.Tissu hautement respirant : le matériau de surface de la chaise de jeu est composé d\'un tissu en maille hautement respirant avec une bonne dissipation de la chaleur. Même en été chaud, vous ne vous sentirez pas étouffé lorsque vous êtes assis sur la chaise. En outre, ce tissu est plus élastique et le corps est soutenu lorsque vous êtes assis, ce qui permet un travail plus efficace.[Garantie de haute qualité] Nous avons amélioré la fixation du dossier de cette table de jeu et de cette chaise. Le dossier est fixé avec des plaques en acier et résiste aux chocs de plus de 300 livres. Les vis de fixation ont une forme triangulaire, ce qui améliore considérablement la stabilité du dossier.', 'Mesh respirant', 'Vert', '199.99', 30, '0.0', 0, 'CHS-DS-002', '{\r\n  \"main_image\": \"/assets/img/products//product_2_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_2_image_1.jpg\",\r\n    \"/assets/img/products/product_2_image_2.jpg\",\r\n    \"/assets/img/products/product_2_image_3.jpg\"\r\n  ]\r\n}'),
-(3, 'Chaise de jeu racing style avec support lombaire', 1, 'SpeedMaster', 'La chaise gaming  est dotée d\'un support lombaire amovible, qui peut protéger efficacement la colonne vertébrale et le cou. L\'oreiller lombaire avec fonction de massage produit plus de 20000 vibrations par heure pour soulager efficacement la fatigue pendant un travail ou un gaming. L\'oreiller lombaire a un câble USB pour se connecter à la prise de courant. L\'interrupteur sur le cordon vous permet d\'activer et de désactiver la fonction de massagePOSTURE CONFORTABLE - Il s\'agit d\'une véritable chaise gamer pour les passionnés de gamers! Ce chaise gaming massante offre un soutien total de la tête aux pieds. L\'angle du dossier peut être facilement ajusté de 90° à 135°. Le repose-pieds, l\'appui-tête et l\'oreiller lombaire vous permettent de vous allonger en attendant que votre fête soit enfin en ligne. Le dossier et les accoudoirs sont entièrement rembourrés de éponge pour fournir un soutien adéquat pour la colonne vertébrale et les coudesREMBOURRÉ - Le dossier et les accoudoirs sont en éponge entièrement élastique et ne se déforment pas, vous pouvez donc profiter longtemps de cette siege gaming. La selle est en éponge de 8 cm d\'épaisseur qui offre une densité d\'assise constante pour les longues sessions. Le cuir PU perforé avec un aspect fibre de carbone assure la respirabilité pour les joueurs à long terme. Nos chaise gaming massage avec motif en V de l\'appui-tête au soutien lombaire, symbolisant la victoire', 'Cuir PU', 'Noir', '179.99', 40, '0.0', 0, 'CHS-DS-003', '{\r\n  \"main_image\": \"/assets/img/products/product_3_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_3_image_1.jpg\",\r\n    \"/assets/img/products/product_3_image_2.jpg\",\r\n    \"/assets/img/products/product_3_image_3.jpg\",\r\n    \"/assets/img/products/product_3_image_4.jpg\"\r\n  ]\r\n}'),
-(4, 'Chaise de gaming XL pour les joueurs sérieux', 1, 'EliteGamer', 'Confort similaire au canapé : le coussin d\'assise de cette chaise de jeu est composé de ressorts ensachés et de mousse moulée qui assurent la même élasticité et le même confort qu\'un canapé. Les ressorts répartissent mieux la pression sur le coussin d\'assise et rendent la conduite plus confortable et ergonomique.Tissu hautement respirant : le matériau de surface de la chaise de jeu est composé d\'un tissu en maille hautement respirant avec une bonne dissipation de la chaleur. Même en été chaud, vous ne vous sentirez pas étouffé lorsque vous êtes assis sur la chaise. En outre, ce tissu est plus élastique et le corps est soutenu lorsque vous êtes assis, ce qui permet un travail plus efficace.[Garantie de haute qualité] Nous avons amélioré la fixation du dossier de cette table de jeu et de cette chaise. Le dossier est fixé avec des plaques en acier et résiste aux chocs de plus de 300 livres. Les vis de fixation ont une forme triangulaire, ce qui améliore considérablement la stabilité du dossier.', 'Cuir PU', 'Noir', '299.99', 20, '0.0', 0, 'CHS-DS-004', '{\r\n  \"main_image\": \"/assets/img/products/product_4_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_4_image_1.jpg\",\r\n    \"/assets/img/products/product_4_image_2.jpg\",\r\n    \"/assets/img/products/product_4_image_3.jpg\",\r\n    \"/assets/img/products/product_4_image_4.jpg\"\r\n  ]\r\n}'),
-(5, 'Chaise de bureau gaming professionnelle', 1, 'MasterGamer', 'La chaise gaming  est dotée d\'un support lombaire amovible, qui peut protéger efficacement la colonne vertébrale et le cou. L\'oreiller lombaire avec fonction de massage produit plus de 20000 vibrations par heure pour soulager efficacement la fatigue pendant un travail ou un gaming. L\'oreiller lombaire a un câble USB pour se connecter à la prise de courant. L\'interrupteur sur le cordon vous permet d\'activer et de désactiver la fonction de massagePOSTURE CONFORTABLE - Il s\'agit d\'une véritable chaise gamer pour les passionnés de gamers! Ce chaise gaming massante offre un soutien total de la tête aux pieds. L\'angle du dossier peut être facilement ajusté de 90° à 135°. Le repose-pieds, l\'appui-tête et l\'oreiller lombaire vous permettent de vous allonger en attendant que votre fête soit enfin en ligne. Le dossier et les accoudoirs sont entièrement rembourrés de éponge pour fournir un soutien adéquat pour la colonne vertébrale et les coudesREMBOURRÉ - Le dossier et les accoudoirs sont en éponge entièrement élastique et ne se déforment pas, vous pouvez donc profiter longtemps de cette siege gaming. La selle est en éponge de 8 cm d\'épaisseur qui offre une densité d\'assise constante pour les longues sessions. Le cuir PU perforé avec un aspect fibre de carbone assure la respirabilité pour les joueurs à long terme. Nos chaise gaming massage avec motif en V de l\'appui-tête au soutien lombaire, symbolisant la victoire', 'Mesh respirant', 'Gris', '229.99', 25, '0.0', 0, 'CHS-DS-005', '{\r\n  \"main_image\": \"/assets/img/products/product_5_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_5_image_1.jpg\",\r\n    \"/assets/img/products/product_5_image_2.jpg\",\r\n    \"/assets/img/products/product_5_image_3.jpg\",\r\n    \"/assets/img/products/product_5_image_4.jpg\"\r\n  ]\r\n}'),
-(6, 'Chaise de jeu convertible en lit', 1, 'DreamGamer', 'Confort similaire au canapé : le coussin d\'assise de cette chaise de jeu est composé de ressorts ensachés et de mousse moulée qui assurent la même élasticité et le même confort qu\'un canapé. Les ressorts répartissent mieux la pression sur le coussin d\'assise et rendent la conduite plus confortable et ergonomique.Tissu hautement respirant : le matériau de surface de la chaise de jeu est composé d\'un tissu en maille hautement respirant avec une bonne dissipation de la chaleur. Même en été chaud, vous ne vous sentirez pas étouffé lorsque vous êtes assis sur la chaise. En outre, ce tissu est plus élastique et le corps est soutenu lorsque vous êtes assis, ce qui permet un travail plus efficace.[Garantie de haute qualité] Nous avons amélioré la fixation du dossier de cette table de jeu et de cette chaise. Le dossier est fixé avec des plaques en acier et résiste aux chocs de plus de 300 livres. Les vis de fixation ont une forme triangulaire, ce qui améliore considérablement la stabilité du dossier.', 'Tissu', 'Gris', '349.99', 15, '0.0', 0, 'CHS-DS-006', '{\r\n  \"main_image\": \"/assets/img/products/product_6_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_6_image_1.jpg\",\r\n    \"/assets/img/products/product_6_image_2.jpg\",\r\n    \"/assets/img/products/product_6_image_3.jpg\",\r\n    \"/assets/img/products/product_6_image_4.jpg\"\r\n  ]\r\n}'),
-(7, 'Chaise de gaming rétro avec design vintage', 1, 'RetroGamer', '【Plus professionnel】 Conçu pour les joueurs. Le dossier ergonomique peut fournir un bon soutien à la colonne vertébrale du joueur, ce qui peut réduire efficacement la pression sur votre dos et votre cou, vous permettant de vous sentir moins fatigué pendant les longues sessions de jeu.【Plus flexible】 Cette fauteuil gamer de jeu dispose d\'une hauteur réglable de 8 cm et d\'un angle d\'inclinaison de 90° à 135° afin que vous puissiez facilement trouver la position assise qui vous convient. L\'angle de pivotement de 360° vous permet de vous déplacer librement.【Des matériaux de meilleure qualité】 Le coussin, le dossier, le coussin lombaire et l\'appui-tête de la siege gamer de jeu sont tous fabriqués avec un rembourrage en mousse haute densité, et le cuir synthétique durable est facile à nettoyer et résistant à la déformation. Le ressort à gaz haut de gamme peut facilement supporter 120 kg.', 'Vinyle', 'Rouge', '189.99', 35, '0.0', 0, 'CHS-DS-007', '{\r\n  \"main_image\": \"/assets/img/products/product_7_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_7_image_1.jpg\",\r\n    \"/assets/img/products/product_7_image_2.jpg\",\r\n    \"/assets/img/products/product_7_image_3.jpg\"\r\n  ]\r\n}'),
-(8, 'Chaise de gaming camouflage', 1, 'AdventureGame', 'Confort similaire au canapé : le coussin d\'assise de cette chaise de jeu est composé de ressorts ensachés et de mousse moulée qui assurent la même élasticité et le même confort qu\'un canapé. Les ressorts répartissent mieux la pression sur le coussin d\'assise et rendent la conduite plus confortable et ergonomique.Tissu hautement respirant : le matériau de surface de la chaise de jeu est composé d\'un tissu en maille hautement respirant avec une bonne dissipation de la chaleur. Même en été chaud, vous ne vous sentirez pas étouffé lorsque vous êtes assis sur la chaise. En outre, ce tissu est plus élastique et le corps est soutenu lorsque vous êtes assis, ce qui permet un travail plus efficace.[Garantie de haute qualité] Nous avons amélioré la fixation du dossier de cette table de jeu et de cette chaise. Le dossier est fixé avec des plaques en acier et résiste aux chocs de plus de 300 livres. Les vis de fixation ont une forme triangulaire, ce qui améliore considérablement la stabilité du dossier.', 'Cuir PU', 'Vert', '209.99', 15, '0.0', 0, 'CHS-DS-008', '{\r\n  \"main_image\": \"/assets/img/products/product_8_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_8_image_1.jpg\",\r\n    \"/assets/img/products/product_8_image_2.jpg\",\r\n    \"/assets/img/products/product_8_image_3.jpg\"\r\n  ]\r\n}'),
-(9, 'Chaise de jeu design futuriste', 1, 'FuturaGamer', 'La chaise gaming  est dotée d\'un support lombaire amovible, qui peut protéger efficacement la colonne vertébrale et le cou. L\'oreiller lombaire avec fonction de massage produit plus de 20000 vibrations par heure pour soulager efficacement la fatigue pendant un travail ou un gaming. L\'oreiller lombaire a un câble USB pour se connecter à la prise de courant. L\'interrupteur sur le cordon vous permet d\'activer et de désactiver la fonction de massagePOSTURE CONFORTABLE - Il s\'agit d\'une véritable chaise gamer pour les passionnés de gamers! Ce chaise gaming massante offre un soutien total de la tête aux pieds. L\'angle du dossier peut être facilement ajusté de 90° à 135°. Le repose-pieds, l\'appui-tête et l\'oreiller lombaire vous permettent de vous allonger en attendant que votre fête soit enfin en ligne. Le dossier et les accoudoirs sont entièrement rembourrés de éponge pour fournir un soutien adéquat pour la colonne vertébrale et les coudesREMBOURRÉ - Le dossier et les accoudoirs sont en éponge entièrement élastique et ne se déforment pas, vous pouvez donc profiter longtemps de cette siege gaming. La selle est en éponge de 8 cm d\'épaisseur qui offre une densité d\'assise constante pour les longues sessions. Le cuir PU perforé avec un aspect fibre de carbone assure la respirabilité pour les joueurs à long terme. Nos chaise gaming massage avec motif en V de l\'appui-tête au soutien lombaire, symbolisant la victoire', 'Cuir PU', 'Noir', '399.99', 15, '0.0', 0, 'CHS-DS-009', '{\r\n  \"main_image\": \"/assets/img/products/product_9_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_9_image_1.jpg\",\r\n    \"/assets/img/products/product_9_image_2.jpg\",\r\n    \"/assets/img/products/product_9_image_3.jpg\",\r\n    \"/assets/img/products/product_9_image_4.jpg\"\r\n  ]\r\n}'),
-(10, 'Chaise de gaming avec système de massage intégré', 1, 'RelaxGamer', '【Plus professionnel】 Conçu pour les joueurs. Le dossier ergonomique peut fournir un bon soutien à la colonne vertébrale du joueur, ce qui peut réduire efficacement la pression sur votre dos et votre cou, vous permettant de vous sentir moins fatigué pendant les longues sessions de jeu.【Plus flexible】 Cette fauteuil gamer de jeu dispose d\'une hauteur réglable de 8 cm et d\'un angle d\'inclinaison de 90° à 135° afin que vous puissiez facilement trouver la position assise qui vous convient. L\'angle de pivotement de 360° vous permet de vous déplacer librement.【Des matériaux de meilleure qualité】 Le coussin, le dossier, le coussin lombaire et l\'appui-tête de la siege gamer de jeu sont tous fabriqués avec un rembourrage en mousse haute densité, et le cuir synthétique durable est facile à nettoyer et résistant à la déformation. Le ressort à gaz haut de gamme peut facilement supporter 120 kg.', 'Cuir PU', 'Noir', '299.99', 20, '0.0', 0, 'CHS-DS-010', '{\r\n  \"main_image\": \"/assets/img/products/product_10_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_10_image_1.jpg\",\r\n    \"/assets/img/products/product_10_image_2.jpg\",\r\n    \"/assets/img/products/product_10_image_3.jpg\",\r\n    \"/assets/img/products/product_10_image_4.jpg\"\r\n  ]\r\n}');
+INSERT INTO `product` (`product_id`, `name`, `category_id`, `brand`, `description`, `material`, `color`, `price`, `stock`, `average_rating`, `number_of_ratings`, `vendor_code`, `images`) VALUES
+(1, 'Chaise de jeu ergonomique avec repose-pieds', 1, 'ProGamer', 'La chaise gaming  est dotée d\'un support lombaire amovible, qui peut protéger efficacement la colonne vertébrale et le cou. L\'oreiller lombaire avec fonction de massage produit plus de 20000 vibrations par heure pour soulager efficacement la fatigue pendant un travail ou un gaming. L\'oreiller lombaire a un câble USB pour se connecter à la prise de courant. L\'interrupteur sur le cordon vous permet d\'activer et de désactiver la fonction de massagePOSTURE CONFORTABLE - Il s\'agit d\'une véritable chaise gamer pour les passionnés de gamers! Ce chaise gaming massante offre un soutien total de la tête aux pieds. L\'angle du dossier peut être facilement ajusté de 90° à 135°. Le repose-pieds, l\'appui-tête et l\'oreiller lombaire vous permettent de vous allonger en attendant que votre fête soit enfin en ligne. Le dossier et les accoudoirs sont entièrement rembourrés de éponge pour fournir un soutien adéquat pour la colonne vertébrale et les coudesREMBOURRÉ - Le dossier et les accoudoirs sont en éponge entièrement élastique et ne se déforment pas, vous pouvez donc profiter longtemps de cette siege gaming. La selle est en éponge de 8 cm d\'épaisseur qui offre une densité d\'assise constante pour les longues sessions. Le cuir PU perforé avec un aspect fibre de carbone assure la respirabilité pour les joueurs à long terme. Nos chaise gaming massage avec motif en V de l\'appui-tête au soutien lombaire, symbolisant la victoire', 'Cuir PU', 'Rouge', 249.99, 50, 0.0, 0, 'CHS-WD-001', '{\r\n  \"main_image\": \"/assets/img/products/product_1_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_1_image_1.jpg\",\r\n    \"/assets/img/products/product_1_image_2.jpg\"\r\n  ]\r\n}'),
+(2, 'Chaise de gaming haute performance', 1, 'ProGamer', 'Confort similaire au canapé : le coussin d\'assise de cette chaise de jeu est composé de ressorts ensachés et de mousse moulée qui assurent la même élasticité et le même confort qu\'un canapé. Les ressorts répartissent mieux la pression sur le coussin d\'assise et rendent la conduite plus confortable et ergonomique.Tissu hautement respirant : le matériau de surface de la chaise de jeu est composé d\'un tissu en maille hautement respirant avec une bonne dissipation de la chaleur. Même en été chaud, vous ne vous sentirez pas étouffé lorsque vous êtes assis sur la chaise. En outre, ce tissu est plus élastique et le corps est soutenu lorsque vous êtes assis, ce qui permet un travail plus efficace.[Garantie de haute qualité] Nous avons amélioré la fixation du dossier de cette table de jeu et de cette chaise. Le dossier est fixé avec des plaques en acier et résiste aux chocs de plus de 300 livres. Les vis de fixation ont une forme triangulaire, ce qui améliore considérablement la stabilité du dossier.', 'Mesh respirant', 'Vert', 199.99, 30, 0.0, 0, 'CHS-DS-002', '{\r\n  \"main_image\": \"/assets/img/products//product_2_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_2_image_1.jpg\",\r\n    \"/assets/img/products/product_2_image_2.jpg\",\r\n    \"/assets/img/products/product_2_image_3.jpg\"\r\n  ]\r\n}'),
+(3, 'Chaise de jeu racing style avec support lombaire', 1, 'SpeedMaster', 'La chaise gaming  est dotée d\'un support lombaire amovible, qui peut protéger efficacement la colonne vertébrale et le cou. L\'oreiller lombaire avec fonction de massage produit plus de 20000 vibrations par heure pour soulager efficacement la fatigue pendant un travail ou un gaming. L\'oreiller lombaire a un câble USB pour se connecter à la prise de courant. L\'interrupteur sur le cordon vous permet d\'activer et de désactiver la fonction de massagePOSTURE CONFORTABLE - Il s\'agit d\'une véritable chaise gamer pour les passionnés de gamers! Ce chaise gaming massante offre un soutien total de la tête aux pieds. L\'angle du dossier peut être facilement ajusté de 90° à 135°. Le repose-pieds, l\'appui-tête et l\'oreiller lombaire vous permettent de vous allonger en attendant que votre fête soit enfin en ligne. Le dossier et les accoudoirs sont entièrement rembourrés de éponge pour fournir un soutien adéquat pour la colonne vertébrale et les coudesREMBOURRÉ - Le dossier et les accoudoirs sont en éponge entièrement élastique et ne se déforment pas, vous pouvez donc profiter longtemps de cette siege gaming. La selle est en éponge de 8 cm d\'épaisseur qui offre une densité d\'assise constante pour les longues sessions. Le cuir PU perforé avec un aspect fibre de carbone assure la respirabilité pour les joueurs à long terme. Nos chaise gaming massage avec motif en V de l\'appui-tête au soutien lombaire, symbolisant la victoire', 'Cuir PU', 'Noir', 179.99, 40, 0.0, 0, 'CHS-DS-003', '{\r\n  \"main_image\": \"/assets/img/products/product_3_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_3_image_1.jpg\",\r\n    \"/assets/img/products/product_3_image_2.jpg\",\r\n    \"/assets/img/products/product_3_image_3.jpg\",\r\n    \"/assets/img/products/product_3_image_4.jpg\"\r\n  ]\r\n}'),
+(4, 'Chaise de gaming XL pour les joueurs sérieux', 1, 'EliteGamer', 'Confort similaire au canapé : le coussin d\'assise de cette chaise de jeu est composé de ressorts ensachés et de mousse moulée qui assurent la même élasticité et le même confort qu\'un canapé. Les ressorts répartissent mieux la pression sur le coussin d\'assise et rendent la conduite plus confortable et ergonomique.Tissu hautement respirant : le matériau de surface de la chaise de jeu est composé d\'un tissu en maille hautement respirant avec une bonne dissipation de la chaleur. Même en été chaud, vous ne vous sentirez pas étouffé lorsque vous êtes assis sur la chaise. En outre, ce tissu est plus élastique et le corps est soutenu lorsque vous êtes assis, ce qui permet un travail plus efficace.[Garantie de haute qualité] Nous avons amélioré la fixation du dossier de cette table de jeu et de cette chaise. Le dossier est fixé avec des plaques en acier et résiste aux chocs de plus de 300 livres. Les vis de fixation ont une forme triangulaire, ce qui améliore considérablement la stabilité du dossier.', 'Cuir PU', 'Noir', 299.99, 20, 0.0, 0, 'CHS-DS-004', '{\r\n  \"main_image\": \"/assets/img/products/product_4_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_4_image_1.jpg\",\r\n    \"/assets/img/products/product_4_image_2.jpg\",\r\n    \"/assets/img/products/product_4_image_3.jpg\",\r\n    \"/assets/img/products/product_4_image_4.jpg\"\r\n  ]\r\n}'),
+(5, 'Chaise de bureau gaming professionnelle', 1, 'MasterGamer', 'La chaise gaming  est dotée d\'un support lombaire amovible, qui peut protéger efficacement la colonne vertébrale et le cou. L\'oreiller lombaire avec fonction de massage produit plus de 20000 vibrations par heure pour soulager efficacement la fatigue pendant un travail ou un gaming. L\'oreiller lombaire a un câble USB pour se connecter à la prise de courant. L\'interrupteur sur le cordon vous permet d\'activer et de désactiver la fonction de massagePOSTURE CONFORTABLE - Il s\'agit d\'une véritable chaise gamer pour les passionnés de gamers! Ce chaise gaming massante offre un soutien total de la tête aux pieds. L\'angle du dossier peut être facilement ajusté de 90° à 135°. Le repose-pieds, l\'appui-tête et l\'oreiller lombaire vous permettent de vous allonger en attendant que votre fête soit enfin en ligne. Le dossier et les accoudoirs sont entièrement rembourrés de éponge pour fournir un soutien adéquat pour la colonne vertébrale et les coudesREMBOURRÉ - Le dossier et les accoudoirs sont en éponge entièrement élastique et ne se déforment pas, vous pouvez donc profiter longtemps de cette siege gaming. La selle est en éponge de 8 cm d\'épaisseur qui offre une densité d\'assise constante pour les longues sessions. Le cuir PU perforé avec un aspect fibre de carbone assure la respirabilité pour les joueurs à long terme. Nos chaise gaming massage avec motif en V de l\'appui-tête au soutien lombaire, symbolisant la victoire', 'Mesh respirant', 'Gris', 229.99, 25, 0.0, 0, 'CHS-DS-005', '{\r\n  \"main_image\": \"/assets/img/products/product_5_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_5_image_1.jpg\",\r\n    \"/assets/img/products/product_5_image_2.jpg\",\r\n    \"/assets/img/products/product_5_image_3.jpg\",\r\n    \"/assets/img/products/product_5_image_4.jpg\"\r\n  ]\r\n}'),
+(6, 'Chaise de jeu convertible en lit', 1, 'DreamGamer', 'Confort similaire au canapé : le coussin d\'assise de cette chaise de jeu est composé de ressorts ensachés et de mousse moulée qui assurent la même élasticité et le même confort qu\'un canapé. Les ressorts répartissent mieux la pression sur le coussin d\'assise et rendent la conduite plus confortable et ergonomique.Tissu hautement respirant : le matériau de surface de la chaise de jeu est composé d\'un tissu en maille hautement respirant avec une bonne dissipation de la chaleur. Même en été chaud, vous ne vous sentirez pas étouffé lorsque vous êtes assis sur la chaise. En outre, ce tissu est plus élastique et le corps est soutenu lorsque vous êtes assis, ce qui permet un travail plus efficace.[Garantie de haute qualité] Nous avons amélioré la fixation du dossier de cette table de jeu et de cette chaise. Le dossier est fixé avec des plaques en acier et résiste aux chocs de plus de 300 livres. Les vis de fixation ont une forme triangulaire, ce qui améliore considérablement la stabilité du dossier.', 'Tissu', 'Gris', 349.99, 15, 0.0, 0, 'CHS-DS-006', '{\r\n  \"main_image\": \"/assets/img/products/product_6_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_6_image_1.jpg\",\r\n    \"/assets/img/products/product_6_image_2.jpg\",\r\n    \"/assets/img/products/product_6_image_3.jpg\",\r\n    \"/assets/img/products/product_6_image_4.jpg\"\r\n  ]\r\n}'),
+(7, 'Chaise de gaming rétro avec design vintage', 1, 'RetroGamer', '【Plus professionnel】 Conçu pour les joueurs. Le dossier ergonomique peut fournir un bon soutien à la colonne vertébrale du joueur, ce qui peut réduire efficacement la pression sur votre dos et votre cou, vous permettant de vous sentir moins fatigué pendant les longues sessions de jeu.【Plus flexible】 Cette fauteuil gamer de jeu dispose d\'une hauteur réglable de 8 cm et d\'un angle d\'inclinaison de 90° à 135° afin que vous puissiez facilement trouver la position assise qui vous convient. L\'angle de pivotement de 360° vous permet de vous déplacer librement.【Des matériaux de meilleure qualité】 Le coussin, le dossier, le coussin lombaire et l\'appui-tête de la siege gamer de jeu sont tous fabriqués avec un rembourrage en mousse haute densité, et le cuir synthétique durable est facile à nettoyer et résistant à la déformation. Le ressort à gaz haut de gamme peut facilement supporter 120 kg.', 'Vinyle', 'Rouge', 189.99, 35, 0.0, 0, 'CHS-DS-007', '{\r\n  \"main_image\": \"/assets/img/products/product_7_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_7_image_1.jpg\",\r\n    \"/assets/img/products/product_7_image_2.jpg\",\r\n    \"/assets/img/products/product_7_image_3.jpg\"\r\n  ]\r\n}'),
+(8, 'Chaise de gaming camouflage', 1, 'AdventureGame', 'Confort similaire au canapé : le coussin d\'assise de cette chaise de jeu est composé de ressorts ensachés et de mousse moulée qui assurent la même élasticité et le même confort qu\'un canapé. Les ressorts répartissent mieux la pression sur le coussin d\'assise et rendent la conduite plus confortable et ergonomique.Tissu hautement respirant : le matériau de surface de la chaise de jeu est composé d\'un tissu en maille hautement respirant avec une bonne dissipation de la chaleur. Même en été chaud, vous ne vous sentirez pas étouffé lorsque vous êtes assis sur la chaise. En outre, ce tissu est plus élastique et le corps est soutenu lorsque vous êtes assis, ce qui permet un travail plus efficace.[Garantie de haute qualité] Nous avons amélioré la fixation du dossier de cette table de jeu et de cette chaise. Le dossier est fixé avec des plaques en acier et résiste aux chocs de plus de 300 livres. Les vis de fixation ont une forme triangulaire, ce qui améliore considérablement la stabilité du dossier.', 'Cuir PU', 'Vert', 209.99, 15, 0.0, 0, 'CHS-DS-008', '{\r\n  \"main_image\": \"/assets/img/products/product_8_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_8_image_1.jpg\",\r\n    \"/assets/img/products/product_8_image_2.jpg\",\r\n    \"/assets/img/products/product_8_image_3.jpg\"\r\n  ]\r\n}'),
+(9, 'Chaise de jeu design futuriste', 1, 'FuturaGamer', 'La chaise gaming  est dotée d\'un support lombaire amovible, qui peut protéger efficacement la colonne vertébrale et le cou. L\'oreiller lombaire avec fonction de massage produit plus de 20000 vibrations par heure pour soulager efficacement la fatigue pendant un travail ou un gaming. L\'oreiller lombaire a un câble USB pour se connecter à la prise de courant. L\'interrupteur sur le cordon vous permet d\'activer et de désactiver la fonction de massagePOSTURE CONFORTABLE - Il s\'agit d\'une véritable chaise gamer pour les passionnés de gamers! Ce chaise gaming massante offre un soutien total de la tête aux pieds. L\'angle du dossier peut être facilement ajusté de 90° à 135°. Le repose-pieds, l\'appui-tête et l\'oreiller lombaire vous permettent de vous allonger en attendant que votre fête soit enfin en ligne. Le dossier et les accoudoirs sont entièrement rembourrés de éponge pour fournir un soutien adéquat pour la colonne vertébrale et les coudesREMBOURRÉ - Le dossier et les accoudoirs sont en éponge entièrement élastique et ne se déforment pas, vous pouvez donc profiter longtemps de cette siege gaming. La selle est en éponge de 8 cm d\'épaisseur qui offre une densité d\'assise constante pour les longues sessions. Le cuir PU perforé avec un aspect fibre de carbone assure la respirabilité pour les joueurs à long terme. Nos chaise gaming massage avec motif en V de l\'appui-tête au soutien lombaire, symbolisant la victoire', 'Cuir PU', 'Noir', 399.99, 15, 0.0, 0, 'CHS-DS-009', '{\r\n  \"main_image\": \"/assets/img/products/product_9_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_9_image_1.jpg\",\r\n    \"/assets/img/products/product_9_image_2.jpg\",\r\n    \"/assets/img/products/product_9_image_3.jpg\",\r\n    \"/assets/img/products/product_9_image_4.jpg\"\r\n  ]\r\n}'),
+(10, 'Chaise de gaming avec système de massage intégré', 1, 'RelaxGamer', '【Plus professionnel】 Conçu pour les joueurs. Le dossier ergonomique peut fournir un bon soutien à la colonne vertébrale du joueur, ce qui peut réduire efficacement la pression sur votre dos et votre cou, vous permettant de vous sentir moins fatigué pendant les longues sessions de jeu.【Plus flexible】 Cette fauteuil gamer de jeu dispose d\'une hauteur réglable de 8 cm et d\'un angle d\'inclinaison de 90° à 135° afin que vous puissiez facilement trouver la position assise qui vous convient. L\'angle de pivotement de 360° vous permet de vous déplacer librement.【Des matériaux de meilleure qualité】 Le coussin, le dossier, le coussin lombaire et l\'appui-tête de la siege gamer de jeu sont tous fabriqués avec un rembourrage en mousse haute densité, et le cuir synthétique durable est facile à nettoyer et résistant à la déformation. Le ressort à gaz haut de gamme peut facilement supporter 120 kg.', 'Cuir PU', 'Noir', 299.99, 20, 0.0, 0, 'CHS-DS-010', '{\r\n  \"main_image\": \"/assets/img/products/product_10_main_image.jpg\",\r\n  \"other_images\": [\r\n    \"/assets/img/products/product_10_image_1.jpg\",\r\n    \"/assets/img/products/product_10_image_2.jpg\",\r\n    \"/assets/img/products/product_10_image_3.jpg\",\r\n    \"/assets/img/products/product_10_image_4.jpg\"\r\n  ]\r\n}');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_review`
+-- Structure de la table `product_review`
 --
 
 CREATE TABLE `product_review` (
@@ -43455,121 +43503,36 @@ CREATE TABLE `product_review` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for dumped tables
+-- Index pour les tables déchargées
 --
 
 --
--- Indexes for table `adress`
+-- Index pour la table `adress`
 --
 ALTER TABLE `adress`
   ADD PRIMARY KEY (`adress_id`);
 
 --
--- Indexes for table `brand`
---
-ALTER TABLE `brand`
-  ADD PRIMARY KEY (`brand_id`);
-
---
--- Indexes for table `category`
---
-ALTER TABLE `category`
-  ADD PRIMARY KEY (`category_id`);
-
---
--- Indexes for table `customer`
+-- Index pour la table `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`customer_id`);
 
 --
--- Indexes for table `order`
---
-ALTER TABLE `order`
-  ADD PRIMARY KEY (`order_id`);
-
---
--- Indexes for table `order_item`
---
-ALTER TABLE `order_item`
-  ADD PRIMARY KEY (`order_item_id`);
-
---
--- Indexes for table `postal_code`
---
-ALTER TABLE `postal_code`
-  ADD PRIMARY KEY (`postal_code_id`),
-  ADD KEY `Codepos` (`postal_code`);
-
---
--- Indexes for table `product`
---
-ALTER TABLE `product`
-  ADD PRIMARY KEY (`product_id`);
-
---
--- Indexes for table `product_review`
---
-ALTER TABLE `product_review`
-  ADD PRIMARY KEY (`product_review_id`);
-
---
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT for table `adress`
+-- AUTO_INCREMENT pour la table `adress`
 --
 ALTER TABLE `adress`
-  MODIFY `adress_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `adress_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=498;
 
 --
--- AUTO_INCREMENT for table `brand`
---
-ALTER TABLE `brand`
-  MODIFY `brand_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `category`
---
-ALTER TABLE `category`
-  MODIFY `category_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `customer`
+-- AUTO_INCREMENT pour la table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customer_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `order`
---
-ALTER TABLE `order`
-  MODIFY `order_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `order_item`
---
-ALTER TABLE `order_item`
-  MODIFY `order_item_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `postal_code`
---
-ALTER TABLE `postal_code`
-  MODIFY `postal_code_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43182;
-
---
--- AUTO_INCREMENT for table `product`
---
-ALTER TABLE `product`
-  MODIFY `product_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `product_review`
---
-ALTER TABLE `product_review`
-  MODIFY `product_review_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `customer_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
