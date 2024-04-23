@@ -129,9 +129,14 @@ class CrudUser {
         return $city;
     }
 
-    public function createUser(){
-        $passwordHash = password_hash($this->password, PASSWORD_DEFAULT);
-        $this->password = $passwordHash;
+    public function createUser($name, $firstname, $mail, $phone, $adress, $postalCode, $city, $password){
+        $passwordHash = sodium_crypto_pwhash_str(
+            $password,
+            SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE,  // Nombre d'opérations pour la résistance aux attaques par force brute
+            SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE // Limite de mémoire pour la résistance aux attaques par force brute
+        );
+        $password = $passwordHash;
+
 
         $conn = Database::connect();
         
@@ -167,11 +172,11 @@ class CrudUser {
             $insertCustomer = $conn->prepare("INSERT INTO customer (`customer_last-name`, `customer_first-name`, email, phone, password) VALUES (:customer_last_name, :customer_first_name, :email, :phone, :password)");
             $insertCustomer->execute(
                 array(
-                    'customer_last_name' => $this->lastname,
-                    'customer_first_name' => $this->firstname,
-                    'email' => $this->email,
-                    'phone' => $this->phone,
-                    'password' => $this->password
+                    'customer_last_name' => $name,
+                    'customer_first_name' => $firstname,
+                    'email' => $mail,
+                    'phone' => $phone,
+                    'password' => $password
                 )
             );
         
@@ -191,15 +196,15 @@ class CrudUser {
                                             FROM postal_code WHERE postal_code = :postal_code");
             $insertAddress->execute(
                 array(
-                    'city' => $this->city,
-                    'postal_code' => $this->postal_code,
-                    'adress' => $this->adress,
+                    'city' => $city,
+                    'postal_code' => $postalCode,
+                    'adress' => $adress,
                     'customer_id' => $customerId
                 )
             );
 
-            $this->setCustomer_id($customerId);
-            $this->setFirstname($firstName);
+            $this->customer_id = $customerId;
+            $this->firstname = $firstName;
             // Commit des transactions
             $conn->commit();
         } catch(PDOException $e) {
