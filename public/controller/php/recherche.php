@@ -1,7 +1,8 @@
 <?php
-$conn = Database::connect();
+require('./classes/Database.class.php');
 
 try {
+    $conn = Database::connect();
     $stmt = $conn->prepare("SELECT * FROM product");
     $stmt->execute();
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -10,6 +11,7 @@ try {
 }
 
 $conn = null;
+
 
 header('Content-Type: application/json');
 echo json_encode($products);

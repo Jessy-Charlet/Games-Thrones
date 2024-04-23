@@ -15,6 +15,15 @@ $router->map('GET', '/rgpd', '/rgpd', 'rgpd');
 $router->map('GET', '/mention', '/mention', 'mention');
 $router->map('GET', '/contact', '/contact', 'contact');
 $router->map('GET', '/produit', '/product', 'produit');
+$router->map('GET', '/404', '/404', '404');
+$router->map('GET', '/panier', '/panier', 'panier');
+
+
+// route de page de traitement
+$router->map('POST', '/signUpControllerphp', '../public/controller/php/signUpController', 'signUpControllerphp');
+$router->map('POST', '/signInControllerphp', '../public/controller/php/signInController', 'signInControllerphp');
+$router->map('GET', '/deconnexion', '../public/controller/php/deconnexion', 'deconnexion');
+$router->map('POST', '/profilControllerphp', '../public/controller/php/profilController', 'profilControllerphp');
 
 
 function my_autoloader($class)
