@@ -16,37 +16,23 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        var values = {
-            email: email.value,
-            password: password.value
+        const formdata = new FormData();
+        formdata.append('email', email.value);
+        formdata.append('password', password.value);
+
+        const requestOptions = {
+            method: "POST",
+            header: "Content-Type: application/form-data",
+            body: formdata
         };
-        
-        var queryString = '';
-        for (var key in values) {
-            if (values.hasOwnProperty(key)) {
-                queryString += '&' + key + '=' + encodeURIComponent(values[key]);
-            }
-        }
-        fetch('controller/php/signInController.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: queryString
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text();
-        })
-        .then(data => {
-            var user = data['id'];
-            var firstName = data['firstName'];
-            //window.location.href = '/';
-        })
-        .catch(error => {
-            self.location = 'connexion?error=error'
-        })
+
+        fetch("http://localhost:8080/controller/php/signInController.php", requestOptions)
+            .then(response => response.text())
+            .then(() => {
+                window.location.href = '/';
+            })
+            .catch(error => 
+                self.location = 'inscription?error=error'
+            );
     });
 });

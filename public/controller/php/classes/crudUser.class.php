@@ -328,35 +328,26 @@ class CrudUser {
 
     public function connectionUser(string $mail, string $password){
         $conn = Database::connect();
-
-        if(isset($password)){
-            $passwordHash = sodium_crypto_pwhash_str(
-                $password,
-                SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE,  // Nombre d'opérations pour la résistance aux attaques par force brute
-                SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE // Limite de mémoire pour la résistance aux attaques par force brute
-            );
-            $password = $passwordHash;
-        }
-
+    
         try{
             $conn->beginTransaction();
-
-
-            $sql = $conn->prepare("SELECT * FROM customer WHERE email = :mail AND password = :password");
+    
+            $sql = $conn->prepare("SELECT * FROM customer WHERE email = :mail");
             $sql->execute(
                 array(
-                    'mail' => $mail,
-                    'password' => $password
+                    'mail' => $mail
                 )
             );
             $result = $sql->fetch(PDO::FETCH_ASSOC);
             if ($result){
-                $id = $result['customer_id'];
-                $firstName = $result['customer_first-name'];
-                $_SESSION['user'] = $id;
-                $_SESSION['userFirstName'] = $firstName;
-                $conn->commit();
-                return array('id' => $id, 'firstName' => $firstName);
+                $storedPasswordHash = $result['password'];
+                if (sodium_crypto_pwhash_str_verify($storedPasswordHash, $password)) {
+                    $customerId = $result['customer_id'];
+                    $firstName = $result['customer_first-name'];
+                    $this->customer_id = $customerId;
+                    $this->firstname = $firstName;
+                    $conn->commit();
+                }
             }
         }catch(PDOException $e) {
             // En cas d'erreur, annulation des transactions

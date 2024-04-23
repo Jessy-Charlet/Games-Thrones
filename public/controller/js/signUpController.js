@@ -94,6 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(() => {
                 window.location.href = '/';
             })
-            .catch(error => console.log("error", error));
+            .catch(error => 
+                self.location = 'inscription?error=error'
+            );
     });
 });
