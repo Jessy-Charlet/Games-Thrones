@@ -26,6 +26,7 @@ $(document).ready(function () {
             $(this).hide();
             $("#logo").addClass("logoMove");
             $("#navContainer").addClass("navContainerOpen")
+            document.getElementById("searchBar").focus();
         });
     }
 
