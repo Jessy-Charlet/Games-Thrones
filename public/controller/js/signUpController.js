@@ -71,9 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-<<<<<<< Updated upstream
-        document.getElementById('myForm').submit();
-=======
+    
         const myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/form-data');
 
@@ -99,7 +97,5 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = '/';
         })
         .catch(error => console.log("error", error));
-        
->>>>>>> Stashed changes
     });
 });

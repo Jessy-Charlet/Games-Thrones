@@ -177,9 +177,6 @@ class CrudUser {
         
             // Récupération de l'ID du client inséré
             $customerId = $conn->lastInsertId();
-<<<<<<< Updated upstream
-        
-=======
             $sql = $conn->prepare("SELECT `customer_first-name` FROM customer WHERE customer_id = :id");
             $sql->execute(
                 array(
@@ -188,7 +185,6 @@ class CrudUser {
             );
             $firstName = $sql->fetch(PDO::FETCH_ASSOC)['customer_first-name'];
 
->>>>>>> Stashed changes
             // Insertion de l'adresse
             $insertAddress = $conn->prepare("INSERT INTO adress (city, postal_code, adress, customer_id, postal_code_id) 
                                             SELECT :city, :postal_code, :adress, :customer_id, postal_code_id 
@@ -201,15 +197,9 @@ class CrudUser {
                     'customer_id' => $customerId
                 )
             );
-<<<<<<< Updated upstream
-            session_start();
-            $_SESSION['user'] = $customerId;
-            header('Location: '.$router->generate('accueil'));
-=======
 
             $this->setCustomer_id($customerId);
             $this->setFirstname($firstName);
->>>>>>> Stashed changes
             // Commit des transactions
             $conn->commit();
         } catch(PDOException $e) {
@@ -330,8 +320,6 @@ class CrudUser {
             )
         );
     }
-<<<<<<< Updated upstream
-=======
 
     public function connectionUser(string $mail, string $password){
         $conn = Database::connect();
@@ -371,5 +359,4 @@ class CrudUser {
             throw $e;
         }
     }
->>>>>>> Stashed changes
 }
