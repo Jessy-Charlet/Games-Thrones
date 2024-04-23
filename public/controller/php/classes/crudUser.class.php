@@ -214,7 +214,7 @@ class CrudUser {
         }
     }
 
-    public function updateUser(int $id, $mail, $phone, $password, $adress, string $name, string $firstname, int $postalCode, string $city){
+ /*   public function updateUser(int $id, $mail, $phone, $password, $adress, string $name, string $firstname, int $postalCode, string $city){
         $conn = Database::connect();
         $current_page_url = strtok($_SERVER['REQUEST_URI'] ?? '', '?');
 
@@ -294,7 +294,7 @@ class CrudUser {
             }
         }  
 
-    }
+    }*/
     
     public function delete($customer_id, $password){
         $conn = Database::connect();
