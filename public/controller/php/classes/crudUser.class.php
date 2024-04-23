@@ -260,11 +260,11 @@ class CrudUser {
                 $sql = $conn->prepare("UPDATE customer SET `customer_last-name` = :customer_last_name, `customer_first-name` = :customer_first_name, email = :email, phone = :phone, password = :password WHERE customer_id = :customer_id");
                 $sql->execute(
                     array(
-                        'customer_last_name' => $isNameChanged,
-                        'customer_first_name' => $isFirstnameChanged,
-                        'email' => $isEmailChanged,
-                        'phone' => $isPhoneChanged,
-                        'password' => $isPasswordChanged,
+                        'customer_last_name' => $name,
+                        'customer_first_name' => $firstname,
+                        'email' => $mail,
+                        'phone' => $phone,
+                        'password' => $password,
                         'customer_id' => $id
                     )
                 );
@@ -274,9 +274,9 @@ class CrudUser {
                 $sql = $conn->prepare("UPDATE adress SET city = :city, postal_code = :postal_code, adress = :adress WHERE customer_id = :customer_id");
                 $sql->execute(
                     array(
-                        'city' => $isCityChanged,
-                        'postal_code' => $isPostalCodeChanged,
-                        'adress' => $isAddressChanged,
+                        'city' => $city,
+                        'postal_code' => $postalCode,
+                        'adress' => $adress,
                         'customer_id' => $id
                     )
                 );
