@@ -10,6 +10,7 @@
     padding: 0;
     transition: all 200ms;
     z-index: 17;
+    user-select: none;
 
     .navLeft {
         justify-self: left;
