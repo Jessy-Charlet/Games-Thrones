@@ -129,9 +129,14 @@ class CrudUser {
         return $city;
     }
 
-    public function createUser(){
-        $passwordHash = password_hash($this->password, PASSWORD_DEFAULT);
-        $this->password = $passwordHash;
+    public function createUser($name, $firstname, $mail, $phone, $adress, $postalCode, $city, $password){
+        $passwordHash = sodium_crypto_pwhash_str(
+            $password,
+            SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE,  // Nombre d'opérations pour la résistance aux attaques par force brute
+            SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE // Limite de mémoire pour la résistance aux attaques par force brute
+        );
+        $password = $passwordHash;
+
 
         $conn = Database::connect();
         
@@ -167,19 +172,16 @@ class CrudUser {
             $insertCustomer = $conn->prepare("INSERT INTO customer (`customer_last-name`, `customer_first-name`, email, phone, password) VALUES (:customer_last_name, :customer_first_name, :email, :phone, :password)");
             $insertCustomer->execute(
                 array(
-                    'customer_last_name' => $this->lastname,
-                    'customer_first_name' => $this->firstname,
-                    'email' => $this->email,
-                    'phone' => $this->phone,
-                    'password' => $this->password
+                    'customer_last_name' => $name,
+                    'customer_first_name' => $firstname,
+                    'email' => $mail,
+                    'phone' => $phone,
+                    'password' => $password
                 )
             );
         
             // Récupération de l'ID du client inséré
             $customerId = $conn->lastInsertId();
-<<<<<<< Updated upstream
-        
-=======
             $sql = $conn->prepare("SELECT `customer_first-name` FROM customer WHERE customer_id = :id");
             $sql->execute(
                 array(
@@ -188,28 +190,21 @@ class CrudUser {
             );
             $firstName = $sql->fetch(PDO::FETCH_ASSOC)['customer_first-name'];
 
->>>>>>> Stashed changes
             // Insertion de l'adresse
             $insertAddress = $conn->prepare("INSERT INTO adress (city, postal_code, adress, customer_id, postal_code_id) 
                                             SELECT :city, :postal_code, :adress, :customer_id, postal_code_id 
                                             FROM postal_code WHERE postal_code = :postal_code");
             $insertAddress->execute(
                 array(
-                    'city' => $this->city,
-                    'postal_code' => $this->postal_code,
-                    'adress' => $this->adress,
+                    'city' => $city,
+                    'postal_code' => $postalCode,
+                    'adress' => $adress,
                     'customer_id' => $customerId
                 )
             );
-<<<<<<< Updated upstream
-            session_start();
-            $_SESSION['user'] = $customerId;
-            header('Location: '.$router->generate('accueil'));
-=======
 
-            $this->setCustomer_id($customerId);
-            $this->setFirstname($firstName);
->>>>>>> Stashed changes
+            $this->customer_id = $customerId;
+            $this->firstname = $firstName;
             // Commit des transactions
             $conn->commit();
         } catch(PDOException $e) {
@@ -330,40 +325,29 @@ class CrudUser {
             )
         );
     }
-<<<<<<< Updated upstream
-=======
 
     public function connectionUser(string $mail, string $password){
         $conn = Database::connect();
-
-        if(isset($password)){
-            $passwordHash = sodium_crypto_pwhash_str(
-                $password,
-                SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE,  // Nombre d'opérations pour la résistance aux attaques par force brute
-                SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE // Limite de mémoire pour la résistance aux attaques par force brute
-            );
-            $password = $passwordHash;
-        }
-
+    
         try{
             $conn->beginTransaction();
-
-
-            $sql = $conn->prepare("SELECT * FROM customer WHERE email = :mail AND password = :password");
+    
+            $sql = $conn->prepare("SELECT * FROM customer WHERE email = :mail");
             $sql->execute(
                 array(
-                    'mail' => $mail,
-                    'password' => $password
+                    'mail' => $mail
                 )
             );
             $result = $sql->fetch(PDO::FETCH_ASSOC);
             if ($result){
-                $id = $result['customer_id'];
-                $firstName = $result['customer_first-name'];
-                $_SESSION['user'] = $id;
-                $_SESSION['userFirstName'] = $firstName;
-                $conn->commit();
-                return array('id' => $id, 'firstName' => $firstName);
+                $storedPasswordHash = $result['password'];
+                if (sodium_crypto_pwhash_str_verify($storedPasswordHash, $password)) {
+                    $customerId = $result['customer_id'];
+                    $firstName = $result['customer_first-name'];
+                    $this->customer_id = $customerId;
+                    $this->firstname = $firstName;
+                    $conn->commit();
+                }
             }
         }catch(PDOException $e) {
             // En cas d'erreur, annulation des transactions
@@ -371,5 +355,4 @@ class CrudUser {
             throw $e;
         }
     }
->>>>>>> Stashed changes
 }

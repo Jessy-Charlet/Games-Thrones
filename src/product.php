@@ -24,8 +24,9 @@ class Product
     private $stock;
     private $average_rating;
     private $description;
+    private $image;
 
-    public function __construct($product_id, $name, $brand, $color, $material, $price, $stock, $average_rating, $description)
+    public function __construct($product_id, $name, $brand, $color, $material, $price, $stock, $average_rating, $description, $image)
     {
         $this->product_id = $product_id;
         $this->name = $name;
@@ -36,6 +37,7 @@ class Product
         $this->stock = $stock;
         $this->average_rating = $average_rating;
         $this->description = $description;
+        $this->image = $image;
     }
 
     public function getProductId()
@@ -82,6 +84,11 @@ class Product
     {
         return $this->description;
     }
+    
+    public function getImage()
+    {
+        return $this->image;
+    }
 
     // Mutateurs (setters)
     public function setPrice($price)
@@ -102,6 +109,7 @@ class Product
 
     public function displayDetails()
     {
+        echo "productId: {$this->product_id}\n";
         echo "Product: {$this->name}\n";
         echo "Brand: {$this->brand}\n";
         echo "Color: {$this->color}\n";
@@ -110,6 +118,7 @@ class Product
         echo "Stock: {$this->stock}\n";
         echo "Rating: {$this->average_rating}\n";
         echo "Description: {$this->description}\n";
+        echo "Image: {$this->image}\n";
     }
 }
 
@@ -124,10 +133,14 @@ foreach ($products as $productInfo) {
         $productInfo['price'],
         $productInfo['stock'],
         $productInfo['average_rating'],
-        $productInfo['description']
+        $productInfo['description'],
+        $productInfo['images']
     );
     $productObjects[] = $product;
 }
+
+$productId = $product->getProductId();
+
 ?>
 
 
@@ -140,21 +153,18 @@ foreach ($products as $productInfo) {
                         <div class="slider">
                             <ul>
                                 <li id="Photo1">
-                                    <img class="sliderPhoto" src="./assets/img/products/chaise_licorne.jpg" alt="Chaise gaming">
+                                    <img class="sliderPhoto" src="./assets/img/products/product_<?=$productId?>_image_1.jpg" alt="Chaise gaming">
                                 </li>
                                 <li id="Photo2">
-                                    <img class="sliderPhoto" src="./assets/img/products/chaise_licorne.jpg" alt="Chaise gaming">
+                                    <img class="sliderPhoto" src="./assets/img/products/product_<?=$productId?>_image_2.jpg" alt="Chaise gaming">
                                 </li>
                                 <li id="Photo3">
-                                    <img class="sliderPhoto" src="./assets/img/products/chaise_licorne.jpg" alt="Chaise gaming">
-                                </li>
-                                <li id="Photo4">
-                                    <img class="sliderPhoto" src="./assets/img/products/chaise_licorne.jpg" alt="Chaise gaming">
+                                    <img class="sliderPhoto" src="./assets/img/products/product_<?=$productId?>_image_3.jpg" alt="Chaise gaming">
                                 </li>
                             </ul>
                         </div>
                         <div class="imageActuelle">
-                            <img class="imageMain" src="./assets/img/products/chaise_licorne.jpg" alt="Chaise gaming">
+                            <img class="imageMain" src="./assets/img/products/product_<?=$productId?>_main_image.jpg" alt="Chaise gaming">
                         </div>
                         <div class="sliderDots"></div>
                     </div>
@@ -174,9 +184,8 @@ foreach ($products as $productInfo) {
                     </div>
                 </div>
                 <div class="rightSide">
-                    <!--*****************************************************-->
                     <div class="descriptionTop">
-                        <h1 class="productTitle"><?php echo  "{$product->getName()}</>"; ?></h1>
+                        <h1 class="productTitle"><?php echo  "{$product->getName()}</li>"; ?></h1>
                         <?php echo  "<p id='deco'>Réf: {$product->getProductId()}</p>"; ?>
                         <div class="productInfo">
                             <div class="productInfoLeft">
@@ -234,10 +243,9 @@ foreach ($products as $productInfo) {
                     <div class="card">
                         <div class="cardTop">
                             <a href="#">
-                                <img class="cardImg" src="./assets/img/products/chaise_licorne.jpg" alt="<?php echo $product->getName(); ?>">
+                                <img class="cardImg" src="./assets/img/products/product_<?php echo $product->getProductId(); ?>_main_image.jpg" alt="<?php echo $product->getName(); ?>">
                             </a>
                         </div>
-                        <!--**************************************-->
                         <div class="cardBottom">
                             <a href="#productDetails" class="productLink" data-product-id="<?php echo $product->getProductId(); ?>">
                                 <?php echo $product->getName(); ?>
@@ -254,7 +262,7 @@ foreach ($products as $productInfo) {
             </div>
         </div>
     </section>
-    <section id="Commentaires">
+    <!-- <section id="Commentaires">
         <div class="container">
             <h3 class="reviewTitle">Commentaires</h3>
             <form class="reviewForm" method="post" action="">
@@ -388,7 +396,8 @@ foreach ($products as $productInfo) {
             </div>
         </div>
     </section>
-    </main>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-    <script src="./assets/js/product.js?t=<?= time(); ?>"></script>
+                -->
+</main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script src="./assets/js/product.js?t=<?= time(); ?>"></script>

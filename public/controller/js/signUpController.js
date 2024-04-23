@@ -71,11 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-<<<<<<< Updated upstream
-        document.getElementById('myForm').submit();
-=======
-        const myHeaders = new Headers();
-        myHeaders.append('Content-Type', 'application/form-data');
+
 
         const formdata = new FormData();
         formdata.append('name', name);
@@ -88,18 +84,18 @@ document.addEventListener('DOMContentLoaded', function() {
         formdata.append('password', password);
 
         const requestOptions = {
-            method: 'POST',
-            header: myHeaders,
+            method: "POST",
+            header: "Content-Type: application/form-data",
             body: formdata
         };
 
         fetch("http://localhost:8080/controller/php/signUpController.php", requestOptions)
-        .then(response => response.text())
-        .then(() => {
-            window.location.href = '/';
-        })
-        .catch(error => console.log("error", error));
-        
->>>>>>> Stashed changes
+            .then(response => response.text())
+            .then(() => {
+                window.location.href = '/';
+            })
+            .catch(error => 
+                self.location = 'inscription?error=error'
+            );
     });
 });
