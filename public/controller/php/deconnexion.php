@@ -1,4 +1,6 @@
 <?php
 session_destroy();
-header('Location: '.$router->generate('accueil'));
 ?>
+<script>
+    window.location.href = '/';
+</script>

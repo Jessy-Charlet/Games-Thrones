@@ -1,4 +1,15 @@
 <?php
+<<<<<<< Updated upstream
+=======
+if(!isset($_SESSION['user'])){
+    ?>
+    <script>
+        window.location.href = '/';
+    </script>
+    <?php
+    exit();
+}else{
+>>>>>>> Stashed changes
 $id = $_SESSION['user'];
 
 $user = new CrudUser();
@@ -71,7 +82,7 @@ if(isset($_GET['update'])){
                 <div>
                     <label for="telephone" class="labelForm">Téléphone</label>
                     <br>
-                    <input type="tel" name="telephone" id="telephone" value="<?= $userData['phone'] ?>" class="inputForm inputFormSmall">
+                    <input type="tel" name="telephone" id="telephone" value="<?= $userData['phone'] ?>" class="inputForm inputFormSmall" maxlength="14" pattern="\d*">
                 </div>
             </div>
             <div class="formRow3">
@@ -100,6 +111,7 @@ if(isset($_GET['update'])){
                     <input type="password" name="password" id="password" class="inputForm inputFormSmall">
                 </div>
                 <div class="formDiv">
+                    <input type="hidden" value="<?php $_SESSION['user'] ?>" name="customer_id" id="customer_id">
                     <input type="submit" value="modifier" id="personnalInfoModif" class="inputSubmit">
                     <div class="containeurCancelButton" id="cancelButtonContainer"></div>
                 </div>
@@ -117,6 +129,7 @@ if(isset($_GET['update'])){
                 </p>
             </form>
             <a href="<?= $router->generate('deconnexion');  ?>" class="deconnexionButton">Se déconnecter</a>
+            <a href="/modifier-le-mot-de-passe" class="deconnexionButton">Changer le mot de passe</a>
         </div>
         <button class="buttonAcordeonIn"><span class="buttonAcrodeonLeftContent">Carte bancaires enregistrées</span><span class="buttonAcrodeonRightContent">►</span></button>
         <div class="acordeonContentIn">

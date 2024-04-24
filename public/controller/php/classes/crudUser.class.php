@@ -229,10 +229,14 @@ class CrudUser {
         }
     }
 
+<<<<<<< Updated upstream
     public function updateUser($id, $isEmailChanged, $isPhoneChanged, $isPasswordChanged, $isAddressChanged, $isNameChanged, $isFirstnameChanged, $isPostalCodeChanged, $isCityChanged){
+=======
+    public function testUpdateUser(int $id, $mail, $phone, $password){
+>>>>>>> Stashed changes
         $conn = Database::connect();
-        $current_page_url = strtok($_SERVER['REQUEST_URI'] ?? '', '?');
 
+<<<<<<< Updated upstream
 
         if(isset($isPasswordChanged)){
             $passwordHash = sodium_crypto_pwhash_str(
@@ -245,12 +249,22 @@ class CrudUser {
 
     
         $sql = $conn->prepare("SELECT email FROM customer WHERE customer_id = :id");
+=======
+        $error = "none";
+        
+        $sql = $conn->prepare("SELECT email, phone, password FROM customer WHERE customer_id = :id");
+>>>>>>> Stashed changes
         $sql->execute(
             array(
                 'id' => $id
             )
         );
+<<<<<<< Updated upstream
         if($sql->fetch(PDO::FETCH_ASSOC)['email'] != $isEmailChanged){
+=======
+        $result =  $sql->fetch(PDO::FETCH_ASSOC);
+        if($result['email'] != $mail){
+>>>>>>> Stashed changes
             $sql2 = $conn->prepare("SELECT email FROM customer WHERE email = :email");
             $sql2->execute(
                 array(
@@ -258,11 +272,12 @@ class CrudUser {
                 )
             );
             if($sql2->rowCount() > 0){
-                header('Location: '.$current_page_url.'?error=mailAlreadyUsed');
+                $error = "mailAlreadyUsed";
                 exit();
             }
             $sql2->closeCursor();
         }
+<<<<<<< Updated upstream
         $sql->closeCursor();
     
 
@@ -273,6 +288,9 @@ class CrudUser {
             )
         );
         if($sql->fetch(PDO::FETCH_ASSOC)['phone'] != $isPhoneChanged){
+=======
+        if($result['phone'] != $phone){
+>>>>>>> Stashed changes
             $sql2 = $conn->prepare("SELECT phone FROM customer WHERE phone = :phone");
             $sql2->execute(
                 array(
@@ -280,11 +298,12 @@ class CrudUser {
                 )
             );
             if($sql2->rowCount() > 0){
-                header('Location: '.$current_page_url.'?error=phoneAlreadyUsed');
+                $error = "phoneAlreadyUsed";
                 exit();
             }
             $sql2->closeCursor();
         }
+<<<<<<< Updated upstream
         $sql->closeCursor();
 
         try {
@@ -324,6 +343,75 @@ class CrudUser {
         }
     }
 
+=======
+        if(sodium_crypto_pwhash_str_verify($result['password'], $password)){
+            $error = "";
+        }else{
+            $error = "wrongPassword";
+            exit();
+        }
+
+        if($error == "wrongPassword"){
+            return 'wrongPassword';
+        }elseif($error == "mailAlreadyUsed"){
+            return 'mailAlreadyUsed';
+        }elseif($error == "phoneAlreadyUsed"){
+            return 'phoneAlreadyUsed';
+        }else{
+            return 'none';
+        }
+    }
+
+    public function updateUser(int $id, $mail, $phone, $password, $adress, string $name, string $firstname, int $postalCode, string $city){
+        $conn = Database::connect();
+
+        $passwordHash = sodium_crypto_pwhash_str(
+            $password,
+            SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE,  // Nombre d'opérations pour la résistance aux attaques par force brute
+            SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE // Limite de mémoire pour la résistance aux attaques par force brute
+        );
+
+        $password = $passwordHash;
+        try {
+            $conn->beginTransaction();
+    
+            // Mettre à jour les données de l'utilisateur
+            $sql = $conn->prepare("UPDATE customer SET `customer_last-name` = :customer_last_name, `customer_first-name` = :customer_first_name, email = :email, phone = :phone, password = :password WHERE customer_id = :customer_id");
+            $sql->execute(
+                array(
+                    'customer_last_name' => $name,
+                    'customer_first_name' => $firstname,
+                    'email' => $mail,
+                    'phone' => $phone,
+                    'password' => $password,
+                    'customer_id' => $id
+                )
+            );
+            $sql->closeCursor();
+    
+            // Mettre à jour l'adresse de l'utilisateur
+            $sql = $conn->prepare("UPDATE adress SET city = :city, postal_code = :postal_code, adress = :adress WHERE customer_id = :customer_id");
+            $sql->execute(
+                array(
+                    'city' => $city,
+                    'postal_code' => $postalCode,
+                    'adress' => $adress,
+                    'customer_id' => $id
+                )
+            );
+            $sql->closeCursor();
+    
+            $this->firstname = $firstname;
+    
+            $conn->commit();
+        } catch(PDOException $e) {
+            // En cas d'erreur, annulation des transactions
+            $conn->rollback();
+            throw $e;
+        }
+    }  
+    
+>>>>>>> Stashed changes
     public function delete($customer_id, $password){
         $conn = Database::connect();
         $sql = $conn->prepare("DELETE FROM customer WHERE customer_id = :customer_id AND password = :password");

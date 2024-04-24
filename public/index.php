@@ -6,6 +6,10 @@ $router = new AltoRouter();
 
 // Création des routes
 // route de page affichée
+
+// exemple de route
+// $router->map('METHOD', '/nom-dans-url', '/lien/du/fichier', 'nom-de-la-route');
+
 $router->map('GET', '/', '/home', 'accueil');
 $router->map('GET', '/connexion', '/signIn', 'connexion');
 $router->map('GET', '/inscription', '/signUp', 'inscription');
@@ -17,6 +21,7 @@ $router->map('GET', '/contact', '/contact', 'contact');
 $router->map('GET', '/produit', '/product', 'produit');
 $router->map('GET', '/404', '/404', '404');
 $router->map('GET', '/panier', '/panier', 'panier');
+$router->map('GET', '/modifier-le-mot-de-passe', '/passwordModify', 'modifier-le-mot-de-passe');
 
 
 // route de page de traitement
