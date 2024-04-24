@@ -232,9 +232,9 @@ $quantity = 1;
                             <div class="productAdd">
                                 <p class="quantity">
                                     <label for="quantity">Quantité</label><br>
-                                    <input type="number" class="quantity" name="quantity" min="1" max="<?php echo $product->getStock(); ?>" value="<?php echo $quantity; ?>">
+                                    <input id="product_quantity" type="number" class="quantity" name="quantity" min="1" max="<?php echo $product->getStock(); ?>" value="<?php echo $quantity; ?>">
                                 </p>
-                                <button class="basketButton" type="submit">
+                                <button id="product_basketButton" class="basketButton" type="submit">
                                     <span>Ajouter au panier</span> <img src="./images/icon_panier.png" alt="">
                                 </button>
                             </div>
