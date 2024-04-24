@@ -15,9 +15,9 @@
                             </div>
                             <div class="panierContentRight">
                                 <div class="panierItemQuantity">
-                                    <span>-</span>
-                                    <input type="text" type="number" value="2">
-                                    <span>+</span>
+                                    <span class="reduce_basket_quantity">-</span>
+                                    <input class="basket_quantity" type="text" type="number" value="2">
+                                    <span class="add_basket_quantity">+</span>
                                 </div>
                                 <div class="panierItemSubtotal">
                                     <p class="panierItemPrix">299.00 <span>€</span></p>
@@ -44,9 +44,9 @@
                             </div>
                             <div class="panierContentRight">
                                 <div class="panierItemQuantity">
-                                    <span>-</span>
-                                    <input type="text" type="number" value="2">
-                                    <span>+</span>
+                                    <span class="reduce_basket_quantity">-</span>
+                                    <input class="basket_quantity" type="text" type="number" value="2">
+                                    <span class="add_basket_quantity">+</span>
                                 </div>
                                 <div class="panierItemSubtotal">
                                     <p class="panierItemPrix">299.00 <span>€</span></p>
