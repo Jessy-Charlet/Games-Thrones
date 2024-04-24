@@ -33,28 +33,6 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-  $(".selectWrapper").click(function () {
-    $(this).find(".select").toggleClass("open");
-  });
-  $(".customOption").click(function () {
-    if (!$(this).hasClass("selected")) {
-      $(this).parent().find(".customOption.selected").removeClass("selected");
-      $(this).addClass("selected");
-      $(this)
-        .closest(".select")
-        .find(".selectTrigger span")
-        .text($(this).text());
-    }
-  });
-
-  $(window).click(function (e) {
-    if (!$(".select").has(e.target).length) {
-      $(".select").removeClass("open");
-    }
-  });
-});
-
-$(document).ready(function () {
   $("#toggleButton").click(function () {
     $("#svg1").toggle();
     $("#svg2").toggle();
