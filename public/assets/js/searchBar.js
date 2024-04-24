@@ -103,9 +103,10 @@ $(document).ready(function () {
 
 
     async function afficherProduits(recherche) {
-        const arrow = document.createElement('div');
+        const arrow = document.createElement('a');
         arrow.id = "fleche"
-        arrow.textContent = "▲";
+        arrow.textContent = "▲ ▲ ▲";
+        arrow.href="#navContainer";
         if (recherche != "") {
 
             const reponse = await fetch('../controller/php/recherche.php');

@@ -189,6 +189,7 @@
     background: linear-gradient(355deg, #d1d1d1 , white);
     border-bottom: 5px solid black;
     padding: 4em 5vw 2vh 5vw;
+    box-shadow: 0 0 500px rgb(0, 0, 0);
     justify-items: center;
     position: absolute;
     top: 8vh;
@@ -196,12 +197,17 @@
     z-index: 16;
     .navContainer{
         border-right:1px solid black;
+        width: 100%;
+        text-align: left;
+        p{
+            text-align: center;
+        }
         a{
             text-transform: uppercase;
             display: block;
             text-decoration: none;
             padding: 0.5em 1em;
-            margin-bottom: 1em;
+            margin: 0 auto 1em auto;
             width: 80%;
             border-radius: 5px;
             background-color: white;
@@ -221,6 +227,8 @@
         }
     }
     #fleche{
+        display: block;
+        text-decoration: none;
         width: fit-content;
         text-align: center;
         background-color: black;
@@ -236,7 +244,6 @@
 
 #navSearch{
     padding: 4em 5vw 0 5vw;
-    box-shadow: 0 0 500px rgb(0, 0, 0);
     text-align: center;
 }
 
@@ -247,7 +254,7 @@
 }
 #navInfos{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 1em;
 }
 

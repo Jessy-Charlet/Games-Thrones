@@ -102,8 +102,8 @@ session_start();
     <nav id="navSearch">
         <div class="navContainer">
             <p>Aucun résultat...</p>
+            <a href="#navContainer" id="fleche">▲ ▲ ▲</a>
         </div>
-        <div id="fleche">▲</div>
     </nav>
 
 
