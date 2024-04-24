@@ -1,7 +1,16 @@
 // Wait for the page to load
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', (event) => {
     // Get the submit button element
     var submitBtn = document.getElementById('submitBtn');
+    var phoneInput = document.getElementById('phoneId');
+
+    phoneInput.addEventListener('keyup', function(event) {
+        // Supprime le dernier caractère avant d'ajouter un espace
+        if(phoneInput.value.length === 2 || phoneInput.value.length === 5 || phoneInput.value.length === 8 || phoneInput.value.length === 11) {
+            phoneInput.value += ' ';
+        }
+        phoneInput.value = phoneInput.value.replace(/[^\d ]/g, '');
+    });
 
     // Add click event listener to the submit button
     submitBtn.addEventListener('click', function(event) {
@@ -19,6 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
         var password = document.getElementById('passwordId').value;
         var confirmPassword = document.getElementById('passwordConfirmId').value;
 
+        
+
         var errorMessages = document.getElementById('errorMessage');
         errorMessages.innerHTML = '';
 
@@ -35,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        /*
         if(phone !== ''){
             var phoneFormat = /^(\d{2} ){4}\d{2}$/;
             if (!phoneFormat.test(phone)) {
@@ -43,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 errorMessages.innerHTML = errorMessage;
                 return;
             }
-        }*/
+        }
 
         if(email !== ''){
             var emailFormat = /\S+@\S+\.\S+/;
@@ -91,13 +101,29 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         fetch("http://localhost:8080/controller/php/signUpController.php", requestOptions)
-            .then(response => response.text())
-            .then((body) => {
-                console.log(body)
-                window.location.href = '/';
+            .then(response => response.json())
+            .then(data => {
+                if(data.status == 'error') {
+                    if (data.error === 'mailAlreadyUsed') {
+                        self.location = 'inscription?error=mailAlreadyUsed';
+                    } else if (data.error === 'phoneAlreadyUsed') {
+                        self.location = 'inscription?error=phoneAlreadyUsed';
+                    }
+                }else if(data.status == 'success') {
+                    self.location = '/';
+                }
             })
             .catch(error => 
-                self.location = 'inscription?error=error'
+                self.location = 'inscription?error=UnexpectedError'
             );
     });
 });
+// 
+// 
+// 
+//  finir de faire les verifications 
+// 
+// 
+// 
+// 
+// 
