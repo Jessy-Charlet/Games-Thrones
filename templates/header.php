@@ -26,6 +26,7 @@ session_start();
     <link rel="stylesheet" href="./assets/css/banner.css?t=<?= time(); ?>">
     <link rel="stylesheet" href="./assets/css/product.css?t=<?= time(); ?>">
     <link rel="stylesheet" href="./assets/css/products.css?t=<?= time(); ?>">
+    <link rel="stylesheet" href="./assets/css/basket.css?t=<?= time(); ?>">
 
 </head>
 
@@ -44,17 +45,20 @@ session_start();
         </div>
         <!-- -->
         <button id="searchBarOpen"><img src="./assets/img/icon_search.png" alt="rechercher" /></button>
-        <a href="<?= $router->generate('panier') ?>"><img src="./assets/img/icon_panier.png" alt="Mon panier" /><span>2</span></a>
+        <a href="<?= $router->generate('panier') ?>"><img src="./assets/img/icon_panier.png" alt="Mon panier" />
+            <span id="header_totalProductsQuantity">2</span>
+        </a>
         <?php
         if (isset($_SESSION['user'])) {
             ?>
             <a href="<?= $router->generate('profil') ?>"><img src="./assets/img/icon_user.png" alt="Mon compte" />
-            <div><?=$_SESSION['userFirstName']?></div></a>
+                <div><?= $_SESSION['userFirstName'] ?></div>
+            </a>
             <?php
-        } elseif(!isset($_SESSION['user'])){
+        } elseif (!isset($_SESSION['user'])) {
             ?>
             <a href="<?= $router->generate('connexion') ?>"><img src="./assets/img/icon_user.png" alt="Me connecter" />
-            <?php
+                <?php
         }
         ?>
     </header>
@@ -111,7 +115,9 @@ session_start();
             <div></div>
             <div></div>
         </div>
-        <a href="<?= $router->generate('panier') ?>"><img src="./assets/img/icon_panier.png" alt="Mon panier" /><span>2</span></a>
+        <a href="<?= $router->generate('panier') ?>"><img src="./assets/img/icon_panier.png" alt="Mon panier" />
+            <span id="header_totalProductsQuantityBottom">2</span>
+        </a>
         <?php
         if (isset($_SESSION['user'])) {
             ?>
