@@ -220,9 +220,24 @@
             color: #482664;
         }
     }
+    #fleche{
+        width: fit-content;
+        text-align: center;
+        background-color: black;
+        color: white;
+        padding:0.5em 6em;
+        margin: 2em auto 0 auto;
+        border-radius: 20px 20px 0 0;
+    }
     .navContainer:last-child{
         border-right: none;
     }
+}
+
+#navSearch{
+    padding: 4em 5vw 0 5vw;
+    box-shadow: 0 0 500px rgb(0, 0, 0);
+    text-align: center;
 }
 
 #navShop{
@@ -240,10 +255,11 @@
 @media (orientation: portrait) {
     #navContainer {
         grid-template-columns: 1fr;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         padding: 0 5vw;
+        z-index: 50;
         
         .navLeft{
             display: none;
@@ -279,6 +295,7 @@
         background-color: black;
         align-items: center;
         padding: 0;
+        z-index: 50;
         box-shadow: 0 0 20px rgb(0, 0, 0, 0.5);
         transition: all 200ms;
 
@@ -335,8 +352,11 @@
         }
     
     }
-    #navShop, #navInfos, #navSearch{
+    #navShop, #navInfos{
         padding: 2vh 5vw ;
+    }
+    #navSearch{
+        padding: 2vh 5vw 0 5vw ;
     }
 
 }

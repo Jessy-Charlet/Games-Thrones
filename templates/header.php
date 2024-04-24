@@ -103,6 +103,7 @@ session_start();
         <div class="navContainer">
             <p>Aucun résultat...</p>
         </div>
+        <div id="fleche">▲</div>
     </nav>
 
 

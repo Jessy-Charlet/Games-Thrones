@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
     const mediaQueryList = window.matchMedia("(orientation: landscape)");
+    $("#fleche").css('cursor', 'pointer');
     $("#navShop").hide();
     $("#navInfos").hide();
     $("#navSearch").hide();
@@ -32,8 +33,8 @@ $(document).ready(function () {
 
     /*** Fermeture de la barre de recherche */
     function searchClose() {
-        $("#searchBarClose").on("click", function () {
-            $(this).hide();
+        $("#searchBarClose, #fleche").on("click", function () {
+            $("#searchBarClose").hide();
             $("#navSearch").slideUp("fast");
             if (mediaQueryList.matches) {
                 $("#searchBarContainer").hide();
@@ -81,70 +82,87 @@ $(document).ready(function () {
         $("#navShop").slideUp("fast");
         $("#navSearch").slideUp("fast");
     });
-
-})
-
-$('#searchBar').on({
-    keyup: function () {
-        let recherche = $(this).val();
-        afficherProduits(recherche);
-    },
-    focusin: function () {
-        $("#navSearch").slideDown("fast");
-        $("#navShop").slideUp("fast");
-        $("#navInfos").slideUp("fast");
-        $("#searchBarClose").show();
-
-    }
-})
+    $("#fleche").on("click", function(){
+        searchClose();
+    })
 
 
-async function afficherProduits(recherche) {
-    if (recherche != "") {
+    $('#searchBar').on({
+        keyup: function () {
+            let recherche = $(this).val();
+            afficherProduits(recherche);
+        },
+        focusin: function () {
+            $("#navSearch").slideDown("fast");
+            $("#navShop").slideUp("fast");
+            $("#navInfos").slideUp("fast");
+            $("#searchBarClose").show();
 
-        const reponse = await fetch('../controller/php/recherche.php');
-        const products = await reponse.json();
-        const liste = document.createElement('div');
-        liste.classList.add("productsGrid");
-        for (var i = 0; i < products.length; i++) {
-            if (products[i]["name"].toLowerCase().includes(recherche) == true) {
-                // Container
-                const listItem = document.createElement('div');
-                listItem.classList.add("product");
-                // Nom du produit
-                const titleElement = document.createElement('div');
-                listItem.classList.add("productName");
-                titleElement.textContent = products[i]["name"];
-                // Lien du produit
-                const urlElement = document.createElement('a');
-                urlElement.href = `/produit?id=${products[i]["product_id"]}`;
-                // Image du produit
-                console.log(urlElement.href);
-                const imageElement = document.createElement('img');
-                const productImages = JSON.parse(products[i]["images"]);
-                const imageUrl = productImages["main_image"];
-                imageElement.src = imageUrl;
-                imageElement.alt = products[i]["name"];
-                // Prix du produit
-                const priceElement = document.createElement('div');
-                priceElement.classList.add("productPrice");
-                priceElement.textContent = products[i]["price"];
-                // Note du produit
-                const ratingElement = document.createElement('span');
-                ratingElement.classList.add("productPrice");
-                ratingElement.textContent = parseFloat(products[i]["price"]).toFixed(1);
+        }
+    })
 
-                // Ajouter les éléments à la liste
-                listItem.appendChild(urlElement);
-                urlElement.appendChild(imageElement);
-                listItem.appendChild(titleElement);
-                listItem.appendChild(ratingElement);
-                liste.appendChild(listItem);
+
+    async function afficherProduits(recherche) {
+        const arrow = document.createElement('div');
+        arrow.id = "fleche"
+        arrow.textContent = "▲";
+        if (recherche != "") {
+
+            const reponse = await fetch('../controller/php/recherche.php');
+            const products = await reponse.json();
+            const liste = document.createElement('div');
+            liste.classList.add("productsGrid");
+            for (var i = 0; i < products.length; i++) {
+                if (products[i]["name"].toLowerCase().includes(recherche) == true) {
+                    // Container
+                    const listItem = document.createElement('div');
+                    listItem.classList.add("product");
+                    // Nom du produit
+                    const titleElement = document.createElement('div');
+                    titleElement.classList.add("productName");
+                    titleElement.textContent = products[i]["name"];
+                    // Lien du produit
+                    const urlElement = document.createElement('a');
+                    urlElement.href = `/produit?id=${products[i]["product_id"]}`;
+                    // Image du produit
+                    console.log(urlElement.href);
+                    const imageElement = document.createElement('img');
+                    const productImages = JSON.parse(products[i]["images"]);
+                    const imageUrl = productImages["main_image"];
+                    imageElement.src = imageUrl;
+                    imageElement.alt = products[i]["name"];
+                    // Prix du produit
+                    const divElement = document.createElement('div');
+                    divElement.classList.add("productDiv");
+                    const priceElement = document.createElement('div');
+                    priceElement.classList.add("productPrice");
+                    priceElement.textContent = products[i]["price"] + " €";
+                    // Note du produit
+                    const ratingElement = document.createElement('div');
+                    ratingElement.classList.add("productRate");
+                    ratingElement.innerHTML = parseFloat(products[i]["average_rating"]).toFixed(1) + "<img src='./assets/img/star.png'/>";
+
+                    // Ajouter les éléments à la liste
+                    listItem.appendChild(urlElement);
+                    urlElement.appendChild(imageElement);
+                    urlElement.appendChild(titleElement);
+                    urlElement.appendChild(divElement);
+                    divElement.appendChild(priceElement);
+                    divElement.appendChild(ratingElement);
+                    liste.appendChild(listItem);
+                };
             };
-        };
-        $("#navSearch").html(liste);
-    } else {
-        $("#navSearch").html("Aucun résultat...");
+            $("#navSearch").html(liste);
+            $("#navSearch").append(arrow);
+            $("#fleche").css('cursor', 'pointer');
+            searchClose()
+        } else {
+            $("#navSearch").html("Aucun résultat...");
+            $("#navSearch").append(arrow);
+            $("#fleche").css('cursor', 'pointer');
+            searchClose()
+        }
     }
-}
 
+
+})
