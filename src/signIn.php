@@ -1,4 +1,8 @@
 <?php
+if(isset($_SESSION['user'])){
+    header('Location: '.$router->generate('profil'));
+    exit();
+}else{
 if(isset($_GET['mail'])){
     $mail = $_GET['mail'];
 }else{
@@ -30,3 +34,6 @@ if(isset($_GET['error']) && $_GET['error'] == 'error'){
     </div>
 </section>
 <script src="./controller/js/signInController.js?t=<?= time() ?>"></script>
+<?php
+}
+?>

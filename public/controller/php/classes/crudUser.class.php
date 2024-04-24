@@ -129,19 +129,11 @@ class CrudUser {
         return $city;
     }
 
-    public function createUser($name, $firstname, $mail, $phone, $adress, $postalCode, $city, $password){
-        $passwordHash = sodium_crypto_pwhash_str(
-            $password,
-            SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE,  // Nombre d'opérations pour la résistance aux attaques par force brute
-            SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE // Limite de mémoire pour la résistance aux attaques par force brute
-        );
-        $password = $passwordHash;
-
-
+    public function testInsertUser($mail, $phone){
         $conn = Database::connect();
-        
-        $current_page_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
+        $error = "none";
+        
         $sql = $conn->prepare("SELECT email FROM customer WHERE email = :email");
         $sql->execute(
             array(
@@ -149,7 +141,7 @@ class CrudUser {
             )
         );
         if($sql->rowCount() > 0){
-            header('Location: '.$current_page_url.'?error=mailAlreadyUsed&name='.$name.'&firstname='.$firstname.'&phone='.$phone.'&adress='.$adress.'&postalCode='.$postalCode.'&city='.$city);
+            $error = "mailAlreadyUsed";
             exit();
         }
         $sql->closeCursor();
@@ -161,11 +153,31 @@ class CrudUser {
             )
         );
         if($sql->rowCount() > 0){
-            header('Location: '.$current_page_url.'?error=phoneAlreadyUsed&name='.$name.'&firstname='.$firstname.'&mail='.$mail.'&adress='.$adress.'&postalCode='.$postalCode.'&city='.$city);
+            $error = "phoneAlreadyUsed";
             exit();
         }
         $sql->closeCursor();
-        try {
+
+        if($error == "mailAlreadyUsed"){
+            return 'mailAlreadyUsed';
+        }elseif($error == "phoneAlreadyUsed"){
+            return 'phoneAlreadyUsed';
+        }else{
+            return 'none';
+        }
+    }
+
+    public function createUser($name, $firstname, $mail, $phone, $adress, $postalCode, $city, $password){
+        $conn = Database::connect();
+
+        $passwordHash = sodium_crypto_pwhash_str(
+            $password,
+            SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE,  // Nombre d'opérations pour la résistance aux attaques par force brute
+            SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE // Limite de mémoire pour la résistance aux attaques par force brute
+        );
+        $password = $passwordHash;
+        
+        try {            
             $conn->beginTransaction();
         
             // Insertion du client
@@ -207,6 +219,7 @@ class CrudUser {
             $this->firstname = $firstName;
             // Commit des transactions
             $conn->commit();
+
         } catch(PDOException $e) {
             // En cas d'erreur, annulation des transactions
             $conn->rollback();

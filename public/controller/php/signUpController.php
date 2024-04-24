@@ -2,7 +2,6 @@
 require 'classes/Database.class.php';
 require 'classes/CrudUser.class.php';
 
-
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
     $firstname = $_POST['firstname'];
@@ -14,19 +13,36 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     $user = new CrudUser();
-    $user->createUser($name, $firstname, $mail, $phone, $adress, $postalCode, $city, $password);
 
-    session_start();
-    $_SESSION['user'] = $user->getCustomer_id();
-    $_SESSION['userFirstName'] = $user->getFirstname();
+    $testInsert = $user->testInsertUser($mail, $phone);
 
-    echo json_encode(
-        array(
-            'status' => 'success',
-            'sessionUser' => $user->getCustomer_id(),
-            'sessionUserFirstName' => $user->getFirstname()
-        )
-    );
+    var_dump($testInsert);
+
+    if($testInsert == 'mailAlreadyUsed'){
+        echo json_encode(
+            array(
+                'status' => 'error',
+                'error' => 'mailAlreadyUsed'
+            )
+        );
+    }elseif($testInsert == 'phoneAlreadyUsed'){
+        echo json_encode(
+            array(
+                'status' => 'error',
+                'error' => 'phoneAlreadyUsed'
+            )
+        );
+    }else{
+        $user->createUser($name, $firstname, $mail, $phone, $adress, $postalCode, $city, $password);
+        session_start();
+        $_SESSION['user'] = $user->getCustomer_id();
+        $_SESSION['userFirstName'] = $user->getFirstname();
+        echo json_encode(
+            array(
+                'status' => 'success',
+                'error' => 'none'
+            )
+        );
+    }
 }
-
 ?>
