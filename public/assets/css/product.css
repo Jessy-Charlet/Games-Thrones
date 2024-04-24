@@ -34,7 +34,7 @@ h2 {
   padding: 3em 1em;
 }
 
-button{
+button {
   color: #ffff;
   background-color: #482664;
 }
@@ -138,11 +138,11 @@ button{
   text-align: center;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   cursor: pointer;
-  transition: transform 0.5s
+  transition: transform 0.5s;
 }
 
 .benefitsItem:hover {
-  transform: scale(1.05); 
+  transform: scale(1.05);
 }
 
 .benefitsItemImg {
@@ -158,7 +158,6 @@ button{
 /*** End Benefits ***/
 
 /****** End leftSide *******/
-
 
 /****** Start RighrSide *******/
 .rightSide {
@@ -403,6 +402,7 @@ input.quantity {
   position: relative;
   transition: 0.2s;
   padding: 8px 7px;
+  z-index: -1
 }
 
 .cardTop {
@@ -413,6 +413,7 @@ input.quantity {
   object-fit: cover;
   text-align: center;
 }
+
 .card:hover {
   box-shadow: 4px 8px 16px rgba(136, 83, 164, 0.8);
 }
@@ -564,19 +565,19 @@ input.quantity {
   padding: 2em 1em;
 }
 
-.toggleContButton{
+.toggleContButton {
   display: flex;
   align-items: center;
 }
 
-#toggleButton{
+#toggleButton {
   color: #ffff;
   background-color: #482664;
   border: none;
   padding: 0.2em 0.5em;
 }
 
-.toggleContButton svg{
+.toggleContButton svg {
   padding: 0.5em 0.5em 0;
 }
 
@@ -598,7 +599,7 @@ input.quantity {
 }
 
 @media (max-width: 768px) {
-  .container{
+  .container {
     padding: 1em;
   }
   .cartForm {
@@ -620,15 +621,16 @@ input.quantity {
     order: 2;
     height: 40%;
   }
-  .slick-slider .slick-list, .slick-slider .slick-track{
+  .slick-slider .slick-list,
+  .slick-slider .slick-track {
     display: flex;
     gap: 5.2vw;
   }
 
-  .sliderPhoto{
+  .sliderPhoto {
     max-width: 90%;
   }
-  
+
   .imageActuelle {
     order: 1;
   }
@@ -642,7 +644,7 @@ input.quantity {
     display: flex;
     flex-direction: column;
   }
-  .productBenefits{
+  .productBenefits {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
