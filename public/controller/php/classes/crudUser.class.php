@@ -238,7 +238,7 @@ class CrudUser {
                 'id' => $id
             )
         );
-        $result =  $sql->fetch(PDO::FETCH_ASSOC);
+        $result = $sql->fetch(PDO::FETCH_ASSOC);
         if($result['email'] != $mail){
             $sql2 = $conn->prepare("SELECT email FROM customer WHERE email = :email");
             $sql2->execute(
@@ -247,7 +247,7 @@ class CrudUser {
                 )
             );
             if($sql2->rowCount() > 0){
-                header('Location: '.$current_page_url.'?error=mailAlreadyUsed');
+                $error = "mailAlreadyUsed";
                 exit();
             }
             $sql2->closeCursor();
@@ -260,55 +260,64 @@ class CrudUser {
                 )
             );
             if($sql2->rowCount() > 0){
-                header('Location: '.$current_page_url.'?error=phoneAlreadyUsed');
+                $error = "phoneAlreadyUsed";
                 exit();
             }
             $sql2->closeCursor();
         }
-        if(sodium_crypto_pwhash_str_verify($result['password'], $password)){
-            $error = ""; 
-            try {
-                $conn->beginTransaction();
-    
-                // Mettre à jour les données de l'utilisateur
-                $sql = $conn->prepare("UPDATE customer SET `customer_last-name` = :customer_last_name, `customer_first-name` = :customer_first_name, email = :email, phone = :phone, password = :password WHERE customer_id = :customer_id");
-                $sql->execute(
-                    array(
-                        'customer_last_name' => $name,
-                        'customer_first_name' => $firstname,
-                        'email' => $mail,
-                        'phone' => $phone,
-                        'password' => $password,
-                        'customer_id' => $id
-                    )
-                );
-                $sql->closeCursor();
-    
-                // Mettre à jour l'adresse de l'utilisateur
-                $sql = $conn->prepare("UPDATE adress SET city = :city, postal_code = :postal_code, adress = :adress WHERE customer_id = :customer_id");
-                $sql->execute(
-                    array(
-                        'city' => $city,
-                        'postal_code' => $postalCode,
-                        'adress' => $adress,
-                        'customer_id' => $id
-                    )
-                );
-                $sql->closeCursor();
-    
-                $this->firstname = $firstName;
-    
-                $conn->commit();
-            } catch(PDOException $e) {
-                // En cas d'erreur, annulation des transactions
-                $conn->rollback();
-                throw $e;
-            }
-        }else{
+        if(!sodium_crypto_pwhash_str_verify($result['password'], $password)){
             $error = "wrongPassword";
             exit();
         }
-    }  
+    }
+
+    public function updateUser(int $id, $name, $firstname, $mail, $phone, $adress, $postalCode, $city, $password){
+        $conn = Database::connect();
+        $passwordHash = sodium_crypto_pwhash_str(
+            $password,
+            SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE,  // Nombre d'opérations pour la résistance aux attaques par force brute
+            SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE // Limite de mémoire pour la résistance aux attaques par force brute
+        );
+        $password = $passwordHash;
+        
+        try {
+            $conn->beginTransaction();
+
+            // Mettre à jour les données de l'utilisateur
+            $sql = $conn->prepare("UPDATE customer SET `customer_last-name` = :customer_last_name, `customer_first-name` = :customer_first_name, email = :email, phone = :phone, password = :password WHERE customer_id = :customer_id");
+            $sql->execute(
+                array(
+                    'customer_last_name' => $name,
+                    'customer_first_name' => $firstname,
+                    'email' => $mail,
+                    'phone' => $phone,
+                    'password' => $password,
+                    'customer_id' => $id
+                )
+            );
+            $sql->closeCursor();
+
+            // Mettre à jour l'adresse de l'utilisateur
+            $sql = $conn->prepare("UPDATE adress SET city = :city, postal_code = :postal_code, adress = :adress WHERE customer_id = :customer_id");
+            $sql->execute(
+                array(
+                    'city' => $city,
+                    'postal_code' => $postalCode,
+                    'adress' => $adress,
+                    'customer_id' => $id
+                )
+            );
+            $sql->closeCursor();
+
+            $this->firstname = $firstname;
+
+            $conn->commit();
+        } catch(PDOException $e) {
+            // En cas d'erreur, annulation des transactions
+            $conn->rollback();
+            throw $e;
+        }
+    }
     
     public function delete($customer_id, $password){
         $conn = Database::connect();

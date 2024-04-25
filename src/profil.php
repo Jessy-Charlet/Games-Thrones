@@ -101,7 +101,7 @@ if(!isset($_SESSION['user'])){
                     <div>
                         <label for="password" class="labelForm">Mot de passe</label>
                         <br>
-                        <input type="password" name="password" id="password" class="inputForm inputFormSmall">
+                        <input type="password" name="password" id="password" class="inputForm inputFormSmall" autocomplete="off">
                     </div>
                     <div class="formDiv">
                         <input type="hidden" value="<?php $_SESSION['user'] ?>" name="customer_id" id="customer_id">

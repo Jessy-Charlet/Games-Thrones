@@ -163,7 +163,7 @@ personalInfoModif.addEventListener('click', function(event) {
                         }
                     })
                     .catch(error => 
-                        self.location = 'profil?error=UnexpectedError'
+                        console.log(error)
                     );
 
                 nameId.disabled = true;

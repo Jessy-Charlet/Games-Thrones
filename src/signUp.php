@@ -1,6 +1,10 @@
 <?php
 if(isset($_SESSION['user'])){
-    header('Location: '.$router->generate('profil'));
+    ?>
+        <script>
+            window.location.href = '/';
+        </script>
+   <?php 
     exit();
 }else{
     if(isset($_GET['error'])){

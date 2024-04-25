@@ -1,8 +1,6 @@
 <?php
-session_start();
 include 'classes/CrudUser.class.php';
 include 'classes/Database.class.php';
-include 'classes/CrudUser.class.php';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $mail = $_POST['email'];
@@ -41,7 +39,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             )
         );
     }else{
-        $user->updateUser($id, $mail, $phone, $password, $adresse, $name, $firstname, $postalCode, $city);
+        $user->updateUser($id, $name, $firstname, $mail, $phone, $adresse, $postalCode, $city, $password);
 
         session_start();
         $_SESSION['userFirstName'] = $user->getFirstname();
