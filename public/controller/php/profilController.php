@@ -2,38 +2,55 @@
 session_start();
 include 'classes/CrudUser.class.php';
 include 'classes/Database.class.php';
+include 'classes/CrudUser.class.php';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-    $isEmailChanged = $isPhoneChanged = $isPasswordChanged = $isAddressChanged = $isNameChanged = $isFirstnameChanged = $isPostalCodeChanged = $isCityChanged = null;
-
-    if(isset($_POST['changeEmail'])){
-        $isEmailChanged = $_POST['changeEmail'];
-    }
-    if(isset($_POST['changePhone'])){
-        $isPhoneChanged = $_POST['changePhone'];
-    }
-    if(isset($_POST['changePassword'])){
-        $isPasswordChanged = $_POST['changePassword'];
-    }
-    if(isset($_POST['changeAdresse'])){
-        $isAddressChanged = $_POST['changeAdresse'];
-    }
-    if(isset($_POST['changeName'])){
-        $isNameChanged = $_POST['changeName'];
-    }
-    if(isset($_POST['changeFirstname'])){
-        $isFirstnameChanged = $_POST['changeFirstname'];
-    }
-    if(isset($_POST['changePostalCode'])){
-        $isPostalCodeChanged = $_POST['changePostalCode'];
-    }
-    if(isset($_POST['changeCity'])){
-        $isCityChanged = $_POST['changeCity'];
-    }
-    $id = $_SESSION['user'];
+    $mail = $_POST['email'];
+    $phone = $_POST['phone'];
+    $password = $_POST['password'];
+    $adresse = $_POST['adress'];
+    $name = $_POST['name'];
+    $firstname = $_POST['firstname'];
+    $postalCode = $_POST['postalCode'];
+    $city = $_POST['city'];
+    $id = $_POST['id'];
     
     $user = new CrudUser();
-    $user->updateUser($id, $isEmailChanged, $isPhoneChanged, $isPasswordChanged, $isAddressChanged, $isNameChanged, $isFirstnameChanged, $isPostalCodeChanged, $isCityChanged);
+
+    $testInsert = $user->testUpdateUser($id, $mail, $phone, $password);
+
+    if($testInsert == 'mailAlreadyUsed'){
+        echo json_encode(
+            array(
+                'status' => 'error',
+                'error' => 'mailAlreadyUsed'
+            )
+        );
+    }elseif($testInsert == 'wrongPassword'){
+        echo json_encode(
+            array(
+                'status' => 'error',
+                'error' => 'wrongPassword'
+            )
+        );
+    }elseif($testInsert == 'phoneAlreadyUsed'){
+        echo json_encode(
+            array(
+                'status' => 'error',
+                'error' => 'phoneAlreadyUsed'
+            )
+        );
+    }else{
+        $user->updateUser($id, $mail, $phone, $password, $adresse, $name, $firstname, $postalCode, $city);
+
+        session_start();
+        $_SESSION['userFirstName'] = $user->getFirstname();
+        echo json_encode(
+            array(
+                'status' => 'success',
+                'error' => 'none'
+            )
+        );
+    }
+
 }
-?>

@@ -1,8 +1,8 @@
 <?php
-if(isset($_GET["id"])){
-    $product_id = $_GET["id"]; 
+if (isset($_GET["id"])) {
+    $product_id = $_GET["id"];
 } else {
-    $product_id = 2; 
+    $product_id = 2;
 }
 
 $conn = Database::connect();
@@ -98,7 +98,7 @@ class Product
     {
         return $this->description;
     }
-    
+
     public function getImage()
     {
         return $this->image;
@@ -168,18 +168,25 @@ $quantity = 1;
                         <div class="slider">
                             <ul>
                                 <li id="Photo1">
-                                    <img class="sliderPhoto" src="./assets/img/products/product_<?=$productId?>_image_1.jpg" alt="Chaise gaming">
+                                    <img class="sliderPhoto"
+                                        src="./assets/img/products/product_<?= $productId ?>_image_1.jpg"
+                                        alt="Chaise gaming">
                                 </li>
                                 <li id="Photo2">
-                                    <img class="sliderPhoto" src="./assets/img/products/product_<?=$productId?>_image_2.jpg" alt="Chaise gaming">
+                                    <img class="sliderPhoto"
+                                        src="./assets/img/products/product_<?= $productId ?>_image_2.jpg"
+                                        alt="Chaise gaming">
                                 </li>
                                 <li id="Photo3">
-                                    <img class="sliderPhoto" src="./assets/img/products/product_<?=$productId?>_image_3.jpg" alt="Chaise gaming">
+                                    <img class="sliderPhoto"
+                                        src="./assets/img/products/product_<?= $productId ?>_image_3.jpg"
+                                        alt="Chaise gaming">
                                 </li>
                             </ul>
                         </div>
                         <div class="imageActuelle">
-                            <img class="imageMain" src="./assets/img/products/product_<?=$productId?>_main_image.jpg" alt="Chaise gaming">
+                            <img class="imageMain" src="./assets/img/products/product_<?= $productId ?>_main_image.jpg"
+                                alt="Chaise gaming">
                         </div>
                         <div class="sliderDots"></div>
                     </div>
@@ -189,7 +196,8 @@ $quantity = 1;
                             <p class="benefitsItemText">GARANTIE</p>
                         </div>
                         <div class="benefitsItem">
-                            <img class="benefitsItemImg" src="./assets/img/product/shipped.png" alt="Car with free shipping">
+                            <img class="benefitsItemImg" src="./assets/img/product/shipped.png"
+                                alt="Car with free shipping">
                             <p class="benefitsItemText">LIVRAISON GRATUITE</p>
                         </div>
                         <div class="benefitsItem">
@@ -200,12 +208,12 @@ $quantity = 1;
                 </div>
                 <div class="rightSide">
                     <div class="descriptionTop">
-                        <h1 class="productTitle"><?php echo  "{$product->getName()}</li>"; ?></h1>
-                        <?php echo  "<p id='deco'>Réf: {$product->getProductId()}</p>"; ?>
+                        <h1 class="productTitle"><?php echo "{$product->getName()}</li>"; ?></h1>
+                        <?php echo "<p id='deco'>Réf: {$product->getProductId()}</p>"; ?>
                         <div class="productInfo">
                             <div class="productInfoLeft">
                                 <div class="rating-result">
-                                    <?php echo  "<h2 id='deco'>{$product->getAverageRating()}</h2>"; ?>
+                                    <?php echo "<h2 id='deco'>{$product->getAverageRating()}</h2>"; ?>
                                 </div>
                                 <p class="prisInfo"><span><?php echo "{$product->getPrice()}$</>"; ?></span></p>
                                 <div class="attributesInfo">
@@ -232,7 +240,8 @@ $quantity = 1;
                             <div class="productAdd">
                                 <p class="quantity">
                                     <label for="quantity">Quantité</label><br>
-                                    <input id="product_quantity" type="number" class="quantity" name="quantity" min="1" max="<?php echo $product->getStock(); ?>" value="<?php echo $quantity; ?>">
+                                    <input id="product_quantity" type="number" class="quantity" name="quantity" min="1"
+                                        max="<?php echo $product->getStock(); ?>" value="<?php echo $quantity; ?>">
                                 </p>
                                 <button id="product_basketButton" class="basketButton" type="submit">
                                     <span>Ajouter au panier</span> <img src="./images/icon_panier.png" alt="">
@@ -254,15 +263,18 @@ $quantity = 1;
         <div class="container">
             <h3 class="similarProductsTitle">Produits liés à cet article</h3>
             <div class="similarProductscontent">
-                <?php foreach ($productObjects as $product) : ?>
+                <?php foreach ($productObjects as $product): ?>
                     <div class="card">
                         <div class="cardTop">
                             <a href="#">
-                                <img class="cardImg" src="./assets/img/products/product_<?php echo $product->getProductId(); ?>_main_image.jpg" alt="<?php echo $product->getName(); ?>">
+                                <img class="cardImg"
+                                    src="./assets/img/products/product_<?php echo $product->getProductId(); ?>_main_image.jpg"
+                                    alt="<?php echo $product->getName(); ?>">
                             </a>
                         </div>
                         <div class="cardBottom">
-                            <a href="#productDetails" class="productLink" data-product-id="<?php echo $product->getProductId(); ?>">
+                            <a href="#productDetails" class="productLink"
+                                data-product-id="<?php echo $product->getProductId(); ?>">
                                 <?php echo $product->getName(); ?>
                             </a>
                             <div class="priceRating">
@@ -277,7 +289,7 @@ $quantity = 1;
             </div>
         </div>
     </section>
-  <section id="Commentaires">
+    <section id="Commentaires">
         <div class="container">
             <h3 class="reviewTitle">Commentaires</h3>
             <form class="reviewForm" method="post" action="">
@@ -412,5 +424,6 @@ $quantity = 1;
         </div>
     </section>
 </main>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <script src="./assets/js/product.js?t=<?= time(); ?>"></script>

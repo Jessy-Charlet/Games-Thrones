@@ -227,18 +227,19 @@ class CrudUser {
         }
     }
 
- /*   public function updateUser(int $id, $mail, $phone, $password, $adress, string $name, string $firstname, int $postalCode, string $city){
+    public function testUpdateUser(int $id, $mail, $phone, $password){
         $conn = Database::connect();
-        $current_page_url = strtok($_SERVER['REQUEST_URI'] ?? '', '?');
 
+        $error = "none";
+        
         $sql = $conn->prepare("SELECT email, phone, password FROM customer WHERE customer_id = :id");
         $sql->execute(
             array(
                 'id' => $id
             )
         );
-
-        if($sql->fetch(PDO::FETCH_ASSOC)['email'] != $mail){
+        $result =  $sql->fetch(PDO::FETCH_ASSOC);
+        if($result['email'] != $mail){
             $sql2 = $conn->prepare("SELECT email FROM customer WHERE email = :email");
             $sql2->execute(
                 array(
@@ -250,7 +251,8 @@ class CrudUser {
                 exit();
             }
             $sql2->closeCursor();
-        }elseif($sql->fetch(PDO::FETCH_ASSOC)['phone'] != $phone){
+        }
+        if($result['phone'] != $phone){
             $sql2 = $conn->prepare("SELECT phone FROM customer WHERE phone = :phone");
             $sql2->execute(
                 array(
@@ -262,10 +264,9 @@ class CrudUser {
                 exit();
             }
             $sql2->closeCursor();
-        }elseif(sodium_crypto_pwhash_str_verify($sql->fetch(PDO::FETCH_ASSOC)['password'], $password)){
-            header('Location: '.$current_page_url.'?error=passwordNotValid');
-            exit();
-        }else{
+        }
+        if(sodium_crypto_pwhash_str_verify($result['password'], $password)){
+            $error = ""; 
             try {
                 $conn->beginTransaction();
     
@@ -298,16 +299,16 @@ class CrudUser {
                 $this->firstname = $firstName;
     
                 $conn->commit();
-                //header('Location: '.$current_page_url.'?update=success');
             } catch(PDOException $e) {
                 // En cas d'erreur, annulation des transactions
                 $conn->rollback();
-                //header('Location: '.$current_page_url.'?update=error');
                 throw $e;
             }
-        }  
-
-    }*/
+        }else{
+            $error = "wrongPassword";
+            exit();
+        }
+    }  
     
     public function delete($customer_id, $password){
         $conn = Database::connect();
@@ -350,7 +351,11 @@ class CrudUser {
                     $this->customer_id = $customerId;
                     $this->firstname = $firstName;
                     $conn->commit();
+                }else{
+                    return 'wrongPassword';
                 }
+            }else{
+                return 'mailNotFound';
             }
         }catch(PDOException $e) {
             // En cas d'erreur, annulation des transactions
