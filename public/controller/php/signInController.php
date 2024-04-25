@@ -7,18 +7,32 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     $user = new CrudUser();
-    $user->connectionUser($mail, $password);
+    $testConn = $user->testConnectionUser($mail, $password);
 
-    session_start();
-    $_SESSION['user'] = $user->getCustomer_id();
-    $_SESSION['userFirstName'] = $user->getFirstname();
-
-    echo json_encode(
-        array(
-            'status' => 'success',
-            'sessionUser' => $user->getCustomer_id(),
-            'sessionUserFirstName' => $user->getFirstname()
-        )
-    );
+    if($testConn == "success"){
+        session_start();
+        $_SESSION['user'] = $user->getCustomer_id();
+        $_SESSION['userFirstName'] = $user->getFirstname();
+        echo json_encode(
+            array(
+                'status' => 'success',
+                'error' => 'none'
+            )
+        );  
+    }elseif($testConn == "wrongPassword"){
+        echo json_encode(
+            array(
+                'status' => 'error',
+                'error' => 'wrongPassword'
+            )
+        );   
+    }elseif($testConn == "mailNotFound"){
+        echo json_encode(
+            array(
+                'status' => 'error',
+                'error' => 'mailNotFound'
+            )
+        );
+    }
 }
 ?>

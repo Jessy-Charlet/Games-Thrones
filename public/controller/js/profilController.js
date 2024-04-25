@@ -12,6 +12,16 @@ const personalInfoModif = document.getElementById('personnalInfoModif');
 const form = document.getElementById('personalInfoForm');
 const customer_id = document.getElementById('customer_id').value;
 
+
+nameId.disabled = true;
+firstname.disabled = true;
+email.disabled = true;
+phone.disabled = true;
+adresse.disabled = true;
+postalCode.disabled = true;
+city.disabled = true;
+password.disabled = true;
+
 var initialnameId = nameId.value || 'defaultName';
 var initialFirstname = firstname.value;
 var initialEmail = email.value;
@@ -133,38 +143,39 @@ personalInfoModif.addEventListener('click', function(event) {
             }
 
             const formdata = new FormData();
-                formdata.append('name', nameId);
-                formdata.append('firstname', firstname);
-                formdata.append('email', email);
-                formdata.append('phone', phone);
-                formdata.append('adress', adresse);
-                formdata.append('postalCode', postalCode);
-                formdata.append('city', city);
-                formdata.append('password', password);
-                formdata.append('id', customer_id)
-                const requestOptions = {
-                    method: "POST",
-                    header: "Content-Type: application/form-data",
-                    body: formdata
-                };
-                fetch("http://localhost:8080/controller/php/profilController.php", requestOptions)
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.status == 'error') {
-                            if (data.error === 'mailAlreadyUsed') {
-                                self.location = 'profil?error=mailAlreadyUsed';
-                            } else if (data.error === 'phoneAlreadyUsed') {
-                                self.location = 'profil?error=phoneAlreadyUsed';
-                            } else if (data.error === 'wrongPassword') {
-                                self.location = 'profil?error=wrongPassword';
-                            }
-                        }else if(data.status == 'success') {
-                            self.location = '/profil';
+            formdata.append('name', nameId);
+            formdata.append('firstname', firstname);
+            formdata.append('email', email);
+            formdata.append('phone', phone);
+            formdata.append('adress', adresse);
+            formdata.append('postalCode', postalCode);
+            formdata.append('city', city);
+            formdata.append('password', password);
+            formdata.append('id', customer_id);
+    
+            const requestOptions = {
+                method: "POST",
+                Header: "Content-Type: multipart/form-data",
+                body: formdata
+            };
+    
+            fetch("http://localhost:8080/controller/php/profilController.php", requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    if(data.status == 'error') {
+                        if (data.error === 'mailAlreadyUsed') {
+                            self.location = '/profil?error=mailAlreadyUsed';
+                        } else if (data.error === 'phoneAlreadyUsed') {
+                            self.location = '/profil?error=phoneAlreadyUsed';
                         }
-                    })
-                    .catch(error => 
-                        console.log(error)
-                    );
+                    }else if(data.status == 'success') {
+                        self.location = '/';
+                    }
+                })
+                .catch(error => 
+                    console.log(error)
+                    //self.location = '/profil?error=UnexpectedError'
+                );
 
                 nameId.disabled = true;
                 firstname.disabled = true;
