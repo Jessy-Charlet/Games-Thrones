@@ -40,7 +40,7 @@
                         <div class="panierContent">
                             <div class="panierContentLeft">
                                 <h2 class="panierItemTitle">Nom du produit</h2>
-                                <p>coleur</p>
+                                <p>color</p>
                             </div>
                             <div class="panierContentRight">
                                 <div class="panierItemQuantity">
