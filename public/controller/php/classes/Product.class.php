@@ -35,7 +35,7 @@ Class Product
     }
 
     public function get_random_product_id() {
-        return rand(1, 10); // Génère un ID de produit aléatoire entre 1 et 10 000
+        return rand(1, 10); 
     }
 
     public function getName()

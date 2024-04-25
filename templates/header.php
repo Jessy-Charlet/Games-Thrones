@@ -46,7 +46,11 @@ session_start();
         <!-- -->
         <button id="searchBarOpen"><img src="./assets/img/icon_search.png" alt="rechercher" /></button>
         <a href="<?= $router->generate('panier') ?>"><img src="./assets/img/icon_panier.png" alt="Mon panier" />
-            <span id="header_totalProductsQuantity">2</span>
+        <?php
+        if(isset($_SESSION['basketQuantity'])){
+            echo "<span id='header_totalProductsQuantity'>".$_SESSION['basketQuantity']."</span>";
+        }
+        ?>
         </a>
         <?php
         if (isset($_SESSION['user'])) {
@@ -69,7 +73,7 @@ session_start();
             <a href="">Dossier inclinable</a>
             <a href="">A roulettes</a>
             <a href="">Sans accoudoires</a>
-            <a href="">Découvrir tous nos produit</a>
+            <a href="/filtre">Découvrir tous nos produit</a>
         </div>
         <div class="navContainer">
             <a href="">Dossier inclinable</a>
