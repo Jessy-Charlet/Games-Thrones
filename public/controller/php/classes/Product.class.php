@@ -1,4 +1,6 @@
 <?php 
+
+
 Class Product
 
 {
@@ -30,6 +32,10 @@ Class Product
     public function getProductId()
     {
         return $this->product_id;
+    }
+
+    public function get_random_product_id() {
+        return rand(1, 10); // Génère un ID de produit aléatoire entre 1 et 10 000
     }
 
     public function getName()
@@ -109,19 +115,4 @@ Class Product
     }
 }
 
-$productObjects = [];
-foreach ($products as $productInfo) {
-    $product = new Product(
-        $productInfo['product_id'],
-        $productInfo['name'],
-        $productInfo['brand'],
-        $productInfo['color'],
-        $productInfo['material'],
-        $productInfo['price'],
-        $productInfo['stock'],
-        $productInfo['average_rating'],
-        $productInfo['description'],
-        $productInfo['images']
-    );
-    $productObjects[] = $product;
-}
+

@@ -4,7 +4,7 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap:2vw;
+    gap: 2vw;
 
     .product {
         box-sizing: border-box;
@@ -12,7 +12,7 @@
         width: 100%;
         padding: 1em;
         background-color: #F2F2F2;
-        box-shadow: 0 0 20px rgb(0,0,0,0.05);
+        box-shadow: 0 0 20px rgb(0, 0, 0, 0.05);
         text-decoration: none;
 
         img {
@@ -32,11 +32,14 @@
             text-align: left;
         }
 
-        .productRate{
+        .productRate {
             text-align: right;
             color: #482664;
             font-weight: bold;
-            img{
+            font-size: 1em;
+            line-height: 1em;
+
+            img {
                 float: right;
                 width: 1em;
                 height: 1em;
@@ -44,7 +47,7 @@
             }
         }
 
-        .productDiv{
+        .productDiv {
             display: grid;
             grid-template-columns: 1fr 1fr;
         }
@@ -52,6 +55,18 @@
     }
 }
 
+/***-------------------------INDEX--------------------------------------------------*/
+.section {
+    box-sizing: border-box;
+    width: 80vw;
+    margin: auto;
+    h2{
+        text-align: center;
+        font-size: 1.5em;
+    }
+}
+
+/***-------------------------MOBILE--------------------------------------------------*/
 @media (orientation: portrait) {
     .productsGrid {
         grid-template-columns: repeat(2, 1fr);
