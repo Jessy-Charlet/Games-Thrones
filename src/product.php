@@ -18,7 +18,6 @@ if (isset($_GET["id"])) {
     $product_id = get_random_product_id($valid_product_ids);
 }
 
-
 $conn = Database::connect();
 
 if (empty($product_id)) {
@@ -37,7 +36,6 @@ if (empty($product_id)) {
     } catch (PDOException $e) {
         echo "Erreur de connexion à la base de données: " . $e->getMessage();
     }
-
 
 $productObjects = [];
 foreach ($products as $productInfo) {
