@@ -43,3 +43,22 @@ $(document).ready(function () {
     $(".toggleReviewsItem").toggleClass("hideElement");
   }
 });
+
+
+jQuery(document).ready(function () {
+  jQuery("#product_basketButton").click(function () {
+    var quantity = parseInt(jQuery("#product_quantity").val());
+    var currentTotalBottom =
+      parseInt(jQuery("#header_totalProductsQuantityBottom").text()) || 0;
+    var currentTotalTop =
+      parseInt(jQuery("#header_totalProductsQuantity").text()) || 0;
+
+    var newTotalBottom = currentTotalBottom + quantity;
+    var newTotalTop = currentTotalTop + quantity;
+
+    jQuery("#header_totalProductsQuantityBottom").text(newTotalBottom);
+    jQuery("#header_totalProductsQuantity").text(newTotalTop);
+  });
+});
+
+
