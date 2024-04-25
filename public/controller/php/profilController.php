@@ -1,21 +1,24 @@
 <?php
-include 'classes/CrudUser.class.php';
 include 'classes/Database.class.php';
+include 'classes/CrudUser.class.php';
+
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $mail = $_POST['email'];
-    $phone = $_POST['phone'];
-    $password = $_POST['password'];
-    $adresse = $_POST['adress'];
     $name = $_POST['name'];
     $firstname = $_POST['firstname'];
+    $mail = $_POST['email'];
+    $phone = $_POST['phone'];
+    $adresse = $_POST['adress'];
     $postalCode = $_POST['postalCode'];
     $city = $_POST['city'];
+    $password = $_POST['password'];
     $id = $_POST['id'];
     
     $user = new CrudUser();
 
+
     $testInsert = $user->testUpdateUser($id, $mail, $phone, $password);
+
 
     if($testInsert == 'mailAlreadyUsed'){
         echo json_encode(

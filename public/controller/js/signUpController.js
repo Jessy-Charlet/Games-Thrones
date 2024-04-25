@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         const requestOptions = {
             method: "POST",
-            header: "Content-Type: application/form-data",
+            Header: "Content-Type: multipart/form-data",
             body: formdata
         };
 
@@ -105,16 +105,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
             .then(data => {
                 if(data.status == 'error') {
                     if (data.error === 'mailAlreadyUsed') {
-                        self.location = 'inscription?error=mailAlreadyUsed';
+                        self.location = '/inscription?error=mailAlreadyUsed';
                     } else if (data.error === 'phoneAlreadyUsed') {
-                        self.location = 'inscription?error=phoneAlreadyUsed';
+                        self.location = '/inscription?error=phoneAlreadyUsed';
                     }
                 }else if(data.status == 'success') {
                     self.location = '/';
                 }
             })
             .catch(error => 
-                self.location = 'inscription?error=UnexpectedError'
+                self.location = '/inscription?error=UnexpectedError'
             );
     });
 });

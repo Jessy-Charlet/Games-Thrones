@@ -2,6 +2,7 @@
 require 'classes/Database.class.php';
 require 'classes/CrudUser.class.php';
 
+
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
     $firstname = $_POST['firstname'];
@@ -12,11 +13,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $city = $_POST['city'];
     $password = $_POST['password'];
 
+    
+
     $user = new CrudUser();
 
     $testInsert = $user->testInsertUser($mail, $phone);
-
-    var_dump($testInsert);
 
     if($testInsert == 'mailAlreadyUsed'){
         echo json_encode(
@@ -45,4 +46,3 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         );
     }
 }
-?>
