@@ -8,7 +8,7 @@ if (isset($_GET["filter"])) {
     switch ($_GET["filter"]) {
         case "color":
             try {
-              $stmt = $conn->prepare("SELECT * FROM product WHERE color='" . $_GET['value'] . "'");
+              $stmt = $conn->prepare("SELECT * FROM product WHERE color='" . $_GET['value1'] . "'");
                 $stmt->execute();
                 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } catch (PDOException $e) {
@@ -18,7 +18,7 @@ if (isset($_GET["filter"])) {
             break;
         case "price":
             try {
-                $stmt = $conn->prepare("SELECT * FROM product WHERE price=" . $_GET['value'] . "");
+                $stmt = $conn->prepare("SELECT * FROM product WHERE price >= '" . $_GET['value1'] . "' AND price <= '" . $_GET['value2'] . "'");
                 $stmt->execute();
                 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } catch (PDOException $e) {
