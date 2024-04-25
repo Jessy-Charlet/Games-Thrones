@@ -126,7 +126,6 @@ $(document).ready(function () {
                     const urlElement = document.createElement('a');
                     urlElement.href = `/produit?id=${products[i]["product_id"]}`;
                     // Image du produit
-                    console.log(urlElement.href);
                     const imageElement = document.createElement('img');
                     const productImages = JSON.parse(products[i]["images"]);
                     const imageUrl = productImages["main_image"];

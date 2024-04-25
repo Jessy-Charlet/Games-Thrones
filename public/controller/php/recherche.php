@@ -1,18 +1,45 @@
 <?php
 require('./classes/Database.class.php');
 
-try {
-    $conn = Database::connect();
-    $stmt = $conn->prepare("SELECT * FROM product");
-    $stmt->execute();
-    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    echo "Erreur de connexion à la base de données: " . $e->getMessage();
+$conn = Database::connect();
+
+if (isset($_GET["filter"])) {
+
+    switch ($_GET["filter"]) {
+        case "color":
+            try {
+              $stmt = $conn->prepare("SELECT * FROM product WHERE color='" . $_GET['value'] . "'");
+                $stmt->execute();
+                $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                http_response_code(500);
+                echo "Erreur de connexion à la base de données: " . $e->getMessage();
+            }
+            break;
+        case "price":
+            try {
+                $stmt = $conn->prepare("SELECT * FROM product WHERE price=" . $_GET['value'] . "");
+                $stmt->execute();
+                $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                http_response_code(500);
+                echo "Erreur de connexion à la base de données: " . $e->getMessage();
+            }
+            break;
+    }
+} else {
+
+    try {
+        $stmt = $conn->prepare("SELECT * FROM product");
+        $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo "Erreur de connexion à la base de données: " . $e->getMessage();
+    }
 }
 
 $conn = null;
 
-
 header('Content-Type: application/json');
 echo json_encode($products);
-?>

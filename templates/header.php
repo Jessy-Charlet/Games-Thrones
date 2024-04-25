@@ -73,7 +73,7 @@ session_start();
             <a href="">Dossier inclinable</a>
             <a href="">A roulettes</a>
             <a href="">Sans accoudoires</a>
-            <a href="">Découvrir tous nos produit</a>
+            <a href="/filtre">Découvrir tous nos produit</a>
         </div>
         <div class="navContainer">
             <a href="">Dossier inclinable</a>
