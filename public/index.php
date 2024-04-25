@@ -17,6 +17,7 @@ $router->map('GET', '/contact', '/contact', 'contact');
 $router->map('GET', '/produit', '/product', 'produit');
 $router->map('GET', '/404', '/404', '404');
 $router->map('GET', '/panier', '/panier', 'panier');
+$router->map('GET', '/filtre', '/filters', 'filtre');
 
 
 // route de page de traitement
