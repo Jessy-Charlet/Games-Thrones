@@ -12,7 +12,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $postalCode = $_POST['postalCode'];
     $city = $_POST['city'];
     $password = $_POST['password'];
-    $id = $_POST['id'];
+    $customer_id = $_POST['id'];
+    $id = intval($customer_id);
+    
     
     $user = new CrudUser();
 

@@ -10,7 +10,6 @@ const city = document.getElementById('ville');
 const password = document.getElementById('password');
 const personalInfoModif = document.getElementById('personnalInfoModif');
 const form = document.getElementById('personalInfoForm');
-const customer_id = document.getElementById('customer_id').value;
 
 
 nameId.disabled = true;
@@ -142,6 +141,8 @@ personalInfoModif.addEventListener('click', function(event) {
                 }
             }
 
+            const customer_id = document.getElementById('customer_id').value;
+            
             const formdata = new FormData();
             formdata.append('name', nameId);
             formdata.append('firstname', firstname);
