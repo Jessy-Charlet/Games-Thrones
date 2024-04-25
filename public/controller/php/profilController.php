@@ -43,7 +43,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         );
     }else{
         $user->updateUser($id, $name, $firstname, $mail, $phone, $adresse, $postalCode, $city, $password);
-
         session_start();
         $_SESSION['userFirstName'] = $user->getFirstname();
         echo json_encode(

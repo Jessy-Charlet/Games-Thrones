@@ -338,8 +338,10 @@ class CrudUser {
 
     public function testConnectionUser($mail, $password){
         $conn = Database::connect();
+
+        $error = "none";
     
-        $sql = $conn->prepare("SELECT email, password FROM customer WHERE email = :mail");
+        $sql = $conn->prepare("SELECT email FROM customer WHERE email = :mail");
         $sql->execute(
             array(
                 'mail' => $mail
@@ -347,14 +349,32 @@ class CrudUser {
         );
         $result = $sql->fetch(PDO::FETCH_ASSOC);
         if ($result){
-            $storedPasswordHash = $result['password'];
-            if (sodium_crypto_pwhash_str_verify($storedPasswordHash, $password)) {
-                return 'success';
+            $sql = $conn->prepare("SELECT password FROM customer WHERE email = :mail");
+            $sql->execute(
+                array(
+                    'mail' => $mail
+                )
+            );
+            $result = $sql->fetch(PDO::FETCH_ASSOC);
+            if(sodium_crypto_pwhash_str_verify($result['password'], $password)){
+                $sql = $conn->prepare("SELECT customer_id, `customer_first-name` FROM customer WHERE email = :mail");
+                $sql->execute(
+                    array(
+                        'mail' => $mail
+                    )
+                );
+                $result = $sql->fetch(PDO::FETCH_ASSOC);
+                $this->customer_id = $result['customer_id'];
+                $this->firstname = $result['customer_first-name'];
+                $error = "success";
+                return $error;
             }else{
-                return 'wrongPassword';
+                $error = "wrongPassword";
+                return $error;
             }
         }else{
-            return 'mailNotFound';
+            $error = "mailNotFound";
+            return $error;
         }
     }
 }
