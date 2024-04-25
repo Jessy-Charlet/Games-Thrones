@@ -142,7 +142,7 @@ class CrudUser {
         );
         if($sql->rowCount() > 0){
             $error = "mailAlreadyUsed";
-            exit();
+            return $error;
         }
         $sql->closeCursor();
 
@@ -154,17 +154,11 @@ class CrudUser {
         );
         if($sql->rowCount() > 0){
             $error = "phoneAlreadyUsed";
-            exit();
+            return $error;
         }
         $sql->closeCursor();
 
-        if($error == "mailAlreadyUsed"){
-            return 'mailAlreadyUsed';
-        }elseif($error == "phoneAlreadyUsed"){
-            return 'phoneAlreadyUsed';
-        }else{
-            return 'none';
-        }
+        return $error;
     }
 
     public function createUser($name, $firstname, $mail, $phone, $adress, $postalCode, $city, $password){
@@ -239,7 +233,7 @@ class CrudUser {
             )
         );
         $result = $sql->fetch(PDO::FETCH_ASSOC);
-        if($result['email'] != $mail){
+        if($mail != $result['email']){
             $sql2 = $conn->prepare("SELECT email FROM customer WHERE email = :email");
             $sql2->execute(
                 array(
@@ -248,11 +242,11 @@ class CrudUser {
             );
             if($sql2->rowCount() > 0){
                 $error = "mailAlreadyUsed";
-                exit();
+                return $error;
             }
             $sql2->closeCursor();
         }
-        if($result['phone'] != $phone){
+        if($phone != $result['phone']){
             $sql2 = $conn->prepare("SELECT phone FROM customer WHERE phone = :phone");
             $sql2->execute(
                 array(
@@ -261,13 +255,16 @@ class CrudUser {
             );
             if($sql2->rowCount() > 0){
                 $error = "phoneAlreadyUsed";
-                exit();
+                return $error;
             }
             $sql2->closeCursor();
         }
-        if(!sodium_crypto_pwhash_str_verify($result['password'], $password)){
+        if(sodium_crypto_pwhash_str_verify($result['password'], $password)){
+            $error = "none";
+            return $error;
+        }else{
             $error = "wrongPassword";
-            exit();
+            return $error;
         }
     }
 
@@ -339,37 +336,45 @@ class CrudUser {
         );
     }
 
-    public function connectionUser(string $mail, string $password){
+    public function testConnectionUser($mail, $password){
         $conn = Database::connect();
+
+        $error = "none";
     
-        try{
-            $conn->beginTransaction();
-    
-            $sql = $conn->prepare("SELECT * FROM customer WHERE email = :mail");
+        $sql = $conn->prepare("SELECT email FROM customer WHERE email = :mail");
+        $sql->execute(
+            array(
+                'mail' => $mail
+            )
+        );
+        $result = $sql->fetch(PDO::FETCH_ASSOC);
+        if ($result){
+            $sql = $conn->prepare("SELECT password FROM customer WHERE email = :mail");
             $sql->execute(
                 array(
                     'mail' => $mail
                 )
             );
             $result = $sql->fetch(PDO::FETCH_ASSOC);
-            if ($result){
-                $storedPasswordHash = $result['password'];
-                if (sodium_crypto_pwhash_str_verify($storedPasswordHash, $password)) {
-                    $customerId = $result['customer_id'];
-                    $firstName = $result['customer_first-name'];
-                    $this->customer_id = $customerId;
-                    $this->firstname = $firstName;
-                    $conn->commit();
-                }else{
-                    return 'wrongPassword';
-                }
+            if(sodium_crypto_pwhash_str_verify($result['password'], $password)){
+                $sql = $conn->prepare("SELECT customer_id, `customer_first-name` FROM customer WHERE email = :mail");
+                $sql->execute(
+                    array(
+                        'mail' => $mail
+                    )
+                );
+                $result = $sql->fetch(PDO::FETCH_ASSOC);
+                $this->customer_id = $result['customer_id'];
+                $this->firstname = $result['customer_first-name'];
+                $error = "success";
+                return $error;
             }else{
-                return 'mailNotFound';
+                $error = "wrongPassword";
+                return $error;
             }
-        }catch(PDOException $e) {
-            // En cas d'erreur, annulation des transactions
-            $conn->rollback();
-            throw $e;
+        }else{
+            $error = "mailNotFound";
+            return $error;
         }
     }
 }

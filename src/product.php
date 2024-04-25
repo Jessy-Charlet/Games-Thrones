@@ -36,11 +36,6 @@ if (empty($product_id)) {
     } catch (PDOException $e) {
         echo "Erreur de connexion à la base de données: " . $e->getMessage();
     }
-}
-
-$conn = null;
-
-
 
 $productObjects = [];
 foreach ($products as $productInfo) {
@@ -61,6 +56,56 @@ foreach ($products as $productInfo) {
 
 $productId = $product->getProductId();
 $quantity = 1;
+
+
+// Récupère le produit principal avec son ID
+if (isset($product)) {
+    $mainProductColor = $product->getColor();
+} else {
+    echo "Erreur : Produit principal non défini.";
+    return;
+}
+
+// Récupère tous les produits (pas forcément similaires)
+$stmt = $conn->prepare("SELECT * FROM product");
+$stmt->execute();
+$allProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Utilisation d'un array pour stocker les produits similaires
+$productObjectsSimilar = [];
+
+$index = 0;
+$totalProducts = count($allProducts);
+
+// Boucle pour trouver des produits avec des couleurs similaires
+while ($index < $totalProducts) {
+    $currentProductInfo = $allProducts[$index];
+    $currentProduct = new Product(
+        $currentProductInfo['product_id'],
+        $currentProductInfo['name'],
+        $currentProductInfo['brand'],
+        $currentProductInfo['color'],
+        $currentProductInfo['material'],
+        $currentProductInfo['price'],
+        $currentProductInfo['stock'],
+        $currentProductInfo['average_rating'],
+        $currentProductInfo['description'],
+        $currentProductInfo['images']
+    );
+
+    // Ajoute le produit si la couleur est similaire mais exclut le produit principal
+    if (
+        strtolower($currentProduct->getColor()) === strtolower($mainProductColor) &&
+        $currentProduct->getProductId() !== $product->getProductId()
+    ) {
+        $productObjectsSimilar[] = $currentProduct;
+    }
+
+    $index++;
+}
+}
+
+$conn = null;
 
 ?>
 
@@ -169,24 +214,24 @@ $quantity = 1;
         <div class="container">
             <h3 class="similarProductsTitle">Produits liés à cet article</h3>
             <div class="similarProductscontent">
-                <?php foreach ($productObjects as $product): ?>
+                <?php foreach ($productObjectsSimilar as $productSimilar) : ?>
                     <div class="card">
                         <div class="cardTop">
                             <a href="#">
                                 <img class="cardImg"
-                                    src="./assets/img/products/product_<?php echo $product->getProductId(); ?>_main_image.jpg"
-                                    alt="<?php echo $product->getName(); ?>">
+                                    src="./assets/img/products/product_<?php echo $productSimilar->getProductId(); ?>_main_image.jpg"
+                                    alt="<?php echo $productSimilar->getName(); ?>">
                             </a>
                         </div>
                         <div class="cardBottom">
                             <a href="#productDetails" class="productLink"
-                                data-product-id="<?php echo $product->getProductId(); ?>">
-                                <?php echo $product->getName(); ?>
+                                data-product-id="<?php echo $productSimilar->getProductId(); ?>">
+                                <?php echo $productSimilar->getName(); ?>
                             </a>
                             <div class="priceRating">
-                                <div class="cardPrice cardPrice--common"><?php echo "{$product->getPrice()}$"; ?></div>
+                                <div class="cardPrice cardPrice--common"><?php echo "{$productSimilar->getPrice()}$"; ?></div>
                                 <div class="rating-mini">
-                                    <?php echo "{$product->getAverageRating()}"; ?>
+                                    <?php echo "{$productSimilar->getAverageRating()}"; ?>
                                 </div>
                             </div>
                         </div>
