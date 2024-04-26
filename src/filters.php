@@ -19,7 +19,8 @@
             <button id="bleu" class="filtersColorsItems"></button>
             <button id="violet" class="filtersColorsItems"></button>
             <button id="gris" class="filtersColorsItems"></button>
-            </div>
+        </div>
+        <button id="filtersSup">❌ Supprimer le filtre</button>
         </div>
         <div class="filtersContainer">
             <h3>Filter par types</h3>
