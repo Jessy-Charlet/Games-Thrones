@@ -2,10 +2,11 @@
     <div class="filtersConditions">
         <div class="filtersContainer">
             <h3>Filter par prix</h3>
-            <button id="moinsDe80">Moins de 80€</button>
-            <button id="de80A150">De 80€ à 150€</button>
-            <button id="de150A350">De 150€ à 350€</button>
-            <button id="plusDe350">Plus de 350€</button>
+            <p>
+  <input type="text" id="amount" readonly="">
+</p>
+ 
+<div id="slider-range"></div>
         </div>
         <div class="filtersContainer">
             <h3>Filter par couleurs</h3>

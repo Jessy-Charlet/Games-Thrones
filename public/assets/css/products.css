@@ -63,6 +63,7 @@
     font-weight: 700;
 }
 
+
 /***-------------------------INDEX--------------------------------------------------*/
 .section {
     box-sizing: border-box;
@@ -167,9 +168,21 @@
                 }
 
             }
+
+            input {
+                width: 100%;
+                color:#482664;
+                text-align: center;
+                border: 0;
+                font-weight: 700;
+                margin-bottom: 1em;
+                font-size: 1.5em;
+            }
+
         }
     }
 }
+
 
 
 

@@ -58,7 +58,7 @@ if(!isset($_SESSION['user'])){
                     <div>
                         <label for="nameId" class="labelForm">Nom</label>
                         <br>
-                        <input type="text" name="name" id="nameId" value="<?= $userData['customer_last-name'] ?>" class="inputForm inputFormSmall">
+                        <input type="text" name="name" id="nameId" value="<?= $userData['customer_last-name'] ?>" class="inputForm inputFormSmall" autocomplete="off">
                     </div>
                     <div>
                         <label for="firstname" class="labelForm">Prénom</label>
@@ -70,7 +70,7 @@ if(!isset($_SESSION['user'])){
                     <div>
                         <label for="email" class="labelForm">Email</label>
                         <br>
-                        <input type="email" name="email" id="email" value="<?= $userData['email'] ?>" class="inputForm inputFormSmall">
+                        <input type="email" name="email" id="email" value="<?= $userData['email'] ?>" class="inputForm inputFormSmall" autocomplete="off">
                     </div>
                     <div>
                         <label for="telephone" class="labelForm">Téléphone</label>
@@ -170,3 +170,4 @@ if(!isset($_SESSION['user'])){
     <script src="./controller/js/profilController.js?t=<?= time(); ?>"></script>
 <?php
 }
+var_dump($_SESSION);

@@ -1,8 +1,6 @@
-<?php 
+<?php
 
-
-Class Product
-
+class Product
 {
     private $product_id;
     private $name;
@@ -34,8 +32,9 @@ Class Product
         return $this->product_id;
     }
 
-    public function get_random_product_id() {
-        return rand(1, 10); 
+    public function get_random_product_id()
+    {
+        return rand(1, 10);
     }
 
     public function getName()
@@ -77,7 +76,7 @@ Class Product
     {
         return $this->description;
     }
-    
+
     public function getImage()
     {
         return $this->image;
@@ -114,5 +113,4 @@ Class Product
         echo "Image: {$this->image}\n";
     }
 }
-
 

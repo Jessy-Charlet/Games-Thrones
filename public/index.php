@@ -16,7 +16,7 @@ $router->map('GET', '/mention', '/mention', 'mention');
 $router->map('GET', '/contact', '/contact', 'contact');
 $router->map('GET', '/produit', '/product', 'produit');
 $router->map('GET', '/404', '/404', '404');
-$router->map('GET', '/panier', '/panier', 'panier');
+$router->map('GET', '/panier', '/basket', 'panier');
 $router->map('GET', '/filtre', '/filters', 'filtre');
 
 
@@ -26,6 +26,11 @@ $router->map('POST', '/signInControllerphp', '../public/controller/php/signInCon
 $router->map('GET', '/deconnexion', '../public/controller/php/deconnexion', 'deconnexion');
 $router->map('POST', '/profilControllerphp', '../public/controller/php/profilController', 'profilControllerphp');
 
+// Routes to AJAX files
+$router->map('GET', '/addProductToBasketAjaxController', '../public/controller/php/ajax/addProductToBasketAjaxController', 'addProductToBasketAjaxController');
+$router->map('GET', '/getProductDataByIdAjaxController', '../public/controller/php/ajax/getProductDataByIdAjaxController', 'getProductDataByIdAjaxController');
+$router->map('GET', '/getCartContentsAjaxController', '../public/controller/php/ajax/getCartContentsAjaxController', 'getCartContentsAjaxController');
+
 function my_autoloader($class)
 {
     include 'controller/php/classes/' . $class . '.class.php';
@@ -34,20 +39,32 @@ function my_autoloader($class)
 // Enregistrement de la fonction d'autoload
 spl_autoload_register('my_autoloader');
 
+
+
 $match = $router->match();
 
+
+
 if (is_array($match)) {
-    require '../templates/header.php';
-    if (is_callable($match['target'])) {
-        call_user_func_array($match['target'], $match['params']);
+    if (str_contains($match["name"], "Ajax")) {
+        if (is_callable($match['target'])) {
+            call_user_func_array($match['target'], $match['params']);
+        } else {
+            $params = $match['params'];
+            require "../src/{$match['target']}.php";
+        }
     } else {
-        $params = $match['params'];
-        require "../src/{$match['target']}.php";
+        require '../templates/header.php';
+        if (is_callable($match['target'])) {
+            call_user_func_array($match['target'], $match['params']);
+        } else {
+            $params = $match['params'];
+            require "../src/{$match['target']}.php";
+        }
+        require '../templates/footer.php';
+        echo "</html>";
     }
-    require '../templates/footer.php';
 } else {
-    header("location:".$router->generate('404')."");
+    header("location:" . $router->generate('404') . "");
 }
 ?>
-
-</html>
