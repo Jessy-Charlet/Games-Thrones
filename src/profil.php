@@ -170,4 +170,3 @@ if(!isset($_SESSION['user'])){
     <script src="./controller/js/profilController.js?t=<?= time(); ?>"></script>
 <?php
 }
-var_dump($_SESSION);

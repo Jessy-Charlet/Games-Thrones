@@ -17,6 +17,7 @@ $router->map('GET', '/contact', '/contact', 'contact');
 $router->map('GET', '/produit', '/product', 'produit');
 $router->map('GET', '/404', '/404', '404');
 $router->map('GET', '/panier', '/basket', 'panier');
+$router->map('GET', '/api/panier', '/basket_json', '/Ajax/panier');
 $router->map('GET', '/filtre', '/filters', 'filtre');
 
 

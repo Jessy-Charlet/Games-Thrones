@@ -43,6 +43,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 'error' => 'phoneAlreadyUsed'
             )
         );
+    }elseif($testInsert == 'UserNotFound'){
+        echo json_encode(
+            array(
+                'status' => 'error',
+                'error' => 'UserNotFound'
+            )
+        );
     }else{
         $user->updateUser($id, $name, $firstname, $mail, $phone, $adresse, $postalCode, $city, $password);
         session_start();

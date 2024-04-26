@@ -64,128 +64,133 @@ personalInfoModif.addEventListener('click', function(event) {
     }
 
     if(personalInfoModif.value === 'enregistrer') {
-            if (nameId.value === '' || password.value === '' || email.value === '' || phone.value === '' || adresse.value === '' || firstname.value === '' || postalCode.value === '' || city.value === '') {
-               var errorMessage = 'Please fill in all fields.';
-               errorMessages.innerHTML = errorMessage;
-               return;
+        if (nameId.value === '' || password.value === '' || email.value === '' || phone.value === '' || adresse.value === '' || firstname.value === '' || postalCode.value === '' || city.value === '') {
+            var errorMessage = 'Please fill in all fields.';
+            errorMessages.innerHTML = errorMessage;
+            return;
+        }
+
+        if(phone.value !== ''){
+            var phoneFormat = /^(\d{2} ){4}\d{2}$/;
+            if (!phoneFormat.test(phone.value)) {
+                var errorMessage = 'Phone number format is incorrect. It should be like "00 00 00 00 00".';
+                errorMessages.innerHTML = errorMessage;
+                return;
             }
+        }
 
-            if(phone.value !== ''){
-                var phoneFormat = /^(\d{2} ){4}\d{2}$/;
-                if (!phoneFormat.test(phone.value)) {
-                    var errorMessage = 'Phone number format is incorrect. It should be like "00 00 00 00 00".';
-                    errorMessages.innerHTML = errorMessage;
-                    return;
-                }
+        if(email.value !== ''){
+            var emailFormat = /\S+@\S+\.\S+/;
+            if (!emailFormat.test(email.value)) {
+                var errorMessage = 'Email format is incorrect.';
+                errorMessages.innerHTML = errorMessage;
+                return;
             }
-   
-            if(email.value !== ''){
-                var emailFormat = /\S+@\S+\.\S+/;
-                if (!emailFormat.test(email.value)) {
-                    var errorMessage = 'Email format is incorrect.';
-                    errorMessages.innerHTML = errorMessage;
-                    return;
-                }
-           }
+        }
 
-            if(password.value !== ''){
-                var passwordFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&()!\/.,?;:_+=}{é~"#'-|è`\\ç^à@£$¤*µù%§<>°]).{6,255}$/;
-                if (!passwordFormat.test(password.value)) {
-                    var errorMessage = 'Password must contain at least one number and one uppercase and lowercase letter, a special character, and at least 6 or more characters.';
-                    errorMessages.innerHTML = errorMessage;
-                    return;
-                }
+        if(password.value !== ''){
+            var passwordFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&()!\/.,?;:_+=}{é~"#'-|è`\\ç^à@£$¤*µù%§<>°]).{6,255}$/;
+            if (!passwordFormat.test(password.value)) {
+                var errorMessage = 'Password must contain at least one number and one uppercase and lowercase letter, a special character, and at least 6 or more characters.';
+                errorMessages.innerHTML = errorMessage;
+                return;
             }
+        }
 
-            if(postalCode.value !== ''){
-                var postalCodeFormat = /^\d{5}$/;
-                if (!postalCodeFormat.test(postalCode.value)) {
-                    var errorMessage = 'Postal code format is incorrect. It should be 5 digits.';
-                    errorMessages.innerHTML = errorMessage;
-                    return;
-                }
+        if(postalCode.value !== ''){
+            var postalCodeFormat = /^\d{5}$/;
+            if (!postalCodeFormat.test(postalCode.value)) {
+                var errorMessage = 'Postal code format is incorrect. It should be 5 digits.';
+                errorMessages.innerHTML = errorMessage;
+                return;
             }
-            function isChangeValueChanged(initialValue, newValue){
-                if(initialValue != newValue){
-                    return newValue;
-                }else{
-                    return initialValue;
-                }
+        }
+        function isChangeValueChanged(initialValue, newValue){
+            if(initialValue != newValue){
+                return newValue;
+            }else{
+                return initialValue;
             }
-            const initialValues = {
-                nameId: 'defaultName',
-                firstname: '',
-                email: '',
-                phone: '',
-                adresse: '',
-                postalCode: '',
-                city: '',
-                password: ''
-            };
+        }
+        const initialValues = {
+            nameId: 'defaultName',
+            firstname: '',
+            email: '',
+            phone: '',
+            adresse: '',
+            postalCode: '',
+            city: '',
+            password: ''
+        };
 
-            const newValues = {
-                nameId: document.getElementById('nameId').value,
-                firstname: document.getElementById('firstname').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('telephone').value,
-                adresse: document.getElementById('adresse').value,
-                postalCode: document.getElementById('code_postal').value,
-                city: document.getElementById('ville').value,
-                password: document.getElementById('password').value
-            };
+        const newValues = {
+            nameId: document.getElementById('nameId').value,
+            firstname: document.getElementById('firstname').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('telephone').value,
+            adresse: document.getElementById('adresse').value,
+            postalCode: document.getElementById('code_postal').value,
+            city: document.getElementById('ville').value,
+            password: document.getElementById('password').value
+        };
 
-            let changedValues = {};
-            for (var key in initialValues) {
-                if (initialValues.hasOwnProperty(key)) {
-                    changedValues[key] = isChangeValueChanged(initialValues[key], newValues[key]);
-                }
+        let changedValues = {};
+        for (var key in initialValues) {
+            if (initialValues.hasOwnProperty(key)) {
+                changedValues[key] = isChangeValueChanged(initialValues[key], newValues[key]);
             }
+        }
 
-            const customer_id = document.getElementById('customer_id').value;
-            
-            const formdata = new FormData();
-            formdata.append('name', nameId);
-            formdata.append('firstname', firstname);
-            formdata.append('email', email);
-            formdata.append('phone', phone);
-            formdata.append('adress', adresse);
-            formdata.append('postalCode', postalCode);
-            formdata.append('city', city);
-            formdata.append('password', password);
-            formdata.append('id', customer_id);
-    
-            const requestOptions = {
-                method: "POST",
-                Header: "Content-Type: multipart/form-data",
-                body: formdata
-            };
-    
-            fetch("http://localhost:8080/controller/php/profilController.php", requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    if(data.status == 'error') {
-                        if (data.error === 'mailAlreadyUsed') {
-                            self.location = '/profil?error=mailAlreadyUsed';
-                        } else if (data.error === 'phoneAlreadyUsed') {
-                            self.location = '/profil?error=phoneAlreadyUsed';
-                        }
-                    }else if(data.status == 'success') {
-                        self.location = '/';
-                    }
-                })
-                .catch(error => 
-                    console.log(error)
-                    //self.location = '/profil?error=UnexpectedError'
-                );
+        const customer_id = document.getElementById('customer_id').value;
+        
+        const formdata = new FormData();
+        formdata.append('name', nameId.value);
+        formdata.append('firstname', firstname.value);
+        formdata.append('email', email.value);
+        formdata.append('phone', phone.value);
+        formdata.append('adress', adresse.value);
+        formdata.append('postalCode', postalCode.value);
+        formdata.append('city', city.value);
+        formdata.append('password', password.value);
+        formdata.append('id', customer_id);
 
-                nameId.disabled = true;
-                firstname.disabled = true;
-                email.disabled = true;
-                phone.disabled = true;
-                adresse.disabled = true;
-                postalCode.disabled = true;
-                city.disabled = true;
-                password.disabled = true;
+        const requestOptions = {
+            method: "POST",
+            body: formdata
+        };
+
+        fetch("http://localhost:8080/controller/php/profilController.php", requestOptions)
+        .then(response => {
+            return response.json();
+            }
+        )
+        .then(data => {
+            console.log(data)
+            switch (data.status) {
+                case "error":
+                    self.location = '/profil?error='+data.error;
+                    break;
+                case "success":
+                    self.location = '/';
+                    break;
+                default:
+                    break;
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            self.location = '/profil?error=UnexpectedError'
+            }
+        );
+
+        nameId.disabled = true;
+        firstname.disabled = true;
+        email.disabled = true;
+        phone.disabled = true;
+        adresse.disabled = true;
+        postalCode.disabled = true;
+        city.disabled = true;
+        password.disabled = true;
     }
     
     personalInfoModif.value = 'enregistrer';

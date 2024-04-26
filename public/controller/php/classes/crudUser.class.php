@@ -233,39 +233,45 @@ class CrudUser {
             )
         );
         $result = $sql->fetch(PDO::FETCH_ASSOC);
-        if($mail != $result['email']){
-            $sql2 = $conn->prepare("SELECT email FROM customer WHERE email = :email");
-            $sql2->execute(
-                array(
-                    'email' => $mail
-                )
-            );
-            if($sql2->rowCount() > 0){
-                $error = "mailAlreadyUsed";
+        if($result){
+            if($mail != $result['email']){
+                $sql2 = $conn->prepare("SELECT email FROM customer WHERE email = :email");
+                $sql2->execute(
+                    array(
+                        'email' => $mail
+                    )
+                );
+                if($sql2->rowCount() > 0){
+                    $error = "mailAlreadyUsed";
+                    return $error;
+                }
+                $sql2->closeCursor();
+            }
+            if($phone != $result['phone']){
+                $sql2 = $conn->prepare("SELECT phone FROM customer WHERE phone = :phone");
+                $sql2->execute(
+                    array(
+                        'phone' => $phone
+                    )
+                );
+                if($sql2->rowCount() > 0){
+                    $error = "phoneAlreadyUsed";
+                    return $error;
+                }
+                $sql2->closeCursor();
+            }
+            if(sodium_crypto_pwhash_str_verify($result['password'], $password)){
+                $error = "none";
+                return $error;
+            }else{
+                $error = "wrongPassword";
                 return $error;
             }
-            $sql2->closeCursor();
-        }
-        if($phone != $result['phone']){
-            $sql2 = $conn->prepare("SELECT phone FROM customer WHERE phone = :phone");
-            $sql2->execute(
-                array(
-                    'phone' => $phone
-                )
-            );
-            if($sql2->rowCount() > 0){
-                $error = "phoneAlreadyUsed";
-                return $error;
-            }
-            $sql2->closeCursor();
-        }
-        if(sodium_crypto_pwhash_str_verify($result['password'], $password)){
-            $error = "none";
-            return $error;
         }else{
-            $error = "wrongPassword";
+            $error = "userNotFound";
             return $error;
         }
+
     }
 
     public function updateUser(int $id, $name, $firstname, $mail, $phone, $adress, $postalCode, $city, $password){
