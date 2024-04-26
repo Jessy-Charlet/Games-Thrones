@@ -1,3 +1,0 @@
-<?php
-
-// As signInController.php
