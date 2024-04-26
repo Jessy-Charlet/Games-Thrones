@@ -13,7 +13,9 @@ if (isset($_GET["filter"])) {
                 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } catch (PDOException $e) {
                 http_response_code(500);
-                echo "Erreur de connexion à la base de données: " . $e->getMessage();
+                header('Content-Type: application/json');
+                echo json_encode(["msg"=>"Erreur de connexion à la base de données: " . $e->getMessage()]);
+                exit();
             }
             break;
         case "price":
@@ -23,7 +25,10 @@ if (isset($_GET["filter"])) {
                 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } catch (PDOException $e) {
                 http_response_code(500);
-                echo "Erreur de connexion à la base de données: " . $e->getMessage();
+                header('Content-Type: application/json');
+                echo json_encode(["msg"=>"Erreur de connexion à la base de données: " . $e->getMessage()]);
+                exit();
+
             }
             break;
     }
@@ -35,11 +40,13 @@ if (isset($_GET["filter"])) {
         $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         http_response_code(500);
-        echo "Erreur de connexion à la base de données: " . $e->getMessage();
+        header('Content-Type: application/json');
+        echo json_encode(["msg"=>"Erreur de connexion à la base de données: " . $e->getMessage()]);
+        exit();
+
     }
 }
 
 $conn = null;
 
-header('Content-Type: application/json');
 echo json_encode($products);

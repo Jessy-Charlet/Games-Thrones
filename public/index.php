@@ -6,6 +6,7 @@ $router = new AltoRouter();
 
 // Création des routes
 // route de page affichée
+// $router->map('METHOD', '/url/to/page', '/path/to/file_name', 'name_route');
 $router->map('GET', '/', '/home', 'accueil');
 $router->map('GET', '/connexion', '/signIn', 'connexion');
 $router->map('GET', '/inscription', '/signUp', 'inscription');
@@ -40,13 +41,10 @@ function my_autoloader($class)
 // Enregistrement de la fonction d'autoload
 spl_autoload_register('my_autoloader');
 
-
-
 $match = $router->match();
 
-
-
 if (is_array($match)) {
+    // Handle routes that send JSON
     if (str_contains($match["name"], "Ajax")) {
         if (is_callable($match['target'])) {
             call_user_func_array($match['target'], $match['params']);
@@ -55,6 +53,7 @@ if (is_array($match)) {
             require "../src/{$match['target']}.php";
         }
     } else {
+        // Handle routes that send HTML
         require '../templates/header.php';
         if (is_callable($match['target'])) {
             call_user_func_array($match['target'], $match['params']);
@@ -66,6 +65,7 @@ if (is_array($match)) {
         echo "</html>";
     }
 } else {
+    // 404 error 
     header("location:" . $router->generate('404') . "");
 }
 ?>
