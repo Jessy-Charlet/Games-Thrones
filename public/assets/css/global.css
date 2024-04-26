@@ -56,16 +56,13 @@ h2 {
     align-items: center;
 
     h2 {
+        display: block;
         font-weight: 900;
-        font-size: 500%;
+        font-size: 3em;
         padding: 0;
         margin: 0;
         text-align: center;
 
-        span {
-            display: block;
-            font-size: 150%;
-        }
     }
 
     img {
@@ -96,5 +93,22 @@ h2 {
 @media (orientation: portrait) {
     main {
         padding: 8vh 0 0 0;
+    }
+
+    .error404 {
+
+        grid-template-columns: 1fr;
+        grid-template-rows: 10vh 10vh 10vh 54vh;
+        justify-items: center;
+        align-items: center;
+    
+    
+        img {
+            height: 95%;
+            grid-column: 1/2;
+            grid-row: 4/5;
+            
+        }
+    
     }
 }
