@@ -8,6 +8,7 @@
     grid-template-columns: 55% 1fr 10vh 10vh;
     align-items: center;
     padding: 0;
+    margin: 0;
     transition: all 200ms;
     z-index: 17;
     user-select: none;
@@ -16,25 +17,28 @@
         justify-self: left;
         padding-left: 2vh;
 
-        button {
+        button, a {
+            box-sizing: border-box;
             text-transform: uppercase;
             color: white;
             background-color: transparent;
             border: none;
             padding: 0 2vw;
-            margin: 0;
-            line-height: 8vh;
+            margin: 0 1em 0 0;
+            height: 8vh;
 
-            span {
-                color: #482664;
-                font-weight: bold;
-            }
+        }
+        a{ 
+            line-height: 8vh;
+            padding: 2vh 4vh;
+            border-radius: 10px;
+            background-color: #482664;
         }
         button:after{
             content:"▼";
             color: #482664;
         }
-        button:hover{
+        button:hover, a:hover{
             background-color: #1b1b1b;
         }
          .active{
@@ -182,7 +186,7 @@
 }
 
 
-#navShop, #navInfos, #navSearch{
+#navInfos, #navSearch{
     position: relative;
     box-sizing: border-box;
     width: 100%;
@@ -195,6 +199,8 @@
     top: 8vh;
     left: 0;
     z-index: 16;
+    display: none;
+
     .navContainer{
         border-right:1px solid black;
         width: 100%;
@@ -247,15 +253,11 @@
     text-align: center;
 }
 
-#navShop{
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    gap: 1em;
-}
-#navInfos{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1em;
+#navInfos > div{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1em;
+
 }
 
 
@@ -359,7 +361,7 @@
         }
     
     }
-    #navShop, #navInfos{
+    #navInfos{
         padding: 2vh 5vw ;
     }
     #navSearch{

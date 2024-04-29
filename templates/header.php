@@ -32,7 +32,7 @@ session_start();
     <!-- Menu PC -->
     <header id="navContainer">
         <nav class="navLeft">
-            <button id="shop">Shop </button>
+            <a href="/filtre">Shop</a>
             <button id="infos">Infos </button>
         </nav>
         <a href="<?= $router->generate('accueil') ?>" id="logo"><img src="./assets/img/logo_Games_Thrones_nav.png" alt="Logo Games Thrones" /></a>
@@ -58,43 +58,34 @@ session_start();
         <?php
         } elseif (!isset($_SESSION['user'])) {
         ?>
-            <a href="<?= $router->generate('connexion') ?>"><img src="./assets/img/icon_user.png" alt="Me connecter" />
-            <?php
+            <a href="<?= $router->generate('connexion') ?>"><img src="./assets/img/icon_user.png" alt="Me connecter" /></a>
+        <?php
         }
-            ?>
+        ?>
     </header>
     <!-- Menu slide shop -->
     <nav id="navShop">
-        <div class="navContainer">
-            <a class="promotions" href="">Promotions</a>
-            <a href="">Dossier inclinable</a>
-            <a href="">A roulettes</a>
-            <a href="">Sans accoudoires</a>
-            <a href="/filtre">Découvrir tous nos produit</a>
-        </div>
-        <div class="navContainer">
-            <a href="">Dossier inclinable</a>
-            <a href="">A roulettes</a>
-            <a href="">Sans accoudoires</a>
-            <a href="">Découvrir tous nos produit</a>
-        </div>
-
-
     </nav>
 
     <!-- Menu slide infos -->
     <nav id="navInfos">
-        <div class="navContainer">
-            <div class="navH1">Service client</div>
-            <a href="<?= $router->generate('contact') ?>">Contactez-nous</a>
-            <a href="">Foire aux questions</a>
-            <a href="">Expédition et livraison</a>
-            <a href="">Garantie</a>
-        </div>
-        <div class="navContainer">
-            <div class="navH1">Mentions légales</div>
-            <a href="<?= $router->generate('rgpd') ?>">RGPD</a>
-            <a href="<?= $router->generate('cgv') ?>">CGV</a>
+        <div>
+            <div class="navContainer">
+                <div class="navH1">L'actu</div>
+                <a class="promotions" href="">Promotions</a>
+            </div>
+            <div class="navContainer">
+                <div class="navH1">Service client</div>
+                <a href="<?= $router->generate('contact') ?>">Contactez-nous</a>
+                <a href="">Foire aux questions</a>
+                <a href="">Expédition et livraison</a>
+                <a href="">Garantie</a>
+            </div>
+            <div class="navContainer">
+                <div class="navH1">Mentions légales</div>
+                <a href="<?= $router->generate('rgpd') ?>">RGPD</a>
+                <a href="<?= $router->generate('cgv') ?>">CGV</a>
+            </div>
         </div>
     </nav>
 

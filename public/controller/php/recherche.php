@@ -4,7 +4,7 @@ require('./classes/Database.class.php');
 $conn = Database::connect();
 
 if (isset($_GET["color"])) {
-if ($_GET["color"] != "all");
+    if ($_GET["color"] != "all");
 
     switch ($_GET["color"]) {
         case "all":
@@ -14,18 +14,18 @@ if ($_GET["color"] != "all");
                 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } catch (PDOException $e) {
                 http_response_code(500);
-                echo json_encode(["msg"=>"Erreur de connexion à la base de données: " . $e->getMessage()]);
+                echo json_encode(["msg" => "Erreur de connexion à la base de données: " . $e->getMessage()]);
                 exit();
             }
             break;
-        default :
+        default:
             try {
-                $stmt = $conn->prepare("SELECT * FROM product WHERE price >= '" . $_GET['mini'] . "' AND price <= '" . $_GET['maxi'] . "' AND color='". $_GET['color'] ."'");
+                $stmt = $conn->prepare("SELECT * FROM product WHERE price >= '" . $_GET['mini'] . "' AND price <= '" . $_GET['maxi'] . "' AND color='" . $_GET['color'] . "'");
                 $stmt->execute();
                 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } catch (PDOException $e) {
                 http_response_code(500);
-                echo json_encode(["msg"=>"Erreur de connexion à la base de données: " . $e->getMessage()]);
+                echo json_encode(["msg" => "Erreur de connexion à la base de données: " . $e->getMessage()]);
                 exit();
             }
             break;
@@ -38,7 +38,7 @@ if ($_GET["color"] != "all");
         $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         http_response_code(500);
-        echo json_encode(["msg"=>"Erreur de connexion à la base de données: " . $e->getMessage()]);
+        echo json_encode(["msg" => "Erreur de connexion à la base de données: " . $e->getMessage()]);
         exit();
     }
 }
