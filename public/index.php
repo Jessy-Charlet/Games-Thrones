@@ -20,6 +20,9 @@ $router->map('GET', '/404', '/404', '404');
 $router->map('GET', '/panier', '/basket', 'panier');
 $router->map('GET', '/api/panier', '/basket_json', '/Ajax/panier');
 $router->map('GET', '/filtre', '/filters', 'filtre');
+$router->map('GET', '/checkout', '/checkout', 'checkout');
+$router->map('GET', '/success', '/success', 'success');
+$router->map('GET', '/cancel', '/cancel', 'cancel');
 
 
 // route de page de traitement

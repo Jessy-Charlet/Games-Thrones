@@ -77,7 +77,7 @@ $cartContent = $product->getProductsByCartJson($conn, $cartJson);
                             <div id="basket_total"><span id="basket_total_number">300.99</span><span>€</span></div>
                         </div>
                     </div>
-                    <button class="panierBtn" type="submit">Passer la comande</button>
+                    <a id="makeOrder" class="panierBtn" href="<?php echo $router->generate('checkout'); ?>">Passer la comande</a>
                 </div>
         </section>
     </div>
