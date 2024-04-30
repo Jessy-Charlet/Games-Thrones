@@ -25,6 +25,7 @@
 <script src="./assets/js/searchBar.js"></script>
 <script src="./assets/js/banner.js"></script>
 <script src="./assets/js/filters.js"></script>
+<script src="./controller/js/postalCodeController.js"></script>
 </body>
 
 </html>
