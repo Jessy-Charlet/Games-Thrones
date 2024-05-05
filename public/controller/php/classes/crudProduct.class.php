@@ -288,4 +288,10 @@ average_rating, number_of_ratings, vendor_code, images) VALUES (:name, :category
             return array('products' => array(), 'totalProducts' => 0); // Return empty array with 0 total products
         }
     }
+
+    public function getProductsByCartJsonForStripe($conn, $product, $jsonData)
+    {
+        $cartContent = $product->getProductsByCartJson($conn, $jsonData);
+    }
+
 }
