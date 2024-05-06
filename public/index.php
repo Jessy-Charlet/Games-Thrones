@@ -18,7 +18,6 @@ $router->map('GET', '/contact', '/contact', 'contact');
 $router->map('GET', '/produit', '/product', 'produit');
 $router->map('GET', '/404', '/404', '404');
 $router->map('GET', '/panier', '/basket', 'panier');
-$router->map('GET', '/api/panier', '/basket_json', '/Ajax/panier');
 $router->map('GET', '/filtre', '/filters', 'filtre');
 
 
@@ -29,6 +28,7 @@ $router->map('GET', '/deconnexion', '../public/controller/php/deconnexion', 'dec
 $router->map('POST', '/profilControllerphp', '../public/controller/php/profilController', 'profilControllerphp');
 
 // Routes to AJAX files
+$router->map('GET', '/api/panier', '/basket_json', '/Ajax/panier');
 $router->map('GET', '/addProductToBasketAjaxController', '../public/controller/php/ajax/addProductToBasketAjaxController', 'addProductToBasketAjaxController');
 $router->map('GET', '/getProductDataByIdAjaxController', '../public/controller/php/ajax/getProductDataByIdAjaxController', 'getProductDataByIdAjaxController');
 $router->map('GET', '/getCartContentsAjaxController', '../public/controller/php/ajax/getCartContentsAjaxController', 'getCartContentsAjaxController');
