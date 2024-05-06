@@ -54,7 +54,6 @@ class CrudUser {
         return $name;
     }
 
-
     public function getEmail($customer_id){
         $conn = Database::connect();
         $sql = $conn->prepare("SELECT mail FROM customer WHERE id = :customer_id");
@@ -347,6 +346,24 @@ class CrudUser {
         }else{
             $error = "mailNotFound";
             return $error;
+        }
+    }
+
+    public function checkRole(int $id){
+        $conn = Database::connect();
+        $sql = $conn->prepare("SELECT role FROM customer WHERE id = :id");
+        $sql->execute(
+            array(
+                'id' => $id
+            )
+        );
+        $role = $sql->fetch(PDO::FETCH_ASSOC);
+        $sql->closeCursor();
+        
+        if($role['role'] == "admin"){
+            return true;
+        }else{
+            return false;
         }
     }
 }
