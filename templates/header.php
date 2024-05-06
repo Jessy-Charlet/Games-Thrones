@@ -29,6 +29,7 @@ session_start();
 </head>
 
 <body>
+    <div id="upToTop"></div>
     <!-- Menu PC -->
     <header id="navContainer">
         <nav class="navLeft">
@@ -94,7 +95,7 @@ session_start();
     <nav id="navSearch">
         <div class="navContainer">
             <p>Aucun résultat...</p>
-            <a href="#navContainer" id="fleche">▲ ▲ ▲</a>
+            <a href="#upToTop" id="fleche">▲ ▲ ▲</a>
         </div>
     </nav>
 

@@ -20,8 +20,7 @@ $(document).ready(function () {
         urlElement.href = `/produit?id=${products[i]["product_id"]}`;
         // Image du produit
         const imageElement = document.createElement('img');
-        const productImages = JSON.parse(products[i]["images"]);
-        const imageUrl = productImages["main_image"];
+        const imageUrl = "./assets/img/products/" + products[i]["img"];
         imageElement.src = imageUrl;
         imageElement.alt = products[i]["name"];
         // Prix du produit
@@ -33,7 +32,7 @@ $(document).ready(function () {
         // Note du produit
         const ratingElement = document.createElement('div');
         ratingElement.classList.add("productRate");
-        ratingElement.innerHTML = parseFloat(products[i]["average_rating"]).toFixed(1) + "<img src='./assets/img/star.png'/>";
+        ratingElement.innerHTML = parseFloat(products[i]["rate"]).toFixed(1) + "<img src='./assets/img/star.png'/>";
 
         // Ajouter les éléments à la liste
         listItem.appendChild(urlElement);
@@ -54,11 +53,13 @@ $(document).ready(function () {
     const reponse = await fetch("../controller/php/recherche.php?color=" + color + "&mini=" + mini + "&maxi=" + maxi);
     const products = await reponse.json();
     afficherProduits(products);
+    console.log(products);
   }
   
   $("#noir, #blanc, #rouge, #jaune, #vert, #bleu, #violet, #gris").on("click", function () {
     sessionStorage.setItem('color', this.id);
     recherche($("#slider-range").slider("values", 0), $("#slider-range").slider("values", 1), sessionStorage.getItem('color'));
+    $("#filtersSup").html("❌ Supprimer le filtre <span class='bold'>" + this.id + "<span>");
     $("#filtersSup").slideDown();
   });
   

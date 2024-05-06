@@ -87,6 +87,11 @@
     margin: auto;
 
     .filtersConditions {
+        .bold{
+            text-transform: uppercase;
+            font-weight: 900;
+            color: rgb(80,80,80);
+        }
         .filtersContainer {
             background-color: white;
             border-radius: 15px;
