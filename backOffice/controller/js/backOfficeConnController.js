@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
             body: formdata
         };
 
-        fetch("http://localhost:8080/controller/php/backOfficeController.php", requestOptions)
+        fetch("http://localhost:8080/controller/php/backOfficeConnController.php", requestOptions)
         .then(response => response.json())
         .then(data => {
             if(data.status == 'error') {

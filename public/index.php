@@ -20,11 +20,6 @@ $router->map('GET', '/404', '/404', '404');
 $router->map('GET', '/panier', '/basket', 'panier');
 $router->map('GET', '/filtre', '/filters', 'filtre');
 
-
-$router->map('GET', '/gt-admin', '/backOffice', 'backOffice');
-$router->map('GET', '/gt-signIn', '/backOfficeConnexion', 'backOfficeSignIn');
-
-
 // route de page de traitement
 $router->map('POST', '/signUpControllerphp', '../public/controller/php/signUpController', 'signUpControllerphp');
 $router->map('POST', '/signInControllerphp', '../public/controller/php/signInController', 'signInControllerphp');
