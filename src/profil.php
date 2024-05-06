@@ -6,9 +6,7 @@ if(!isset($_SESSION['user'])){
     $id = $_SESSION['user'];
 
     $user = new CrudUser();
-    $userAlldata = $user->getAll($id);
-    $userData = $userAlldata['userData'];
-    $adressData = $userAlldata['adressData'];
+    $userData = $user->getAll($id);
 
 
     if(isset($_GET['update'])){
@@ -58,19 +56,19 @@ if(!isset($_SESSION['user'])){
                     <div>
                         <label for="nameId" class="labelForm">Nom</label>
                         <br>
-                        <input type="text" name="name" id="nameId" value="<?= $userData['customer_last-name'] ?>" class="inputForm inputFormSmall" autocomplete="off">
+                        <input type="text" name="name" id="nameId" value="<?= $userData['last_name'] ?>" class="inputForm inputFormSmall" autocomplete="off">
                     </div>
                     <div>
                         <label for="firstname" class="labelForm">Prénom</label>
                         <br>
-                        <input type="text" name="firstname" id="firstname" value="<?= $userData['customer_first-name'] ?>" class="inputForm inputFormSmall">
+                        <input type="text" name="firstname" id="firstname" value="<?= $userData['first_name'] ?>" class="inputForm inputFormSmall">
                     </div>
                 </div>
                 <div class="formRow1">
                     <div>
                         <label for="email" class="labelForm">Email</label>
                         <br>
-                        <input type="email" name="email" id="email" value="<?= $userData['email'] ?>" class="inputForm inputFormSmall" autocomplete="off">
+                        <input type="email" name="email" id="email" value="<?= $userData['mail'] ?>" class="inputForm inputFormSmall" autocomplete="off">
                     </div>
                     <div>
                         <label for="telephone" class="labelForm">Téléphone</label>
@@ -82,19 +80,19 @@ if(!isset($_SESSION['user'])){
                     <div>
                         <label for="adresse" class="labelForm">Adresse</label>
                         <br>
-                        <input type="text" name="adresse" id="adresse" value="<?= $adressData['adress'] ?>" class="inputForm inputFormLarge">
+                        <input type="text" name="adresse" id="adresse" value="<?= $userData['adresse'] ?>" class="inputForm inputFormLarge">
                     </div>
                 </div>
                 <div class="formRow1">
                     <div>
                         <label for="code_postal" class="labelForm">Code postal</label>
                         <br>
-                        <input type="text" name="code_postal" id="code_postal" value="<?= $adressData['postal_code'] ?>" class="inputForm inputFormSmall">
+                        <input type="text" name="code_postal" id="code_postal" value="<?= $userData['postal_code'] ?>" class="inputForm inputFormSmall">
                     </div>
                     <div>
                         <label for="ville" class="labelForm">Ville</label>
                         <br>
-                        <input type="text" name="ville" id="ville" value="<?= $adressData['city'] ?>" class="inputForm inputFormSmall">
+                        <input type="text" name="ville" id="ville" value="<?= $userData['city'] ?>" class="inputForm inputFormSmall">
                     </div>
                 </div>
                 <div class="formRow1">

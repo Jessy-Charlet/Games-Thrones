@@ -1,6 +1,6 @@
 <?php
 require 'classes/Database.class.php';
-require 'classes/CrudUser.class.php';
+require 'classes/crudUser.class.php';
 
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -14,11 +14,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     
-
+    
     $user = new CrudUser();
 
     $testInsert = $user->testInsertUser($mail, $phone);
 
+    // Check for error
     if($testInsert == 'mailAlreadyUsed'){
         echo json_encode(
             array(
