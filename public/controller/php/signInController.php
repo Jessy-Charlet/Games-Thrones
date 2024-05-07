@@ -33,6 +33,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'error' => 'mailNotFound'
             )
         );
+    }elseif($testConn == "successAdmin"){
+        session_start();
+        $_SESSION['user'] = $user->getCustomer_id();
+        $_SESSION['userFirstName'] = $user->getFirstname();
+        $_SESSION['admin'] = true;
+        echo json_encode(
+            array(
+                'status' => 'success',
+                'error' => 'none'
+            )
+        ); 
     }
 }
 ?>

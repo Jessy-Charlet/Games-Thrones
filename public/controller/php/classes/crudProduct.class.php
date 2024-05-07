@@ -87,24 +87,22 @@ class crudProduct
         $sql = $conn->prepare("SELECT * FROM product");
         $sql->execute();
         $product = $sql->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($product as $row) {
-            $id = $row['category_id'];
-        }
 
-        $sql2 = $conn->prepare("SELECT * FROM category WHERE id = :id");
-        $sql2->execute(
+        return $product;
+    }
+    
+    public function getCategoryByProductId($id){
+        $conn = Database::connect();
+
+        $sql = $conn->prepare("SELECT name FROM category WHERE id = :id");
+        $sql->execute(
             array(
                 ':id' => $id
             )
         );
-        $category = $sql2->fetch(PDO::FETCH_ASSOC);
+        $category = $sql->fetch(PDO::FETCH_ASSOC);
 
-        $result = [
-            $product,
-            $category
-        ];
-
-        return $result;
+        return $category;
     }
 
     public function getProductId()

@@ -1,9 +1,8 @@
 <?php
-require('./classes/Database.class.php');
 
+require('./classes/Database.class.php');
 $conn = Database::connect();
 $selec = [];
-
 function getImg($products)
 {
     global $selec;
@@ -24,7 +23,6 @@ function getImg($products)
         }
     }
 }
-
 if (isset($_GET["color"])) {
     try {
         switch ($_GET["color"]) {
@@ -47,7 +45,6 @@ if (isset($_GET["color"])) {
         exit();
     }
 } else {
-
     try {
         $stmt = $conn->prepare("SELECT * FROM product");
         $stmt->execute();
@@ -59,7 +56,6 @@ if (isset($_GET["color"])) {
         exit();
     }
 }
-
 $conn = null;
 header('Content-Type: application/json');
 echo json_encode($selec);

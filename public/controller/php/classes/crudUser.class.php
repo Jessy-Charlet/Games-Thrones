@@ -328,7 +328,7 @@ class CrudUser {
             );
             $result = $sql->fetch(PDO::FETCH_ASSOC);
             if(sodium_crypto_pwhash_str_verify($result['password'], $password)){
-                $sql = $conn->prepare("SELECT id, `first_name` FROM customer WHERE mail = :mail");
+                $sql = $conn->prepare("SELECT id, `first_name`, `role` FROM customer WHERE mail = :mail");
                 $sql->execute(
                     array(
                         'mail' => $mail
@@ -338,6 +338,9 @@ class CrudUser {
                 $this->customer_id = $result['id'];
                 $this->firstname = $result['first_name'];
                 $error = "success";
+                if($result['role'] == "admin"){
+                    $error = "successAdmin";
+                }
                 return $error;
             }else{
                 $error = "wrongPassword";
