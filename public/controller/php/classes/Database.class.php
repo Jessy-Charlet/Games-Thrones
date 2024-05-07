@@ -28,90 +28,77 @@ class Database
         self::$conn = null;
     }
 
+    // Récupération de toutes les images d'un produit 
     public static function getImagesByProductId($id)
     {
         try {
+            // Connection à la BDD
             $conn = Database::connect();
-            
-            // 
+
+            // Préparation de la requête SQL pour récupérer l'ensemble des images
             $stmt = $conn->prepare("SELECT url, main FROM image
             INNER JOIN image_product
             WHERE image.id = image_product.image_id AND image_product.product_id = :id");
             $stmt->bindParam(':id', $id);
-            
+
+            // Execution de la requête SQL
             $stmt->execute();
             $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
+
+            // Création de la valeur de retour
             $productImages = [
                 "main" => null,
                 "secondary" => [],
                 "all" => []
             ];
 
-            
-            foreach($images as $image){
-                if($image["main"]==1){
+            // Tri et remplissage de la valeur de retour
+            foreach ($images as $image) {
+                if ($image["main"] == 1) {
                     $productImages["main"] = $image["url"];
-                }
-                else{
+                } else {
                     array_push($productImages["secondary"], $image["url"]);
-
                 }
                 array_push($productImages["all"], $image["url"]);
             }
-            
-            var_dump($productImages);
+
+            // return["main"] pour la photo principale
+            // return["secondary"] pour les photos secondaires
+            // return["all"] pour toutes les photos
             return $productImages;
         } catch (PDOException $e) {
             return $e;
         }
     }
 
-    public static function addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category){
-        $conn = Database::connect();
+     // Récupération de tous les produits
+    public static function getAllProduct()
+    {
+        try {
+            // Connection à la BDD
+            $conn = Database::connect();
 
-        try{
-            $conn->beginTransaction();
-        
-            $sql = $conn->prepare("INSERT INTO product (name, rate, price, quantity, description, color, material, brand, category_id) VALUES (:name, :rate, :price, :quantity, :description, :color, :material, :brand, :category)");
-            $sql->execute(
-                array(
-                    ':name' => $name,
-                    ':rate' => $rate,
-                    ':price' => $price,
-                    ':quantity' => $quantity,
-                    ':description' => $description,
-                    ':color' => $color,
-                    ':material' => $material,
-                    ':brand' => $brand,
-                    ':category' => $category
-                )
-                );
-            $conn->commit();
-        }
-        catch(PDOException $e){
-            echo "Error: " . $e->getMessage();
-            $conn->rollback();
-        }
-    }
+            // Préparation de la requête SQL pour récupérer l'ensemble produits
+            $stmt = $conn->prepare("SELECT * FROM product");
+            $stmt->execute();
 
-    public static function testInsertProduct($name, $brand, $category){
-        $conn = Database::connect();
-        $result = "success";
+            // Execution de la requête SQL
+            $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $sql = $conn->prepare("SELECT * FROM product WHERE name = :name AND brand = :brand AND category_id = :category");
-        $sql->execute(
-            array(
-                ':name' => $name,
-                ':brand' => $brand,
-                ':category' => $category
-            )
-        );
-        if($sql->rowCount() > 0){
-            $result = "Product already exists";
+            // return["id"] pour l'ID du produit
+            // return["name"] pour le nom du produit
+            // return["rate"] pour la note du produit
+            // return["price"] pour le prix du produit
+            // return["quantity"] pour la quantitée du produit    
+            // return["description"] pour la déscription complète du produit
+            // return["color"] pour la couleur du produit 
+            // return["material"] pour la matière du produit 
+            // return["brand"] pour la marque du produit   
+            // return["category_id"] pour la catégorie du produit   
+            return $product;
+        } catch (PDOException $e) {
+            return $e;
         }
-        return $result;
     }
 }
 $conn = Database::connect();
-
