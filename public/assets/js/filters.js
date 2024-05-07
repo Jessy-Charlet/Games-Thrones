@@ -15,7 +15,7 @@ $(document).ready(function () {
         titleElement.textContent = products[i]["name"];
         // Lien du produit
         const urlElement = document.createElement('a');
-        urlElement.href = `/produit?id=${products[i]["product_id"]}`;
+        urlElement.href = `/produit?id=${products[i]["id"]}`;
         // Image du produit
         const imageElement = document.createElement('img');
         const imageUrl = "./assets/img/products/" + products[i]["img"];
