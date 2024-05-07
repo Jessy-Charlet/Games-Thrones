@@ -41,7 +41,7 @@ if($user->checkRole($id) === false){
                 </p>
             </form>
         </section>
-    <script src="./controller/js/backOfficeController.js"></script>
+    <script src="./controller/js/backOfficeConnController.js"></script>
     </body>
     </html>
     <?php

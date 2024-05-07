@@ -81,6 +81,32 @@ class crudProduct
         $this->images = $newImages;
     }
 
+    public function getAllProducts(){
+        $conn = Database::connect();
+
+        $sql = $conn->prepare("SELECT * FROM product");
+        $sql->execute();
+        $product = $sql->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($product as $row) {
+            $id = $row['category_id'];
+        }
+
+        $sql2 = $conn->prepare("SELECT * FROM category WHERE id = :id");
+        $sql2->execute(
+            array(
+                ':id' => $id
+            )
+        );
+        $category = $sql2->fetch(PDO::FETCH_ASSOC);
+
+        $result = [
+            $product,
+            $category
+        ];
+
+        return $result;
+    }
+
     public function getProductId()
     {
         return $this->product_id;
@@ -162,8 +188,8 @@ class crudProduct
         $images
     ) {
         $sql = $conn->prepare("INSERT INTO product (name, category_id, brand, description, material, color, price, stock,
-average_rating, number_of_ratings, vendor_code, images) VALUES (:name, :category_id, :brand, :description, :material,
-:color, :price, :stock, :average_rating, :number_of_ratings, :vendor_code, :images)");
+                               average_rating, number_of_ratings, vendor_code, images) VALUES (:name, :category_id, :brand, :description, :material,
+                               :color, :price, :stock, :average_rating, :number_of_ratings, :vendor_code, :images)");
         $sql->execute(
             array(
                 ':name' => $name,
@@ -210,8 +236,8 @@ average_rating, number_of_ratings, vendor_code, images) VALUES (:name, :category
 
     public function updateProduct($conn, $id, $name, $category_id, $brand, $description, $material, $color, $price, $stock)
     {
-        $sql = $conn->prepare("UPDATE product SET name = :name, category_id = :category_id, brand = :brand, description =
-:description, material = :material, color = :color, price = :price, stock = :stock WHERE product_id = :id");
+        $sql = $conn->prepare("UPDATE product SET name = :name, category_id = :category_id, brand = :brand, description = :description, 
+                               material = :material, color = :color, price = :price, stock = :stock WHERE product_id = :id");
         $sql->execute(
             array(
                 ':name' => $name,
