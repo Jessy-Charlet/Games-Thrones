@@ -53,7 +53,6 @@ $(document).ready(function () {
     const reponse = await fetch("../controller/php/recherche.php?color=" + color + "&mini=" + mini + "&maxi=" + maxi);
     const products = await reponse.json();
     afficherProduits(products);
-    console.log(products);
   }
   
   $("#noir, #blanc, #rouge, #jaune, #vert, #bleu, #violet, #gris").on("click", function () {
