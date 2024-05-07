@@ -24,7 +24,6 @@ $router->map('GET', '/checkout', '/checkout_backend', 'checkout_backend');
 $router->map('GET', '/success', '/success', 'success');
 $router->map('GET', '/cancel', '/cancel', 'cancel');
 
-
 // route de page de traitement
 $router->map('POST', '/signUpControllerphp', '../public/controller/php/signUpController', 'signUpControllerphp');
 $router->map('POST', '/signInControllerphp', '../public/controller/php/signInController', 'signInControllerphp');

@@ -27,31 +27,12 @@ $cartContent = $product->getProductsByCartJson($conn, $cartJson);
 
 /*var_dump($_SESSION);
 die();*/
+
 $cartId = uniqid();
 $_SESSION['cart_id'] = $cartId;
+
 $stripeArray = [
-    'line_items' => [
-        [
-            'price_data' => [
-                'currency' => 'eur',
-                'product_data' => [
-                    'name' => "Product name",
-                ],
-                'unit_amount' => "70 * 100",
-            ],
-            'quantity' => 1,
-        ],
-        [
-            'price_data' => [
-                'currency' => 'eur',
-                'product_data' => [
-                    'name' => "Product name",
-                ],
-                'unit_amount' => "70 * 100",
-            ],
-            'quantity' => 1,
-        ]
-    ],
+    'line_items' => [],
     'mode' => 'payment',
     'success_url' => 'http://localhost:8080/success?cart_id=' . $cartId,
     'cancel_url' => 'http://localhost:8080/cancel',
@@ -66,6 +47,7 @@ $stripeArray = [
 /*echo "### CART ###\n";
 var_dump($cartContent);
 */
+
 
 foreach ($cartContent['products'] as $key => $value) {
     $stripeArray["line_items"][$key] = [
