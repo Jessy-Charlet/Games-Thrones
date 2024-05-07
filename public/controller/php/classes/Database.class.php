@@ -62,6 +62,9 @@ class Database
                 array_push($productImages["all"], $image["url"]);
             }
 
+            // Fermeture de la connection
+            $conn = null;
+
             // return["main"] pour la photo principale
             // return["secondary"] pour les photos secondaires
             // return["all"] pour toutes les photos
@@ -71,7 +74,7 @@ class Database
         }
     }
 
-     // Récupération de tous les produits
+    // Récupération de TOUS les produits
     public static function getAllProduct()
     {
         try {
@@ -83,7 +86,43 @@ class Database
             $stmt->execute();
 
             // Execution de la requête SQL
-            $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Fermeture de la connection
+            $conn = null;
+
+            // return["id"] pour l'ID du produit
+            // return["name"] pour le nom du produit
+            // return["rate"] pour la note du produit
+            // return["price"] pour le prix du produit
+            // return["quantity"] pour la quantitée du produit    
+            // return["description"] pour la déscription complète du produit
+            // return["color"] pour la couleur du produit 
+            // return["material"] pour la matière du produit 
+            // return["brand"] pour la marque du produit   
+            // return["category_id"] pour la catégorie du produit   
+            return $products;
+        } catch (PDOException $e) {
+            return $e;
+        }
+    }
+    // Récupération des produits par ID
+    public static function getProductById($id)
+    {
+        try {
+            // Connection à la BDD
+            $conn = Database::connect();
+
+            // Préparation de la requête SQL pour récupérer l'ensemble produits
+            $stmt = $conn->prepare("SELECT * FROM product WHERE id=:id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            // Execution de la requête SQL
+            $product = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Fermeture de la connection
+            $conn = null;
 
             // return["id"] pour l'ID du produit
             // return["name"] pour le nom du produit
