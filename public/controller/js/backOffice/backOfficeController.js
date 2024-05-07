@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append("material", material);
         formData.append("brand", brand);
         formData.append("category", category);
+        formData.append("request", "addProduct");
 
         const requestOptions = {
             method: "POST",
@@ -58,18 +59,19 @@ document.addEventListener('DOMContentLoaded', function() {
             body: formData
         };
 
-        fetch("http://localhost:8080/controller/php/backOffice/backOfficeController.php?request=addProduct", requestOptions)
+        fetch("http://localhost:8080/controller/php/backOffice/backOfficeController.php", requestOptions)
         .then(response => response.json())
         .then(data => {
             if(data.status === "success") {
                 alert("Product added successfully");
-                location.reload();
+                productForm.style.display = "none";
+
             } else if(data.status === "error"){
-                alert("An error occured while adding the product");
+                alert("Product already exists")
             }
         })
         .catch(error => 
-            console.log(error)
+            self.location = '/gt-admin?error=UnexpectedError'
         );
     });
 });

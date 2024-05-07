@@ -3,8 +3,8 @@ require "../classes/Database.class.php";
 
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
-    if(isset($_GET['request'])){
-        if($_GET['request'] == "addProduct"){
+    if(isset($_POST['request'])){
+        if($_POST['request'] == "addProduct"){
             $name = $_POST['name'];
             $rate = $_POST['rate'];
             $price = $_POST['price'];
