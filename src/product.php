@@ -41,16 +41,15 @@ if (empty($product_id)) {
     $productObjects = [];
     foreach ($products as $productInfo) {
         $product = new Product(
-            $productInfo['product_id'],
+            $productInfo['id'],
             $productInfo['name'],
             $productInfo['brand'],
             $productInfo['color'],
             $productInfo['material'],
             $productInfo['price'],
             $productInfo['stock'],
-            $productInfo['average_rating'],
-            $productInfo['description'],
-            $productInfo['images']
+            $productInfo['rate'],
+            $productInfo['description']
         );
         $productObjects[] = $product;
     }

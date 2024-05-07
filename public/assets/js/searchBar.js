@@ -66,13 +66,6 @@ $(document).ready(function () {
     mediaQueryList.addListener(screenTest);
 
     /*** Menu de gauche */
-    $("#shop").on("click", function () {
-        $("#shop").toggleClass("active");
-        $("#infos").removeClass("active");
-        $("#navInfos").slideUp("fast");
-        $("#navSearch").slideUp("fast");
-
-    });
     $("#infos").on("click", function () {
         $("#infos").toggleClass("active");
         $("#navInfos").slideToggle("fast");

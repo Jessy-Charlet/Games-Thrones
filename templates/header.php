@@ -54,7 +54,7 @@ session_start();
         if (isset($_SESSION['user'])) {
         ?>
             <a href="<?= $router->generate('profil') ?>"><img src="./assets/img/icon_user.png" alt="Mon compte" />
-                <div><?= $_SESSION['userFirstName'] ?></div>
+                <div class="menuId"><?= $_SESSION['userFirstName'] ?></div>
             </a>
         <?php
         } elseif (!isset($_SESSION['user'])) {
@@ -103,18 +103,19 @@ session_start();
     <!-- Menu Mobile -->
     <header id="navContainerMobile">
         <a href="<?= $router->generate('accueil') ?>"><img id="logoMobile" src="./assets/img/logo_Games_Thrones_nav_mobile.png" alt="Logo Games Thrones" /></a>
-        <div id="menuBurger">
+        <a href="/filtre"><div id="menuBurger">
             <div></div>
             <div></div>
             <div></div>
-        </div>
-        <a href="<?= $router->generate('panier') ?>"><img src="./assets/img/icon_panier.png" alt="Mon panier" />
+        </div></a>
+        <a href="/panier"><img src="./assets/img/icon_panier.png" alt="Mon panier" />
             <span id="header_totalProductsQuantityBottom">2</span>
         </a>
         <?php
         if (isset($_SESSION['user'])) {
         ?>
-            <a href="<?= $router->generate('profil') ?>"><img src="./assets/img/icon_user.png" alt="Mon compte" /></a>
+            <a href="<?= $router->generate('profil') ?>"><img src="./assets/img/icon_user.png" alt="Mon compte" />
+            <div class="menuId"><?= $_SESSION['userFirstName'] ?></div></a>
         <?php
         } else {
         ?>
