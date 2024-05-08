@@ -189,7 +189,7 @@ function sliderPhotos($images){
                                 <p class="quantity">
                                     <label for="quantity">Quantité</label><br>
                                     <input id="product_quantity" type="number" class="quantity" name="quantity" min="1"
-                                        max="<?= $product["quantity"]?>" value="<?= $product["quantity"]?>">
+                                        max="<?= $product["quantity"]?>" value="1">
                                 </p>
                                 <button id="product_basketButton" class="basketButton" type="submit">
                                     <span>Ajouter au panier</span> <img src="./assets/img/icon_panier.png" alt="">
