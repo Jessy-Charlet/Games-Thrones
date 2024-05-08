@@ -29,7 +29,7 @@ class CrudUser {
 
     public function getAll($id){
         $conn = Database::connect();
-        $sql = $conn->prepare("SELECT * FROM customer WHERE customer_id = :customer_id");
+        $sql = $conn->prepare("SELECT * FROM customer WHERE id = :customer_id");
         $sql->execute(
             array(
                 'customer_id' => $id
@@ -38,21 +38,12 @@ class CrudUser {
         $userData = $sql->fetch(PDO::FETCH_ASSOC);
         $sql->closeCursor();
 
-        $sql = $conn->prepare("SELECT * FROM adress WHERE customer_id = :customer_id");
-        $sql->execute(
-            array(
-                'customer_id' => $id
-            )
-        );
-        $adressData = $sql->fetch(PDO::FETCH_ASSOC);
-        $sql->closeCursor();
-
-        return array('userData' => $userData, 'adressData' => $adressData);
+        return $userData;
     }
 
     public function getLastname($customer_id){
         $conn = Database::connect();
-        $sql = $conn->prepare("SELECT `customer_last-name` FROM customer WHERE customer_id = :customer_id");
+        $sql = $conn->prepare("SELECT `last_name` FROM customer WHERE id = :customer_id");
         $sql->execute(
             array(
                 'customer_id' => $customer_id
@@ -63,10 +54,9 @@ class CrudUser {
         return $name;
     }
 
-
     public function getEmail($customer_id){
         $conn = Database::connect();
-        $sql = $conn->prepare("SELECT email FROM customer WHERE customer_id = :customer_id");
+        $sql = $conn->prepare("SELECT mail FROM customer WHERE id = :customer_id");
         $sql->execute(
             array(
                 'customer_id' => $customer_id
@@ -79,7 +69,7 @@ class CrudUser {
 
     public function getPhone($customer_id){
         $conn = Database::connect();
-        $sql = $conn->prepare("SELECT phone FROM customer WHERE customer_id = :customer_id");
+        $sql = $conn->prepare("SELECT phone FROM customer WHERE id = :customer_id");
         $sql->execute(
             array(
                 'customer_id' => $customer_id
@@ -92,7 +82,7 @@ class CrudUser {
 
     public function getAdress($customer_id){
         $conn = Database::connect();
-        $sql = $conn->prepare("SELECT adress FROM adress WHERE customer_id = :customer_id");
+        $sql = $conn->prepare("SELECT adresse FROM customer WHERE customer_id = :customer_id");
         $sql->execute(
             array(
                 'customer_id' => $customer_id
@@ -105,7 +95,7 @@ class CrudUser {
 
     public function getPostal_code($customer_id){
         $conn = Database::connect();
-        $sql = $conn->prepare("SELECT postal_code FROM adress WHERE customer_id = :customer_id");
+        $sql = $conn->prepare("SELECT postal_code FROM customer WHERE customer_id = :customer_id");
         $sql->execute(
             array(
                 'customer_id' => $customer_id
@@ -118,7 +108,7 @@ class CrudUser {
 
     public function getCity($customer_id){
         $conn = Database::connect();
-        $sql = $conn->prepare("SELECT city FROM adress WHERE customer_id = :customer_id");
+        $sql = $conn->prepare("SELECT city FROM customer WHERE customer_id = :customer_id");
         $sql->execute(
             array(
                 'customer_id' => $customer_id
@@ -134,7 +124,7 @@ class CrudUser {
 
         $error = "none";
         
-        $sql = $conn->prepare("SELECT email FROM customer WHERE email = :email");
+        $sql = $conn->prepare("SELECT mail FROM customer WHERE mail = :email");
         $sql->execute(
             array(
                 'email' => $mail
@@ -173,14 +163,19 @@ class CrudUser {
         
         try {            
             $conn->beginTransaction();
+            $role = "client";
         
             // Insertion du client
-            $insertCustomer = $conn->prepare("INSERT INTO customer (`customer_last-name`, `customer_first-name`, email, phone, password) VALUES (:customer_last_name, :customer_first_name, :email, :phone, :password)");
+            $insertCustomer = $conn->prepare("INSERT INTO customer (`last_name`, `first_name`, mail, adresse, postal_code, city, phone, role, password) VALUES (:customer_last_name, :customer_first_name, :email, :adresse, :postal_code, :city, :phone, :role, :password)");
             $insertCustomer->execute(
                 array(
                     'customer_last_name' => $name,
                     'customer_first_name' => $firstname,
                     'email' => $mail,
+                    'adresse' => $adress,
+                    'postal_code' => $postalCode,
+                    'city' => $city,
+                    'role' => $role,
                     'phone' => $phone,
                     'password' => $password
                 )
@@ -188,26 +183,13 @@ class CrudUser {
         
             // Récupération de l'ID du client inséré
             $customerId = $conn->lastInsertId();
-            $sql = $conn->prepare("SELECT `customer_first-name` FROM customer WHERE customer_id = :id");
+            $sql = $conn->prepare("SELECT `first_name` FROM customer WHERE id = :id");
             $sql->execute(
                 array(
                     'id' => $customerId
                 )
             );
-            $firstName = $sql->fetch(PDO::FETCH_ASSOC)['customer_first-name'];
-
-            // Insertion de l'adresse
-            $insertAddress = $conn->prepare("INSERT INTO adress (city, postal_code, adress, customer_id, postal_code_id) 
-                                            SELECT :city, :postal_code, :adress, :customer_id, postal_code_id 
-                                            FROM postal_code WHERE postal_code = :postal_code");
-            $insertAddress->execute(
-                array(
-                    'city' => $city,
-                    'postal_code' => $postalCode,
-                    'adress' => $adress,
-                    'customer_id' => $customerId
-                )
-            );
+            $firstName = $sql->fetch(PDO::FETCH_ASSOC)['first_name'];
 
             $this->customer_id = $customerId;
             $this->firstname = $firstName;
@@ -226,7 +208,7 @@ class CrudUser {
 
         $error = "none";
         
-        $sql = $conn->prepare("SELECT email, phone, password FROM customer WHERE customer_id = :id");
+        $sql = $conn->prepare("SELECT mail, phone, password FROM customer WHERE id = :id");
         $sql->execute(
             array(
                 'id' => $id
@@ -235,7 +217,7 @@ class CrudUser {
         $result = $sql->fetch(PDO::FETCH_ASSOC);
         if($result){
             if($mail != $result['email']){
-                $sql2 = $conn->prepare("SELECT email FROM customer WHERE email = :email");
+                $sql2 = $conn->prepare("SELECT mail FROM customer WHERE mail = :email");
                 $sql2->execute(
                     array(
                         'email' => $mail
@@ -287,7 +269,7 @@ class CrudUser {
             $conn->beginTransaction();
 
             // Mettre à jour les données de l'utilisateur
-            $sql = $conn->prepare("UPDATE customer SET `customer_last-name` = :customer_last_name, `customer_first-name` = :customer_first_name, email = :email, phone = :phone, password = :password WHERE customer_id = :customer_id");
+            $sql = $conn->prepare("UPDATE customer SET `last_name` = :customer_last_name, `first_name` = :customer_first_name, mail = :email, phone = :phone, password = :password, city = :city, postal_code = :postal_code, adress = :adress WHERE customer_id = :customer_id");
             $sql->execute(
                 array(
                     'customer_last_name' => $name,
@@ -295,15 +277,6 @@ class CrudUser {
                     'email' => $mail,
                     'phone' => $phone,
                     'password' => $password,
-                    'customer_id' => $id
-                )
-            );
-            $sql->closeCursor();
-
-            // Mettre à jour l'adresse de l'utilisateur
-            $sql = $conn->prepare("UPDATE adress SET city = :city, postal_code = :postal_code, adress = :adress WHERE customer_id = :customer_id");
-            $sql->execute(
-                array(
                     'city' => $city,
                     'postal_code' => $postalCode,
                     'adress' => $adress,
@@ -324,7 +297,7 @@ class CrudUser {
     
     public function delete($customer_id, $password){
         $conn = Database::connect();
-        $sql = $conn->prepare("DELETE FROM customer WHERE customer_id = :customer_id AND password = :password");
+        $sql = $conn->prepare("DELETE FROM customer WHERE id = :customer_id AND password = :password");
         $sql->execute(
             array(
                 'password' => $password,
@@ -332,14 +305,6 @@ class CrudUser {
             )
         );
         $sql->closeCursor();
-
-        $sql = $conn->prepare("DELETE FROM adress WHERE customer_id = :customer_id AND password = :password");
-        $sql->execute(
-            array(
-                'password' => $password,
-                'customer_id' => $this->customer_id
-            )
-        );
     }
 
     public function testConnectionUser($mail, $password){
@@ -347,7 +312,7 @@ class CrudUser {
 
         $error = "none";
     
-        $sql = $conn->prepare("SELECT email FROM customer WHERE email = :mail");
+        $sql = $conn->prepare("SELECT mail FROM customer WHERE mail = :mail");
         $sql->execute(
             array(
                 'mail' => $mail
@@ -355,7 +320,7 @@ class CrudUser {
         );
         $result = $sql->fetch(PDO::FETCH_ASSOC);
         if ($result){
-            $sql = $conn->prepare("SELECT password FROM customer WHERE email = :mail");
+            $sql = $conn->prepare("SELECT password FROM customer WHERE mail = :mail");
             $sql->execute(
                 array(
                     'mail' => $mail
@@ -363,16 +328,19 @@ class CrudUser {
             );
             $result = $sql->fetch(PDO::FETCH_ASSOC);
             if(sodium_crypto_pwhash_str_verify($result['password'], $password)){
-                $sql = $conn->prepare("SELECT customer_id, `customer_first-name` FROM customer WHERE email = :mail");
+                $sql = $conn->prepare("SELECT id, `first_name`, `role` FROM customer WHERE mail = :mail");
                 $sql->execute(
                     array(
                         'mail' => $mail
                     )
                 );
                 $result = $sql->fetch(PDO::FETCH_ASSOC);
-                $this->customer_id = $result['customer_id'];
-                $this->firstname = $result['customer_first-name'];
+                $this->customer_id = $result['id'];
+                $this->firstname = $result['first_name'];
                 $error = "success";
+                if($result['role'] == "admin"){
+                    $error = "successAdmin";
+                }
                 return $error;
             }else{
                 $error = "wrongPassword";
@@ -381,6 +349,24 @@ class CrudUser {
         }else{
             $error = "mailNotFound";
             return $error;
+        }
+    }
+
+    public function checkRole(int $id){
+        $conn = Database::connect();
+        $sql = $conn->prepare("SELECT role FROM customer WHERE id = :id");
+        $sql->execute(
+            array(
+                'id' => $id
+            )
+        );
+        $role = $sql->fetch(PDO::FETCH_ASSOC);
+        $sql->closeCursor();
+        
+        if($role['role'] == "admin"){
+            return true;
+        }else{
+            return false;
         }
     }
 }

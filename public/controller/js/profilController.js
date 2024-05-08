@@ -165,23 +165,20 @@ personalInfoModif.addEventListener('click', function(event) {
             }
         )
         .then(data => {
-            console.log(data)
             switch (data.status) {
                 case "error":
                     self.location = '/profil?error='+data.error;
                     break;
                 case "success":
-                    self.location = '/';
+                    self.location = '/profil?success=success';
                     break;
                 default:
                     break;
             }
         })
         .catch(error => {
-            console.log(error)
             self.location = '/profil?error=UnexpectedError'
-            }
-        );
+        });
 
         nameId.disabled = true;
         firstname.disabled = true;

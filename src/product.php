@@ -1,4 +1,5 @@
 <?php
+/*
 // Définition d'un tableau d'IDs valides
 $valid_product_ids = range(1, 10); // Crée un tableau [1, 2, ..., 10]
 
@@ -41,16 +42,15 @@ if (empty($product_id)) {
     $productObjects = [];
     foreach ($products as $productInfo) {
         $product = new Product(
-            $productInfo['product_id'],
+            $productInfo['id'],
             $productInfo['name'],
             $productInfo['brand'],
             $productInfo['color'],
             $productInfo['material'],
             $productInfo['price'],
             $productInfo['stock'],
-            $productInfo['average_rating'],
-            $productInfo['description'],
-            $productInfo['images']
+            $productInfo['rate'],
+            $productInfo['description']
         );
         $productObjects[] = $product;
     }
@@ -108,10 +108,20 @@ if (empty($product_id)) {
 
 $conn = null;
 
+*/
+$images = Database::getImagesByProductId($_GET["id"]);
+$product = Database::getProductById($_GET["id"]);
+
+function sliderPhotos($images){
+    $i = 1;
+    foreach($images["all"] as $image){
+        echo "<li id='Photo".$i."'><img class='sliderPhoto'src='./assets/img/products/".$image."' alt='Chaise gaming'></li>";
+        $i++;
+    }
+}
 ?>
 
-
-<main>
+<section class="section">
     <section id="description">
         <div class="container">
             <div class="cartForm">
@@ -119,31 +129,13 @@ $conn = null;
                     <div class="productPhotos">
                         <div class="slider">
                             <ul>
-                                <li id="Photo1">
-                                    <img class="sliderPhoto"
-                                        src="./assets/img/products/product_<?= $productId ?>_image_1.jpg"
-                                        alt="Chaise gaming">
-                                </li>
-                                <li id="Photo2">
-                                    <img class="sliderPhoto"
-                                        src="./assets/img/products/product_<?= $productId ?>_image_2.jpg"
-                                        alt="Chaise gaming">
-                                </li>
-                                <li id="Photo3">
-                                    <img class="sliderPhoto"
-                                        src="./assets/img/products/product_<?= $productId ?>_image_3.jpg"
-                                        alt="Chaise gaming">
-                                </li>
-                                <li id="Photo4">
-                                    <img class="sliderPhoto"
-                                        src="./assets/img/products/product_<?= $productId ?>_image_4.jpg"
-                                        alt="Chaise gaming">
-                                </li>
+                                <?php
+                                    sliderPhotos($images)
+                                ?>
                             </ul>
                         </div>
                         <div class="imageActuelle">
-                            <img class="imageMain" src="./assets/img/products/product_<?= $productId ?>_main_image.jpg"
-                                alt="Chaise gaming">
+                            <img class="imageMain" src="./assets/img/products/<?=$images['main']?>" alt="Chaise gaming">
                         </div>
                         <div class="sliderDots"></div>
                     </div>
@@ -165,32 +157,31 @@ $conn = null;
                 </div>
                 <div class="rightSide">
                     <div class="descriptionTop">
-                        <h1 class="productTitle"><?php echo "{$product->getName()}</li>"; ?></h1>
-                        <?php echo "<p id='deco'>Réf: <span id='product_ref'>{$product->getProductId()}</span></p>"; ?>
+                        <h1 class="productTitle"><?= $product["name"]?></h1>
                         <div class="productInfo">
                             <div class="productInfoLeft">
                                 <div class="rating-result">
-                                    <?php echo "<h2 id='deco'>{$product->getAverageRating()}</h2>"; ?>
+                                    <h2 id='deco'><?= $product["rate"]?></h2>
                                 </div>
-                                <p class="prisInfo"><span><?php echo "{$product->getPrice()}$</>"; ?></span></p>
+                                <p class="prisInfo"><span><?= $product["price"] ?></span></p>
                                 <div class="attributesInfo">
                                     <div>
                                         <p>Marque:</p>
                                     </div>
                                     <div>
-                                        <?php echo "<p>{$product->getBrand()}</p>" ?>
+                                        <p><?= $product["brand"]?></p>
                                     </div>
                                     <div>
                                         <p>Couleur:</p>
                                     </div>
                                     <div>
-                                        <?php echo "<p>{$product->getColor()}</p>" ?>
+                                    <p><?= $product["color"]?></p>
                                     </div>
                                     <div>
                                         <p>Materiaux:</p>
                                     </div>
                                     <div>
-                                        <?php echo "<p>{$product->getMaterial()}</p>" ?>
+                                    <p><?= $product["material"]?></p>
                                     </div>
                                 </div>
                             </div>
@@ -198,10 +189,10 @@ $conn = null;
                                 <p class="quantity">
                                     <label for="quantity">Quantité</label><br>
                                     <input id="product_quantity" type="number" class="quantity" name="quantity" min="1"
-                                        max="<?php echo $product->getStock(); ?>" value="<?php echo $quantity; ?>">
+                                        max="<?= $product["quantity"]?>" value="1">
                                 </p>
                                 <button id="product_basketButton" class="basketButton" type="submit">
-                                    <span>Ajouter au panier</span> <img src="./images/icon_panier.png" alt="">
+                                    <span>Ajouter au panier</span> <img src="./assets/img/icon_panier.png" alt="">
                                 </button>
                             </div>
                         </div>
@@ -209,7 +200,7 @@ $conn = null;
                     <div class="descriptBotton">
                         <h3 class="descriptTitle">A propos de cet article</h3>
                         <div>
-                            <?php echo "<p>{$product->getDescription()}</p>" ?>
+                          <p><?= $product["description"]?></p>
                         </div>
                     </div>
                 </div>
@@ -220,30 +211,6 @@ $conn = null;
         <div class="container">
             <h3 class="similarProductsTitle">Produits liés à cet article</h3>
             <div class="similarProductscontent">
-                <?php foreach ($productObjectsSimilar as $productSimilar): ?>
-                    <div class="card">
-                        <div class="cardTop">
-                            <a href="#">
-                                <img class="cardImg"
-                                    src="./assets/img/products/product_<?php echo $productSimilar->getProductId(); ?>_main_image.jpg"
-                                    alt="<?php echo $productSimilar->getName(); ?>">
-                            </a>
-                        </div>
-                        <div class="cardBottom">
-                            <a href="#productDetails" class="productLink"
-                                data-product-id="<?php echo $productSimilar->getProductId(); ?>">
-                                <?php echo $productSimilar->getName(); ?>
-                            </a>
-                            <div class="priceRating">
-                                <div class="cardPrice cardPrice--common"><?php echo "{$productSimilar->getPrice()}$"; ?>
-                                </div>
-                                <div class="rating-mini">
-                                    <?php echo "{$productSimilar->getAverageRating()}"; ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
             </div>
         </div>
 
@@ -382,7 +349,7 @@ $conn = null;
             </div>
         </div>
     </section>
-</main>
+</section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <script src="./assets/js/product.js?t=<?= time(); ?>"></script>

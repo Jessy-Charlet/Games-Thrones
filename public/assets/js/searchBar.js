@@ -2,7 +2,6 @@ $(document).ready(function () {
 
     const mediaQueryList = window.matchMedia("(orientation: landscape)");
     $("#fleche").css('cursor', 'pointer');
-    $("#navShop").hide();
     $("#navInfos").hide();
     $("#navSearch").hide();
 
@@ -67,19 +66,10 @@ $(document).ready(function () {
     mediaQueryList.addListener(screenTest);
 
     /*** Menu de gauche */
-    $("#shop").on("click", function () {
-        $("#shop").toggleClass("active");
-        $("#navShop").slideToggle("fast");
-        $("#infos").removeClass("active");
-        $("#navInfos").slideUp("fast");
-        $("#navSearch").slideUp("fast");
-
-    });
     $("#infos").on("click", function () {
         $("#infos").toggleClass("active");
         $("#navInfos").slideToggle("fast");
         $("#shop").removeClass("active");
-        $("#navShop").slideUp("fast");
         $("#navSearch").slideUp("fast");
     });
     $("#fleche").on("click", function(){
@@ -90,23 +80,22 @@ $(document).ready(function () {
     $('#searchBar').on({
         keyup: function () {
             let recherche = $(this).val();
-            afficherProduits(recherche);
+            afficherRecherche(recherche);
         },
         focusin: function () {
             $("#navSearch").slideDown("fast");
-            $("#navShop").slideUp("fast");
             $("#navInfos").slideUp("fast");
+            $("#infos").removeClass("active");
             $("#searchBarClose").show();
-
         }
     })
 
 
-    async function afficherProduits(recherche) {
+    async function afficherRecherche(recherche) {
         const arrow = document.createElement('a');
         arrow.id = "fleche"
         arrow.textContent = "▲ ▲ ▲";
-        arrow.href="#navContainer";
+        arrow.href="#upToTop";
         if (recherche != "") {
 
             const reponse = await fetch('../controller/php/recherche.php');
@@ -124,11 +113,10 @@ $(document).ready(function () {
                     titleElement.textContent = products[i]["name"];
                     // Lien du produit
                     const urlElement = document.createElement('a');
-                    urlElement.href = `/produit?id=${products[i]["product_id"]}`;
+                    urlElement.href = `/produit?id=${products[i]["id"]}`;
                     // Image du produit
                     const imageElement = document.createElement('img');
-                    const productImages = JSON.parse(products[i]["images"]);
-                    const imageUrl = productImages["main_image"];
+                    const imageUrl = "./assets/img/products/" + products[i]["img"];
                     imageElement.src = imageUrl;
                     imageElement.alt = products[i]["name"];
                     // Prix du produit
@@ -140,7 +128,7 @@ $(document).ready(function () {
                     // Note du produit
                     const ratingElement = document.createElement('div');
                     ratingElement.classList.add("productRate");
-                    ratingElement.innerHTML = parseFloat(products[i]["average_rating"]).toFixed(1) + "<img src='./assets/img/star.png'/>";
+                    ratingElement.innerHTML = parseFloat(products[i]["rate"]).toFixed(1) + "<img src='./assets/img/star.png'/>";
 
                     // Ajouter les éléments à la liste
                     listItem.appendChild(urlElement);

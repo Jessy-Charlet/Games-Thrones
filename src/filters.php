@@ -32,3 +32,4 @@
     </div>
     <div id="filtersProducts"></div>
 </section>
+<script src="./assets/js/filters.js"></script>

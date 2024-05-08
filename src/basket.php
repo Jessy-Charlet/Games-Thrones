@@ -38,11 +38,11 @@ $cartContent = $product->getProductsByCartJson($conn, $cartJson);
 
                         echo '<div class="panierItem">
                         <div class="panierImg">
-                            <img src="./assets/img/products/product_' . $cartProduct['product_id'] . '_main_image.jpg" alt="">
+                            <img src="./assets/img/products/product_' . $cartProduct['id'] . '_main_image.jpg" alt="">
                         </div>
                         <div class="panierContent">
                             <div class="panierContentLeft">
-                                <h2 class="panierItemTitle">' . $cartProduct['name'] . '></h2>
+                                <h2 class="panierItemTitle">' . $cartProduct['name'] . '</h2>
                                 <p>' . $cartProduct['color'] . '</p>
                             </div>
                             <div class="panierContentRight">

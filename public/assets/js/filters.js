@@ -1,8 +1,6 @@
 $(document).ready(function () {
-
   $("#filtersSup").hide();
   sessionStorage.clear('color');
-
   function afficherProduits(products) {
     const liste = document.createElement('div');
     liste.classList.add("productsGrid");
@@ -17,11 +15,10 @@ $(document).ready(function () {
         titleElement.textContent = products[i]["name"];
         // Lien du produit
         const urlElement = document.createElement('a');
-        urlElement.href = `/produit?id=${products[i]["product_id"]}`;
+        urlElement.href = `/produit?id=${products[i]["id"]}`;
         // Image du produit
         const imageElement = document.createElement('img');
-        const productImages = JSON.parse(products[i]["images"]);
-        const imageUrl = productImages["main_image"];
+        const imageUrl = "./assets/img/products/" + products[i]["img"];
         imageElement.src = imageUrl;
         imageElement.alt = products[i]["name"];
         // Prix du produit
@@ -33,8 +30,7 @@ $(document).ready(function () {
         // Note du produit
         const ratingElement = document.createElement('div');
         ratingElement.classList.add("productRate");
-        ratingElement.innerHTML = parseFloat(products[i]["average_rating"]).toFixed(1) + "<img src='./assets/img/star.png'/>";
-
+        ratingElement.innerHTML = parseFloat(products[i]["rate"]).toFixed(1) + "<img src='./assets/img/star.png'/>";
         // Ajouter les éléments à la liste
         listItem.appendChild(urlElement);
         urlElement.appendChild(imageElement);
@@ -49,19 +45,17 @@ $(document).ready(function () {
       $("#filtersProducts").html("<div class='oups'>Oups... Aucun produit ne correspond à cette recherche :(</div>")
     }
   }
-
   async function recherche(mini = 1, maxi = 1000, color = "all") {
     const reponse = await fetch("../controller/php/recherche.php?color=" + color + "&mini=" + mini + "&maxi=" + maxi);
     const products = await reponse.json();
     afficherProduits(products);
   }
-  
   $("#noir, #blanc, #rouge, #jaune, #vert, #bleu, #violet, #gris").on("click", function () {
     sessionStorage.setItem('color', this.id);
     recherche($("#slider-range").slider("values", 0), $("#slider-range").slider("values", 1), sessionStorage.getItem('color'));
+    $("#filtersSup").html("❌ Supprimer le filtre <span class='bold'>" + this.id + "<span>");
     $("#filtersSup").slideDown();
   });
-  
   $(function () {
     $("#slider-range").slider({
       range: true,
@@ -74,14 +68,12 @@ $(document).ready(function () {
           recherche($("#slider-range").slider("values", 0), $("#slider-range").slider("values", 1), sessionStorage.getItem('color'));
         } else {
           recherche($("#slider-range").slider("values", 0), $("#slider-range").slider("values", 1));
-
         }
       }
     });
     $("#amount").val($("#slider-range").slider("values", 0) +
     " € - " + $("#slider-range").slider("values", 1) + " €");
   });    
-  
   $(function () {
     if (sessionStorage.getItem('color')) {
       $("#filtersSup").slideDown();
@@ -91,7 +83,7 @@ $(document).ready(function () {
       recherche($("#slider-range").slider("values", 0), $("#slider-range").slider("values", 1));
       $(this).slideUp();
     });
-    
+ 
   })
   recherche();
 })

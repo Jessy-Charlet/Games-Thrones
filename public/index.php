@@ -18,7 +18,6 @@ $router->map('GET', '/contact', '/contact', 'contact');
 $router->map('GET', '/produit', '/product', 'produit');
 $router->map('GET', '/404', '/404', '404');
 $router->map('GET', '/panier', '/basket', 'panier');
-$router->map('GET', '/api/panier', '/basket_json', '/Ajax/panier');
 $router->map('GET', '/filtre', '/filters', 'filtre');
 $router->map('GET', '/checkout', '/checkout_backend', 'checkout_backend');
 $router->map('GET', '/success', '/success', 'success');
@@ -29,11 +28,16 @@ $router->map('POST', '/signUpControllerphp', '../public/controller/php/signUpCon
 $router->map('POST', '/signInControllerphp', '../public/controller/php/signInController', 'signInControllerphp');
 $router->map('GET', '/deconnexion', '../public/controller/php/deconnexion', 'deconnexion');
 $router->map('POST', '/profilControllerphp', '../public/controller/php/profilController', 'profilControllerphp');
+$router->map('POST', '/backOfficeControllerphp', '../public/controller/php/backOffice/backOfficeController', 'backOfficeControllerphp');
 
 // Routes to AJAX files
+$router->map('GET', '/api/panier', '/basket_json', '/Ajax/panier');
 $router->map('GET', '/addProductToBasketAjaxController', '../public/controller/php/ajax/addProductToBasketAjaxController', 'addProductToBasketAjaxController');
 $router->map('GET', '/getProductDataByIdAjaxController', '../public/controller/php/ajax/getProductDataByIdAjaxController', 'getProductDataByIdAjaxController');
 $router->map('GET', '/getCartContentsAjaxController', '../public/controller/php/ajax/getCartContentsAjaxController', 'getCartContentsAjaxController');
+
+// Routes Back Office
+$router->map('GET', '/gt-admin', '../public/backOffice/backOffice', 'backOffice');
 
 function my_autoloader($class)
 {

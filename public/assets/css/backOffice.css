@@ -1,0 +1,25 @@
+body{
+    width: 100%;
+    background: rgb(255, 255, 255);
+}
+
+.bo_section{
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background-color: grey;
+}
+
+.bo_table{
+    width: 80%;
+    background-color: white;
+}
+
+.bo_tbody_tr_td{
+    border: 2px solid black;
+}
+
+.bo_thead_tr_th{
+    border: 2px solid black;
+}

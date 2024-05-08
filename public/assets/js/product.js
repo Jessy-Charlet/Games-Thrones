@@ -105,18 +105,18 @@ jQuery(document).ready(function () {
   jQuery("#product_basketButton").click(function (event) {
     event.preventDefault(); // Prevent default form submission if applicable
 
-    const productId = jQuery("#product_ref").text();
+    var url = window.location.href;
+    var params = new URLSearchParams(url.split("?")[1]);
+    var id = params.get("id");
     const quantity = jQuery("#product_quantity").val();
 
-    fetch(
-      `/addProductToBasketAjaxController?id=${productId}&quantity=${quantity}`
-    )
+    fetch(`/addProductToBasketAjaxController?id=${id}&quantity=${quantity}`)
       .then((response) => response.json()) // Parse the response as JSON (optional)
       .then((data) => {
         console.log("Product added to cart:", data); // Optional for debugging
         // Page refresh after successful request (not recommended)
         window.location.reload();
-      })  
+      })
       .catch((error) => {
         console.error("Error adding product to cart:", error);
         // Handle any errors during the request (optional)

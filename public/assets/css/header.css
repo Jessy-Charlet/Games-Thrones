@@ -8,41 +8,60 @@
     grid-template-columns: 55% 1fr 10vh 10vh;
     align-items: center;
     padding: 0;
+    margin: 0;
     transition: all 200ms;
     z-index: 17;
     user-select: none;
+
+    .upToTop {
+        height: 0;
+    }
 
     .navLeft {
         justify-self: left;
         padding-left: 2vh;
 
-        button {
+        button,
+        a {
+            box-sizing: border-box;
             text-transform: uppercase;
             color: white;
             background-color: transparent;
             border: none;
             padding: 0 2vw;
-            margin: 0;
-            line-height: 8vh;
+            margin: 0 1em 0 0;
+            height: 8vh;
 
-            span {
-                color: #482664;
-                font-weight: bold;
-            }
         }
-        button:after{
-            content:"▼";
+
+        a {
+            line-height: 8vh;
+            padding: 2vh 4vh;
+            border-radius: 10px;
+            background-color: #482664;
+        }
+
+        button:after {
+            content: "▼";
             color: #482664;
         }
-        button:hover{
+        
+        button:hover,
+        a:hover {
             background-color: #1b1b1b;
         }
-         .active{
-            color:black;
+        a:hover{
+            color: #482664;
+            background-color: white;
+        }
+
+        .active {
+            color: black;
             background-color: white !important;
         }
-        .active:after{
-            content:"✖";
+
+        .active:after {
+            content: "✖";
         }
     }
 
@@ -76,7 +95,7 @@
         width: 100%;
         padding: 0 1em 0 0;
         position: relative;
-        align-self:right;
+        align-self: right;
 
         #searchBar {
             box-sizing: border-box;
@@ -90,7 +109,7 @@
             font-size: 1.2em;
             background-color: rgb(50, 50, 50);
         }
-        
+
         #searchBarClose {
             position: absolute;
             text-align: center;
@@ -105,26 +124,27 @@
         }
     }
 
-    
+
     button {
         background-color: transparent;
         border: none;
-        
+
         img {
             height: 4vh;
             transition: all 200ms;
         }
-        
+
         img:hover {
             height: 5vh;
         }
     }
+
     #searchBarOpen {
         text-align: right;
         width: 10vh;
         justify-self: right;
     }
-    
+
     a {
         position: relative;
         height: fit-content;
@@ -146,63 +166,68 @@
             font-weight: bold;
         }
 
-        div {
-            position: absolute;
-            right: 50%;
-            bottom: -0;
-            background-color: white;
-            color: #482664;
-            border-radius: 0.5em;
-            height: 1em;
-            width: fit-content;
-            text-align: center;
-            line-height: 1em;
-            padding: 0.2em;
-            font-weight: bold;
-            translate: 50% 50%;
-        }
-
+        
         img {
             height: 4vh;
             transition: all 200ms;
         }
     }
-
+    
     a img:hover {
         height: 5vh;
     }
-
+    
 }
-.navContainerOpen{
+.menuId {
+    position: absolute;
+    right: 50%;
+    bottom: -0;
+    background-color: white;
+    color: #482664;
+    border-radius: 0.5em;
+    height: 1em;
+    width: fit-content;
+    text-align: center;
+    line-height: 1em;
+    padding: 0.2em;
+    font-weight: bold;
+    translate: 50% 50%;
+}
+
+.navContainerOpen {
     grid-template-columns: 35% 1fr 10vh 10vh !important;
 }
 
-#navContainerMobile{
+#navContainerMobile {
     display: none;
 }
 
 
-#navShop, #navInfos, #navSearch{
+#navInfos,
+#navSearch {
     position: relative;
     box-sizing: border-box;
     width: 100%;
-    background: linear-gradient(355deg, #d1d1d1 , white);
-    border-bottom: 5px solid black;
-    padding: 4em 5vw 2vh 5vw;
+    background: linear-gradient(355deg, #d1d1d1, white);
+    padding: 5em 5vw 4vh 5vw;
     box-shadow: 0 0 500px rgb(0, 0, 0);
     justify-items: center;
     position: absolute;
     top: 8vh;
     left: 0;
     z-index: 16;
-    .navContainer{
-        border-right:1px solid black;
+    display: none;
+
+    .navContainer {
+        border-right: 1px solid black;
         width: 100%;
         text-align: left;
-        p{
+
+        p {
             text-align: center;
         }
-        a{
+
+        a {
             text-transform: uppercase;
             display: block;
             text-decoration: none;
@@ -213,12 +238,14 @@
             background-color: white;
             font-size: 0.8em;
         }
-        .promotions{
+
+        .promotions {
             background-color: red;
             color: white;
             font-weight: bold;
         }
-        .navH1{
+
+        .navH1 {
             font-size: 1.3em;
             text-transform: uppercase;
             margin-bottom: 1em;
@@ -226,36 +253,35 @@
             color: #482664;
         }
     }
-    #fleche{
+
+    #fleche {
         display: block;
         text-decoration: none;
         width: fit-content;
         text-align: center;
-        background-color: black;
-        color: white;
-        padding:0.5em 6em;
+        background-color: white;
+        color: black;
+        padding: 0.5em 6em;
         margin: 2em auto 0 auto;
         border-radius: 20px 20px 0 0;
     }
-    .navContainer:last-child{
+
+    .navContainer:last-child {
         border-right: none;
     }
 }
 
-#navSearch{
+#navSearch {
     padding: 4em 5vw 0 5vw;
     text-align: center;
+    border-bottom: 5px solid white;
 }
 
-#navShop{
+#navInfos>div {
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 1em;
-}
-#navInfos{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1em;
+
 }
 
 
@@ -267,33 +293,39 @@
         left: 0;
         padding: 0 5vw;
         z-index: 50;
-        
-        .navLeft{
+
+        .navLeft {
             display: none;
         }
-        #logo{
+
+        #logo {
             display: none;
         }
-        a{
-            display:none;
-        }
-        .navLeft{
+
+        a {
             display: none;
         }
-        #logo{
+
+        .navLeft {
             display: none;
         }
-        #searchBarOpen{
+
+        #logo {
             display: none;
         }
-        
-        #searchBar{
+
+        #searchBarOpen {
+            display: none;
+        }
+
+        #searchBar {
             width: 50vh;
         }
     }
+
     #navContainerMobile {
         display: grid;
-        grid-template-columns: repeat(4,1fr);
+        grid-template-columns: repeat(4, 1fr);
         width: 100%;
         height: 8vh;
         position: fixed;
@@ -311,7 +343,7 @@
             height: fit-content;
             width: fit-content;
             margin: auto;
-    
+
             span {
                 position: absolute;
                 right: -1vh;
@@ -326,12 +358,13 @@
                 padding: 0.2em;
                 font-weight: bold;
             }
-    
+
             img {
                 height: 4vh;
                 transition: all 200ms;
             }
-            #logoMobile{
+
+            #logoMobile {
                 height: 6vh;
             }
         }
@@ -340,30 +373,36 @@
             height: 5vh;
         }
 
-        #menuBurger{
+        #menuBurger {
             display: grid;
-            grid-template-rows: repeat(3,1fr);
-            gap: 0.90vh;
+            grid-template-rows: repeat(3, 1fr);
+            gap: 0.8vh;
             width: 4vh;
             height: 3vh;
             margin: auto;
-            
-            div{
+
+            div {
                 background-color: white;
                 width: 100%;
-                height: 0.4vh;
+                height: 0.5vh;
                 border-radius: 5px;
-            
-
+            }
+            div:first-child {
+                width: 50%;
+            }
+            div:nth-child(2) {
+                width: 75%;
             }
         }
-    
+
     }
-    #navShop, #navInfos{
-        padding: 2vh 5vw ;
+
+    #navInfos {
+        padding: 2vh 5vw;
     }
-    #navSearch{
-        padding: 2vh 5vw 0 5vw ;
+
+    #navSearch {
+        padding: 2vh 5vw 0 5vw;
     }
 
 }
