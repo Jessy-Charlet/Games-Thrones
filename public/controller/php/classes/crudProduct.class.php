@@ -2,28 +2,57 @@
 
 class crudProduct
 {
-    private $product_id;
+    private $id;
     private $name;
-    private $category_id;
-    private $brand;
-    private $description;
-    private $material;
-    private $color;
+    private $rate;
     private $price;
-    private $stock;
-    private $average_rating;
-    private $number_of_ratings;
-    private $vendor_code;
+    private $quantity;
+    private $description;
+    private $color;
+    private $material;
+    private $brand;
+    private $category_id;
+
     private $images;
 
-    public function setProductId($newId)
+    public function setId($newId)
     {
-        $this->product_id = $newId;
+        $this->id = $newId;
     }
 
     public function setName($newName)
     {
         $this->name = $newName;
+    }
+
+    public function setRate($newRate)
+    {
+        $this->rate = $newRate;
+    }
+
+    public function setPrice($newPrice)
+    {
+        $this->price = $newPrice;
+    }
+
+    public function setQuantity($newQuantity)
+    {
+        $this->stock = $newQuantity;
+    }
+
+    public function setDescription($newDescription)
+    {
+        $this->description = $newDescription;
+    }
+
+    public function setColor($newColor)
+    {
+        $this->color = $newColor;
+    }
+
+    public function setMaterial($newMaterial)
+    {
+        $this->material = $newMaterial;
     }
 
     public function setCategoryId($newCategoryId)
@@ -36,52 +65,13 @@ class crudProduct
         $this->brand = $newBrand;
     }
 
-    public function setDescription($newDescription)
-    {
-        $this->description = $newDescription;
-    }
-
-    public function setMaterial($newMaterial)
-    {
-        $this->material = $newMaterial;
-    }
-
-    public function setColor($newColor)
-    {
-        $this->color = $newColor;
-    }
-
-    public function setPrice($newPrice)
-    {
-        $this->price = $newPrice;
-    }
-
-    public function setStock($newStock)
-    {
-        $this->stock = $newStock;
-    }
-
-    public function setAverageRating($newAverageRating)
-    {
-        $this->average_rating = $newAverageRating;
-    }
-
-    public function setNumberOfRatings($newNumberOfRatings)
-    {
-        $this->number_of_ratings = $newNumberOfRatings;
-    }
-
-    public function setVendorCode($newVendorCode)
-    {
-        $this->vendor_code = $newVendorCode;
-    }
-
     public function setImages($newImages)
     {
-        $this->images = $newImages;
+        $this->images = Database::getImagesByProductId($this->id);
     }
 
-    public function getAllProducts(){
+    public function getAllProducts()
+    {
         $conn = Database::connect();
 
         $sql = $conn->prepare("SELECT * FROM product");
@@ -90,8 +80,9 @@ class crudProduct
 
         return $product;
     }
-    
-    public function getCategoryByProductId($id){
+
+    public function getCategoryByProductId($id)
+    {
         $conn = Database::connect();
 
         $sql = $conn->prepare("SELECT name FROM category WHERE id = :id");
@@ -105,14 +96,44 @@ class crudProduct
         return $category;
     }
 
-    public function getProductId()
+    public function getId()
     {
-        return $this->product_id;
+        return $this->id;
     }
 
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getRate()
+    {
+        return $this->rate;
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    public function getMaterial()
+    {
+        return $this->material;
     }
 
     public function getCategoryId()
@@ -125,153 +146,105 @@ class crudProduct
         return $this->brand;
     }
 
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    public function getMaterial()
-    {
-        return $this->material;
-    }
-
-    public function getColor()
-    {
-        return $this->color;
-    }
-
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    public function getStock()
-    {
-        return $this->stock;
-    }
-
-    public function getAverageRating()
-    {
-        return $this->average_rating;
-    }
-
-    public function getNumberOfRatings()
-    {
-        return $this->number_of_ratings;
-    }
-
-    public function getVendorCode()
-    {
-        return $this->vendor_code;
-    }
-
     public function getImages()
     {
         return $this->images;
     }
-
     public function createProduct(
         $conn,
         $name,
-        $category_id,
-        $brand,
-        $description,
-        $material,
-        $color,
+        $rate,
         $price,
-        $stock,
-        $average_rating,
-        $number_of_ratings,
-        $vendor_code,
-        $images
+        $quantity,
+        $description,
+        $color,
+        $material,
+        $brand,
+        $category_id,
+        //$images
     ) {
-        $sql = $conn->prepare("INSERT INTO product (name, category_id, brand, description, material, color, price, stock,
-                               average_rating, number_of_ratings, vendor_code, images) VALUES (:name, :category_id, :brand, :description, :material,
-                               :color, :price, :stock, :average_rating, :number_of_ratings, :vendor_code, :images)");
+        $sql = $conn->prepare("INSERT INTO product (name, rate, price, quantity, description, color, material, stock ,brand, category_id) VALUES (:name, :rate, :price, :quantity, :description, :color, :material, :stock, :brand, :category_id)");
         $sql->execute(
             array(
+
                 ':name' => $name,
-                ':category_id' => $category_id,
-                ':brand' => $brand,
-                ':description' => $description,
-                ':material' => $material,
-                ':color' => $color,
+                ':rate' => $rate,
                 ':price' => $price,
-                ':stock' => $stock,
-                ':average_rating' => $average_rating,
-                ':number_of_ratings' => $number_of_ratings,
-                ':vendor_code' => $vendor_code,
-                ':images' => $images
+                ':quantity' => $quantity,
+                ':description' => $description,
+                ':color' => $color,
+                ':material' => $material,
+                ':brand' => $brand,
+                ':category_id' => $category_id,
+                /*':images' => $images,*/
             )
         );
     }
 
     public function readProduct($conn, $id)
     {
-        $sql = $conn->prepare("SELECT * FROM product WHERE product_id = :id");
+        $sql = $conn->prepare("SELECT * FROM product WHERE id = :id");
         $sql->execute(array(':id' => $id));
         $result = $sql->fetch(PDO::FETCH_ASSOC);
         if ($result) {
             // Set product properties from fetched data
-            $this->setProductId($result['product_id']);
+            $this->setId($result['id']);
             $this->setName($result['name']);
-            $this->setCategoryId($result['category_id']);
-            $this->setBrand($result['brand']);
-            $this->setDescription($result['description']);
-            $this->setMaterial($result['material']);
-            $this->setColor($result['color']);
+            $this->setRate($result['rate']);
             $this->setPrice($result['price']);
-            $this->setStock($result['stock']);
-            $this->setAverageRating($result['average_rating']);
-            $this->setNumberOfRatings($result['number_of_ratings']);
-            $this->setVendorCode($result['vendor_code']);
-            $this->setImages($result['images']);
+            $this->setQuantity($result['quantity']);
+            $this->setBrand($result['brand']);
+            $this->setMaterial($result['material']);
+            $this->setDescription($result['description']);
+            $this->setColor($result['color']);
+            $this->setCategoryId($result['category_id']);
+            $this->setImages($result['id']);
+
+            //$this->setImages($result['images']);
             return true;
         } else {
             return false;
         }
     }
 
-    public function updateProduct($conn, $id, $name, $category_id, $brand, $description, $material, $color, $price, $stock)
+    public function updateProduct($conn, $id, $name, $rate, $price, $quantity, $description, $color, $material, $brand, $category_id)
     {
-        $sql = $conn->prepare("UPDATE product SET name = :name, category_id = :category_id, brand = :brand, description = :description, 
-                               material = :material, color = :color, price = :price, stock = :stock WHERE product_id = :id");
+        $sql = $conn->prepare("UPDATE product SET name = :name, rate = :rate, price = :price, quantity = :quantity, description = :description, color = :color, 
+                               material = :material, brand =:brand,  WHERE id = :id");
         $sql->execute(
             array(
                 ':name' => $name,
-                ':category_id' => $category_id,
-                ':brand' => $brand,
-                ':description' => $description,
-                ':material' => $material,
-                ':color' => $color,
+                ':rate' => $rate,
                 ':price' => $price,
-                ':stock' => $stock,
-                ':id' => $id
+                ':quantity' => $quantity,
+                ':description' => $description,
+                ':color' => $color,
+                ':material' => $material,
+                ':brand' => $brand,
+                ':category_id' => $category_id,
             )
         );
     }
 
     public function deleteProduct($conn, $id)
     {
-        $sql = $conn->prepare("DELETE FROM product WHERE product_id = :id");
+        $sql = $conn->prepare("DELETE FROM product WHERE id = :id");
         $sql->execute(array(':id' => $id));
     }
 
     public function getProductData()
     {
         $data = array(
-            'product_id' => $this->getProductId(),
+            'id' => $this->getId(),
             'name' => $this->getName(),
-            'category_id' => $this->getCategoryId(),
-            'brand' => $this->getBrand(),
-            'description' => $this->getDescription(),
-            'material' => $this->getMaterial(),
-            'color' => $this->getColor(),
+            'rate' => $this->getRate(),
             'price' => $this->getPrice(),
-            'stock' => $this->getStock(),
-            'average_rating' => $this->getAverageRating(),
-            'number_of_ratings' => $this->getNumberOfRatings(),
-            'vendor_code' => $this->getVendorCode(),
+            'quantity' => $this->getQuantity(),
+            'description' => $this->getDescription(),
+            'color' => $this->getColor(),
+            'material' => $this->getMaterial(),
+            'brand' => $this->getBrand(),
+            'category_id' => $this->getCategoryId(),
             'images' => $this->getImages(),
         );
         return $data;
@@ -297,14 +270,14 @@ class crudProduct
         if (count($productIds) > 0) {
             $productList = array();
             $placeholders = implode(',', array_fill(0, count($productIds), '?'));
-            $sql = $conn->prepare("SELECT * FROM product WHERE product_id IN ($placeholders)");
+            $sql = $conn->prepare("SELECT * FROM product WHERE id IN ($placeholders)");
             $sql->execute($productIds);
 
             while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
                 $product = new crudProduct(); // Create a new product object
-                $product->readProduct($conn, $row['product_id']); // Populate data using existing method
+                $product->readProduct($conn, $row['id']); // Populate data using existing method
                 $productData = $product->getProductData();
-                $productData['quantity'] = $productQuantities[$product->getProductId()]; // Add quantity from map
+                $productData['quantity'] = $productQuantities[$product->getId()]; // Add quantity from map
                 $productList[] = $productData;
             }
             return array('products' => $productList, 'totalProducts' => $totalProducts);
