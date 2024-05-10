@@ -1,30 +1,27 @@
+
 <?php
-class Database
-{
+class Database{
     private static $servername = 'localhost';
     private static $username = 'root';
     private static $password = '';
-    private static $BDD = 'boutique';
+    private static $BDD ='boutique';
     private static $conn = null;
 
-    public function __construct()
-    {
+    public function __construct(){
         die('Init function is not allowed');
     }
-    public static function connect()
-    { //fonction de connexion à la BDD
-        if (null == self::$conn) { //si la connexion est nulle
-            try { //on essaie de se connecter
-                self::$conn = new PDO("mysql:host=" . self::$servername . ";" . "dbname=" . self::$BDD, self::$username, self::$password); //on se connecte à la BDD
+    public static function connect(){ //fonction de connexion à la BDD
+        if (null == self::$conn){ //si la connexion est nulle
+            try{ //on essaie de se connecter
+                self::$conn = new PDO("mysql:host=".self::$servername.";"."dbname=".self::$BDD,self::$username,self::$password); //on se connecte à la BDD
                 self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
+            }catch(PDOException $e){
                 die($e->getMessage());
             }
         }
         return self::$conn;
     }
-    public static function disconnect()
-    {
+    public static function disconnect(){
         self::$conn = null;
     }
 
@@ -36,7 +33,7 @@ class Database
             $conn = Database::connect();
 
             // Préparation de la requête SQL pour récupérer l'ensemble des images
-            $stmt = $conn->prepare("SELECT url, main FROM image
+            $stmt = $conn->prepare("SELECT * FROM image
             INNER JOIN image_product
             WHERE image.id = image_product.image_id AND image_product.product_id = :id");
             $stmt->bindParam(':id', $id);
@@ -57,9 +54,9 @@ class Database
                 if ($image["main"] == 1) {
                     $productImages["main"] = $image["url"];
                 } else {
-                    array_push($productImages["secondary"], $image["url"]);
+                    array_push($productImages["secondary"], $image["url"], $image["id"]);
                 }
-                array_push($productImages["all"], $image["url"]);
+                array_push($productImages["all"], $image["url"], $image["id"]);
             }
 
             // Fermeture de la connection
@@ -106,6 +103,7 @@ class Database
             return $e;
         }
     }
+
     // Récupération des produits par ID
     public static function getProductById($id)
     {
@@ -140,7 +138,7 @@ class Database
         }
     }
 
-    public static function addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category){
+    public static function addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image){
         $conn = Database::connect();
 
         try{
@@ -159,7 +157,24 @@ class Database
                     ':brand' => $brand,
                     ':category' => $category
                 )
-                );
+            );
+            $productId = $conn->lastInsertId();
+            $sql2 = $conn->prepare("INSERT INTO image (url) VALUES (:url) WHERE product_id = :product_id");
+            $sql2->execute(
+                array(
+                    ':url' => $image,
+                    ':product_id' => $productId
+                )
+            );
+
+            $imageId = $conn->lastInsertId();
+            $sql3 = $conn->prepare("INSERT INTO image_product (image_id, product_id) VALUES (:image_id, :product_id)");
+            $sql3->execute(
+                array(
+                    ':image_id' => $imageId,
+                    ':product_id' => $productId
+                )
+            );
             $conn->commit();
         }
         catch(PDOException $e){
@@ -187,3 +202,4 @@ class Database
     }
 }
 $conn = Database::connect();
+?>

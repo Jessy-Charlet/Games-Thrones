@@ -18,8 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
         let material = document.getElementById("material").value;
         let brand = document.getElementById("brand").value;
         let category = document.getElementById("category").value;
+        let image = document.getElementById("image").value;
 
-        if(name === "" || rate === "" || price === "" || quantity === "" || description === "" || color === "" || material === "" || brand === "" || category === "") {
+        if(name === "" || rate === "" || price === "" || quantity === "" || description === "" || color === "" || material === "" || brand === "" || category === "" || image === "") {
             alert("Please fill all fields");
             return;
         }
@@ -40,6 +41,11 @@ document.addEventListener('DOMContentLoaded', function() {
             alert("Please enter a valid category");
             return;
         }
+        const imageTest = /\.(jpe?g|png|gif|bmp)$/i;
+        if(!imageTest.test(image)) {
+            alert("Please enter a valid image");
+            return;
+        }
 
         const formData = new FormData();
         formData.append("name", name);
@@ -51,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append("material", material);
         formData.append("brand", brand);
         formData.append("category", category);
+        formData.append("image", image);
         formData.append("request", "addProduct");
 
         const requestOptions = {
@@ -73,5 +80,13 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => 
             self.location = '/gt-admin?error=UnexpectedError'
         );
+    });
+
+    const delProductBtn = document.getElementById("bo_button_deleteProduct");
+
+    delProductBtn.addEventListener('click', function() {
+        const productId = document.getElementById("td_product_id").value;
+        
+        
     });
 });

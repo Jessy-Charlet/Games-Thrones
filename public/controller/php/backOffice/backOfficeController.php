@@ -14,6 +14,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
             $material = $_POST['material'];
             $brand = $_POST['brand'];
             $category = $_POST['category'];
+            $image = $_POST['image'];
 
             $testInsert = Database::testInsertProduct($name, $brand, $category);
 
@@ -28,7 +29,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                     )
                 );
             }elseif($testInsert == "success"){
-                Database::addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category);
+                Database::addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image);
                 echo json_encode(
                     array(
                         "status" => "success",
