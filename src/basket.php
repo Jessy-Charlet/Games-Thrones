@@ -77,7 +77,7 @@ $cartContent = $product->getProductsByCartJson($conn, $cartJson);
                             <div id="basket_total"><span id="basket_total_number">300.99</span><span>€</span></div>
                         </div>
                     </div>
-                    <a id="makeOrder" class="panierBtn" href="/checkout">Passer la comande</a>
+                    <a id="makeOrder" class="panierBtn" href="/checkout">Passer la commande</a>
                 </div>
         </section>
     </div>
