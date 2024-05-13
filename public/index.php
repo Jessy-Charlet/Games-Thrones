@@ -67,6 +67,8 @@ function generateBreadcrumbs($uri, $router)
     // Décomposer l'URL et générer les autres éléments du fil d'Ariane
     $segments = explode('/', trim($uri, '/'));
     $cumulative_url = $base_url;
+    var_dump($segments); echo "<br>";
+  
 
     foreach ($segments as $segment) {
         if ($segment) {
@@ -75,18 +77,22 @@ function generateBreadcrumbs($uri, $router)
 
             // Exemple de logique pour obtenir le nom de la page et du produit
             $page_name = end($segments); // Obtenez le nom de la page à partir de l'URL
-            $product_name = end($segments); // Obtenez le nom du produit à partir de l'URL
+            $productName = end($segments); // Obtenez le nom du produit à partir de l'URL
+
 
 
             $breadcrumbs[] = [
                 'name' => $page_name,
                 'url' => $cumulative_url
             ];
+
+            $productName = $segments;
+
                // Si c'est une page produit, ajoutez également le nom du produit
-               if ($segment === 'produit') {
+               if (isset($productName) && $productName === 'produit') {
                 $breadcrumbs[] = [
-                    'name' => $product_name,
-                    'url' => $cumulative_url // Peut-être que vous voulez un lien spécifique vers le produit ici
+                    'name' => $productName,
+                    'url' => $cumulative_url  // Peut-être que vous voulez un lien spécifique vers le produit ici
                 ];
             }
 
@@ -96,13 +102,14 @@ function generateBreadcrumbs($uri, $router)
     return $breadcrumbs;
 }
 
+
 // Obtenir le fil d'Ariane
 $breadcrumbs = generateBreadcrumbs($uri, $router);
 
 // Vérifier si une route a été trouvée
 if ($match !== false) {
     require '../templates/header.php';
-
+//*****************************************************//
     // Affichage du fil d'Ariane
     echo '<nav aria-label="breadcrumb">';
     echo '<ol class="breadcrumb">';
@@ -116,6 +123,7 @@ if ($match !== false) {
     }
     echo '</ol>';
     echo '</nav>';
+//********************************************************//
 
     // Exécution du contenu de la page
     if (is_callable($match['target'])) {
