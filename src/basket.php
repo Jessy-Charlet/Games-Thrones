@@ -1,21 +1,3 @@
-<?php
-
-require_once $_SERVER['DOCUMENT_ROOT'] . "/controller/php/classes/Database.class.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/controller/php/classes/crudProduct.class.php";
-if (isset($_GET['reduce'])) {
-    $_SESSION['cart'][$_GET['reduce']]['quantity']--;
-    if ($_SESSION['cart'][$_GET['reduce']]['quantity'] <= 0) {
-        unset($_SESSION['cart'][$_GET['reduce']]);
-    }
-}
-else if(isset($_GET['add'])) {
-    $productAdd = Database::getProductById($_GET['add']);
-    $_SESSION['cart'][$_GET['add']]['quantity']++;
-    if ($_SESSION['cart'][$_GET['add']]['quantity'] > $productAdd['quantity']) {
-        $_SESSION['cart'][$_GET['add']]['quantity']--;
-    }
-}
-?>
 <main>
     <div class="container">
         <h1 class="panierTitle">Votre panier</h1>
@@ -55,12 +37,17 @@ else if(isset($_GET['add'])) {
                                 <div class="panierItemSubtotal">
                                     <p class="panierItemPrix">' . $productPriceTotal . ' €</p>
                                     <span class="panierItemRemove">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor"
-                                            class="h-5 w-5 cursor-pointer duration-150 hover:text-red-500">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M6 18L18 6M6 6l12 12"></path>
-                                        </svg>
+                                        <form action="" method="get">
+                                            <input name="remove" type="hidden" value="' . $product['id'] . '" />
+                                            <button type="submit" value="submit">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                     stroke-width="1.5" stroke="currentColor"
+                                                     class="h-5 w-5 cursor-pointer duration-150 hover:text-red-500">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M6 18L18 6M6 6l12 12"></path>
+                                                    </svg>
+                                            </button>
+                                        </form>
                                     </span>
                                 </div>
                             </div>
