@@ -1,5 +1,25 @@
 <?php
 session_start();
+if (isset($_GET['reduce'])) {
+    $_SESSION['cart'][$_GET['reduce']]['quantity']--;
+    if ($_SESSION['cart'][$_GET['reduce']]['quantity'] <= 0) {
+        unset($_SESSION['cart'][$_GET['reduce']]);
+    }
+} else if (isset($_GET['add'])) {
+    $productAdd = Database::getProductById($_GET['add']);
+    $_SESSION['cart'][$_GET['add']]['quantity']++;
+    if ($_SESSION['cart'][$_GET['add']]['quantity'] > $productAdd['quantity']) {
+        $_SESSION['cart'][$_GET['add']]['quantity']--;
+    }
+} else if (isset($_GET['remove'])) {
+    unset($_SESSION['cart'][$_GET['remove']]);
+}
+if (isset($_SESSION['cart'])) {
+    $cartValue = 0;
+    foreach ($_SESSION['cart'] as $cartProduct) {
+        $cartValue = $cartValue + $cartProduct['quantity'];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -45,8 +65,8 @@ session_start();
         <button id="searchBarOpen"><img src="./assets/img/icon_search.png" alt="rechercher" /></button>
         <a href="<?= $router->generate('panier') ?>"><img src="./assets/img/icon_panier.png" alt="Mon panier" />
             <?php
-            if (isset($_SESSION['basketQuantity'])) {
-                echo "<span id='header_totalProductsQuantity'>" . $_SESSION['basketQuantity'] . "</span>";
+            if (isset($_SESSION['cart'])) {
+                echo "<span id='header_totalProductsQuantity'>" . $cartValue . "</span>";
             }
             ?>
         </a>
@@ -103,19 +123,22 @@ session_start();
     <!-- Menu Mobile -->
     <header id="navContainerMobile">
         <a href="<?= $router->generate('accueil') ?>"><img id="logoMobile" src="./assets/img/logo_Games_Thrones_nav_mobile.png" alt="Logo Games Thrones" /></a>
-        <a href="/filtre"><div id="menuBurger">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div></a>
+        <a href="/filtre">
+            <div id="menuBurger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </a>
         <a href="/panier"><img src="./assets/img/icon_panier.png" alt="Mon panier" />
-            <span id="header_totalProductsQuantityBottom">2</span>
+            <span id="header_totalProductsQuantityBottom"><?=$cartValue?></span>
         </a>
         <?php
         if (isset($_SESSION['user'])) {
         ?>
             <a href="<?= $router->generate('profil') ?>"><img src="./assets/img/icon_user.png" alt="Mon compte" />
-            <div class="menuId"><?= $_SESSION['userFirstName'] ?></div></a>
+                <div class="menuId"><?= $_SESSION['userFirstName'] ?></div>
+            </a>
         <?php
         } else {
         ?>
