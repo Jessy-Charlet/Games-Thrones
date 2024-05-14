@@ -54,9 +54,9 @@ class Database{
                 if ($image["main"] == 1) {
                     $productImages["main"] = $image["url"];
                 } else {
-                    array_push($productImages["secondary"], $image["url"], $image["id"]);
+                    array_push($productImages["secondary"], $image["url"]);
                 }
-                array_push($productImages["all"], $image["url"], $image["id"]);
+                array_push($productImages["all"], $image["url"]);
             }
 
             // Fermeture de la connection
@@ -138,7 +138,43 @@ class Database{
         }
     }
 
-    public static function addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image, $secondaryImages){
+    // Récupération des produits par Color
+    public static function getProductByColor($color, $id)
+    {
+        try {
+            // Connection à la BDD
+            $conn = Database::connect();
+
+            // Préparation de la requête SQL pour récupérer l'ensemble produits
+            $stmt = $conn->prepare("SELECT * FROM product WHERE color=:color AND id!=:id");
+            $stmt->bindParam(':color', $color);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            // Execution de la requête SQL
+            $product = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Fermeture de la connection
+            $conn = null;
+
+            // return["id"] pour l'ID du produit
+            // return["name"] pour le nom du produit
+            // return["rate"] pour la note du produit
+            // return["price"] pour le prix du produit
+            // return["quantity"] pour la quantitée du produit    
+            // return["description"] pour la déscription complète du produit
+            // return["color"] pour la couleur du produit 
+            // return["material"] pour la matière du produit 
+            // return["brand"] pour la marque du produit   
+            // return["category_id"] pour la catégorie du produit   
+            return $product;
+        } catch (PDOException $e) {
+            return $e;
+        }
+    }
+    
+
+    public static function addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image){
         $conn = Database::connect();
 
         try{
