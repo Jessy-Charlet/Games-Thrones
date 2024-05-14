@@ -18,8 +18,11 @@ document.addEventListener('DOMContentLoaded', function() {
         let material = document.getElementById("material").value;
         let brand = document.getElementById("brand").value;
         let category = document.getElementById("category").value;
-        let image = document.getElementById("image").value;
-
+        let image = document.getElementById("images").value;
+        let secondaryImage = document.getElementById("secondaryImages").value;
+        if(secondaryImage === "") {
+            secondaryImage = "none";
+        }
         if(name === "" || rate === "" || price === "" || quantity === "" || description === "" || color === "" || material === "" || brand === "" || category === "" || image === "") {
             alert("Please fill all fields");
             return;
@@ -58,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append("brand", brand);
         formData.append("category", category);
         formData.append("image", image);
+        formData.append("secondaryImage", secondaryImage);
         formData.append("request", "addProduct");
 
         const requestOptions = {
@@ -104,6 +108,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
             fetch("http://localhost:8080/controller/php/backOffice/backOfficeController.php", requestOptions)
             .then(response => response.json())
+        });
+    });
+
+    const updateButtons = document.querySelectorAll('.bo_updateProduct_button');
+
+    updateButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const tableCase = this.closest('.bo_tbody_tr').querySelectorAll('.bo_tbody_tr_td').textContent;
+            console.log(tableCase);
         });
     });
 });

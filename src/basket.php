@@ -1,24 +1,25 @@
 <main>
-    <div class="container">
-        <h1 class="panierTitle">Votre panier</h1>
-        <section>
+    <div class="containerPanier">
+        <?php
+        $cartTotal = 0;
+        if (isset($_SESSION['cart']) && $_SESSION['cart'] != null) {
+            echo '<h1 class="panierTitle">Mon panier</h1>
+            <section>
             <div class="panierContainer">
-                <div class="panierLeft">
+                <div class="panierLeft">';
 
-                    <?php
-                    $cartTotal = 0;
-                    foreach ($_SESSION['cart'] as $product) {
-                        $image = Database::getImagesByProductId($product['id']);
-                        $productDetail = Database::getProductById($product['id']);
-                        $productPriceTotal = $product['quantity'] * $productDetail['price'];
-                        $cartTotal = $cartTotal + $productPriceTotal;
-                        echo '<div class="panierItem">
+            foreach ($_SESSION['cart'] as $product) {
+                $image = Database::getImagesByProductId($product['id']);
+                $productDetail = Database::getProductById($product['id']);
+                $productPriceTotal = $product['quantity'] * $productDetail['price'];
+                $cartTotal = $cartTotal + $productPriceTotal;
+                echo '<div class="panierItem">
                         <div class="panierImg">
                             <img src="./assets/img/products/' . $image["main"] . '" alt="Product">
                         </div>
                         <div class="panierContent">
                             <div class="panierContentLeft">
-                                <h2 class="panierItemTitle">' . $productDetail['name'] . '</h2>
+                                <h2 class="panierItemTitle"><a href="./produit?id=' . $productDetail["id"] . '">' . $productDetail['name'] . '</a></h2>
                                 <p>' . $productDetail['color'] . '</p>
                                 <p>' . $productDetail['price'] . ' €</p>
                             </div>
@@ -52,21 +53,26 @@
                                 </div>
                             </div>
                         </div>
-                    </div>';
-                    }
+                        </div>';
+            }
+            echo '</div>
+                    <div class="panierRight">
+                        <div class="panierTotal">
+                            <div class="panierTotalTop">
+                                <p>Total</p>
+                                <div id="basket_total"><span id="basket_total_number"><?= $cartTotal ?></span><span>€</span></div>
+                                </div>
+                                </div>
+                                <a id="makeOrder" class="panierBtn" href="/checkout">Passer la commande</a>
+                                </div>
+                                </section>';
+        } else {
+            echo "<div class='panierVide'><h2>Votre panier est vide <span>:(</span> ...</h2>
+                                <p>Découvrez nos superbes Thrones, il y en a forcément un qui a été créé pour votre popotin !</p>
+                                <a class='buttonShop' href='/filtre'>⮌ Chercher un Throne</a></div>";
+        }
 
-                    ?>
-                </div>
-                <div class="panierRight">
-                    <div class="panierTotal">
-                        <div class="panierTotalTop">
-                            <p>Total</p>
-                            <div id="basket_total"><span id="basket_total_number"><?= $cartTotal ?></span><span>€</span></div>
-                        </div>
-                    </div>
-                    <a id="makeOrder" class="panierBtn" href="/checkout">Passer la commande</a>
-                </div>
-        </section>
+        ?>
     </div>
     </div>
 </main>
