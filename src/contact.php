@@ -12,10 +12,12 @@
 
     <label for="sujet">Sujet de la demande :</label>
     <select id="sujet" name="sujet" required>
+      <option value=""></option>
       <option value="Assistance produit">Assistance produit</option>
       <option value="Suivi de commande">Suivi de commande</option>
       <option value="Problème de paiement">Problème de paiement</option>
       <option value="Suggestions / Commentaires">Suggestions / Commentaires</option>
+      <option value="Données personnelle">Données personnelle</option>
       <option value="Autre">Autre</option>
     </select>
 
