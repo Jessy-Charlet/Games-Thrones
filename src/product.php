@@ -1,114 +1,5 @@
 <?php
-/*
-// Définition d'un tableau d'IDs valides
-$valid_product_ids = range(1, 10); // Crée un tableau [1, 2, ..., 10]
 
-// Fonction pour obtenir un ID par défaut aléatoire
-function get_random_product_id($valid_ids)
-{
-    return $valid_ids[array_rand($valid_ids)];
-}
-
-if (isset($_GET["id"])) {
-    $product_id = intval($_GET["id"]); // Convertit en entier
-    if (!in_array($product_id, $valid_product_ids)) { // Vérifie si l'ID est dans le tableau
-        // Si l'ID n'est pas valide, choisir un ID aléatoire
-        $product_id = get_random_product_id($valid_product_ids);
-    }
-} else {
-    // Si aucun ID n'est passé, choisir un ID par défaut aléatoire
-    $product_id = get_random_product_id($valid_product_ids);
-}
-
-$conn = Database::connect();
-
-if (empty($product_id)) {
-    echo "Erreur : L'ID du produit est vide.";
-} else {
-    try {
-        $stmt = $conn->prepare("SELECT * FROM product WHERE product_id = ?");
-        $stmt->execute([$product_id]);
-        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        if (empty($products)) {
-            echo "Aucun produit trouvé avec l'ID spécifié.";
-        } else {
-
-        }
-    } catch (PDOException $e) {
-        echo "Erreur de connexion à la base de données: " . $e->getMessage();
-    }
-
-    $productObjects = [];
-    foreach ($products as $productInfo) {
-        $product = new Product(
-            $productInfo['id'],
-            $productInfo['name'],
-            $productInfo['brand'],
-            $productInfo['color'],
-            $productInfo['material'],
-            $productInfo['price'],
-            $productInfo['stock'],
-            $productInfo['rate'],
-            $productInfo['description']
-        );
-        $productObjects[] = $product;
-    }
-
-    $productId = $product->getProductId();
-    $quantity = 1;
-
-
-    // Récupère le produit principal avec son ID
-    if (isset($product)) {
-        $mainProductColor = $product->getColor();
-    } else {
-        echo "Erreur : Produit principal non défini.";
-        return;
-    }
-
-    // Récupère tous les produits (pas forcément similaires)
-    $stmt = $conn->prepare("SELECT * FROM product");
-    $stmt->execute();
-    $allProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Utilisation d'un array pour stocker les produits similaires
-    $productObjectsSimilar = [];
-
-    $index = 0;
-    $totalProducts = count($allProducts);
-
-    // Boucle pour trouver des produits avec des couleurs similaires
-    while ($index < $totalProducts) {
-        $currentProductInfo = $allProducts[$index];
-        $currentProduct = new Product(
-            $currentProductInfo['product_id'],
-            $currentProductInfo['name'],
-            $currentProductInfo['brand'],
-            $currentProductInfo['color'],
-            $currentProductInfo['material'],
-            $currentProductInfo['price'],
-            $currentProductInfo['stock'],
-            $currentProductInfo['average_rating'],
-            $currentProductInfo['description'],
-            $currentProductInfo['images']
-        );
-
-        // Ajoute le produit si la couleur est similaire mais exclut le produit principal
-        if (
-            strtolower($currentProduct->getColor()) === strtolower($mainProductColor) &&
-            $currentProduct->getProductId() !== $product->getProductId()
-        ) {
-            $productObjectsSimilar[] = $currentProduct;
-        }
-
-        $index++;
-    }
-}
-
-$conn = null;
-
-*/
 $images = Database::getImagesByProductId($_GET["id"]);
 $product = Database::getProductById($_GET["id"]);
 
@@ -122,6 +13,36 @@ function sliderPhotos($images){
 ?>
 
 <section class="section">
+<?php
+$def = "index";
+$dPath = $_SERVER['REQUEST_URI'];
+$dChunks = explode("/", $dPath);
+
+echo('<a class="dynNav" href="/">Accueil</a><span class="dynNav"> > </span>');
+for($i=1; $i<count($dChunks); $i++ ){
+    echo('<a class="dynNav" href="/');
+    for($j=1; $j<=$i; $j++ ){
+        echo($dChunks[$j]);
+        if($j!=count($dChunks)-1){ echo("/");}
+    }
+
+    if($i==count($dChunks)-1){
+        $prChunks = explode(".", $dChunks[$i]);
+        if ($prChunks[0] == $def) $prChunks[0] = "";
+        $prChunks[0] = $prChunks[0] . '</a>';
+    }
+    else $prChunks[0]=$dChunks[$i] . '</a><span class="dynNav"> > </span>';
+    echo('">');
+    if ($i == count($dChunks) - 1 && isset($product)) {
+        echo(str_replace("_" , " " , $product["name"]));
+    } else {
+        echo(str_replace("_" , " " , $prChunks[0]));
+    }
+}
+?>
+<!--<p><?= $product["category_id"] ?></p>-->
+
+    
     <section id="description">
         <div class="container">
             <div class="cartForm">
