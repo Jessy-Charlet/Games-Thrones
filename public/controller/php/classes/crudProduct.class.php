@@ -37,7 +37,7 @@ class crudProduct
 
     public function setQuantity($newQuantity)
     {
-        $this->stock = $newQuantity;
+        $this->quantity = $newQuantity;
     }
 
     public function setDescription($newDescription)
