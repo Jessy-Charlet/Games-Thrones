@@ -43,7 +43,6 @@ for($i=1; $i<count($dChunks); $i++ ){
 }
 ?>
 
-
 <section class="section">
     <section id="description">
         <div class="container">
