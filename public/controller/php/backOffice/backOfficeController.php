@@ -39,5 +39,32 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
             }
             
         }
+
+        if($_POST['request'] == "deleteProduct"){
+            $productId = $_POST['productId'];
+            $imageId = $_POST['imageId'];
+            $secondaryImageId = $_POST['secondaryImageId'];
+            
+            $imageIds = preg_split('/,/', $secondaryImageId);
+            $imageIds = array_filter($imageIds, 'is_numeric');
+
+            $result = Database::deleteProduct($productId, $imageId, $imageIds);
+
+            if($result) {
+                echo json_encode(
+                    array(
+                        'status' => 'success',
+                        'message' => 'Product deleted'
+                    )
+                );
+            } else {
+                echo json_encode(
+                    array(
+                        'status' => 'error',
+                        'message' => 'Product not deleted'
+                    )
+                );
+            }
+        }
     }
 }

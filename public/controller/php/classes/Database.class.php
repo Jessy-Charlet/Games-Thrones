@@ -200,6 +200,69 @@ class Database{
         }
         return $result;
     }
+
+    public static function deleteProduct($id, $imageId, $secondaryImagesId){
+        $conn = Database::connect();
+        
+        try{
+            $conn->beginTransaction();
+
+            $sql = $conn->prepare("DELETE FROM review WHERE product_id = :id");
+            $sql->execute(
+                array(
+                    ':id' => $id
+                )
+            );
+            $sql->closeCursor();
+        
+            //delete from product_image table first
+            $sql = $conn->prepare("DELETE FROM image_product WHERE product_id = :id OR image_id = :id");
+            $sql->execute(
+                array(
+                    ':id' => $id
+                )
+            );
+            $sql->closeCursor();
+        
+            //delete main image
+            $sql = $conn->prepare("DELETE FROM image WHERE id = :id");
+            $sql->execute(
+                array(
+                    ':id' => $imageId
+                )
+            );
+            $sql->closeCursor();
+        
+            //delete secondary images
+            foreach($secondaryImagesId as $secondId){
+                $sql = $conn->prepare("DELETE FROM image WHERE id = :id");
+                $sql->execute(
+                    array(
+                        ':id' => $secondId
+                    )
+                );
+                $sql->closeCursor();
+            }
+        
+            //delete product
+            $sql = $conn->prepare("DELETE FROM product WHERE id = :id");
+            $sql->execute(
+                array(
+                    ':id' => $id
+                )
+            );
+            $sql->closeCursor();
+        
+            $conn->commit();
+            return true;
+        }
+        catch(PDOException $e){
+            echo "Error: " . $e->getMessage();
+            $conn->rollback();
+            return false;
+        }
+
+    }
 }
 $conn = Database::connect();
 ?>

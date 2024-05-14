@@ -81,12 +81,29 @@ document.addEventListener('DOMContentLoaded', function() {
             self.location = '/gt-admin?error=UnexpectedError'
         );
     });
-
-    const delProductBtn = document.getElementById("bo_button_deleteProduct");
-
-    delProductBtn.addEventListener('click', function() {
-        const productId = document.getElementById("td_product_id").value;
+    
+    const deleteButtons = document.querySelectorAll('.bo_deleteProduct_button');
         
-        
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.closest('.bo_tbody_tr').querySelector('#td_product_id').textContent;
+            const imageId = this.closest('.bo_tbody_tr').querySelector('#td_image_id').textContent;
+            const secondaryImageId = this.closest('.bo_tbody_tr').querySelector('#td_secondary_image_id').textContent;
+            
+            const formData = new FormData();
+            formData.append("productId", productId);
+            formData.append("imageId", imageId);
+            formData.append("secondaryImageId", secondaryImageId);
+            formData.append("request", "deleteProduct");
+
+            const requestOptions = {
+                method: "POST",
+                Header: "Content-Type: multipart/form-data",
+                body: formData
+            };
+
+            fetch("http://localhost:8080/controller/php/backOffice/backOfficeController.php", requestOptions)
+            .then(response => response.json())
+        });
     });
 });

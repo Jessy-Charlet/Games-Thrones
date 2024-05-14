@@ -6,7 +6,6 @@ if($_SESSION['admin'] === true){
     $products = $product->getAllProducts();
     $productId = $products[0]['id'];    
     $category = $product->getCategoryByProductId($productId);
-
     echo "
             <section class='bo_section'>
                 <table class='bo_table'>
@@ -30,11 +29,8 @@ if($_SESSION['admin'] === true){
                     </thead>
                     <tbody class='bo_tbody'>";
                     foreach($products as $product){
-                        $images = Database::getImagesByProductId($productId);
+                        $images = Database::getImagesByProductId($product['id']);
                         $lastImage = end($images['all']);
-                        if(isset($images['secondary'])){
-                            $idSecondary = end($images['secondary']);
-                        }
                         echo "<tr class='bo_tbody_tr'>";
                         echo "<td class='bo_tbody_tr_td' id='td_product_id'>".(isset($product['id']) ? $product['id'] : '')."</td>";
                         echo "<td class='bo_tbody_tr_td'>".(isset($product['name']) ? $product['name'] : '')."</td>";
@@ -47,11 +43,19 @@ if($_SESSION['admin'] === true){
                         echo "<td class='bo_tbody_tr_td'>".(isset($product['brand']) ? $product['brand'] : '')."</td>";
                         echo "<td class='bo_tbody_tr_td'>".(isset($category['name']) ? $category['name'] : '')."</td>";
                         echo "<td class='bo_tbody_tr_td'>".(isset($lastImage) ? $lastImage : '')."</td>";
-                        echo "<td class='bo_tbody_tr_td'>".(isset($images['main']) ? $images['main'] : '')."</td>";
-                        echo "<td class='bo_tbody_tr_td'>".(isset($idSecondary) ? $idSecondary : '')."</td>";
+                        echo "<td class='bo_tbody_tr_td' id='td_image_id'".(isset($images['main']) ? $images['main'] : '')."</td>";
+                        echo "<td class='bo_tbody_tr_td' id='td_secondary_image_id'>";
+                        foreach($images['secondary'] as $image){
+                            if(is_int($image)){
+                                echo $image.", ";
+                            }
+                        }
+                        echo "</td>";
                         echo "<td class='bo_tbody_tr_td'>";
                         foreach($images['secondary'] as $image){
-                            echo $image.", ";
+                            if(is_string($image)){
+                                echo $image.", ";
+                            }
                         }
                         echo "</td>";
                         echo "<td class='bo_tbody_tr_td'><button id='bo_button_deleteProduct' class='bo_deleteProduct_button'>Supprimer le produit</button></td>";
