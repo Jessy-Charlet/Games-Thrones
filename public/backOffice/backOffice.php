@@ -79,6 +79,7 @@ if($_SESSION['admin'] === true){
                     <input type="text" name="brand" id="brand" placeholder="Brand">
                     <input type="text" name="category" id="category" placeholder="Category">
                     <input type="text" name="images" id="images" placeholder="images name">
+                    <input type="text" name="secondaryImages" id="secondaryImages" placeholder="secondary images">
                     <input type="submit" value="Add Product" id="submitProduct">
                 </form>
             </div>

@@ -138,7 +138,7 @@ class Database{
         }
     }
 
-    public static function addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image){
+    public static function addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image, $secondaryImages){
         $conn = Database::connect();
 
         try{
@@ -158,18 +158,31 @@ class Database{
                     ':category' => $category
                 )
             );
+            $sql->closeCursor();
             $productId = $conn->lastInsertId();
-            $sql2 = $conn->prepare("INSERT INTO image (url) VALUES (:url) WHERE product_id = :product_id");
-            $sql2->execute(
+
+            $sql = $conn->prepare("INSERT INTO image (url, main) VALUES (:url, :main)");
+            $sql->execute(
                 array(
                     ':url' => $image,
-                    ':product_id' => $productId
+                    ':main' => 0
                 )
             );
+            $sql->closeCursor();
+            if($secondaryImages !== "none"){
+                $sql = $conn->prepare("INSERT INTO image (url, main) VALUES (:url, :main)");
+                $sql->execute(
+                    array(
+                        ':url' => $secondaryImages,
+                        ':main' => 1
+                    )
+                );
+                $sql->closeCursor();
+            }
 
             $imageId = $conn->lastInsertId();
-            $sql3 = $conn->prepare("INSERT INTO image_product (image_id, product_id) VALUES (:image_id, :product_id)");
-            $sql3->execute(
+            $sql = $conn->prepare("INSERT INTO image_product (image_id, product_id) VALUES (:image_id, :product_id)");
+            $sql->execute(
                 array(
                     ':image_id' => $imageId,
                     ':product_id' => $productId
