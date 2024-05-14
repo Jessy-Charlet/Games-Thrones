@@ -54,7 +54,7 @@ CREATE TABLE `customer` (
   `adresse` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `postal_code` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
   `city` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `phone` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `phone` varchar(14) COLLATE utf8mb4_general_ci NOT NULL,
   `role` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `password` varchar(100) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
