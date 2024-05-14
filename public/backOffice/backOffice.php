@@ -30,7 +30,7 @@ if($_SESSION['admin'] === true){
                     <tbody class='bo_tbody'>";
                     foreach($products as $product){
                         $images = Database::getImagesByProductId($product['id']);
-                        $lastImage = end($images['all']);
+                        $lastImage = $images['all'][1];
 
                         echo "<tr class='bo_tbody_tr'>";
                         echo "<td class='bo_tbody_tr_td' id='td_product_id'>".(isset($product['id']) ? $product['id'] : '')."</td>";
