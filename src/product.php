@@ -215,6 +215,9 @@ $conn = null;
             </div>
         </div>
     </section>
+?>
+
+
     <section id="similarProducts">
         <div class="container">
             <h3 class="similarProductsTitle">Produits liés à cet article</h3>
@@ -248,11 +251,15 @@ $conn = null;
 
 
     </section>
+<?php
+  
+?>
     <section id="Commentaires">
         <div class="container">
             <h3 class="reviewTitle">Commentaires</h3>
-            <form class="reviewForm" method="post" action="">
+            <form class="reviewForm" method="POST" action="<?= $router->generate('reviewHandlerControllerphp') ?>">
                 <button class="reviewFormBtn" type="submit">Écrire un commentaire</button>
+                <input type="hidden" name="customer_id" value="<?php echo $_SESSION['customer_id']; ?>">
                 <div class="ratingContent">
                     <div class="ratingContentTop">
                         <span>Votre avis</span>
@@ -296,7 +303,7 @@ $conn = null;
                         laborum.
                     </span>
                 </div>
-                <div class="reviewsItem">
+              <div class="reviewsItem">
                     <div class="reviewsItemName">
                         <span>Sandrine</span>
                         <span>CLEMENT</span>
@@ -319,7 +326,11 @@ $conn = null;
                         occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
                         laborum.
                     </span>
-                </div>
+                </div>'
+
+}
+
+
                 <div class="toggleContButton">
                     <button id="toggleButton">Voir plus</button>
                     <span class="toggleIcon">
@@ -356,30 +367,10 @@ $conn = null;
                         culpa qui officia
                         deserunt mollit anim id est laborum.</span>
                 </div>
-                <div class="toggleReviewsItem hideElement">
-                    <div class="reviewsItemName">
-                        <span>Sandrine</span>
-                        <span>CLEMENT</span>
-                    </div>
-                    <div class="rating-mini">
-                        <span class="active"></span>
-                        <span class="active"></span>
-                        <span class="active"></span>
-                        <span class="active"></span>
-                        <span class="active"></span>
-                    </div>
-                    <p>Commenté en France <span>le 3 mars 2024</span></p>
-                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut
-                        aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-                        esse cillum
-                        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui officia
-                        deserunt mollit anim id est laborum.</span>
-                </div>
             </div>
+        
         </div>
+
     </section>
 </main>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
