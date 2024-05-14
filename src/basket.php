@@ -60,7 +60,7 @@
                         <div class="panierTotal">
                             <div class="panierTotalTop">
                                 <p>Total</p>
-                                <div id="basket_total"><span id="basket_total_number"><?= $cartTotal ?></span><span>€</span></div>
+                                <div id="basket_total"><span id="basket_total_number">'.$cartTotal.'</span><span>€</span></div>
                                 </div>
                                 </div>
                                 <a id="makeOrder" class="panierBtn" href="/checkout">Passer la commande</a>

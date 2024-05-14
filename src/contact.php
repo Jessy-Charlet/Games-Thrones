@@ -1,6 +1,6 @@
 <section class="corp">
-  <form action="/submit_form.php" method="post">
-    <h1>Formulaire de Contact</h1>
+  <form action="/submit_form.php" method="post" class="contact">
+    <h3>Formulaire de Contact</h3>
     <label for="nom">Nom complet :</label>
     <input type="text" id="nom" name="nom" required>
 
@@ -20,18 +20,18 @@
     </select>
 
     <label for="message">Message :</label>
-    <textarea id="message" name="message" required></textarea>
+    <textarea id="message" name="message" rows="6" cols="33" required></textarea>
 
     <label for="captcha">Veuillez résoudre : 5 + 3 = </label>
     <input type="text" id="captcha" name="captcha" required>
 
     <button type="submit">Envoyer</button>
 
-    <label for="telephone">Téléphone :</label>
-    <input type="int" name="telephone" value="01/23/45/67/89" readonly>
+    <h3>✆ Par téléphone</h3>
+    <p>01 23 45 67 89 <span>De 9h à 17h</span><span>Du Lundi au Vendredi</span></p>
 
-    <label for="courrier">Courrier :</label>
-    <input type="text" name="courrier" placeholder="Ici chez nous la bas 00000 Ailleurs rue de quelque part" readonly>
+    <h3>✉ Par courrier</h3>
+    <p>Ici chez nous la bas</br>rue de quelque part</br>00000 Ailleurs</p>
 
   </form>
 </section>
