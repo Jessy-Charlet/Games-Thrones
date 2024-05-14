@@ -19,6 +19,9 @@ $router->map('GET', '/produit', '/product', 'produit');
 $router->map('GET', '/404', '/404', '404');
 $router->map('GET', '/panier', '/basket', 'panier');
 $router->map('GET', '/filtre', '/filters', 'filtre');
+$router->map('GET', '/checkout', '/checkout_backend', 'checkout_backend');
+$router->map('GET', '/success', '/success', 'success');
+$router->map('GET', '/cancel', '/cancel', 'cancel');
 
 // route de page de traitement
 $router->map('POST', '/signUpControllerphp', '../public/controller/php/signUpController', 'signUpControllerphp');
@@ -49,6 +52,13 @@ $match = $router->match();
 if (is_array($match)) {
     // Handle routes that send JSON
     if (str_contains($match["name"], "Ajax")) {
+        if (is_callable($match['target'])) {
+            call_user_func_array($match['target'], $match['params']);
+        } else {
+            $params = $match['params'];
+            require "../src/{$match['target']}.php";
+        }
+    } else if (str_contains($match["name"], "_backend")) {
         if (is_callable($match['target'])) {
             call_user_func_array($match['target'], $match['params']);
         } else {

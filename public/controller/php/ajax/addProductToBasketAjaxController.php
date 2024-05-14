@@ -35,7 +35,7 @@ if ($productInCart) {
 } else {
   $_SESSION['cart'][$productId] = [
     'id' => $productId,
-    'quantity' => $quantity
+    'quantity' => $quantity,
   ];
 }
 

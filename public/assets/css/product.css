@@ -28,10 +28,8 @@ h2 {
 }
 
 .container {
-  max-width: 94vw;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 3em 1em;
+  max-width: 90vw;
+  margin: 3em auto;
 }
 
 button {
@@ -41,11 +39,12 @@ button {
 /*********** Start cartForm ******************/
 .cartForm {
   display: flex;
-  gap: 5%;
+  width: 100%;
+  gap: 2em;
 }
 /****** Start leftSide *******/
 .leftSide {
-  width: 45%;
+  width: 50%;
   display: flex;
   flex-direction: column;
 }
@@ -106,15 +105,17 @@ button {
 }
 
 .imageActuelle {
-  display: block;
+  display: grid;
   background-color: #ffffff;
-  text-align: center;
+  justify-items: center;
+  align-items: center;
 }
 
 .imageMain {
-  max-width: 60%;
-  height: 100%;
-  object-fit: scale-down;
+  aspect-ratio: 1/1;
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto 0;
 }
 
 /*** End Slider ***/
@@ -124,19 +125,17 @@ button {
   display: grid;
   gap: 2em;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  padding: 8vh 0 0 0;
+  padding: 2em 0 0 0;
 }
 
 .benefitsItem {
   background-color: #ffffff;
-  border: 1px solid #1b1818;
   padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
   text-align: center;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   transition: transform 0.5s;
 }
@@ -146,7 +145,8 @@ button {
 }
 
 .benefitsItemImg {
-  width: 60%;
+  width: 40%;
+  padding-bottom: 1em;
   height: auto;
 }
 
@@ -172,7 +172,7 @@ button {
   margin-top: 0;
   font-size: 2em;
   font-weight: 500;
-  color: #000000;
+  color:#482664;
 }
 
 .productInfo {
@@ -190,20 +190,16 @@ button {
 .rating-result {
   display: flex;
   align-items: flex-end;
-  font-size: 40px;
-  line-height: 0.75;
+  font-size: 2em;
   position: relative;
+  color:#401f5b;
+  font-weight: bold;
 }
 .rating-result span {
   padding: 0;
-  font-size: 32px;
-  margin: 0 3 px;
-  line-height: 1;
-  color: #ccc;
-  text-shadow: 1px 1px #bbb;
 }
 
-.rating-result span::before {
+.rating-result span::after {
   content: "★";
 }
 
@@ -213,7 +209,8 @@ button {
 }
 
 .prisInfo {
-  font-size: 2em;
+  font-size: 2.5em;
+  font-weight: bold;
   color: #baa35f;
 }
 
@@ -232,24 +229,36 @@ button {
 
 .availability,
 .quantity {
-  font-size: 1.5em;
-  color: #baa35f;
+  text-align: right;
   margin-top: 0;
 }
 
-input.quantity {
+.quantity label {
+  padding-right: 0.5em;
+  font-size: 1.2em;
+}
+
+.quantity input {
   width: auto;
+  border: none;
+  padding: 0.5em;
+  font-size: 2em;
+  background-color: rgb(245, 245, 245);
 }
 
 .basketButton {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  height: 50px;
+  height: 60px;
   margin: 65px 0 0 0;
-  padding: 1em;
+  padding: 1em 3em;
   gap: 1em;
-  transition: background-color 0.4s, box-shadow 0.2s 0.3s;
+  border-radius: 10px;
+  transition: background-color 0.1s, box-shadow 0.1s 0.1s;
+  img{
+    height: 100%;
+  }
 }
 
 .basketButton:hover {
@@ -526,8 +535,9 @@ input.quantity {
   }
 
   .sliderPhoto {
-    max-width: 90%;
+    max-width: 100%;
   }
+
 
   .imageActuelle {
     order: 1;

@@ -112,5 +112,6 @@ class Product
         echo "Description: {$this->description}\n";
         echo "Image: {$this->image}\n";
     }
+
 }
 

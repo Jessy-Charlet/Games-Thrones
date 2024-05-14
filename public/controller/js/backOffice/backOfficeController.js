@@ -18,8 +18,12 @@ document.addEventListener('DOMContentLoaded', function() {
         let material = document.getElementById("material").value;
         let brand = document.getElementById("brand").value;
         let category = document.getElementById("category").value;
-
-        if(name === "" || rate === "" || price === "" || quantity === "" || description === "" || color === "" || material === "" || brand === "" || category === "") {
+        let image = document.getElementById("images").value;
+        let secondaryImage = document.getElementById("secondaryImages").value;
+        if(secondaryImage === "") {
+            secondaryImage = "none";
+        }
+        if(name === "" || rate === "" || price === "" || quantity === "" || description === "" || color === "" || material === "" || brand === "" || category === "" || image === "") {
             alert("Please fill all fields");
             return;
         }
@@ -40,6 +44,11 @@ document.addEventListener('DOMContentLoaded', function() {
             alert("Please enter a valid category");
             return;
         }
+        const imageTest = /\.(jpe?g|png|gif|bmp)$/i;
+        if(!imageTest.test(image)) {
+            alert("Please enter a valid image");
+            return;
+        }
 
         const formData = new FormData();
         formData.append("name", name);
@@ -51,6 +60,9 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append("material", material);
         formData.append("brand", brand);
         formData.append("category", category);
+        formData.append("image", image);
+        formData.append("secondaryImage", secondaryImage);
+        formData.append("request", "addProduct");
 
         const requestOptions = {
             method: "POST",
@@ -58,18 +70,53 @@ document.addEventListener('DOMContentLoaded', function() {
             body: formData
         };
 
-        fetch("http://localhost:8080/controller/php/backOffice/backOfficeController.php?request=addProduct", requestOptions)
+        fetch("http://localhost:8080/controller/php/backOffice/backOfficeController.php", requestOptions)
         .then(response => response.json())
         .then(data => {
             if(data.status === "success") {
                 alert("Product added successfully");
-                location.reload();
+                productForm.style.display = "none";
+
             } else if(data.status === "error"){
-                alert("An error occured while adding the product");
+                alert("Product already exists")
             }
         })
         .catch(error => 
-            console.log(error)
+            self.location = '/gt-admin?error=UnexpectedError'
         );
+    });
+    
+    const deleteButtons = document.querySelectorAll('.bo_deleteProduct_button');
+        
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.closest('.bo_tbody_tr').querySelector('#td_product_id').textContent;
+            const imageId = this.closest('.bo_tbody_tr').querySelector('#td_image_id').textContent;
+            const secondaryImageId = this.closest('.bo_tbody_tr').querySelector('#td_secondary_image_id').textContent;
+            
+            const formData = new FormData();
+            formData.append("productId", productId);
+            formData.append("imageId", imageId);
+            formData.append("secondaryImageId", secondaryImageId);
+            formData.append("request", "deleteProduct");
+
+            const requestOptions = {
+                method: "POST",
+                Header: "Content-Type: multipart/form-data",
+                body: formData
+            };
+
+            fetch("http://localhost:8080/controller/php/backOffice/backOfficeController.php", requestOptions)
+            .then(response => response.json())
+        });
+    });
+
+    const updateButtons = document.querySelectorAll('.bo_updateProduct_button');
+
+    updateButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const tableCase = this.closest('.bo_tbody_tr').querySelectorAll('.bo_tbody_tr_td').textContent;
+            console.log(tableCase);
+        });
     });
 });

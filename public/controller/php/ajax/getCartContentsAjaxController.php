@@ -59,6 +59,7 @@ if (!isset($_SESSION['cart'])) {
     exit;
 }
 
+$cartId =
 // Get the cart contents from the session
 $cartContents = $_SESSION['cart'];
 

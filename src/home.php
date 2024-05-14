@@ -4,14 +4,10 @@ function showProducts($result, $number)
 {
     foreach ($result as $prod) {
         if ($number > 0) {
-            $conn = Database::connect();
-            $sql = $conn->prepare("SELECT url FROM image
-            INNER JOIN image_product WHERE image.id = image_product.image_id AND image_product.product_id = ".$prod['id']." and image.main = 1");
-            $sql->execute();
-            $img = $sql->fetch(PDO::FETCH_ASSOC);
+            $image = Database::getImagesByProductId($prod["id"]);
             echo "<div class='product'>
             <a href='/produit?id=" . $prod['id'] . "'>
-            <img src='./assets/img/products/" . $img['url'] . "' alt='" . $prod['name'] . "'/>
+            <img src='./assets/img/products/" . $image['main'] . "' alt='" . $prod['name'] . "'/>
             <div class='productName'>" . $prod['name'] . "</div>
             <div class='productDiv'>
             <div class='productPrice'>" . $prod['price'] . " €</div>
