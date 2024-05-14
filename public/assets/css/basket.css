@@ -29,15 +29,47 @@ h2 {
   line-height: 1.75rem;
 }
 
+
 .panierContainer {
   max-width: 1280px;
   width: 100%;
   /*height: 100vh;*/
-  padding-top: 5rem;
+  padding-top: 2em;
   margin: 0 auto;
+}
+.panierVide{
+  text-align: center;
+  background-color: white;
+  border-radius: 10px;
+  width: fit-content;
+  padding: 0 5vw 1vh 5vw;
+  margin: 5vh auto; 
+  h2{
+    font-size: 1.5em;
+    color: black;
+    padding: 5vh 0;
+    span{
+      font-size: 1.5em;
+      font-weight: bold;
+      color:#401f5b;
+    }
+  }
+  p{
+
+  }
+  a{
+    display: block;
+    width: fit-content;
+    background-color: #401f5b;
+    color: white;
+    border-radius: 10px;
+    padding: 0.5em 1em;
+    margin: 5vh auto;
+  }
 }
 
 .panierTitle {
+  margin-top: 8vh;
   text-align: center;
   font-size: 700;
 }
@@ -243,11 +275,18 @@ h2 {
   .panierImg {
     max-width: 8em;
   }
+  .panierTitle {
+    margin-top: 0;
+  }
 }
 
 @media (max-width: 768px) {
   .panierContainer {
     flex-wrap: wrap;
+  }
+
+  .panierTitle {
+    margin-top: 0;
   }
 
   .panierLeft,
