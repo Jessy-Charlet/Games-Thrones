@@ -154,9 +154,9 @@ for($i=1; $i<count($dChunks); $i++ ){
                         <label for="star-4" title="Evaluation «4»"></label>
                         <input type="radio" id="star-3" name="rating" value="3">
                         <label for="star-3" title="Evaluation «3»"></label>
-                        <input type="radio" id="star-2" name="rating" value="2">hh
-                        <input type="radio" id="star-1" name="rating" value="1">
+                        <input type="radio" id="star-2" name="rating" value="2">
                         <label for="star-1" title="Evaluation «1»"></label>
+                        <input type="radio" id="star-1" name="rating" value="1">
                     </div>
                 </div>
                 <textarea name="text"></textarea>

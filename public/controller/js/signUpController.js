@@ -115,6 +115,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             })
             .catch(error => 
                 self.location = '/inscription?error=UnexpectedError'
+           
             );
     });
 });

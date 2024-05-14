@@ -1,7 +1,5 @@
 <?php
 
-//session_start();
-//var_dump($_SESSION);
 unset($_SESSION['cart_id']);
 unset($_SESSION['cart']);
 
