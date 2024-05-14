@@ -12,7 +12,6 @@ function sliderPhotos($images, $product)
 }
 ?>
 
-<section class="section">
 <?php
 $def = "index";
 $dPath = $_SERVER['REQUEST_URI'];
@@ -20,27 +19,32 @@ $dChunks = explode("/", $dPath);
 
 echo('<a class="dynNav" href="/">Accueil</a><span class="dynNav"> > </span>');
 for($i=1; $i<count($dChunks); $i++ ){
-    echo('<a class="dynNav" href="/');
-    for($j=1; $j<=$i; $j++ ){
-        echo($dChunks[$j]);
-        if($j!=count($dChunks)-1){ echo("/");}
-    }
-
-    if($i==count($dChunks)-1){
+    if ($i == count($dChunks) - 1 && isset($product)) {
+        echo('<a class="dynNav" href="/');
+        for($j=1; $j<=$i; $j++ ){
+            echo($dChunks[$j]);
+            if($j!=count($dChunks)-1){ echo("/");}
+        }
+        echo('">');
+        echo(str_replace("_" , " " , $product["name"]));
+        echo('</a>');
+    } else {
+        echo('<a class="dynNav" href="/');
+        for($j=1; $j<=$i; $j++ ){
+            echo($dChunks[$j]);
+            if($j!=count($dChunks)-1){ echo("/");}
+        }
+        echo('">');
         $prChunks = explode(".", $dChunks[$i]);
         if ($prChunks[0] == $def) $prChunks[0] = "";
-        $prChunks[0] = $prChunks[0] . '</a>';
-    }
-    else $prChunks[0]=$dChunks[$i] . '</a><span class="dynNav"> > </span>';
-    echo('">');
-    if ($i == count($dChunks) - 1 && isset($product)) {
-        echo(str_replace("_" , " " , $product["name"]));
-    } else {
         echo(str_replace("_" , " " , $prChunks[0]));
+        echo('</a><span class="dynNav"> > </span>');
     }
 }
 ?>
 
+
+<section class="section">
     <section id="description">
         <div class="container">
             <div class="cartForm">
