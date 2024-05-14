@@ -110,4 +110,13 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
         });
     });
+
+    const updateButtons = document.querySelectorAll('.bo_updateProduct_button');
+
+    updateButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const tableCase = this.closest('.bo_tbody_tr').querySelectorAll('.bo_tbody_tr_td').textContent;
+            console.log(tableCase);
+        });
+    });
 });

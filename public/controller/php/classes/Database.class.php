@@ -46,7 +46,8 @@ class Database{
             $productImages = [
                 "main" => null,
                 "secondary" => [],
-                "all" => []
+                "all" => [],
+                "everything" => []
             ];
 
             // Tri et remplissage de la valeur de retour
@@ -56,7 +57,8 @@ class Database{
                 } else {
                     array_push($productImages["secondary"], $image["url"], $image["id"]);
                 }
-                array_push($productImages["all"], $image["url"], $image["id"]);
+                array_push($productImages["all"], $image["url"]);
+                array_push($productImages["everything"], $image['url'], $image['id']);
             }
 
             // Fermeture de la connection
@@ -311,6 +313,21 @@ class Database{
             return false;
         }
 
+    }
+
+    //public static function updateProduct($id, $name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image, $secondaryImages){
+    public static function updateProduct(Product $product){
+        $conn = Database::connect();
+        
+        try{
+            $conn->beginTransaction();
+
+            $conn->commit();
+        }
+        catch(PDOException $e){
+            echo "Error: " . $e->getMessage();
+            $conn->rollback();
+        }
     }
 }
 $conn = Database::connect();

@@ -8,7 +8,7 @@ if($_SESSION['admin'] === true){
     $category = $product->getCategoryByProductId($productId);
     echo "
             <section class='bo_section'>
-                <table class='bo_table'>
+                <table class='bo_table' id='table_bo'>
                     <thead class='bo_thead'>
                         <tr class='bo_thead_tr'>
                             <th class='bo_thead_tr_th'>Product ID</th>
@@ -30,7 +30,8 @@ if($_SESSION['admin'] === true){
                     <tbody class='bo_tbody'>";
                     foreach($products as $product){
                         $images = Database::getImagesByProductId($product['id']);
-                        $lastImage = $images['all'][1];
+                        $mainImagePath = $images['everything'][0];
+                        $mainImageId = $images['everything'][1];
 
                         echo "<tr class='bo_tbody_tr'>";
                         echo "<td class='bo_tbody_tr_td' id='td_product_id'>".(isset($product['id']) ? $product['id'] : '')."</td>";
@@ -43,8 +44,8 @@ if($_SESSION['admin'] === true){
                         echo "<td class='bo_tbody_tr_td'>".(isset($product['material']) ? $product['material'] : '')."</td>";
                         echo "<td class='bo_tbody_tr_td'>".(isset($product['brand']) ? $product['brand'] : '')."</td>";
                         echo "<td class='bo_tbody_tr_td'>".(isset($category['name']) ? $category['name'] : '')."</td>";
-                        echo "<td class='bo_tbody_tr_td' id='td_image_id'>".(isset($lastImage) ? $lastImage : '')."</td>";
-                        echo "<td class='bo_tbody_tr_td'>".(isset($images['main']) ? $images['main'] : '')."</td>";
+                        echo "<td class='bo_tbody_tr_td' id='td_image_id'>".(isset($mainImageId) ? $mainImageId : '')."</td>";
+                        echo "<td class='bo_tbody_tr_td'>".(isset($mainImagePath) ? $mainImagePath : '')."</td>";
                         echo "<td class='bo_tbody_tr_td' id='td_secondary_image_id'>";
                         foreach($images['secondary'] as $image){
                             if(is_int($image)){
@@ -59,9 +60,16 @@ if($_SESSION['admin'] === true){
                             }
                         }
                         echo "</td>";
+
+                        // delete button
                         echo "<td class='bo_tbody_tr_td'><button id='bo_button_deleteProduct' class='bo_deleteProduct_button'>Supprimer le produit</button></td>";
+                        
+
+                        // update button
+                        echo "<td class='bo_tbody_tr_td'><button id='bo_button_updateProduct' class='bo_updateProduct_button'>Modifier le produit</button></td>";
+                    
                         echo "</tr>";
-                    }
+                }
         echo "  </tbody>
             </table>";
 
