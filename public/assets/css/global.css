@@ -94,6 +94,60 @@ h2 {
 }
 
 
+/*** Contact ***/
+
+.contact{
+    display: grid;
+    padding: 0 5vw;
+    align-items: center;
+    justify-items: center;
+    box-sizing: border-box;
+    width: fit-content;
+    h3{
+
+    }
+    label{
+        padding-top: 1em;
+    }
+    input, select, textarea{
+        box-sizing: border-box;
+        padding: 1em;
+        border: none;
+        border-radius: 5px;
+        background-color: #f1f2f6;
+        width: 25vw;
+    }
+    option:hover{
+        background-color: #482664 !important;
+    }
+    button{
+        background-color: #482664;
+        padding: 1em 3em;
+        border-radius: 10px;
+        width: 100%;
+        text-align: center;
+        margin-top: 2em;
+        border: none;
+        box-shadow: 0 0 0 #482664;
+        text-transform: uppercase;
+        transition: all 200ms;
+    }
+    button:hover{
+        background-color: white;
+        color:#482664;
+        box-shadow: 0 0 15px #482664;
+        letter-spacing: 0.5em;
+    }
+    p{ 
+        text-align: center;
+    span{
+        display: block;
+        font-size: 0.8em;
+    }
+}
+}
+
+
 @media (orientation: portrait) {
     main {
         padding: 8vh 0 0 0;
