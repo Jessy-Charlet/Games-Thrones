@@ -31,6 +31,7 @@ if($_SESSION['admin'] === true){
                     foreach($products as $product){
                         $images = Database::getImagesByProductId($product['id']);
                         $lastImage = end($images['all']);
+
                         echo "<tr class='bo_tbody_tr'>";
                         echo "<td class='bo_tbody_tr_td' id='td_product_id'>".(isset($product['id']) ? $product['id'] : '')."</td>";
                         echo "<td class='bo_tbody_tr_td'>".(isset($product['name']) ? $product['name'] : '')."</td>";
@@ -42,8 +43,8 @@ if($_SESSION['admin'] === true){
                         echo "<td class='bo_tbody_tr_td'>".(isset($product['material']) ? $product['material'] : '')."</td>";
                         echo "<td class='bo_tbody_tr_td'>".(isset($product['brand']) ? $product['brand'] : '')."</td>";
                         echo "<td class='bo_tbody_tr_td'>".(isset($category['name']) ? $category['name'] : '')."</td>";
-                        echo "<td class='bo_tbody_tr_td'>".(isset($lastImage) ? $lastImage : '')."</td>";
-                        echo "<td class='bo_tbody_tr_td' id='td_image_id'".(isset($images['main']) ? $images['main'] : '')."</td>";
+                        echo "<td class='bo_tbody_tr_td' id='td_image_id'>".(isset($lastImage) ? $lastImage : '')."</td>";
+                        echo "<td class='bo_tbody_tr_td'>".(isset($images['main']) ? $images['main'] : '')."</td>";
                         echo "<td class='bo_tbody_tr_td' id='td_secondary_image_id'>";
                         foreach($images['secondary'] as $image){
                             if(is_int($image)){
