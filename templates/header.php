@@ -97,15 +97,16 @@ if (isset($_SESSION['cart'])) {
             </div>
             <div class="navContainer">
                 <div class="navH1">Service client</div>
-                <a href="<?= $router->generate('contact') ?>">Contactez-nous</a>
+                <a href="/contact">Contactez-nous</a>
                 <a href="">Foire aux questions</a>
                 <a href="">Expédition et livraison</a>
                 <a href="">Garantie</a>
             </div>
             <div class="navContainer">
                 <div class="navH1">Mentions légales</div>
-                <a href="<?= $router->generate('rgpd') ?>">RGPD</a>
-                <a href="<?= $router->generate('cgv') ?>">CGV</a>
+                <a href="/mention">Mentions légales</a>
+                <a href="/rgpd">RGPD</a>
+                <a href="/cgv">CGV</a>
             </div>
         </div>
     </nav>
