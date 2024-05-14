@@ -54,9 +54,9 @@ class Database{
                 if ($image["main"] == 1) {
                     $productImages["main"] = $image["url"];
                 } else {
-                    array_push($productImages["secondary"], $image["url"]);
+                    array_push($productImages["secondary"], $image["url"], $image["id"]);
                 }
-                array_push($productImages["all"], $image["url"]);
+                array_push($productImages["all"], $image["url"], $image["id"]);
             }
 
             // Fermeture de la connection
