@@ -27,12 +27,166 @@ SET time_zone = "+00:00";
 -- Structure de la table `adress`
 --
 
-CREATE TABLE `adress` (
-  `adress_id` int UNSIGNED NOT NULL,
-  `postal_code_id` int NOT NULL,
-  `city` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `postal_code` mediumint NOT NULL,
-  `adress` text COLLATE utf8mb4_general_ci NOT NULL,
+CREATE TABLE `category` (
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `parent_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `name`, `parent_id`) VALUES
+(1, 'Chaise gaming', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE `customer` (
+  `id` int NOT NULL,
+  `first_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `mail` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `adresse` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `postal_code` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
+  `city` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `phone` varchar(14) COLLATE utf8mb4_general_ci NOT NULL,
+  `role` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `mail`, `adresse`, `postal_code`, `city`, `phone`, `role`, `password`) VALUES
+(1, 'Prénomtest', 'NOMTEST', 'test@test.test', '01 route du test\r\n', '01234', 'VILLETEST', '0123456789', 'client', '123'),
+(2, 'Admin', 'ISTRATEUR', 'admin@admin.admin', '404 route des admins', '77777', 'ADMINCITY', '9876543210', 'admin', '123');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `image`
+--
+
+CREATE TABLE `image` (
+  `id` int NOT NULL,
+  `url` tinytext COLLATE utf8mb4_general_ci NOT NULL,
+  `main` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `image`
+--
+
+INSERT INTO `image` (`id`, `url`, `main`) VALUES
+(1, 'product_1_image_1.jpg', 0),
+(2, 'product_1_image_2.jpg', 0),
+(3, 'product_1_main_image.jpg', 1),
+(4, 'product_2_image_1.jpg', 0),
+(5, 'product_2_image_2.jpg', 0),
+(6, 'product_2_image_3.jpg', 0),
+(7, 'product_2_main_image.jpg', 1),
+(8, 'product_3_main_image.jpg', 1),
+(9, 'product_4_main_image.jpg', 1),
+(10, 'product_5_main_image.jpg', 1),
+(11, 'product_6_main_image.jpg', 1),
+(12, 'product_7_main_image.jpg', 1),
+(13, 'product_8_main_image.jpg', 1),
+(14, 'product_9_main_image.jpg', 1),
+(15, 'product_10_main_image.jpg', 1),
+(16, 'product_3_image_1.jpg', 0),
+(18, 'product_4_image_1.jpg', 0),
+(19, 'product_5_image_1.jpg', 0),
+(20, 'product_6_image_1.jpg', 0),
+(21, 'product_7_image_1.jpg', 0),
+(22, 'product_8_image_1.jpg', 0),
+(23, 'product_9_image_1.jpg', 0),
+(24, 'product_10_image_1.jpg', 0),
+(25, 'product_3_image_2.jpg', 0),
+(26, 'product_4_image_2.jpg', 0),
+(27, 'product_5_image_2.jpg', 0),
+(28, 'product_6_image_2.jpg', 0),
+(29, 'product_7_image_2.jpg', 0),
+(30, 'product_8_image_2.jpg', 0),
+(31, 'product_9_image_2.jpg', 0),
+(32, 'product_10_image_2.jpg', 0),
+(33, 'product_3_image_3.jpg', 0),
+(34, 'product_3_image_4.jpg', 0),
+(35, 'product_4_image_3.jpg', 0),
+(36, 'product_4_image_4.jpg', 0),
+(37, 'product_5_image_3.jpg', 0),
+(38, 'product_6_image_3.jpg', 0),
+(39, 'product_6_image_4.jpg', 0),
+(40, 'product_7_image_3.jpg', 0),
+(41, 'product_8_image_3.jpg', 0),
+(42, 'product_9_image_3.jpg', 0),
+(43, 'product_10_image_3.jpg', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `image_product`
+--
+
+CREATE TABLE `image_product` (
+  `product_id` int NOT NULL,
+  `image_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `image_product`
+--
+
+INSERT INTO `image_product` (`product_id`, `image_id`) VALUES
+(2, 1),
+(2, 2),
+(2, 3),
+(3, 4),
+(3, 5),
+(3, 6),
+(3, 7),
+(4, 8),
+(5, 9),
+(6, 10),
+(7, 11),
+(8, 12),
+(9, 13),
+(10, 14),
+(11, 15),
+(4, 16),
+(5, 18),
+(6, 19),
+(7, 20),
+(8, 21),
+(9, 22),
+(10, 23),
+(11, 24),
+(4, 25);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order`
+--
+
+CREATE TABLE `order` (
+  `id` int NOT NULL,
+  `stripe_id` tinytext COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_cutomer`
+--
+
+CREATE TABLE `order_cutomer` (
+  `order_id` int NOT NULL,
   `customer_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
