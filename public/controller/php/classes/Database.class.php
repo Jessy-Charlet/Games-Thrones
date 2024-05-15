@@ -1,4 +1,3 @@
-
 <?php
 class Database{
     private static $servername = 'localhost';
@@ -316,17 +315,104 @@ class Database{
     }
 
     //public static function updateProduct($id, $name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image, $secondaryImages){
-    public static function updateProduct(Product $product){
+    public static function updateProduct($id, $name, $brand, $color, $material, $price, $quantity, $rate, $description, $category_name, $imageId, $imagePath, $secondaryImageId, $secondaryImages){
         $conn = Database::connect();
-        
+        $return = "success";
+        $secondaryId = $secondaryImageId;
+        $secondaryImage = $secondaryImages;
+
         try{
             $conn->beginTransaction();
+            $sql = $conn->prepare('SELECT name, brand, category_id FROM product WHERE id = :id');
+            $sql->execute(
+                array(
+                    'id' => $id
+                )
+            );
+            $result = $sql->fetch(PDO::FETCH_ASSOC);
+            $sql->closeCursor();
+
+            $sql = $conn->prepare('SELECT name FROM category WHERE id = :id');
+            $sql->execute(
+                array(
+                    'id' => $result['category_id']
+                )
+            );
+            $result2 = $sql->fetch(PDO::FETCH_ASSOC);
+            $sql->closeCursor();
+
+            $sql = $conn->prepare('SELECT url FROM image WHERE url = :url');
+            $sql->execute(
+                array(
+                    'url' => $imagePath
+                )
+            );
+            $result3 = $sql->fetch(PDO::FETCH_ASSOC);
+            $sql->closeCursor();
+
+            foreach($secondaryImage as $image){
+                $sql = $conn->prepare('SELECT url FROM image WHERE url = :url');
+                $sql->execute(
+                    array(
+                        'url' => $image
+                    )
+                );
+                $result4 = $sql->fetch(PDO::FETCH_ASSOC);
+                $sql->closeCursor();
+                if($result4['url'] == $image){
+                    $return = "ImageAlreadyExist";
+                    return $return;
+                }
+            }
+
+            if($result['name'] == $name && $result['brand'] == $brand && $result2['name'] == $category){
+                $return = "ProductAlreadyExist";
+                return $return;
+            }
+            if($result['name'] == $name){
+                $return = "NameAlreadyExist";
+                return $return;
+            }
+            if($result3['url'] == $imagePath){
+                $return = "ImageAlreadyExist";
+                return $return;
+            }
+
+            /*$sql = $conn->prepare('UPDATE product SET `name` = :name, `rate` = :rate, `price` = :price, `quantity` = :quantity, `description` = :description, `color` = :color, `material` = :material, `brand` = :brand, `category` = :category WHERE id = :id');
+            $sql->execute(
+                array(
+                    ":name" => $name,
+                    ":rate" => $rate,
+                    ":price" => $price,
+                    ":quantity" => $quantity,
+                    ":description" => $description'
+                    ":color" => $color,
+                    ":material" => $material,
+                    ":brand" => $brand,
+                    ":category" => $category,
+                    ":id" => $id
+                )
+            );
+            $sql->closeCursor();
+
+            $sql = $conn->prepare('UPDATE image SET `url` = :url WHERE id = :id');
+            $sql->execute(
+                array(
+                    ":url" => $imagePath,
+                    ":id" => $imageId
+                )
+            );
+            $sql->closeCursor();
+            */
 
             $conn->commit();
+            return $return;
         }
         catch(PDOException $e){
+            $return = "UnexpectedError";
             echo "Error: " . $e->getMessage();
             $conn->rollback();
+            return $return;
         }
     }
 }
