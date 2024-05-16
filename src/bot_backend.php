@@ -28,7 +28,7 @@
     <section class="bodyBack">
         <nav>
             <input type="text" id="rechercheBack" placeholder="Recherche">
-            <button id="bProduct">Produit</button>
+            <button id="bProduct">Produits</button>
             <button id="bCategory">Catégories</button>
             <button id="bOrder">Commandes</button>
             <button id="bCustomer">Clients</button>

@@ -71,9 +71,9 @@ a {
             background-color: white;
         }
         .activeBack{
-            border: 10px solid grey;
+            border-left :20px solid grey;
+            border-right :20px solid grey;
             background-color: white;
-            border-radius: 20px;
         }
     }
 
@@ -126,7 +126,7 @@ a {
                     gap: 1em;
                     padding-bottom: 2em;
 
-                    div:first-child {
+                    .double {
                         grid-column: 1/3;
                     }
 

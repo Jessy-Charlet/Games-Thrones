@@ -153,7 +153,7 @@ class Database{
             $stmt->execute();
 
             // Execution de la requête SQL
-            $product = $stmt->fetch(PDO::FETCH_ASSOC);
+            $product = $stmt->fetchall(PDO::FETCH_ASSOC);
 
             // Fermeture de la connection
             $conn = null;
@@ -173,6 +173,37 @@ class Database{
             return $e;
         }
     }
+
+       // Récupération de tous les clients
+       public static function getAllCustomer()
+       {
+           try {
+               // Connection à la BDD
+               $conn = Database::connect();
+   
+               // Préparation de la requête SQL pour récupérer l'ensemble produits
+               $stmt = $conn->prepare("SELECT * FROM customer");
+               $stmt->execute();
+   
+               // Execution de la requête SQL
+               $customer = $stmt->fetchall(PDO::FETCH_ASSOC);
+   
+               // Fermeture de la connection
+               $conn = null;
+   
+               // return["id"] pour l'ID du client
+               // return["first_name"] pour le prénom du client
+               // return["last_name"] pour le nom de famille du client
+               // return["mail"] pour le mail du client
+               // return["adresse"] pour l'adresse du client
+               // return["postal_code"] pour le code postal
+               // return["city"] pour la ville du client
+               // return["phone"] pour la téléphone du cleint
+               return $customer;
+           } catch (PDOException $e) {
+               return $e;
+           }
+       }
     
 
     public static function addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image){

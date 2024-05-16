@@ -13,6 +13,152 @@ $(document).ready(function () {
         });
     }
 
+    function showCustomer(customer, i, liste) {
+        // Container
+        const blockBack = document.createElement('div');
+        blockBack.classList.add("blockBack");
+
+        // header
+        const blockHead = document.createElement('div');
+        blockHead.classList.add("blockHead");
+        $(blockHead).attr('id', 'headbutton' + i);
+        const nameH = document.createElement('p');
+        nameH.textContent = customer[i]["first_name"] + " " + customer[i]["last_name"];
+        const mailH = document.createElement('p');
+        mailH.textContent = customer[i]["mail"];
+        const cityH = document.createElement('p');
+        const buttonH = document.createElement('div');
+        const updateH = document.createElement('button');
+        updateH.textContent = "Modifier";
+        updateH.classList.add("buttonBack");
+        $(updateH).attr('id', 'button' + i);
+        const deleteH = document.createElement('button');
+        deleteH.textContent = "X";
+        blockHead.appendChild(nameH);
+        blockHead.appendChild(mailH);
+        blockHead.appendChild(cityH);
+        blockHead.appendChild(buttonH);
+        buttonH.appendChild(updateH);
+        buttonH.appendChild(deleteH);
+
+        // body
+        const blockBody = document.createElement('div');
+        blockBody.classList.add("blockBody");
+        $(blockBody).attr('id', 'bodybutton' + i);
+        // formulaire
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '';
+        form.classList.add("formBack");
+        // prénom
+        const firstName = document.createElement('div');
+        const firstNameLabel = document.createElement('label');
+        firstNameLabel.for = 'first_name';
+        firstNameLabel.textContent = 'Prénom';
+        const firstNameForm = document.createElement('input');
+        firstNameForm.type = 'TEXT';
+        firstNameForm.name = 'first_name';
+        firstNameForm.value = customer[i]["first_name"];
+        firstName.appendChild(firstNameLabel);
+        firstName.appendChild(firstNameForm);
+        // nom
+        const lastName = document.createElement('div');
+        const lastNameLabel = document.createElement('label');
+        lastNameLabel.for = 'lastName';
+        lastNameLabel.textContent = 'Nom';
+        const lastNameForm = document.createElement('input');
+        lastNameForm.type = 'TEXT';
+        lastNameForm.name = 'lastName';
+        lastNameForm.value = customer[i]["last_name"];
+        lastName.appendChild(lastNameLabel);
+        lastName.appendChild(lastNameForm);
+        // Email
+        const mail = document.createElement('div');
+        const mailLabel = document.createElement('label');
+        mailLabel.for = 'mail';
+        mailLabel.textContent = 'Email';
+        const mailForm = document.createElement('input');
+        mailForm.type = 'TEXT';
+        mailForm.name = 'mail';
+        mailForm.value = customer[i]["mail"];
+        mail.appendChild(mailLabel);
+        mail.appendChild(mailForm);
+        // adresse
+        const adresse = document.createElement('div');
+        const adresseLabel = document.createElement('label');
+        adresseLabel.for = 'adresse';
+        adresseLabel.textContent = 'Adresse';
+        const adresseForm = document.createElement('input');
+        adresseForm.type = 'TEXT';
+        adresseForm.name = 'adresse';
+        adresseForm.value = customer[i]["adresse"];
+        adresse.appendChild(adresseLabel);
+        adresse.appendChild(adresseForm);
+        // postal_code
+        const postal_code = document.createElement('div');
+        const postal_codeLabel = document.createElement('label');
+        postal_codeLabel.for = 'postal_code';
+        postal_codeLabel.textContent = 'Code postal';
+        const postal_codeForm = document.createElement('input');
+        postal_codeForm.type = 'TEXT';
+        postal_codeForm.name = 'postal_code';
+        postal_codeForm.value = customer[i]["postal_code"];
+        postal_code.appendChild(postal_codeLabel);
+        postal_code.appendChild(postal_codeForm);
+        // ville
+        const city = document.createElement('div');
+        const cityLabel = document.createElement('label');
+        cityLabel.for = 'city';
+        cityLabel.textContent = 'Ville';
+        const cityForm = document.createElement('input');
+        cityForm.type = 'TEXT';
+        cityForm.name = 'city';
+        cityForm.value = customer[i]["city"];
+        city.appendChild(cityLabel);
+        city.appendChild(cityForm);
+        // téléphone
+        const phone = document.createElement('div');
+        const phoneLabel = document.createElement('label');
+        phoneLabel.for = 'phone';
+        phoneLabel.textContent = 'Téléphone';
+        const phoneForm = document.createElement('input');
+        phoneForm.type = 'TEXT';
+        phoneForm.name = 'phone';
+        phoneForm.value = customer[i]["phone_id"];
+        phone.appendChild(phoneLabel);
+        phone.appendChild(phoneForm);
+
+        // annuler valider
+        const resetForm = document.createElement('button');
+        resetForm.type = 'button';
+        resetForm.classList.add("resetForm");
+        resetForm.name = 'reset';
+        resetForm.id = [i];
+        resetForm.textContent = 'Annuler';
+
+        const updateForm = document.createElement('button');
+        updateForm.type = 'submit';
+        updateForm.name = 'update';
+        updateForm.value = customer[i]["id"];
+        updateForm.textContent = 'valider';
+
+        // Ajouter les éléments à la liste
+        blockBack.appendChild(blockHead);
+        blockBack.appendChild(blockBody);
+        blockBody.appendChild(form);
+        form.appendChild(firstName);
+        form.appendChild(lastName);
+        form.appendChild(mail);
+        form.appendChild(adresse);
+        form.appendChild(postal_code);
+        form.appendChild(city);
+        form.appendChild(phone);
+        form.appendChild(resetForm);
+        form.appendChild(updateForm);
+        liste.appendChild(blockBack);
+        return liste;
+    }
+
     function showProduct(products, i, liste) {
         // Container
         const blockBack = document.createElement('div');
@@ -53,6 +199,7 @@ $(document).ready(function () {
         form.classList.add("formBack");
         // nom
         const name = document.createElement('div');
+        name.classList.add("double");
         const nameLabel = document.createElement('label');
         nameLabel.for = 'name';
         nameLabel.textContent = 'Nom';
@@ -196,11 +343,35 @@ $(document).ready(function () {
             openClose();
         }
     }
+    async function customer(recherche) {
+        const reponse = await fetch('../controller/php/botController.php?option=allCustomers');
+        const customer = await reponse.json();
+        if (recherche != "") {
+            const liste = document.createElement('div');
+            for (var i = 0; i < customer.length; i++) {
+                if (customer[i]["first_name"].toLowerCase().includes(recherche) == true || customer[i]["last_name"].toLowerCase().includes(recherche) == true) {
+                    showCustomer(customer, i, liste);
+                }
+            }
+            $("#contentBack").html(liste);
+            $(".blockBody").hide();
+            openClose();
+        } else {
+            const liste = document.createElement('div');
+            for (var i = 0; i < customer.length; i++) {
+                showCustomer(customer, i, liste);
+            }
+            $("#contentBack").html(liste);
+            $(".blockBody").hide();
+            openClose();
+        }
+    }
 
     $('#rechercheBack').on('keyup', function () {
             let recherche = $(this).val();
             switch (localStorage['mode']) {
                 case 'bCustomer':
+                    customer(recherche);
                     break;
                 case 'bProduct':
                     product(recherche);
@@ -222,6 +393,7 @@ $(document).ready(function () {
         localStorage['mode'] = $(this).attr('id');
         switch (localStorage['mode']) {
             case 'bCustomer':
+                customer('');
                 $('#bCustomer, #bProduct, #bRate, #bReview, #bOrder, #bCategory').removeClass('activeBack');
                 $('#bCustomer').addClass('activeBack');
                 break;
