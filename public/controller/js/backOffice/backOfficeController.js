@@ -3,6 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const addProductBtn = document.getElementById("bo_button_addProduct");
     const productForm = document.getElementById("bo_formAddProduct");
     productForm.style.display = "none";
+
+    const updateForm = document.getElementById('bo_formUpdateProductPreFill');
+    updateForm.style.display = "none";
+
     addProductBtn.addEventListener('click', function() {
         productForm.style.display = "block";
     });
@@ -113,12 +117,36 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     const updateButton = document.querySelectorAll('.bo_updateProduct_button');
-    const updateForm = document.getElementById('bo_formUpdateProductPreFill');
-    updateForm.style.display = "none";
     updateButton.forEach(button => {
         updateForm.style.display = "block";
         button.addEventListener('click', function(event) {
             event.preventDefault();
+
+            const addSecondaryImageBtn = document.getElementById('buttonAddImages');
+            const modifyProductForm = document.getElementById('divAddNewImages');
+            let newImageCount = 0;
+            
+            
+            addSecondaryImageBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                if(newImageCount < 1){
+                    let inputAddImages = document.createElement('input');
+                    
+                    inputAddImages.type = "text";
+                    inputAddImages.name = "addSecondaryImages";
+                    inputAddImages.id = "newSecondaryImages";
+                    inputAddImages.placeholder = "prdct_1_img_1.jpg, etc...";
+                    
+                    modifyProductForm.appendChild(inputAddImages);
+                    
+                    newImageCount++;
+
+                    addSecondaryImageBtn.style.display = "none";
+                }else{
+                    alert('Write in the input like this : "product_1_image_1.jpg, product_1_image2.jpg" etc...');
+                }
+            });
+            // GET TABLE DATA
             const productId = this.closest('.bo_tbody_tr').querySelector('#td_product_id').textContent;
             const productName = this.closest('.bo_tbody_tr').querySelector('#td_product_name').textContent;
             const productRate = this.closest('.bo_tbody_tr').querySelector('#td_product_rate').textContent;
@@ -134,6 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const secondaryImageId = this.closest('.bo_tbody_tr').querySelector('#td_secondary_images_id').textContent;
             const secondaryImagePath = this.closest('.bo_tbody_tr').querySelector('#td_secondary_images_path').textContent;
 
+            // GET INPUT TO FILL
             let updateName = document.getElementById('updateName');
             let updateRate = document.getElementById('updateRate');
             let updatePrice = document.getElementById('updatePrice');
@@ -147,7 +176,8 @@ document.addEventListener('DOMContentLoaded', function() {
             let updateImages = document.getElementById('updateImages');
             let updateSecondaryImagesId = document.getElementById('updateSecondaryImagesId');
             let updateSecondaryImages = document.getElementById('updateSecondaryImages');
-
+ 
+            // FILL INPUT
             updateName.value = productName;
             updateRate.value = productRate;
             updatePrice.value = productPrice;
@@ -164,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             updateForm.addEventListener('submit', function(event) {
                 event.preventDefault();
-
+                
                 const formData = new FormData();
                 formData.append('id', productId);
                 formData.append('name', updateName.value);
@@ -179,32 +209,50 @@ document.addEventListener('DOMContentLoaded', function() {
                 formData.append('image_id', updateImagesId.value)
                 formData.append('image_path', updateImages.value);
                 formData.append('secondary_image_id', updateSecondaryImagesId.value);
-                formData.append('secondary_image_path',updateSecondaryImages.value);
+                formData.append('secondary_image_path', updateSecondaryImagesId.value);
                 formData.append('request', "updateProduct");
-
+                if(newImageCount > 0){
+                    const newImages = document.getElementById('newSecondaryImages');
+                    const newImagesValue = newImages.value;
+                    if(newImagesValue.length > 0){
+                        formData.append('newImages', 'true');
+                        formData.append('newImagesPath', newImagesValue);
+                    }else{
+                        formData.append('newImages', 'false');
+                    }           
+                }
+                formData.append('newImages', 'false');
+                
+                
+                
                 const requestOptions = {
                     method: "POST",
                     Header: "Content-Type: multipart/form-data",
                     body: formData
                 }
-
+                
                 fetch('http://localhost:8080/controller/php/backOffice/backOfficeController.php', requestOptions)
                 .then(response => response.json())
                 .then(data => {
-                    if(data.status === "success") {
-                        updateForm.style.display = "none";
-                    } else if(data.status === "error") {
-                        if(data.message === "ProductAlreadyExists") {
+                    if (data.status === "success") {
+                        location.reload();
+                    } else if (data.status === "error") {
+                        if (data.message === "ProductAlreadyExist") {
                             alert("Product already exists");
-                        }else if (data.message == "NameAlreadyExists"){
+                        } else if (data.message === "NameAlreadyExist") {
                             alert("Product name already exists");
-                        }else if (data.message == "ProductNotUpdated"){
-                            alert("Erreur inattendue");
-                        }else if(data.message == "ImageAlreadyExist"){
+                        } else if (data.message === "ProductNotUpdated") {
+                            alert("Unexpected error");
+                        } else if (data.message === "ImageAlreadyExist") {
                             alert("Image already exists");
+                        } else if (data.message === "secondaryImageAlreadyExistInDataBase") {
+                            alert("Secondary image already exists in the database");
+                        } else if (data.message === "cannotAddMainImage") {
+                            alert("Cannot add main image");
+                        } else if (data.message === "SecondaryImageAlreadyExist") {
+                            alert("Secondary image already exists");
                         }
-                    }
-                
+                    }                 
                 })
                 .catch(error =>
                     console.log(error)

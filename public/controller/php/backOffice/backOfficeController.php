@@ -83,8 +83,17 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
             $imagePath = $_POST['image_path'];
             $secondaryImageId = $_POST['secondary_image_id'];
             $secondaryImages = $_POST['secondary_image_path'];
+            if($_POST['newImages'] == "true"){
+                if(empty($_POST['newImagesPath']) || !isset($_POST['newImagesPath'])){
+                    $arrayNewImages = "noNewImages"; 
+                }else{
+                    $arrayNewImages = $_POST['newImagesPath'];
+                }
+            }else{
+                $arrayNewImages = "noNewImages";
+            }
 
-            $update = Database::updateProduct($id, $name, $brand, $color, $material, $price, $quantity, $rate, $description, $imageId, $imagePath, $secondaryImageId, $secondaryImages);
+            $update = Database::updateProduct($id, $name, $brand, $color, $material, $price, $quantity, $rate, $description, $category_name, $imageId, $imagePath, $secondaryImageId, $secondaryImages, $arrayNewImages);
 
             if($update == "success"){
                 echo json_encode(
@@ -97,7 +106,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                 echo json_encode(
                     array(
                         "status" => "error",
-                        "message" => "ProductAlreadyExists"
+                        "message" => "ProductAlreadyExist"
                     )
                 );   
             }elseif($update == "UnexpectedError"){
@@ -111,7 +120,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                 echo json_encode(
                     array(
                         "status" => "error",
-                        "message" => "NameAlreadyExists"
+                        "message" => "NameAlreadyExist"
                     )
                 );
             }elseif($update == "ImageAlreadyExist"){
@@ -119,6 +128,27 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                     array(
                         "status" => "error",
                         "message" => "ImageAlreadyExist"
+                    )
+                );
+            }elseif($update == "secondaryImageAlreadyExistInDataBase"){
+                echo json_encode(
+                    array(
+                        "status" => "error",
+                        "message" => "secondaryImageAlreadyExistInDataBase"
+                    )
+                );
+            }elseif($update == "cannotAddMainImage"){
+                echo json_encode(
+                    array(
+                        "status" => "error",
+                        "message" => "cannotAddMainImage"
+                    )
+                );
+            }elseif($update == "SecondaryImageAlreadyExist"){
+                echo json_encode(
+                    array(
+                        "status" => "error",
+                        "message" => "SecondaryImageAlreadyExist"
                     )
                 );
             }
