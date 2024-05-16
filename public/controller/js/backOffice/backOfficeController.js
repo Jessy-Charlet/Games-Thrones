@@ -124,25 +124,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const addSecondaryImageBtn = document.getElementById('buttonAddImages');
             const modifyProductForm = document.getElementById('divAddNewImages');
-            let newImageCount = 1;
+            let newImageCount = 0;
             
             
             addSecondaryImageBtn.addEventListener('click', function(event) {
                 event.preventDefault();
+                if(newImageCount < 1){
+                    let inputAddImages = document.createElement('input');
+                    
+                    inputAddImages.type = "text";
+                    inputAddImages.name = "addSecondaryImages";
+                    inputAddImages.id = "newSecondaryImages";
+                    inputAddImages.placeholder = "prdct_1_img_1.jpg, etc...";
+                    
+                    modifyProductForm.appendChild(inputAddImages);
+                    
+                    newImageCount++;
 
-                let inputAddImages = document.createElement('input');
-                
-                inputAddImages.type = "text";
-                inputAddImages.name = "addSecondaryImages";
-                inputAddImages.id = "newSecondaryImages";
-                inputAddImages.placeholder = "Ajouter une nouvelle image";
-                
-                modifyProductForm.appendChild(inputAddImages);
-                
-                newImageCount++;
-
-                
-               
+                    addSecondaryImageBtn.style.display = "none";
+                }else{
+                    alert('Write in the input like this : "product_1_image_1.jpg, product_1_image2.jpg" etc...');
+                }
             });
             // GET TABLE DATA
             const productId = this.closest('.bo_tbody_tr').querySelector('#td_product_id').textContent;
@@ -192,9 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             updateForm.addEventListener('submit', function(event) {
                 event.preventDefault();
-
-                const newImages = document.querySelector('#newSecondaryImages');
-
+                
                 const formData = new FormData();
                 formData.append('id', productId);
                 formData.append('name', updateName.value);
@@ -210,10 +210,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 formData.append('image_path', updateImages.value);
                 formData.append('secondary_image_id', updateSecondaryImagesId.value);
                 formData.append('secondary_image_path', updateSecondaryImagesId.value);
-                //formData.append('newImagesPath', newImages);
-                //formData.append('newImages', 'true');
                 formData.append('request', "updateProduct");
-
+                if(newImageCount > 0){
+                    const newImages = document.getElementById('newSecondaryImages');
+                    const newImagesValue = newImages.value;
+                    if(newImagesValue.length > 0){
+                        formData.append('newImages', 'true');
+                        formData.append('newImagesPath', newImagesValue);
+                    }else{
+                        formData.append('newImages', 'false');
+                    }           
+                }
+                formData.append('newImages', 'false');
+                
                 
                 
                 const requestOptions = {

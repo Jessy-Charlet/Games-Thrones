@@ -320,6 +320,12 @@ class Database{
         // prepare the return
         $return = "success";
 
+        if($arrayNewImages == "noNewImages"){
+            $newImage = false;
+        }else{
+            $newImage = true;
+        }
+
         $mainImageId = (int)$mainImageId;
 
         try{
@@ -359,7 +365,7 @@ class Database{
                 $return = "cannotAddMainImage";
                 return $return;
             }
-            if(!strpos($arrayNewImages, "none")){
+            if($newImage === true){
                 // Divide the string where there is ","
                 $imageIdArray = explode(',', $secondaryImageId);
                 $newSecondaryImagesArray = explode(',', $arrayNewImages);
@@ -390,14 +396,13 @@ class Database{
 
 
                 // Verify if new images doesn't already exist
-                $nbOfNewImages = count($newSecondaryImagesArray);
+                $nbOfNewImages = count($newSecondaryImagesArray) - (count($newSecondaryImagesArray) - 1);
                 for($countImages = 0; $countImages < $nbOfNewImages; $countImages++){
                     foreach($imageIdArray as $imageId){
-                        $sql = $conn->prepare('SELECT url FROM image WHERE id != :id AND main = :main');
+                        $sql = $conn->prepare('SELECT url FROM image WHERE id != :id');
                         $sql->execute(
                             array(
-                                'id' => $imageId,
-                                ':main' => 0
+                                'id' => $imageId
                             )
                         );
                         $result4 = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -411,25 +416,28 @@ class Database{
                             exit();
                         }
                     }
-                    // If image doesn't exist
-                    $sql = $conn->prepare("INSERT INTO image (url, main) VALUES (:url, :main)");
-                    $sql->execute(
-                        array(
-                            ':url' => $newSecondaryImagesArray[$i],
-                            ':main' => 0
-                        )
-                    );
-                    $newImageId = $conn->lastInsertId();
-                    $sql->closeCursor();
 
-                    $sql = $conn->prepare("INSERT INTO image_product (product_id, image_id) VALUES (:product_id, :image_id)");
-                    $sql->execute(
-                        array(
-                            ":product_id" => $id,
-                            ":image_id" => $newImageId
-                        )
-                    );
-                    $sql->closeCursor();
+                    // If image doesn't exist
+                    foreach($newSecondaryImagesArray as $image){
+                        $sql = $conn->prepare("INSERT INTO image (url, main) VALUES (:url, :main)");
+                        $sql->execute(
+                            array(
+                                ':url' => $image,
+                                ':main' => 0
+                            )
+                        );
+                        $newImageId = $conn->lastInsertId();
+                        $sql->closeCursor();
+    
+                        $sql = $conn->prepare("INSERT INTO image_product (product_id, image_id) VALUES (:product_id, :image_id)");
+                        $sql->execute(
+                            array(
+                                ":product_id" => $id,
+                                ":image_id" => $newImageId
+                            )
+                        );
+                        $sql->closeCursor();
+                    }
                 }
             }
        

@@ -83,10 +83,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
             $imagePath = $_POST['image_path'];
             $secondaryImageId = $_POST['secondary_image_id'];
             $secondaryImages = $_POST['secondary_image_path'];
-            if(isset($_POST['newImages'])){
-                $arrayNewImages = $_POST['newImagesPath'];
+            if($_POST['newImages'] == "true"){
+                if(empty($_POST['newImagesPath']) || !isset($_POST['newImagesPath'])){
+                    $arrayNewImages = "noNewImages"; 
+                }else{
+                    $arrayNewImages = $_POST['newImagesPath'];
+                }
             }else{
-                $arrayNewImages = "none";
+                $arrayNewImages = "noNewImages";
             }
 
             $update = Database::updateProduct($id, $name, $brand, $color, $material, $price, $quantity, $rate, $description, $category_name, $imageId, $imagePath, $secondaryImageId, $secondaryImages, $arrayNewImages);
