@@ -1,8 +1,8 @@
 // Wait for the page to load
 document.addEventListener('DOMContentLoaded', (event) => {
     // Get the submit button element
-    var submitBtn = document.getElementById('submitBtn');
-    var phoneInput = document.getElementById('phoneId');
+    let submitBtn = document.getElementById('submitBtn');
+    const phoneInput = document.getElementById('phoneId');
 
     phoneInput.addEventListener('keyup', function(event) {
         // Supprime le dernier caractère avant d'ajouter un espace
@@ -11,6 +11,39 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
         phoneInput.value = phoneInput.value.replace(/[^\d ]/g, '');
     });
+
+    // Fonction pour vérifier et formater le numéro de téléphone
+    function formatPhoneNumber() {
+        const phoneNumber = phoneInput.value;
+        // Vérifier si le numéro de téléphone correspond à 10 chiffres consécutifs
+        const regex = /^\d{10}$/;
+        if (regex.test(phoneNumber)) {
+            // Formater le numéro de téléphone
+            const formattedNumber = phoneNumber.replace(/(\d{2})(?=\d)/g, '$1 ').trim();
+            phoneInput.value = formattedNumber;
+        }
+    }
+
+    // Fonction pour vérifier le remplissage automatique
+    function checkAutoFill() {
+        if (phoneInput.value !== '') {
+            // Action à effectuer si le champ est rempli automatiquement
+            console.log('Le champ Numéro de téléphone a été rempli automatiquement.');
+            formatPhoneNumber(); // Formater immédiatement si déjà rempli
+            // Ajouter des écouteurs pour les changements dans le champ
+            phoneInput.removeEventListener('input', checkAutoFill);
+            phoneInput.removeEventListener('change', checkAutoFill);
+            phoneInput.addEventListener('input', formatPhoneNumber);
+            phoneInput.addEventListener('change', formatPhoneNumber);
+        }
+    }
+
+    // Vérifier le champ après un délai pour le remplissage automatique
+    setTimeout(checkAutoFill, 100);
+
+    // Ajouter des écouteurs pour les changements dans le champ initial
+    phoneInput.addEventListener('input', checkAutoFill);
+    phoneInput.addEventListener('change', checkAutoFill);
 
     // Add click event listener to the submit button
     submitBtn.addEventListener('click', function(event) {
@@ -81,8 +114,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 return;
             }
         }
-
-
 
         const formdata = new FormData();
         formdata.append('name', name);
