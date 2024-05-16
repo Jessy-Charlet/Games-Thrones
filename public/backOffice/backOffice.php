@@ -25,7 +25,7 @@ if($_SESSION['admin'] === true){
     </form>
 </div>
 <div id="bo_formUpdateProductPreFill">
-    <form method="post">
+    <form method="post" id="modifyProductForm">
         <input type="text" name="name" id="updateName" placeholder="Name" autocomplete="off">
         <input type="text" name="rate" id="updateRate" placeholder="Rate">
         <input type="text" name="price" id="updatePrice" placeholder="Price">
@@ -39,6 +39,8 @@ if($_SESSION['admin'] === true){
         <input type="text" name="images" id="updateImages" placeholder="images name">
         <input type="text" name="secondaryImagesId" id="updateSecondaryImagesId" placeholder="secondary images id">
         <input type="text" name="secondaryImages" id="updateSecondaryImages" placeholder="secondary images">
+        <div id="divAddNewImages"></div>
+        <input type="button" id="buttonAddImages" value="Ajouter une image">
         <input type="submit" value="Enregistrer">
     </form>
 </div>
@@ -67,8 +69,13 @@ if($_SESSION['admin'] === true){
                     <tbody class='bo_tbody'>";
                     foreach($products as $product){
                         $images = Database::getImagesByProductId($product['id']);
-                        $mainImagePath = $images['everything'][0];
-                        $mainImageId = $images['everything'][1];
+                        if(isset($images['everything'])){
+                            $mainImagePath = $images['everything'][0];
+                            $mainImageId = $images['everything'][1];
+                        }else{
+                            $mainImageId = "none";
+                            $mainImagePath = "none";
+                        }
 
                         echo "<tr class='bo_tbody_tr'>";
                         echo "<td class='bo_tbody_tr_td' id='td_product_id'>".(isset($product['id']) ? $product['id'] : '')."</td>";
