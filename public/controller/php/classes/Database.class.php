@@ -198,7 +198,8 @@ class Database{
                // return["adresse"] pour l'adresse du client
                // return["postal_code"] pour le code postal
                // return["city"] pour la ville du client
-               // return["phone"] pour la téléphone du cleint
+               // return["phone"] pour la téléphone du client
+                // return["role"] pour le role du client
                return $customer;
            } catch (PDOException $e) {
                return $e;
