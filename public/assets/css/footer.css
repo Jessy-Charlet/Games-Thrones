@@ -11,7 +11,8 @@ footer {
     a {
         text-align: center;
     }
-    > a img {
+
+    >a img {
         height: 8.5em;
     }
 
@@ -54,10 +55,20 @@ footer {
         grid-template-columns: 1fr;
         justify-content: center;
         align-items: center;
+
         div:last-child {
             grid-column: 1;
             text-align: center;
             margin-top: 2em;
+        }
+
+        .footerSocialMedias {
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 1fr;
+
+            img {
+                height: 4em;
+            }
+        }
     }
-}
 }

@@ -271,18 +271,13 @@ h2 {
   text-shadow: 1px 1px #482664;
 }
 
-@media (max-width: 950px) {
-  .panierImg {
-    max-width: 8em;
-  }
-  .panierTitle {
-    margin-top: 0;
-  }
-}
-
-@media (max-width: 768px) {
+@media (orientation: portrait) {
   .panierContainer {
     flex-wrap: wrap;
+  }
+
+  .panierImg {
+    max-width: 4em;
   }
 
   .panierTitle {
@@ -302,8 +297,3 @@ h2 {
   }
 }
 
-@media (max-width: 425px) {
-  .panierImg {
-    max-width: 4em;
-  }
-}

@@ -38,6 +38,7 @@ $router->map('GET', '/getCartContentsAjaxController', '../public/controller/php/
 
 // Routes Back Office
 $router->map('GET', '/gt-admin', '../public/backOffice/backOffice', 'backOffice');
+$router->map('GET', '/bot_backend', '/bot_backend', 'bot_backend');
 
 function my_autoloader($class)
 {

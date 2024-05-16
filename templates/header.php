@@ -45,6 +45,7 @@ if (isset($_SESSION['cart'])) {
     <link rel="stylesheet" href="./assets/css/product.css?t=<?= time(); ?>">
     <link rel="stylesheet" href="./assets/css/products.css?t=<?= time(); ?>">
     <link rel="stylesheet" href="./assets/css/basket.css?t=<?= time(); ?>">
+    <link rel="stylesheet" href="./assets/css/bot.css?t=<?= time(); ?>">
 
 </head>
 
