@@ -123,12 +123,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const updateButton = document.querySelectorAll('.bo_updateProduct_button');
 
     let newImageCount = 0;
-             
+
     updateButton.forEach(button => {
-        updateForm.style.display = "block";
         button.addEventListener('click', function (event) {
             event.preventDefault();
-
+            updateForm.style.display = "block";
             
 
             if(newImageCount > 0){
@@ -231,8 +230,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     }else{
                         formData.append('newImages', 'false');
                     }           
+                }else{
+                    formData.append('newImages', 'false');
                 }
-                formData.append('newImages', 'false');
                 
                 
                 

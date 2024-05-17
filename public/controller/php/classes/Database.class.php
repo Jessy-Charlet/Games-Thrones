@@ -431,7 +431,7 @@ class Database
                         );
                         $newImageId = $conn->lastInsertId();
                         $sql->closeCursor();
-    
+
                         $sql = $conn->prepare("INSERT INTO image_product (product_id, image_id) VALUES (:product_id, :image_id)");
                         $sql->execute(
                             array(

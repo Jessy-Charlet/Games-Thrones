@@ -24,26 +24,24 @@ if ($_SESSION['admin'] === true) {
             <input type="submit" value="Add Product" id="submitProduct">
         </form>
     </div>
-    <div>
-        <form method="post" id="bo_formUpdateProductPreFill">
-            <input type="text" name="name" id="updateName" placeholder="Name" autocomplete="off">
-            <input type="text" name="rate" id="updateRate" placeholder="Rate">
-            <input type="text" name="price" id="updatePrice" placeholder="Price">
-            <input type="text" name="quantity" id="updateQuantity" placeholder="Quantity">
-            <textarea id="updateDescription" placeholder="Description"></textarea>
-            <input type="text" name="color" id="updateColor" placeholder="Color">
-            <input type="text" name="material" id="updateMaterial" placeholder="Material">
-            <input type="text" name="brand" id="updateBrand" placeholder="Brand">
-            <input type="text" name="category" id="updateCategory" placeholder="Category">
-            <input type="text" name="imagesId" id="updateImagesId" placeholder="images id">
-            <input type="text" name="images" id="updateImages" placeholder="images name">
-            <input type="text" name="secondaryImagesId" id="updateSecondaryImagesId" placeholder="secondary images id">
-            <input type="text" name="secondaryImages" id="updateSecondaryImages" placeholder="secondary images">
-            <input type="button" id="buttonAddImages" value="Ajouter une image">
-            <div id="divAddNewImages"></div>
-            <input type="submit" value="Enregistrer">
-        </form>
-    </div>
+    <form method="post" id="bo_formUpdateProductPreFill">
+        <input type="text" name="name" id="updateName" placeholder="Name" autocomplete="off">
+        <input type="text" name="rate" id="updateRate" placeholder="Rate">
+        <input type="text" name="price" id="updatePrice" placeholder="Price">
+        <input type="text" name="quantity" id="updateQuantity" placeholder="Quantity">
+        <textarea id="updateDescription" placeholder="Description"></textarea>
+        <input type="text" name="color" id="updateColor" placeholder="Color">
+        <input type="text" name="material" id="updateMaterial" placeholder="Material">
+        <input type="text" name="brand" id="updateBrand" placeholder="Brand">
+        <input type="text" name="category" id="updateCategory" placeholder="Category">
+        <input type="text" name="imagesId" id="updateImagesId" placeholder="images id">
+        <input type="text" name="images" id="updateImages" placeholder="images name">
+        <input type="text" name="secondaryImagesId" id="updateSecondaryImagesId" placeholder="secondary images id">
+        <input type="text" name="secondaryImages" id="updateSecondaryImages" placeholder="secondary images">
+        <input type="button" id="buttonAddImages" value="Ajouter une image">
+        <div id="divAddNewImages"></div>
+        <input type="submit" value="Enregistrer">
+    </form>
     <?php
     echo "
             <section class='bo_section'>
