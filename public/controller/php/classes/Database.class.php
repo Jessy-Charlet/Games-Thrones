@@ -85,8 +85,7 @@ class Database
 
             // Préparation de la requête SQL pour récupérer l'ensemble produits
             $stmt = $conn->prepare("SELECT * FROM product");
-            $stmt->execute();
-
+            $stmt->execute();               
             // Execution de la requête SQL
             $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -105,6 +104,23 @@ class Database
             // return["category_id"] pour la catégorie du produit   
             return $products;
         } catch (PDOException $e) {
+            return $e;
+        }
+    }
+
+    public static function getCategoryName($category_id){
+        $conn = Database::connect();
+
+        try{
+            $sql = $conn->prepare("SELECT name FROM category WHERE id = :id");
+            $sql->execute(
+                array(
+                    ":id" => $category_id
+                )
+            );
+            $category_name = $sql->fetch(PDO::FETCH_ASSOC);
+            return $category_name;
+        }catch(PDOException $e){
             return $e;
         }
     }
@@ -178,6 +194,38 @@ class Database
         }
     }
     
+    // Récupération de tous les clients
+    public static function getAllCustomer()
+    {
+               try {
+                   // Connection à la BDD
+                   $conn = Database::connect();
+       
+                   // Préparation de la requête SQL pour récupérer l'ensemble produits
+                   $stmt = $conn->prepare("SELECT * FROM customer");
+                   $stmt->execute();
+                   $stmt->closeCursor();
+       
+                   // Execution de la requête SQL
+                   $customer = $stmt->fetchall(PDO::FETCH_ASSOC);
+       
+                   // Fermeture de la connection
+                   $conn = null;
+       
+                   // return["id"] pour l'ID du client
+                   // return["first_name"] pour le prénom du client
+                   // return["last_name"] pour le nom de famille du client
+                   // return["mail"] pour le mail du client
+                   // return["adresse"] pour l'adresse du client
+                   // return["postal_code"] pour le code postal
+                   // return["city"] pour la ville du client
+                   // return["phone"] pour la téléphone du client
+                    // return["role"] pour le role du client
+                   return $customer;
+               } catch (PDOException $e) {
+                   return $e;
+               }
+    }
 
     public static function addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image, $secondaryImages){
         $conn = Database::connect();
