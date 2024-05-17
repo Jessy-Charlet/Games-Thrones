@@ -24,8 +24,8 @@ if ($_SESSION['admin'] === true) {
             <input type="submit" value="Add Product" id="submitProduct">
         </form>
     </div>
-    <div id="bo_formUpdateProductPreFill">
-        <form method="post">
+    <div>
+        <form method="post" id="bo_formUpdateProductPreFill">
             <input type="text" name="name" id="updateName" placeholder="Name" autocomplete="off">
             <input type="text" name="rate" id="updateRate" placeholder="Rate">
             <input type="text" name="price" id="updatePrice" placeholder="Price">
@@ -39,6 +39,8 @@ if ($_SESSION['admin'] === true) {
             <input type="text" name="images" id="updateImages" placeholder="images name">
             <input type="text" name="secondaryImagesId" id="updateSecondaryImagesId" placeholder="secondary images id">
             <input type="text" name="secondaryImages" id="updateSecondaryImages" placeholder="secondary images">
+            <input type="button" id="buttonAddImages" value="Ajouter une image">
+            <div id="divAddNewImages"></div>
             <input type="submit" value="Enregistrer">
         </form>
     </div>

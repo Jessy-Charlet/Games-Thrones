@@ -116,19 +116,30 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    const addSecondaryImageBtn = document.getElementById('buttonAddImages');
+    const modifyProductForm = document.getElementById('divAddNewImages');
+    addSecondaryImageBtn.style.display = "none";
+
     const updateButton = document.querySelectorAll('.bo_updateProduct_button');
+
+    let newImageCount = 0;
+             
     updateButton.forEach(button => {
         updateForm.style.display = "block";
         button.addEventListener('click', function (event) {
             event.preventDefault();
 
-            const addSecondaryImageBtn = document.getElementById('buttonAddImages');
-            const modifyProductForm = document.getElementById('divAddNewImages');
-            let newImageCount = 0;
             
-            
+
+            if(newImageCount > 0){
+                addSecondaryImageBtn.style.display = "none";
+            }else{
+                addSecondaryImageBtn.style.display = "block";
+            }
+
             addSecondaryImageBtn.addEventListener('click', function(event) {
                 event.preventDefault();
+                
                 if(newImageCount < 1){
                     let inputAddImages = document.createElement('input');
                     
