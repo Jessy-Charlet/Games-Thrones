@@ -29,15 +29,15 @@ var initialAdresse = adresse.value;
 var initialPostalCode = postalCode.value;
 var initialCity = city.value;
 var initialPassword = password.value;
-    
-personalInfoModif.addEventListener('click', function(event) {
+
+personalInfoModif.addEventListener('click', function (event) {
     event.preventDefault();
 
     const phoneInput = document.getElementById('telephone');
 
-    phoneInput.addEventListener('keyup', function(event) {
+    phoneInput.addEventListener('keyup', function (event) {
         // Supprime le dernier caractère avant d'ajouter un espace
-        if(phoneInput.value.length === 2 || phoneInput.value.length === 5 || phoneInput.value.length === 8 || phoneInput.value.length === 11) {
+        if (phoneInput.value.length === 2 || phoneInput.value.length === 5 || phoneInput.value.length === 8 || phoneInput.value.length === 11) {
             phoneInput.value += ' ';
         }
         phoneInput.value = phoneInput.value.replace(/[^\d ]/g, '');
@@ -54,7 +54,7 @@ personalInfoModif.addEventListener('click', function(event) {
 
     const cancelButtonContainer = document.getElementById('cancelButtonContainer');
     var cancelButton = document.createElement('input');
-    if(!cancelButtonContainer.hasChildNodes()){     
+    if (!cancelButtonContainer.hasChildNodes()) {
         cancelButton.type = 'button';
         cancelButton.id = 'cancelButton';
         cancelButton.className = 'buttonCancel';
@@ -63,14 +63,14 @@ personalInfoModif.addEventListener('click', function(event) {
         cancelButtonContainer.appendChild(cancelButton);
     }
 
-    if(personalInfoModif.value === 'enregistrer') {
+    if (personalInfoModif.value === 'enregistrer') {
         if (nameId.value === '' || password.value === '' || email.value === '' || phone.value === '' || adresse.value === '' || firstname.value === '' || postalCode.value === '' || city.value === '') {
             var errorMessage = 'Please fill in all fields.';
             errorMessages.innerHTML = errorMessage;
             return;
         }
 
-        if(phone.value !== ''){
+        if (phone.value !== '') {
             var phoneFormat = /^(\d{2} ){4}\d{2}$/;
             if (!phoneFormat.test(phone.value)) {
                 var errorMessage = 'Phone number format is incorrect. It should be like "00 00 00 00 00".';
@@ -79,7 +79,7 @@ personalInfoModif.addEventListener('click', function(event) {
             }
         }
 
-        if(email.value !== ''){
+        if (email.value !== '') {
             var emailFormat = /\S+@\S+\.\S+/;
             if (!emailFormat.test(email.value)) {
                 var errorMessage = 'Email format is incorrect.';
@@ -88,7 +88,7 @@ personalInfoModif.addEventListener('click', function(event) {
             }
         }
 
-        if(password.value !== ''){
+        if (password.value !== '') {
             var passwordFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&()!\/.,?;:_+=}{é~"#'-|è`\\ç^à@£$¤*µù%§<>°]).{6,255}$/;
             if (!passwordFormat.test(password.value)) {
                 var errorMessage = 'Password must contain at least one number and one uppercase and lowercase letter, a special character, and at least 6 or more characters.';
@@ -97,7 +97,7 @@ personalInfoModif.addEventListener('click', function(event) {
             }
         }
 
-        if(postalCode.value !== ''){
+        if (postalCode.value !== '') {
             var postalCodeFormat = /^\d{5}$/;
             if (!postalCodeFormat.test(postalCode.value)) {
                 var errorMessage = 'Postal code format is incorrect. It should be 5 digits.';
@@ -105,10 +105,10 @@ personalInfoModif.addEventListener('click', function(event) {
                 return;
             }
         }
-        function isChangeValueChanged(initialValue, newValue){
-            if(initialValue != newValue){
+        function isChangeValueChanged(initialValue, newValue) {
+            if (initialValue != newValue) {
                 return newValue;
-            }else{
+            } else {
                 return initialValue;
             }
         }
@@ -142,7 +142,7 @@ personalInfoModif.addEventListener('click', function(event) {
         }
 
         const customer_id = document.getElementById('customer_id').value;
-        
+
         const formdata = new FormData();
         formdata.append('name', nameId.value);
         formdata.append('firstname', firstname.value);
@@ -160,25 +160,25 @@ personalInfoModif.addEventListener('click', function(event) {
         };
 
         fetch("http://localhost:8080/controller/php/profilController.php", requestOptions)
-        .then(response => {
-            return response.json();
+            .then(response => {
+                return response.json();
             }
-        )
-        .then(data => {
-            switch (data.status) {
-                case "error":
-                    self.location = '/profil?error='+data.error;
-                    break;
-                case "success":
-                    self.location = '/profil?success=success';
-                    break;
-                default:
-                    break;
-            }
-        })
-        .catch(error => {
-            self.location = '/profil?error=UnexpectedError'
-        });
+            )
+            .then(data => {
+                switch (data.status) {
+                    case "error":
+                        self.location = '/profil?error=' + data.error;
+                        break;
+                    case "success":
+                        self.location = '/profil?success=success';
+                        break;
+                    default:
+                        break;
+                }
+            })
+            .catch(error => {
+                self.location = '/profil?error=UnexpectedError'
+            });
 
         nameId.disabled = true;
         firstname.disabled = true;
@@ -189,10 +189,10 @@ personalInfoModif.addEventListener('click', function(event) {
         city.disabled = true;
         password.disabled = true;
     }
-    
+
     personalInfoModif.value = 'enregistrer';
 
-    cancelButton.addEventListener('click', function() {
+    cancelButton.addEventListener('click', function () {
         // Désactiver les champs d'entrée
         nameId.disabled = true;
         firstname.disabled = true;

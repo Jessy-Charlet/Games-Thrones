@@ -3,7 +3,7 @@ include 'classes/Database.class.php';
 include 'classes/CrudUser.class.php';
 
 
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
     $firstname = $_POST['firstname'];
     $mail = $_POST['email'];
@@ -14,43 +14,42 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $password = $_POST['password'];
     $customer_id = $_POST['id'];
     $id = intval($customer_id);
-    
-    
-    $user = new CrudUser();
 
+
+    $user = new CrudUser();
 
     $testInsert = $user->testUpdateUser($id, $mail, $phone, $password);
 
 
-    if($testInsert == 'mailAlreadyUsed'){
+    if ($testInsert == 'mailAlreadyUsed') {
         echo json_encode(
             array(
                 'status' => 'error',
                 'error' => 'mailAlreadyUsed'
             )
         );
-    }elseif($testInsert == 'wrongPassword'){
+    } elseif ($testInsert == 'wrongPassword') {
         echo json_encode(
             array(
                 'status' => 'error',
                 'error' => 'wrongPassword'
             )
         );
-    }elseif($testInsert == 'phoneAlreadyUsed'){
+    } elseif ($testInsert == 'phoneAlreadyUsed') {
         echo json_encode(
             array(
                 'status' => 'error',
                 'error' => 'phoneAlreadyUsed'
             )
         );
-    }elseif($testInsert == 'UserNotFound'){
+    } elseif ($testInsert == 'UserNotFound') {
         echo json_encode(
             array(
                 'status' => 'error',
                 'error' => 'UserNotFound'
             )
         );
-    }else{
+    } else {
         $user->updateUser($id, $name, $firstname, $mail, $phone, $adresse, $postalCode, $city, $password);
         session_start();
         $_SESSION['userFirstName'] = $user->getFirstname();
@@ -61,5 +60,4 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             )
         );
     }
-
 }

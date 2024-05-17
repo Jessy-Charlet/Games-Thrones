@@ -1,19 +1,19 @@
 <?php
-if(!isset($_SESSION['user'])){
-    header('Location: '.$router->generate('connexion'));
+if (!isset($_SESSION['user'])) {
+    header('Location: ' . $router->generate('connexion'));
     exit();
-    }else{
+} else {
     $id = $_SESSION['user'];
 
     $user = new CrudUser();
     $userData = $user->getAll($id);
 
 
-    if(isset($_GET['update'])){
+    if (isset($_GET['update'])) {
         $updateResult = $_GET['update'];
 
         // Vérifiez s'il y a plusieurs paramètres 'update' dans l'URL
-        if(substr_count($_SERVER['QUERY_STRING'], 'update') > 1){
+        if (substr_count($_SERVER['QUERY_STRING'], 'update') > 1) {
 
             // Supprimez tous les paramètres 'update' sauf un
             $params = $_GET;
@@ -28,30 +28,29 @@ if(!isset($_SESSION['user'])){
             header("Location: " . $url);
             exit();
         }
-        if (!isset($_SESSION['first_load'])){
+        if (!isset($_SESSION['first_load'])) {
             $_SESSION['first_load'] = true;
-        }else{
-            if ($_SESSION['first_load'] == true){
-            // La page a été rechargée
-            $pageActuelle = strtok($_SERVER['REQUEST_URI'], '?');
-            header("Location: $pageActuelle");
+        } else {
+            if ($_SESSION['first_load'] == true) {
+                // La page a été rechargée
+                $pageActuelle = strtok($_SERVER['REQUEST_URI'], '?');
+                header("Location: $pageActuelle");
 
-            // Réinitialisez la variable de session pour le prochain chargement de la page
-            $_SESSION['first_load'] = false;
-            }else{
-            // La page est chargée pour la première fois
-            $_SESSION['first_load'] = true;
-            
+                // Réinitialisez la variable de session pour le prochain chargement de la page
+                $_SESSION['first_load'] = false;
+            } else {
+                // La page est chargée pour la première fois
+                $_SESSION['first_load'] = true;
             }
         }
     }
-    ?>
+?>
     <link rel="stylesheet" href="./assets/css/profil.css?t=<?= time(); ?>">
-        <button class="buttonAcordeon" id="btn1"><span class="buttonAcrodeonLeftContent">Mon compte</span><span class="buttonAcrodeonRightContent">►</span></button>
-        <div class="acordeonContent" id="content1">
-            <button class="buttonAcordeonIn"><span class="buttonAcrodeonLeftContent">Informations personnelles</span><span class="buttonAcrodeonRightContent">►</span></button>
-            <div class="acordeonContentIn">
-                <form method="post" class="formPersonnalInfos" id="personalInfoForm">
+    <button class="buttonAcordeon" id="btn1"><span class="buttonAcrodeonLeftContent">Mon compte</span><span class="buttonAcrodeonRightContent">►</span></button>
+    <div class="acordeonContent" id="content1">
+        <button class="buttonAcordeonIn"><span class="buttonAcrodeonLeftContent">Informations personnelles</span><span class="buttonAcrodeonRightContent">►</span></button>
+        <div class="acordeonContentIn">
+            <form method="post" class="formPersonnalInfos" id="personalInfoForm">
                 <div class="formRow1">
                     <div>
                         <label for="nameId" class="labelForm">Nom</label>
@@ -106,64 +105,67 @@ if(!isset($_SESSION['user'])){
                         <input type="submit" value="modifier" id="personnalInfoModif" class="inputSubmit">
                         <div class="containeurCancelButton" id="cancelButtonContainer"></div>
                     </div>
-                </div> 
-                    <p id="errorMessage">
-                        <?php
-                        if(isset($updateResult)){
-                            if($updateResult == 'success'){
-                                ?><p class="updateResult">Vos informations ont bien été modifiées.</p><?php
-                            }else{
-                                ?><p class="updateResult">Une erreur est survenue lors de la modification de vos informations.</p><?php
-                            }
-                        }
-                        ?>
-                    </p>
-                </form>
-                <a href="<?= $router->generate('deconnexion');  ?>" class="deconnexionButton">Se déconnecter</a>
-                <a href="/modifier-le-mot-de-passe" class="deconnexionButton">Changer le mot de passe</a>
-            </div>
-            <button class="buttonAcordeonIn"><span class="buttonAcrodeonLeftContent">Carte bancaires enregistrées</span><span class="buttonAcrodeonRightContent">►</span></button>
-            <div class="acordeonContentIn">
-                <form method="post" class="formPersonnalInfos">
-                    <div class="formRow3">
-                        <div>
-                            <label for="numero" class="labelForm">Numéro de carte</label>
-                            <input type="text" name="numero" id="numero" value="" class="inputForm inputFormLarge">
-                        </div>
-                    </div>
-                    <div class="formRow6">
-                        <div>
-                            <label for="date" class="labelForm">Date d'expiration</label>
-                            <br>
-                            <input type="text" name="date" id="date" value="" class="inputForm inputFormSmall">
-                        </div>
-                        <div>
-                            <label for="crypto" class="labelForm">Cryptogramme</label>
-                            <br>
-                            <input type="text" name="crypto" id="crypto" value="" class="inputForm inputFormSmall">
-                        </div>
-                    </div>
-                    <div class="inputCBDiv">
-                        <input type="submit" value="Modifier" class="inputSubmit">
-                    </div>
-                </form>
-            </div>
-        </div>
-        <button class="buttonAcordeon" id="btn2"><span class="buttonAcrodeonLeftContent">Mes commandes</span><span class="buttonAcrodeonRightContent">►</span></button>
-        <div class="acordeonContent" id="content2">
-            <button class="buttonAcordeonIn"><span class="buttonAcrodeonLeftContent">Commandes en cours</span><span class="buttonAcrodeonRightContent">►</span></button>
-            <div class="acordeonContentIn">
-                <div id="commandeContainer">
-                    
                 </div>
-            </div>
-            <button class="buttonAcordeonIn"><span class="buttonAcrodeonLeftContent">Historique de commandes</span><span class="buttonAcrodeonRightContent">►</span></button>
-            <div class="acordeonContentIn">
+                <p id="errorMessage">
+                    <?php
+                    if (isset($updateResult)) {
+                        if ($updateResult == 'success') {
+                    ?>
+                <p class="updateResult">Vos informations ont bien été modifiées.</p>
+            <?php
+                        } else {
+            ?><p class="updateResult">Une erreur est survenue lors de la modification de vos informations.</p>
+        <?php
+                        }
+                    }
+        ?>
+        </p>
+            </form>
+            <a href="<?= $router->generate('deconnexion');  ?>" class="deconnexionButton">Se déconnecter</a>
+            <a href="/modifier-le-mot-de-passe" class="deconnexionButton">Changer le mot de passe</a>
+        </div>
+        <button class="buttonAcordeonIn"><span class="buttonAcrodeonLeftContent">Carte bancaires enregistrées</span><span class="buttonAcrodeonRightContent">►</span></button>
+        <div class="acordeonContentIn">
+            <form method="post" class="formPersonnalInfos">
+                <div class="formRow3">
+                    <div>
+                        <label for="numero" class="labelForm">Numéro de carte</label>
+                        <input type="text" name="numero" id="numero" value="" class="inputForm inputFormLarge">
+                    </div>
+                </div>
+                <div class="formRow6">
+                    <div>
+                        <label for="date" class="labelForm">Date d'expiration</label>
+                        <br>
+                        <input type="text" name="date" id="date" value="" class="inputForm inputFormSmall">
+                    </div>
+                    <div>
+                        <label for="crypto" class="labelForm">Cryptogramme</label>
+                        <br>
+                        <input type="text" name="crypto" id="crypto" value="" class="inputForm inputFormSmall">
+                    </div>
+                </div>
+                <div class="inputCBDiv">
+                    <input type="submit" value="Modifier" class="inputSubmit">
+                </div>
+            </form>
+        </div>
+    </div>
+    <button class="buttonAcordeon" id="btn2"><span class="buttonAcrodeonLeftContent">Mes commandes</span><span class="buttonAcrodeonRightContent">►</span></button>
+    <div class="acordeonContent" id="content2">
+        <button class="buttonAcordeonIn"><span class="buttonAcrodeonLeftContent">Commandes en cours</span><span class="buttonAcrodeonRightContent">►</span></button>
+        <div class="acordeonContentIn">
+            <div id="commandeContainer">
+
             </div>
         </div>
-        <button class="buttonAcordeon" id="btn3"><span class="buttonAcrodeonLeftContent">Mes commentaires</span><span class="buttonAcrodeonRightContent">►</span></button>
-        <div class="acordeonContent" id="content3">
+        <button class="buttonAcordeonIn"><span class="buttonAcrodeonLeftContent">Historique de commandes</span><span class="buttonAcrodeonRightContent">►</span></button>
+        <div class="acordeonContentIn">
         </div>
+    </div>
+    <button class="buttonAcordeon" id="btn3"><span class="buttonAcrodeonLeftContent">Mes commentaires</span><span class="buttonAcrodeonRightContent">►</span></button>
+    <div class="acordeonContent" id="content3">
+    </div>
     <script src="./assets/js/profil.js?t=<?= time(); ?>"></script>
     <script src="./controller/js/profilController.js?t=<?= time(); ?>"></script>
 <?php

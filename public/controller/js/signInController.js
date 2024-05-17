@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var errorMessages = document.getElementById('errorMessage');
 
     const emailI = document.getElementById('emailId');
@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var signInButton = document.getElementById('signInButton');
 
-    signInButton.addEventListener('click', function(event) {
+    signInButton.addEventListener('click', function (event) {
         event.preventDefault();
 
 
@@ -32,17 +32,17 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch("http://localhost:8080/controller/php/signInController.php", requestOptions)
             .then(response => response.json())
             .then(data => {
-                if(data.status == 'error') {
+                if (data.status == 'error') {
                     if (data.error === 'mailNotFound') {
                         self.location = '/connexion?error=mailNotFound';
                     } else if (data.error === 'wrongPassword') {
                         self.location = '/connexion?error=wrongPassword';
                     }
-                }else if(data.status == 'success') {
+                } else if (data.status == 'success') {
                     self.location = '/';
                 }
             })
-            .catch(error => 
+            .catch(error =>
                 self.location = '/connexion?error=UnexpectedError'
             );
     });

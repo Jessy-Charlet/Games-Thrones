@@ -87,21 +87,24 @@
     margin: auto;
 
     .filtersConditions {
-        .bold{
+        .bold {
             text-transform: uppercase;
             font-weight: 900;
-            color: rgb(80,80,80);
+            color: rgb(80, 80, 80);
         }
+
         .filtersContainer {
             background-color: white;
             border-radius: 15px;
             padding: 1em;
             margin-bottom: 3vw;
-            #filtersSup{
+
+            #filtersSup {
                 height: fit-content;
                 margin-top: 0.5em;
                 padding-left: 0.5em;
             }
+
             h3 {
                 padding: 0 0 1em 1em;
                 font-size: 1em;
@@ -180,7 +183,7 @@
 
             input {
                 width: 100%;
-                color:#482664;
+                color: #482664;
                 text-align: center;
                 border: 0;
                 font-weight: 700;
@@ -226,10 +229,11 @@
             }
         }
     }
+
     .oups {
         margin-top: 10vh;
 
     }
-    
+
 
 }

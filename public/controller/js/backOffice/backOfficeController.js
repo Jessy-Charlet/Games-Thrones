@@ -1,5 +1,5 @@
-document.addEventListener('DOMContentLoaded', function() {
-    
+document.addEventListener('DOMContentLoaded', function () {
+
     const addProductBtn = document.getElementById("bo_button_addProduct");
     const productForm = document.getElementById("bo_formAddProduct");
     productForm.style.display = "none";
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     addProductBtn.addEventListener('click', function() {
         productForm.style.display = "block";
     });
-    productForm.addEventListener('submit', function(event) {
+    productForm.addEventListener('submit', function (event) {
         event.preventDefault();
         let name = document.getElementById("name").value;
         let rate = document.getElementById("rate").value;
@@ -23,32 +23,32 @@ document.addEventListener('DOMContentLoaded', function() {
         let category = document.getElementById("category").value;
         let image = document.getElementById("images").value;
         let secondaryImage = document.getElementById("secondaryImages").value;
-        if(secondaryImage === "") {
+        if (secondaryImage === "") {
             secondaryImage = "none";
         }
-        if(name === "" || rate === "" || price === "" || quantity === "" || description === "" || color === "" || material === "" || brand === "" || category === "" || image === "") {
+        if (name === "" || rate === "" || price === "" || quantity === "" || description === "" || color === "" || material === "" || brand === "" || category === "" || image === "") {
             alert("Please fill all fields");
             return;
         }
 
-        if(isNaN(rate)){
+        if (isNaN(rate)) {
             alert("Please enter a valid rate");
             return;
         }
-        if(isNaN(price)){
+        if (isNaN(price)) {
             alert("Please enter a valid price");
             return;
         }
-        if(isNaN(quantity)){
+        if (isNaN(quantity)) {
             alert("Please enter a valid quantity");
             return;
         }
-        if(isNaN(category)){
+        if (isNaN(category)) {
             alert("Please enter a valid category");
             return;
         }
         const imageTest = /\.(jpe?g|png|gif|bmp)$/i;
-        if(!imageTest.test(image)) {
+        if (!imageTest.test(image)) {
             alert("Please enter a valid image");
             return;
         }
@@ -74,28 +74,28 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         fetch("http://localhost:8080/controller/php/backOffice/backOfficeController.php", requestOptions)
-        .then(response => response.json())
-        .then(data => {
-            if(data.status === "success") {
-                alert("Product added successfully");
-                productForm.style.display = "none";
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    alert("Product added successfully");
+                    productForm.style.display = "none";
 
-            } else if(data.status === "error"){
-                alert("Product already exists")
-            }
-        })
-        .catch(error => 
-            self.location = '/gt-admin?error=UnexpectedError'
-        );
+                } else if (data.status === "error") {
+                    alert("Product already exists")
+                }
+            })
+            .catch(error =>
+                self.location = '/gt-admin?error=UnexpectedError'
+            );
     });
-    
+
     const deleteButtons = document.querySelectorAll('.bo_deleteProduct_button');
     deleteButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const productId = this.closest('.bo_tbody_tr').querySelector('#td_product_id').textContent;
             const imageId = this.closest('.bo_tbody_tr').querySelector('#td_images_id').textContent;
             const secondaryImageId = this.closest('.bo_tbody_tr').querySelector('#td_secondary_image_id').textContent;
-            
+
             const formData = new FormData();
             formData.append("productId", productId);
             formData.append("imageId", imageId);
@@ -109,17 +109,17 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             fetch("http://localhost:8080/controller/php/backOffice/backOfficeController.php", requestOptions)
-            .then(response => response.json())
-            .catch(error =>
-                console.log(error)
-            );
+                .then(response => response.json())
+                .catch(error =>
+                    console.log(error)
+                );
         });
     });
 
     const updateButton = document.querySelectorAll('.bo_updateProduct_button');
     updateButton.forEach(button => {
         updateForm.style.display = "block";
-        button.addEventListener('click', function(event) {
+        button.addEventListener('click', function (event) {
             event.preventDefault();
 
             const addSecondaryImageBtn = document.getElementById('buttonAddImages');
@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateSecondaryImagesId.value = secondaryImageId;
             updateSecondaryImages.value = secondaryImagePath;
 
-            updateForm.addEventListener('submit', function(event) {
+            updateForm.addEventListener('submit', function (event) {
                 event.preventDefault();
                 
                 const formData = new FormData();

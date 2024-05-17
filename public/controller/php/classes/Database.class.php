@@ -1,26 +1,30 @@
 <?php
-class Database{
+class Database
+{
     private static $servername = 'localhost';
     private static $username = 'root';
     private static $password = '';
-    private static $BDD ='boutique';
+    private static $BDD = 'boutique';
     private static $conn = null;
 
-    public function __construct(){
+    public function __construct()
+    {
         die('Init function is not allowed');
     }
-    public static function connect(){ //fonction de connexion à la BDD
-        if (null == self::$conn){ //si la connexion est nulle
-            try{ //on essaie de se connecter
-                self::$conn = new PDO("mysql:host=".self::$servername.";"."dbname=".self::$BDD,self::$username,self::$password); //on se connecte à la BDD
+    public static function connect()
+    { //fonction de connexion à la BDD
+        if (null == self::$conn) { //si la connexion est nulle
+            try { //on essaie de se connecter
+                self::$conn = new PDO("mysql:host=" . self::$servername . ";" . "dbname=" . self::$BDD, self::$username, self::$password); //on se connecte à la BDD
                 self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            }catch(PDOException $e){
+            } catch (PDOException $e) {
                 die($e->getMessage());
             }
         }
         return self::$conn;
     }
-    public static function disconnect(){
+    public static function disconnect()
+    {
         self::$conn = null;
     }
 
@@ -178,9 +182,9 @@ class Database{
     public static function addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image, $secondaryImages){
         $conn = Database::connect();
 
-        try{
+        try {
             $conn->beginTransaction();
-        
+
             $sql = $conn->prepare("INSERT INTO product (name, rate, price, quantity, description, color, material, brand, category_id) VALUES (:name, :rate, :price, :quantity, :description, :color, :material, :brand, :category)");
             $sql->execute(
                 array(
@@ -206,7 +210,7 @@ class Database{
                 )
             );
             $sql->closeCursor();
-            if($secondaryImages !== "none"){
+            if ($secondaryImages !== "none") {
                 $sql = $conn->prepare("INSERT INTO image (url, main) VALUES (:url, :main)");
                 $sql->execute(
                     array(
@@ -226,14 +230,14 @@ class Database{
                 )
             );
             $conn->commit();
-        }
-        catch(PDOException $e){
+        } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
             $conn->rollback();
         }
     }
 
-    public static function testInsertProduct($name, $brand, $category){
+    public static function testInsertProduct($name, $brand, $category)
+    {
         $conn = Database::connect();
         $result = "success";
 
@@ -245,16 +249,17 @@ class Database{
                 ':category' => $category
             )
         );
-        if($sql->rowCount() > 0){
+        if ($sql->rowCount() > 0) {
             $result = "Product already exists";
         }
         return $result;
     }
 
-    public static function deleteProduct($id, $imageId, $secondaryImagesId){
+    public static function deleteProduct($id, $imageId, $secondaryImagesId)
+    {
         $conn = Database::connect();
-        
-        try{
+
+        try {
             $conn->beginTransaction();
 
             $sql = $conn->prepare("DELETE FROM review WHERE product_id = :id");
@@ -264,7 +269,7 @@ class Database{
                 )
             );
             $sql->closeCursor();
-        
+
             //delete from product_image table first
             $sql = $conn->prepare("DELETE FROM image_product WHERE product_id = :id OR image_id = :id");
             $sql->execute(
@@ -273,7 +278,7 @@ class Database{
                 )
             );
             $sql->closeCursor();
-        
+
             //delete main image
             $sql = $conn->prepare("DELETE FROM image WHERE id = :id");
             $sql->execute(
@@ -282,9 +287,9 @@ class Database{
                 )
             );
             $sql->closeCursor();
-        
+
             //delete secondary images
-            foreach($secondaryImagesId as $secondId){
+            foreach ($secondaryImagesId as $secondId) {
                 $sql = $conn->prepare("DELETE FROM image WHERE id = :id");
                 $sql->execute(
                     array(
@@ -293,7 +298,7 @@ class Database{
                 );
                 $sql->closeCursor();
             }
-        
+
             //delete product
             $sql = $conn->prepare("DELETE FROM product WHERE id = :id");
             $sql->execute(
@@ -302,16 +307,14 @@ class Database{
                 )
             );
             $sql->closeCursor();
-        
+
             $conn->commit();
             return true;
-        }
-        catch(PDOException $e){
+        } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
             $conn->rollback();
             return false;
         }
-
     }
 
     //public static function updateProduct($id, $name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image, $secondaryImages){
@@ -328,7 +331,7 @@ class Database{
 
         $mainImageId = (int)$mainImageId;
 
-        try{
+        try {
             $conn->beginTransaction();
 
             // Verification before update
@@ -444,11 +447,11 @@ class Database{
 
 
             // Return error if product or something already exist
-            if($result['name'] == $name && $result['brand'] == $brand && $result2['name'] == $category){
+            if($result['name'] == $name && $result['brand'] == $brand && $result2['name'] == $category_name){
                 $return = "ProductAlreadyExist";
                 return $return;
             }
-            if($result['name'] == $name){
+            if ($result['name'] == $name) {
                 $return = "NameAlreadyExist";
                 return $return;
             }
@@ -496,8 +499,7 @@ class Database{
 
             $conn->commit();
             return $return;
-        }
-        catch(PDOException $e){
+        } catch (PDOException $e) {
             $return = "UnexpectedError";
             echo "Error: " . $e->getMessage();
             $conn->rollback();
@@ -506,4 +508,3 @@ class Database{
     }
 }
 $conn = Database::connect();
-?>

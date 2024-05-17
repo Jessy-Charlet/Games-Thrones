@@ -63,7 +63,7 @@ $(document).ready(function () {
         }
     }
 
-    mediaQueryList.addListener(screenTest);
+    mediaQueryList.addEventListener('change', screenTest);
 
     /*** Menu de gauche */
     $("#infos").on("click", function () {
@@ -72,7 +72,7 @@ $(document).ready(function () {
         $("#shop").removeClass("active");
         $("#navSearch").slideUp("fast");
     });
-    $("#fleche").on("click", function(){
+    $("#fleche").on("click", function () {
         searchClose();
     })
 
@@ -95,7 +95,7 @@ $(document).ready(function () {
         const arrow = document.createElement('a');
         arrow.id = "fleche"
         arrow.textContent = "▲ ▲ ▲";
-        arrow.href="#upToTop";
+        arrow.href = "#upToTop";
         if (recherche != "") {
 
             const reponse = await fetch('../controller/php/recherche.php');
@@ -151,6 +151,4 @@ $(document).ready(function () {
             searchClose()
         }
     }
-
-
 })

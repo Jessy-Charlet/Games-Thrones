@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let submitBtn = document.getElementById('submitBtn');
     const phoneInput = document.getElementById('phoneId');
 
-    phoneInput.addEventListener('keyup', function(event) {
+    phoneInput.addEventListener('keyup', function (event) {
         // Supprime le dernier caractère avant d'ajouter un espace
-        if(phoneInput.value.length === 2 || phoneInput.value.length === 5 || phoneInput.value.length === 8 || phoneInput.value.length === 11) {
+        if (phoneInput.value.length === 2 || phoneInput.value.length === 5 || phoneInput.value.length === 8 || phoneInput.value.length === 11) {
             phoneInput.value += ' ';
         }
         phoneInput.value = phoneInput.value.replace(/[^\d ]/g, '');
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     phoneInput.addEventListener('change', checkAutoFill);
 
     // Add click event listener to the submit button
-    submitBtn.addEventListener('click', function(event) {
+    submitBtn.addEventListener('click', function (event) {
         // Prevent the default form submission
         event.preventDefault();
 
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         var password = document.getElementById('passwordId').value;
         var confirmPassword = document.getElementById('passwordConfirmId').value;
 
-        
+
 
         var errorMessages = document.getElementById('errorMessage');
         errorMessages.innerHTML = '';
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             return;
         }
 
-        if(phone !== ''){
+        if (phone !== '') {
             var phoneFormat = /^(\d{2} ){4}\d{2}$/;
             if (!phoneFormat.test(phone)) {
                 var errorMessage = 'Phone number format is incorrect. It should be like "00 00 00 00 00".';
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         }
 
-        if(email !== ''){
+        if (email !== '') {
             var emailFormat = /\S+@\S+\.\S+/;
             if (!emailFormat.test(email)) {
                 var errorMessage = 'Email format is incorrect.';
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         }
 
-        if(password !== ''){
+        if (password !== '') {
             var passwordFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&()!\/.,?;:_+=}{é~"#'-|è`\\ç^à@£$¤*µù%§<>°]).{6,255}$/;
             if (!passwordFormat.test(password)) {
                 var errorMessage = 'Password must contain at least one number and one uppercase and lowercase letter, a special character, and at least 6 or more characters.';
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         }
 
-        if(postalCode !== ''){
+        if (postalCode !== '') {
             var postalCodeFormat = /^\d{5}$/;
             if (!postalCodeFormat.test(postalCode)) {
                 var errorMessage = 'Postal code format is incorrect. It should be 5 digits.';
@@ -134,28 +134,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
         fetch("http://localhost:8080/controller/php/signUpController.php", requestOptions)
             .then(response => response.json())
             .then(data => {
-                if(data.status == 'error') {
+                if (data.status == 'error') {
                     if (data.error === 'mailAlreadyUsed') {
                         self.location = '/inscription?error=mailAlreadyUsed';
                     } else if (data.error === 'phoneAlreadyUsed') {
                         self.location = '/inscription?error=phoneAlreadyUsed';
                     }
-                }else if(data.status == 'success') {
+                } else if (data.status == 'success') {
                     self.location = '/';
                 }
             })
-            .catch(error => 
+            .catch(error =>
                 self.location = '/inscription?error=UnexpectedError'
-           
+
             );
     });
 });
-// 
-// 
-// 
-//  finir de faire les verifications 
-// 
-// 
-// 
-// 
-// 
+//
+//  finir de faire les verifications
+

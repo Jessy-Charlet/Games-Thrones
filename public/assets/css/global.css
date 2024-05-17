@@ -81,12 +81,14 @@ h2 {
         padding: 1em 2em;
         border-radius: 15px;
     }
-    p{
+
+    p {
         text-align: center;
-        span{
+
+        span {
             display: block;
             font-size: 200%;
-            color:#482664;
+            color: #482664;
             font-weight: 900;
         }
     }
@@ -96,20 +98,23 @@ h2 {
 
 /*** Contact ***/
 
-.contact{
+.contact {
     display: grid;
     padding: 0 5vw;
     align-items: center;
     justify-items: center;
     box-sizing: border-box;
     width: fit-content;
-    h3{
 
-    }
-    label{
+    h3 {}
+
+    label {
         padding-top: 1em;
     }
-    input, select, textarea{
+
+    input,
+    select,
+    textarea {
         box-sizing: border-box;
         padding: 1em;
         border: none;
@@ -117,10 +122,12 @@ h2 {
         background-color: #f1f2f6;
         width: 25vw;
     }
-    option:hover{
+
+    option:hover {
         background-color: #482664 !important;
     }
-    button{
+
+    button {
         background-color: #482664;
         padding: 1em 3em;
         border-radius: 10px;
@@ -132,19 +139,22 @@ h2 {
         text-transform: uppercase;
         transition: all 200ms;
     }
-    button:hover{
+
+    button:hover {
         background-color: white;
-        color:#482664;
+        color: #482664;
         box-shadow: 0 0 15px #482664;
         letter-spacing: 0.5em;
     }
-    p{ 
+
+    p {
         text-align: center;
-    span{
-        display: block;
-        font-size: 0.8em;
+
+        span {
+            display: block;
+            font-size: 0.8em;
+        }
     }
-}
 }
 
 
@@ -159,14 +169,14 @@ h2 {
         grid-template-rows: 10vh 10vh 10vh 54vh;
         justify-items: center;
         align-items: center;
-    
-    
+
+
         img {
             height: 95%;
             grid-column: 1/2;
             grid-row: 4/5;
-            
+
         }
-    
+
     }
 }

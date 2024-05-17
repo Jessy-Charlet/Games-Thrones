@@ -2,6 +2,7 @@
 *::before {
   box-sizing: border-box;
 }
+
 ul,
 li,
 a,
@@ -37,27 +38,30 @@ h2 {
   padding-top: 2em;
   margin: 0 auto;
 }
-.panierVide{
+
+.panierVide {
   text-align: center;
   background-color: white;
   border-radius: 10px;
   width: fit-content;
   padding: 0 5vw 1vh 5vw;
-  margin: 5vh auto; 
-  h2{
+  margin: 5vh auto;
+
+  h2 {
     font-size: 1.5em;
     color: black;
     padding: 5vh 0;
-    span{
+
+    span {
       font-size: 1.5em;
       font-weight: bold;
-      color:#401f5b;
+      color: #401f5b;
     }
   }
-  p{
 
-  }
-  a{
+  p {}
+
+  a {
     display: block;
     width: fit-content;
     background-color: #401f5b;
@@ -111,9 +115,11 @@ h2 {
   justify-content: space-between;
   width: 100%;
 }
+
 .panierItemTitle {
   margin: 0;
 }
+
 .panierContentLeft p {
   margin: 0.25em 0 0 0;
 }
@@ -172,6 +178,7 @@ h2 {
   padding: 1.5em;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
+
 .panierTotal {
   font-weight: 700;
   font-size: 1.125rem;
@@ -266,7 +273,7 @@ h2 {
   content: "★";
 }
 
-.rating-mini > span.active {
+.rating-mini>span.active {
   color: #baa35f;
   text-shadow: 1px 1px #482664;
 }
@@ -275,6 +282,7 @@ h2 {
   .panierImg {
     max-width: 8em;
   }
+
   .panierTitle {
     margin-top: 0;
   }
@@ -297,6 +305,7 @@ h2 {
   .panierRight {
     margin: 0;
   }
+
   .similarProductscontent {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }

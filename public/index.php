@@ -81,4 +81,3 @@ if (is_array($match)) {
     // 404 error 
     header("location:" . $router->generate('404') . "");
 }
-?>

@@ -45,12 +45,13 @@
             content: "▼";
             color: #482664;
         }
-        
+
         button:hover,
         a:hover {
             background-color: #1b1b1b;
         }
-        a:hover{
+
+        a:hover {
             color: #482664;
             background-color: white;
         }
@@ -166,18 +167,19 @@
             font-weight: bold;
         }
 
-        
+
         img {
             height: 4vh;
             transition: all 200ms;
         }
     }
-    
+
     a img:hover {
         height: 5vh;
     }
-    
+
 }
+
 .menuId {
     position: absolute;
     right: 50%;
@@ -387,9 +389,11 @@
                 height: 0.5vh;
                 border-radius: 5px;
             }
+
             div:first-child {
                 width: 50%;
             }
+
             div:nth-child(2) {
                 width: 75%;
             }

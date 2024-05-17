@@ -31,20 +31,20 @@
     }
 
     if (mysqli_num_rows($result) > 0) {
-       
+
         while ($row = mysqli_fetch_assoc($result)) {
             $product_id = $row["product_id"];
-            $product_name = $row["name"];    
+            $product_name = $row["name"];
             $image_data = $row["image"];
             $price = $row["price"];
 
             $rating = $row["average_rating"];
             $image_info = json_decode($image_data, true);
             $image_src = isset($image_info['main_image']) ? ".//" . $image_info['main_image'] : "";
-          
+
             echo "<div class='card'>";
             echo "  <div class='cardTop'>";
-            echo "    <a href='#'>"; 
+            echo "    <a href='#'>";
             echo "      <img class='cardImg' src='$image_src' alt='$product_name'>";
             echo "    </a>";
             echo "  </div>";
@@ -59,7 +59,7 @@
                 echo "        <span class='active'></span>";
             }
             for ($i = $rating; $i < 5; $i++) {
-                echo "        <span></span>"; 
+                echo "        <span></span>";
             }
             echo "      </div>";
             echo "    </div>";

@@ -2,6 +2,7 @@
 *::before {
   box-sizing: border-box;
 }
+
 ul,
 li,
 a {
@@ -37,16 +38,18 @@ button {
   background-color: #482664;
 }
 
-.dynNav{
+.dynNav {
   text-decoration: none;
   color: black
 }
+
 /*********** Start cartForm ******************/
 .cartForm {
   display: flex;
   width: 100%;
   gap: 2em;
 }
+
 /****** Start leftSide *******/
 .leftSide {
   width: 50%;
@@ -58,6 +61,7 @@ button {
   display: grid;
   grid-template-columns: 30% 70%;
 }
+
 /*** Start Slider ****/
 .slider {
   position: relative;
@@ -77,6 +81,7 @@ button {
   position: absolute;
   right: 50%;
 }
+
 .slider .slick-arrow {
   font-size: 0;
   border: none;
@@ -159,6 +164,7 @@ button {
   font-size: 1em;
   font-weight: 500;
 }
+
 /*** End Benefits ***/
 
 /****** End leftSide *******/
@@ -176,7 +182,7 @@ button {
   margin-top: 0;
   font-size: 2em;
   font-weight: 500;
-  color:#482664;
+  color: #482664;
 }
 
 .productInfo {
@@ -184,6 +190,7 @@ button {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 2em;
 }
+
 /*** Start ratingInfo ***/
 .ratingInfo {
   display: flex;
@@ -196,9 +203,10 @@ button {
   align-items: flex-end;
   font-size: 2em;
   position: relative;
-  color:#401f5b;
+  color: #401f5b;
   font-weight: bold;
 }
+
 .rating-result span {
   padding: 0;
 }
@@ -207,7 +215,7 @@ button {
   content: "★";
 }
 
-.rating-result > span.active {
+.rating-result>span.active {
   color: #baa35f;
   text-shadow: 1px 1px #482664;
 }
@@ -222,9 +230,11 @@ button {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  p { padding: 0.5em 0
+  p {
+    padding: 0.5em 0
+  }
 
-  };
+  ;
 }
 
 .productAdd {
@@ -260,7 +270,8 @@ button {
   gap: 1em;
   border-radius: 10px;
   transition: background-color 0.1s, box-shadow 0.1s 0.1s;
-  img{
+
+  img {
     height: 100%;
   }
 }
@@ -360,10 +371,11 @@ button {
   content: "★";
 }
 
-.rating-mini > span.active {
+.rating-mini>span.active {
   color: #baa35f;
   text-shadow: 1px 1px #482664;
 }
+
 /*** End Card ***/
 
 /********** Fin Products ************/
@@ -376,6 +388,7 @@ button {
   gap: 1em;
   background-color: transparent;
 }
+
 .reviewFormBtn {
   width: 300px;
   padding: 1em;
@@ -410,6 +423,7 @@ button {
 .formName label {
   margin: 0 1em 0 0;
 }
+
 .formName input {
   width: 198px;
 }
@@ -420,11 +434,11 @@ button {
   width: 250px;
 }
 
-.rating-area:not(:checked) > input {
+.rating-area:not(:checked)>input {
   display: none;
 }
 
-.rating-area:not(:checked) > label {
+.rating-area:not(:checked)>label {
   float: right;
   width: 32px;
   padding: 0;
@@ -435,27 +449,30 @@ button {
   text-shadow: #401f5b;
 }
 
-.rating-area:not(:checked) > label::before {
+.rating-area:not(:checked)>label::before {
   content: "★";
 }
 
-.rating-area > input:checked ~ label {
+.rating-area>input:checked~label {
   color: #baa35f;
   text-shadow: 1px 1px #482664;
 }
-.rating-area:not(:checked) > label:hover,
-.rating-area:not(:checked) > label:hover ~ label {
+
+.rating-area:not(:checked)>label:hover,
+.rating-area:not(:checked)>label:hover~label {
   color: #baa35f;
 }
-.rating-area > input:checked + label:hover,
-.rating-area > input:checked + label:hover ~ label,
-.rating-area > input:checked ~ label:hover,
-.rating-area > input:checked ~ label:hover ~ label,
-.rating-area > label:hover ~ input:checked ~ label {
+
+.rating-area>input:checked+label:hover,
+.rating-area>input:checked+label:hover~label,
+.rating-area>input:checked~label:hover,
+.rating-area>input:checked~label:hover~label,
+.rating-area>label:hover~input:checked~label {
   color: #baa35f;
   text-shadow: 1px 1px #b39a4f;
 }
-.rate-area > label:active {
+
+.rate-area>label:active {
   position: relative;
 }
 
@@ -513,25 +530,31 @@ button {
   .container {
     padding: 1em;
   }
+
   .cartForm {
     flex-wrap: wrap;
     gap: 3em;
   }
+
   .leftSide {
     width: 100%;
   }
+
   .rightSide {
     width: 100%;
   }
+
   .productPhotos {
     display: flex;
     flex-direction: column;
     gap: 3em;
   }
+
   .slider {
     order: 2;
     height: 40%;
   }
+
   .slick-slider .slick-list,
   .slick-slider .slick-track {
     display: flex;
@@ -546,6 +569,7 @@ button {
   .imageActuelle {
     order: 1;
   }
+
   .similarProductscontent {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -556,6 +580,7 @@ button {
     display: flex;
     flex-direction: column;
   }
+
   .productBenefits {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

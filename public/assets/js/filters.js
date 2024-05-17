@@ -64,7 +64,7 @@ $(document).ready(function () {
       values: [1, 1000],
       slide: function (event, ui) {
         $("#amount").val(ui.values[0] + " € - " + ui.values[1] + " €");
-        if(sessionStorage.getItem('color')){
+        if (sessionStorage.getItem('color')) {
           recherche($("#slider-range").slider("values", 0), $("#slider-range").slider("values", 1), sessionStorage.getItem('color'));
         } else {
           recherche($("#slider-range").slider("values", 0), $("#slider-range").slider("values", 1));
@@ -72,8 +72,8 @@ $(document).ready(function () {
       }
     });
     $("#amount").val($("#slider-range").slider("values", 0) +
-    " € - " + $("#slider-range").slider("values", 1) + " €");
-  });    
+      " € - " + $("#slider-range").slider("values", 1) + " €");
+  });
   $(function () {
     if (sessionStorage.getItem('color')) {
       $("#filtersSup").slideDown();
@@ -83,7 +83,7 @@ $(document).ready(function () {
       recherche($("#slider-range").slider("values", 0), $("#slider-range").slider("values", 1));
       $(this).slideUp();
     });
- 
+
   })
   recherche();
 })

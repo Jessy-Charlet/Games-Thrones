@@ -1,4 +1,4 @@
-main{
+main {
     width: 100%;
     height: 100%;
     display: grid;
@@ -9,7 +9,7 @@ main{
     grid-template-columns: 1fr;
 }
 
-.buttonAcordeon{
+.buttonAcordeon {
     border: none;
     background-color: white;
     color: rgb(72, 38, 100);
@@ -24,26 +24,26 @@ main{
     font-weight: bolder;
 }
 
-.buttonAcrodeonLeftContent{
+.buttonAcrodeonLeftContent {
     justify-self: self-start;
     margin-left: 50px;
 }
 
-.buttonAcrodeonRightContent{
+.buttonAcrodeonRightContent {
     transition: 0.3s;
 }
 
-.buttonAcrodeonRightContent:hover{
+.buttonAcrodeonRightContent:hover {
     font-size: 1.5em;
     transition: 0.3s;
 }
 
-.acordeonContent{
+.acordeonContent {
     display: none;
     justify-items: center;
 }
 
-.buttonAcordeonIn{
+.buttonAcordeonIn {
     border: none;
     background-color: white;
     color: rgb(72, 38, 100);
@@ -58,12 +58,12 @@ main{
     font-weight: bolder;
 }
 
-.acordeonContentIn{
+.acordeonContentIn {
     display: none;
     justify-items: center;
 }
 
-.formPersonnalInfos{
+.formPersonnalInfos {
     display: grid;
     width: 150%;
     height: 100%;
@@ -74,13 +74,13 @@ main{
     margin-bottom: 20px;
 }
 
-.labelForm{
+.labelForm {
     color: rgb(72, 38, 100);
-    font-weight:black;
+    font-weight: black;
     font-size: 1.5em;
 }
 
-.inputForm{
+.inputForm {
     border: none;
     background-color: rgb(228, 228, 228);
     color: rgb(72, 38, 100);
@@ -88,30 +88,30 @@ main{
     height: 4vh;
 }
 
-.inputFormSmall{
+.inputFormSmall {
     width: 80%;
     padding-left: 2%;
 }
 
-.inputFormLarge{
+.inputFormLarge {
     width: 90%;
     padding-left: 1%;
 }
 
-.formDiv{
+.formDiv {
     display: grid;
     height: 10.8vh;
     align-items: end;
 }
 
-.inputCBDiv{
+.inputCBDiv {
     display: grid;
     width: 100%;
     align-items: center;
     justify-content: center;
 }
 
-.inputSubmit{
+.inputSubmit {
     border: none;
     background-color: rgb(72, 38, 100);
     color: white;
@@ -125,7 +125,7 @@ main{
     cursor: pointer;
 }
 
-.buttonCancel{
+.buttonCancel {
     border: 2px solid rgb(72, 38, 100);
     background-color: white;
     color: rgb(72, 38, 100);
@@ -138,49 +138,49 @@ main{
     justify-content: center;
 }
 
-.containerCancelButton{
+.containerCancelButton {
     display: flex;
     justify-content: center;
     margin-top: 2%;
 }
 
-.formRow1{
+.formRow1 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
 
-.formRow2{
+.formRow2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
 
 }
 
-.formRow3{
+.formRow3 {
     display: grid;
     grid-template-columns: 2fr;
     gap: 10px;
 }
 
-.formRow4{
+.formRow4 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
 
-.formRow5{
+.formRow5 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
 
-.formRow6{
+.formRow6 {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
 
-.deconnexionButton{
+.deconnexionButton {
     border: none;
     background-color: transparent;
     color: grey;
@@ -191,6 +191,6 @@ main{
     cursor: pointer;
 }
 
-.deconnexionButton:hover{
+.deconnexionButton:hover {
     color: rgb(72, 38, 100);
 }

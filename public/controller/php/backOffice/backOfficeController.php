@@ -2,9 +2,9 @@
 require "../classes/Database.class.php";
 
 
-if($_SERVER['REQUEST_METHOD'] == "POST"){
-    if(isset($_POST['request'])){
-        if($_POST['request'] == "addProduct"){
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    if (isset($_POST['request'])) {
+        if ($_POST['request'] == "addProduct") {
             $name = $_POST['name'];
             $rate = $_POST['rate'];
             $price = $_POST['price'];
@@ -19,9 +19,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
             $testInsert = Database::testInsertProduct($name, $brand, $category);
 
-            
 
-            if($testInsert == "Product already exists"){
+
+            if ($testInsert == "Product already exists") {
                 var_dump("test");
                 echo json_encode(
                     array(
@@ -29,7 +29,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                         "message" => "Product already exists"
                     )
                 );
-            }elseif($testInsert == "success"){
+            } elseif ($testInsert == "success") {
                 Database::addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image, $secondaryImages);
                 echo json_encode(
                     array(
@@ -38,20 +38,19 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                     )
                 );
             }
-            
         }
 
-        if($_POST['request'] == "deleteProduct"){
+        if ($_POST['request'] == "deleteProduct") {
             $productId = $_POST['productId'];
             $imageId = $_POST['imageId'];
             $secondaryImageId = $_POST['secondaryImageId'];
-            
+
             $imageIds = preg_split('/,/', $secondaryImageId);
             $imageIds = array_filter($imageIds, 'is_numeric');
 
             $result = Database::deleteProduct($productId, $imageId, $imageIds);
 
-            if($result) {
+            if ($result) {
                 echo json_encode(
                     array(
                         'status' => 'success',
@@ -68,7 +67,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
             }
         }
 
-        if($_POST['request'] == "updateProduct"){
+        if ($_POST['request'] == "updateProduct") {
             $id = $_POST['id'];
             $name = $_POST['name'];
             $rate = $_POST['rate'];
@@ -95,35 +94,35 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
             $update = Database::updateProduct($id, $name, $brand, $color, $material, $price, $quantity, $rate, $description, $category_name, $imageId, $imagePath, $secondaryImageId, $secondaryImages, $arrayNewImages);
 
-            if($update == "success"){
+            if ($update == "success") {
                 echo json_encode(
                     array(
                         "status" => "success",
                         "message" => "ProductUpdated"
                     )
                 );
-            }elseif($update == "ProductAlreadyExist"){
+            } elseif ($update == "ProductAlreadyExist") {
                 echo json_encode(
                     array(
                         "status" => "error",
                         "message" => "ProductAlreadyExist"
                     )
-                );   
-            }elseif($update == "UnexpectedError"){
+                );
+            } elseif ($update == "UnexpectedError") {
                 echo json_encode(
                     array(
                         "status" => "error",
                         "message" => "ProductNotUpdated"
                     )
                 );
-            }elseif($update == "NameAlreadyExist"){
+            } elseif ($update == "NameAlreadyExist") {
                 echo json_encode(
                     array(
                         "status" => "error",
                         "message" => "NameAlreadyExist"
                     )
                 );
-            }elseif($update == "ImageAlreadyExist"){
+            } elseif ($update == "ImageAlreadyExist") {
                 echo json_encode(
                     array(
                         "status" => "error",

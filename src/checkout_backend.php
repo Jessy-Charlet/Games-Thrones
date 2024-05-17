@@ -24,10 +24,6 @@ $conn = Database::connect();
 $product = new crudProduct();
 $cartContent = $product->getProductsByCartJson($conn, $cartJson);
 
-
-/*var_dump($_SESSION);
-die();*/
-
 $cartId = uniqid();
 $_SESSION['cart_id'] = $cartId;
 
@@ -44,10 +40,6 @@ $stripeArray = [
         'cart_id' => $cartId
     ]
 ];
-/*echo "### CART ###\n";
-var_dump($cartContent);
-*/
-
 
 foreach ($cartContent['products'] as $key => $value) {
     $stripeArray["line_items"][$key] = [
@@ -60,18 +52,10 @@ foreach ($cartContent['products'] as $key => $value) {
         ],
         'quantity' => $cartContent['products'][$key]["quantity"],
     ];
-
 }
-/*
-echo "### STRIPE ###\n";
-var_dump($stripeArray);
-exit();
-*/
+
 $checkout_session = \Stripe\Checkout\Session::create($stripeArray);
 
-/*
-var_dump($checkout_session->__toString());
-exit();
-*/
+
 header("HTTP/1.1 303 See Other");
 header("Location: " . $checkout_session->url);

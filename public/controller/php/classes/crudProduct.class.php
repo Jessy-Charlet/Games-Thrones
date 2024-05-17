@@ -290,5 +290,4 @@ class crudProduct
     {
         $cartContent = $product->getProductsByCartJson($conn, $jsonData);
     }
-
 }
