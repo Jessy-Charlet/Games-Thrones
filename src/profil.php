@@ -1,5 +1,5 @@
 <?php
-if(!isset($_SESSION['user'])){    
+if(!isset($_SESSION['user'])){
     echo "
         <script>window.location.href = '/connexion'</sciprt>
     ";
