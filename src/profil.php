@@ -1,6 +1,8 @@
 <?php
-if (!isset($_SESSION['user'])) {
-    header('Location: ' . $router->generate('connexion'));
+if (!isset($_SESSION['user'])) {    
+    echo "
+        <script>window.location.href = '/connexion'</sciprt>
+    ";
     exit();
 } else {
     $id = $_SESSION['user'];
