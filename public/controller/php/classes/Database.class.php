@@ -347,106 +347,194 @@ class Database{
     }
 
     //public static function updateProduct($id, $name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image, $secondaryImages){
-    public static function updateProduct($id, $name, $brand, $color, $material, $price, $quantity, $rate, $description, $category_name, $imageId, $imagePath, $secondaryImageId, $secondaryImages){
-        $conn = Database::connect();
-        $return = "success";
-        $secondaryId = $secondaryImageId;
-        $secondaryImage = $secondaryImages;
-
-        try{
-            $conn->beginTransaction();
-            $sql = $conn->prepare('SELECT name, brand, category_id FROM product WHERE id = :id');
-            $sql->execute(
-                array(
-                    'id' => $id
-                )
-            );
-            $result = $sql->fetch(PDO::FETCH_ASSOC);
-            $sql->closeCursor();
-
-            $sql = $conn->prepare('SELECT name FROM category WHERE id = :id');
-            $sql->execute(
-                array(
-                    'id' => $result['category_id']
-                )
-            );
-            $result2 = $sql->fetch(PDO::FETCH_ASSOC);
-            $sql->closeCursor();
-
-            $sql = $conn->prepare('SELECT url FROM image WHERE url = :url');
-            $sql->execute(
-                array(
-                    'url' => $imagePath
-                )
-            );
-            $result3 = $sql->fetch(PDO::FETCH_ASSOC);
-            $sql->closeCursor();
-
-            foreach($secondaryImage as $image){
-                $sql = $conn->prepare('SELECT url FROM image WHERE url = :url');
+        public static function updateProduct($id, $name, $brand, $color, $material, $price, $quantity, $rate, $description, $category_name, $mainImageId, $mainImagePath, $secondaryImageId, $secondaryImages, $arrayNewImages){
+            $conn = Database::connect();
+            // prepare the return
+            $return = "success";
+    
+            if($arrayNewImages == "noNewImages"){
+                $newImage = false;
+            }else{
+                $newImage = true;
+            }
+    
+            $mainImageId = (int)$mainImageId;
+    
+            try {
+                $conn->beginTransaction();
+    
+                // Verification before update
+                $sql = $conn->prepare('SELECT name, brand, category_id FROM product WHERE id != :id');
                 $sql->execute(
                     array(
-                        'url' => $image
+                        'id' => $id
                     )
                 );
-                $result4 = $sql->fetch(PDO::FETCH_ASSOC);
+                $result = $sql->fetch(PDO::FETCH_ASSOC);
                 $sql->closeCursor();
-                if($result4['url'] == $image){
+    
+                $sql = $conn->prepare('SELECT name FROM category WHERE id = :id');
+                $sql->execute(
+                    array(
+                        'id' => $result['category_id']
+                    )
+                );
+                $result2 = $sql->fetch(PDO::FETCH_ASSOC);
+                $sql->closeCursor();
+    
+                $sql = $conn->prepare('SELECT url FROM image WHERE id != :id');
+                $sql->execute(
+                    array(
+                        'id' => $mainImageId
+                    )
+                );
+                $result3 = $sql->fetch(PDO::FETCH_ASSOC);
+                $sql->closeCursor();
+    
+    
+                // If try to add main images in a secondary place
+                if(strpos($arrayNewImages, "main")){
+                    $return = "cannotAddMainImage";
+                    return $return;
+                }
+                if($newImage === true){
+                    // Divide the string where there is ","
+                    $imageIdArray = explode(',', $secondaryImageId);
+                    $newSecondaryImagesArray = explode(',', $arrayNewImages);
+                    $oldSecondaryImages = explode(',', $secondaryImages);
+                    
+                    // Delete white space
+                    $imageIdArray = array_map('intval', array_map('trim', $imageIdArray));
+                    $newSecondaryImagesArray = array_map('trim', $newSecondaryImagesArray);
+                    $oldSecondaryImages = array_map('trim', $oldSecondaryImages);
+    
+                    $imageIdArray = array_filter($imageIdArray, function($value) {
+                        return $value !== 0;
+                    });
+                    $newSecondaryImagesArray = array_filter($newSecondaryImagesArray, function($value) {
+                        return $value !== '';
+                    });
+                    $oldSecondaryImages = array_filter($oldSecondaryImages, function($value) {
+                        return $value !== '';
+                    });
+    
+                    foreach($newSecondaryImagesArray as $newSecondaryImagesPath){
+                        if(in_array($newSecondaryImagesPath, $oldSecondaryImages)){
+                            $return = "SecondaryImageAlreadyExist";
+                            return $return;
+                            exit();
+                        }
+                    }
+    
+    
+                    // Verify if new images doesn't already exist
+                    $nbOfNewImages = count($newSecondaryImagesArray) - (count($newSecondaryImagesArray) - 1);
+                    for($countImages = 0; $countImages < $nbOfNewImages; $countImages++){
+                        foreach($imageIdArray as $imageId){
+                            $sql = $conn->prepare('SELECT url FROM image WHERE id != :id');
+                            $sql->execute(
+                                array(
+                                    'id' => $imageId
+                                )
+                            );
+                            $result4 = $sql->fetchAll(PDO::FETCH_ASSOC);
+                            $sql->closeCursor();
+                        }
+                        $getNbUrl = count($result4);
+                        for($countUrl = 0; $countUrl < $getNbUrl; $countUrl++){
+                            if(in_array($result4[$countUrl]['url'], $newSecondaryImagesArray)){
+                                $return = "secondaryImageAlreadyExistInDataBase";
+                                return $return;
+                                exit();
+                            }
+                        }
+    
+                        // If image doesn't exist
+                        foreach($newSecondaryImagesArray as $image){
+                            $sql = $conn->prepare("INSERT INTO image (url, main) VALUES (:url, :main)");
+                            $sql->execute(
+                                array(
+                                    ':url' => $image,
+                                    ':main' => 0
+                                )
+                            );
+                            $newImageId = $conn->lastInsertId();
+                            $sql->closeCursor();
+    
+                            $sql = $conn->prepare("INSERT INTO image_product (product_id, image_id) VALUES (:product_id, :image_id)");
+                            $sql->execute(
+                                array(
+                                    ":product_id" => $id,
+                                    ":image_id" => $newImageId
+                                )
+                            );
+                            $sql->closeCursor();
+                        }
+                    }
+                }
+           
+    
+    
+                // Return error if product or something already exist
+                if($result['name'] == $name && $result['brand'] == $brand && $result2['name'] == $category_name){
+                    $return = "ProductAlreadyExist";
+                    return $return;
+                }
+                if ($result['name'] == $name) {
+                    $return = "NameAlreadyExist";
+                    return $return;
+                }
+                if($result3['url'] == $mainImagePath){
                     $return = "ImageAlreadyExist";
                     return $return;
                 }
-            }
-
-            if($result['name'] == $name && $result['brand'] == $brand && $result2['name'] == $category){
-                $return = "ProductAlreadyExist";
+    
+                $sql = $conn->prepare('SELECT id FROM category WHERE name = :name');
+                $sql->execute(
+                    array(
+                        ":name" => $category_name
+                    )
+                );
+                $result5 = $sql->fetch(PDO::FETCH_ASSOC);
+                $category = $result5['id'];
+    
+                // Update the product
+                $sql = $conn->prepare('UPDATE product SET `name` = :name, `rate` = :rate, `price` = :price, `quantity` = :quantity, `description` = :description, `color` = :color, `material` = :material, `brand` = :brand, `category_id` = :category WHERE id = :id');
+                $sql->execute(
+                    array(
+                        ":name" => $name,
+                        ":rate" => $rate,
+                        ":price" => $price,
+                        ":quantity" => $quantity,
+                        ":description" => $description,
+                        ":color" => $color,
+                        ":material" => $material,
+                        ":brand" => $brand,
+                        ":category" => $category,
+                        ":id" => $id
+                    )
+                );
+                $sql->closeCursor();
+    
+                // Update the images
+                $sql = $conn->prepare('UPDATE image SET `url` = :url WHERE id = :id');
+                $sql->execute(
+                    array(
+                        ":url" => $mainImagePath,
+                        ":id" => $mainImageId
+                    )
+                );
+                $sql->closeCursor();
+    
+                $conn->commit();
+                return $return;
+            } catch (PDOException $e) {
+                $return = "UnexpectedError";
+                echo "Error: " . $e->getMessage();
+                $conn->rollback();
                 return $return;
             }
-            if($result['name'] == $name){
-                $return = "NameAlreadyExist";
-                return $return;
-            }
-            if($result3['url'] == $imagePath){
-                $return = "ImageAlreadyExist";
-                return $return;
-            }
-
-            /*$sql = $conn->prepare('UPDATE product SET `name` = :name, `rate` = :rate, `price` = :price, `quantity` = :quantity, `description` = :description, `color` = :color, `material` = :material, `brand` = :brand, `category` = :category WHERE id = :id');
-            $sql->execute(
-                array(
-                    ":name" => $name,
-                    ":rate" => $rate,
-                    ":price" => $price,
-                    ":quantity" => $quantity,
-                    ":description" => $description'
-                    ":color" => $color,
-                    ":material" => $material,
-                    ":brand" => $brand,
-                    ":category" => $category,
-                    ":id" => $id
-                )
-            );
-            $sql->closeCursor();
-
-            $sql = $conn->prepare('UPDATE image SET `url` = :url WHERE id = :id');
-            $sql->execute(
-                array(
-                    ":url" => $imagePath,
-                    ":id" => $imageId
-                )
-            );
-            $sql->closeCursor();
-            */
-
-            $conn->commit();
-            return $return;
         }
-        catch(PDOException $e){
-            $return = "UnexpectedError";
-            echo "Error: " . $e->getMessage();
-            $conn->rollback();
-            return $return;
-        }
-    }
 }
 $conn = Database::connect();
 ?>
