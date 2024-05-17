@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Get the submit button element
     let submitBtn = document.getElementById('submitBtn');
     const phoneInput = document.getElementById('phoneId');
+    const errorMessages = document.getElementById('errorMessage');
 
     phoneInput.addEventListener('keyup', function (event) {
         // Supprime le dernier caractère avant d'ajouter un espace
@@ -25,25 +26,44 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 
     // Fonction pour vérifier le remplissage automatique
+    function formatPhoneNumber() {
+        let phoneNumber = phoneInput.value.replace(/\D/g, ''); // Retirer tous les caractères non numériques
+
+        if (phoneNumber.length > 10) {
+            phoneNumber = phoneNumber.substring(0, 10); // Garder seulement les 10 premiers chiffres
+        }
+
+        let formattedNumber = '';
+        for (let i = 0; i < phoneNumber.length; i += 2) {
+            formattedNumber += phoneNumber.slice(i, i + 2) + ' ';
+        }
+        formattedNumber = formattedNumber.trim();
+        
+        phoneInput.value = formattedNumber;
+
+        let errorMessagesValue = errorMessages.value;
+
+        // Vérifier le format et afficher un message d'erreur si nécessaire
+        const phoneFormat = /^(\d{2} ){4}\d{2}$/;
+        if (!phoneFormat.test(formattedNumber)) {
+            errorMessages.textContent = 'Le format du numéro de téléphone est incorrect. Il doit être "00 00 00 00 00".';
+        } else {
+            errorMessages.textContent = '';
+        }
+    }
+
+    // Vérifier et formater le numéro de téléphone à chaque entrée
+    phoneInput.addEventListener('input', formatPhoneNumber);
+
+    // Fonction pour vérifier le remplissage automatique
     function checkAutoFill() {
         if (phoneInput.value !== '') {
-            // Action à effectuer si le champ est rempli automatiquement
-            console.log('Le champ Numéro de téléphone a été rempli automatiquement.');
             formatPhoneNumber(); // Formater immédiatement si déjà rempli
-            // Ajouter des écouteurs pour les changements dans le champ
-            phoneInput.removeEventListener('input', checkAutoFill);
-            phoneInput.removeEventListener('change', checkAutoFill);
-            phoneInput.addEventListener('input', formatPhoneNumber);
-            phoneInput.addEventListener('change', formatPhoneNumber);
         }
     }
 
     // Vérifier le champ après un délai pour le remplissage automatique
     setTimeout(checkAutoFill, 100);
-
-    // Ajouter des écouteurs pour les changements dans le champ initial
-    phoneInput.addEventListener('input', checkAutoFill);
-    phoneInput.addEventListener('change', checkAutoFill);
 
     // Add click event listener to the submit button
     submitBtn.addEventListener('click', function (event) {
@@ -83,7 +103,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             var phoneFormat = /^(\d{2} ){4}\d{2}$/;
             if (!phoneFormat.test(phone)) {
                 var errorMessage = 'Phone number format is incorrect. It should be like "00 00 00 00 00".';
-                errorMessages.innerHTML = errorMessage;
+                errorMessages.value = errorMessage;
                 return;
             }
         }
