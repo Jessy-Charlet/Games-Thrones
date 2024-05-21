@@ -288,6 +288,17 @@ $(document).ready(function () {
         descriptionForm.value = products[i]["description"];
         description.appendChild(descriptionLabel);
         description.appendChild(descriptionForm);
+        // Main image ID
+        const mainImageId = document.createElement('div');
+        const mainImageIdLabel = document.createElement('label');
+        mainImageIdLabel.for = "mainImageId";
+        mainImageIdLabel.textContent = "ID Image principale";
+        const mainImageIdForm = document.createElement('input');
+        mainImageIdForm.type = 'TEXT';
+        mainImageIdForm.name = 'mainImageId';
+        mainImageIdForm.value = products[i][0][1];
+        mainImageId.appendChild(mainImageIdLabel);
+        mainImageId.appendChild(mainImageIdForm);
 
         // annuler valider
         const resetForm = document.createElement('button');

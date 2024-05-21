@@ -80,7 +80,23 @@
                             <div class="textarea">
                                 <label for="description">Description</label>
                                 <textarea name="description" id="description" rows="8">La chaise gaming est dotée d\'un support lombaire amovible, qui peut protéger efficacement la colonne vertébrale et le cou. L\'oreiller lombaire avec fonction de massage produit plus de 20000 vibrations par heure pour soulager efficacement la fatigue pendant un travail ou un gaming. L\'oreiller lombaire a un câble USB pour se connecter à la prise de courant. L\'interrupteur sur le cordon vous permet d\'activer et de désactiver la fonction de massagePOSTURE CONFORTABLE - Il s\'agit d\'une véritable chaise gamer pour les passionnés de gamers! Ce chaise gaming massante offre un soutien total de la tête aux pieds. L\'angle du dossier peut être facilement ajusté de 90° à 135°. Le repose-pieds, l\'appui-tête et l\'oreiller lombaire vous permettent de vous allonger en attendant que votre fête soit enfin en ligne. Le dossier et les accoudoirs sont entièrement rembourrés de éponge pour fournir un soutien adéquat pour la colonne vertébrale et les coudes REMBOURRÉ - Le dossier et les accoudoirs sont en éponge entièrement élastique et ne se déforment pas, vous pouvez donc profiter longtemps de cette siège gaming. La selle est en éponge de 8 cm d\'épaisseur qui offre une densité d\'assise constante pour les longues sessions. Le cuir PU perforé avec un aspect fibre de carbone assure la respirabilité pour les joueurs à long terme. Nos chaise gaming massage avec motif en V de l\'appui-tête au soutien lombaire, symbolisant la victoire
-                        </textarea>
+                                </textarea>
+                            </div>
+                            <div>
+                                <label for="mainImageId">ID Image principale</label>
+                                <input type="text" name="mainImageId" id="mainImageId" value="56" required>
+                            </div>
+                            <div>
+                                <label for="mainImagePath">Image principale</label>
+                                <input type="text" name="mainImagePath" id="mainImagePath" value="product_2_main_image.jpg" required>
+                            </div>
+                            <div>
+                                <label for="secondaryImageId">ID Image(s) secondaire(s)</label>
+                                <input type="text" name="secondaryImageId" id="secondaryImageId" value="" required>
+                            </div>
+                            <div>
+                                <label for="secondaryImagePath">Image(s) secondaire(s)</label>
+                                <input type="text" name="secondaryImagePath" id="secondaryImagePath" value="" required>
                             </div>
                             <div>
                                 <input type="submit" value="Annuler" />

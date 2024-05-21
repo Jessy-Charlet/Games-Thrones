@@ -24,8 +24,13 @@ if(isset($_POST['searching'])){
 
         // TABLEAU DE TABLEAU DES DONNÉES DE CHAQUE PRODUIT
         $products = Database::getAllProduct();
+        
 
         foreach($products as $product){
+            $productImages = Database::getImagesByProductId($product['id']);
+            $productImage = $productImages['everything'];
+            array_push($product, $productImage);
+
             $category_id = $product['category_id'];
             $category = Database::getCategoryName($category_id);
             $product['category_id'] = $category['name'];
