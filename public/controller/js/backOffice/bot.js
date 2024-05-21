@@ -207,6 +207,7 @@ $(document).ready(function () {
         nameForm.type = 'TEXT';
         nameForm.name = 'name';
         nameForm.value = products[i]["name"];
+        nameForm.id = "name";
         name.appendChild(nameLabel);
         name.appendChild(nameForm);
         // prix
@@ -218,6 +219,7 @@ $(document).ready(function () {
         priceForm.type = 'TEXT';
         priceForm.name = 'price';
         priceForm.value = products[i]["price"];
+        priceForm.id = "price";
         price.appendChild(priceLabel);
         price.appendChild(priceForm);
         // Quantité
@@ -229,6 +231,7 @@ $(document).ready(function () {
         quantityForm.type = 'TEXT';
         quantityForm.name = 'quantity';
         quantityForm.value = products[i]["quantity"];
+        quantityForm.id = "quantity";
         quantity.appendChild(quantityLabel);
         quantity.appendChild(quantityForm);
         // Couleur
@@ -240,6 +243,7 @@ $(document).ready(function () {
         colorForm.type = 'TEXT';
         colorForm.name = 'color';
         colorForm.value = products[i]["color"];
+        colorForm.id = "color";
         color.appendChild(colorLabel);
         color.appendChild(colorForm);
         // Matière
@@ -251,6 +255,7 @@ $(document).ready(function () {
         materialForm.type = 'TEXT';
         materialForm.name = 'material';
         materialForm.value = products[i]["material"];
+        materialForm.id = "material";
         material.appendChild(materialLabel);
         material.appendChild(materialForm);
         // Marque
@@ -262,6 +267,7 @@ $(document).ready(function () {
         brandForm.type = 'TEXT';
         brandForm.name = 'brand';
         brandForm.value = products[i]["brand"];
+        brandForm.id = "brand";
         brand.appendChild(brandLabel);
         brand.appendChild(brandForm);
         // Catégorie
@@ -274,6 +280,7 @@ $(document).ready(function () {
         categoryForm.name = 'category';
         // Write id but it's the name of the category
         categoryForm.value = products[i]["category_id"];
+        categoryForm.id = "category";
         category.appendChild(categoryLabel);
         category.appendChild(categoryForm);
         // Description
@@ -286,8 +293,25 @@ $(document).ready(function () {
         descriptionForm.rows = '10';
         descriptionForm.name = 'description';
         descriptionForm.value = products[i]["description"];
+        descriptionForm.id = "description";
         description.appendChild(descriptionLabel);
         description.appendChild(descriptionForm);
+        // Rate
+        const rate = document.createElement('div');
+        rate.classList.add('textarea');
+        const rateLabel = document.createElement('label');
+        rateLabel.for = 'description';
+        rateLabel.textContent = 'rate';
+        const rateForm = document.createElement('input');
+        rateForm.name = 'rate';
+        rateForm.value = products[i]["rate"];
+        rateForm.id = "rate";
+        rateForm.disabled = true;
+        rate.appendChild(rateLabel);
+        rate.appendChild(rateForm);
+
+        //MAIN IMAGE
+
         // Main image ID
         const mainImageId = document.createElement('div');
         const mainImageIdLabel = document.createElement('label');
@@ -296,10 +320,110 @@ $(document).ready(function () {
         const mainImageIdForm = document.createElement('input');
         mainImageIdForm.type = 'TEXT';
         mainImageIdForm.name = 'mainImageId';
-        mainImageIdForm.value = products[i][0][1];
+        mainImageIdForm.value = products[i]["0"][1];
+        mainImageIdForm.disabled = true;
         mainImageId.appendChild(mainImageIdLabel);
         mainImageId.appendChild(mainImageIdForm);
+        // Main image path
+        const mainImagePath = document.createElement('div');
+        const mainImagePathLabel = document.createElement('label');
+        mainImagePathLabel.setAttribute('for', 'mainImagePath');
+        mainImagePathLabel.textContent = 'Chemin Image principale';
+        const mainImagePathForm = document.createElement('input');
+        mainImagePathForm.type = 'text';
+        mainImagePathForm.name = 'mainImagePath';
+        mainImagePathForm.value = products[i]["0"][0];
+        mainImagePathForm.disabled = true;
+        mainImagePath.appendChild(mainImagePathLabel);
+        mainImagePath.appendChild(mainImagePathForm);
 
+        // SECONDARY IMAGES
+
+        // Secondary images id
+        const secondaryImageId = document.createElement('div');
+        const secondaryImageIdLabel = document.createElement('label');
+        secondaryImageIdLabel.setAttribute('for', 'secondaryImageId');
+        secondaryImageIdLabel.textContent = 'Lien Image secondaire';
+        const secondaryImageIdForm = document.createElement('input');
+        secondaryImageIdForm.type = 'text';
+        secondaryImageIdForm.name = 'secondaryImageId';
+        secondaryImageIdForm.disabled = true;
+        
+        let secondaryIds = [];
+        for (let j = 3; j < products[i]["0"].length; j += 2) {
+            secondaryIds.push(products[i]["0"][j]);
+        }
+        secondaryImageIdForm.value = secondaryIds.join(', ');
+        
+        secondaryImageId.appendChild(secondaryImageIdLabel);
+        secondaryImageId.appendChild(secondaryImageIdForm);
+
+
+        // Secondary image path
+        const secondaryImagePath = document.createElement('div');
+        const secondaryImagePathLabel = document.createElement('label');
+        secondaryImagePathLabel.setAttribute('for', 'secondaryImagePath');
+        secondaryImagePathLabel.textContent = 'Lien Image secondaire';
+        const secondaryImagePathForm = document.createElement('input');
+        secondaryImagePathForm.type = 'text';
+        secondaryImagePathForm.name = 'secondaryImagePath';
+        secondaryImagePathForm.disabled = true;
+        
+        // Loop to get secondary image links
+        let secondaryLinks = [];
+        for (let j = 2; j < products[i]["0"].length; j += 2) {
+            secondaryLinks.push(products[i]["0"][j]);
+        }
+        secondaryImagePathForm.value = secondaryLinks.join(', ');
+        
+        secondaryImagePath.appendChild(secondaryImagePathLabel);
+        secondaryImagePath.appendChild(secondaryImagePathForm);
+
+        // Ajouter une image
+        const addImageBtn = document.createElement('button');
+        addImageBtn.setAttribute('type', 'button');
+        addImageBtn.textContent = "Ajouter une image";
+        addImageBtn.classList.add('AddImage');
+
+        let imageInputAdd = 0;
+
+        addImageBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            const addImageLabel = document.createElement('label');
+            addImageLabel.setAttribute('for', 'addImageForm');
+            addImageLabel.textContent = "Ajouter une image";
+
+            const addImageForm = document.createElement('input');
+            addImageForm.setAttribute('type', 'text');
+            addImageForm.setAttribute('name', 'addImageForm');
+            addImageForm.setAttribute('id', 'newImages')
+
+            const annulerAddImage = document.createElement('button');
+            annulerAddImage.setAttribute('type', 'button');
+            annulerAddImage.classList.add('annulerAddImage');
+            annulerAddImage.textContent = "Annuler l'ajout d'image"
+
+            
+            if(imageInputAdd === 0){
+                form.appendChild(addImageLabel);
+                form.appendChild(addImageForm);
+                form.appendChild(annulerAddImage);
+            }
+
+            annulerAddImage.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                form.removeChild(addImageLabel);
+                form.removeChild(addImageForm);
+                form.removeChild(annulerAddImage);
+
+                imageInputAdd = 0;
+            })
+            
+            imageInputAdd++;
+        });
+        
         // annuler valider
         const resetForm = document.createElement('button');
         resetForm.type = 'button';
@@ -314,6 +438,12 @@ $(document).ready(function () {
         updateForm.value = products[i]["id"];
         updateForm.textContent = 'valider';
 
+        updateForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const id = updateForm.value;
+            updateProduct(id, name, rate, price, quantity, color, material, brand, category, description, mainImageId, mainImagePath, secondaryImageId, secondaryImagePath);
+        });
+
         // Ajouter les éléments à la liste
         blockBack.appendChild(blockHead);
         blockBack.appendChild(blockBody);
@@ -325,11 +455,83 @@ $(document).ready(function () {
         form.appendChild(material);
         form.appendChild(brand);
         form.appendChild(category);
+        form.appendChild(rate);
         form.appendChild(description);
+        form.appendChild(mainImageId);
+        form.appendChild(mainImagePath);
+        form.appendChild(secondaryImageId);
+        form.appendChild(secondaryImagePath);
+        form.appendChild(addImageBtn);
         form.appendChild(resetForm);
         form.appendChild(updateForm);
         liste.appendChild(blockBack);
         return liste;
+    }
+
+    async function updateProduct(id, name, rate, price, quantity, color, material, brand, category, description, mainImageId, mainImagePath, secondaryImageId, secondaryImagePath) {
+
+
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('name', name);
+        formData.append('rate', rate);
+        formData.append('price', price);
+        formData.append('quantity', quantity);
+        formData.append('description', description);
+        formData.append('color', color);
+        formData.append('material', material);
+        formData.append('brand', brand);
+        formData.append('category_name', category);
+        formData.append('image_id', mainImageId)
+        formData.append('image_path', mainImagePath);
+        formData.append('secondary_image_id', secondaryImageId);
+        formData.append('secondary_image_path', secondaryImagePath);
+        formData.append('request', "updateProduct");
+        if(newImageCount > 0){
+            const newImages = document.getElementById('newSecondaryImages');
+            const newImagesValue = newImages.value;
+            if(newImagesValue.length > 0){
+                formData.append('newImages', 'true');
+                formData.append('newImagesPath', newImagesValue);
+            }else{
+                formData.append('newImages', 'false');
+            }           
+        }else{
+            formData.append('newImages', 'false');
+        }
+        
+        const requestOptions = {
+            method: "POST",
+            Header: "Content-Type: multipart/form-data",
+            body: formData
+        }
+        
+        fetch('http://localhost:8080/controller/php/backOffice/backOfficeController.php', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                location.reload();
+            } else if (data.status === "error") {
+                if (data.message === "ProductAlreadyExist") {
+                    alert("Product already exists");
+                } else if (data.message === "NameAlreadyExist") {
+                    alert("Product name already exists");
+                } else if (data.message === "ProductNotUpdated") {
+                    alert("Unexpected error");
+                } else if (data.message === "ImageAlreadyExist") {
+                    alert("Image already exists");
+                } else if (data.message === "secondaryImageAlreadyExistInDataBase") {
+                    alert("Secondary image already exists in the database");
+                } else if (data.message === "cannotAddMainImage") {
+                    alert("Cannot add main image");
+                } else if (data.message === "SecondaryImageAlreadyExist") {
+                    alert("Secondary image already exists");
+                }
+            }                 
+        })
+        .catch(error =>
+            console.log(error)
+        )
     }
 
     async function product(recherche) {
@@ -362,6 +564,11 @@ $(document).ready(function () {
             $(".blockBody").hide();
             openClose();
         }
+
+
+
+
+
     }
     async function customer(recherche) {
         const formData = new FormData();
@@ -450,4 +657,7 @@ $(document).ready(function () {
                 break;
         }
     })
+    
+    // Update product
+
 })
