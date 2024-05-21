@@ -1,5 +1,5 @@
 <?php
-require('../public/controller/php/displayProduct.php');
+require ('../public/controller/php/displayProduct.php');
 $images = Database::getImagesByProductId($_GET["id"]);
 $product = Database::getProductById($_GET["id"]);
 function sliderPhotos($images, $product)
@@ -17,31 +17,37 @@ $def = "index";
 $dPath = $_SERVER['REQUEST_URI'];
 $dChunks = explode("/", $dPath);
 
-echo('<a class="dynNav" href="/">Accueil</a><span class="dynNav"> > </span>');
-for($i=1; $i<count($dChunks); $i++ ){
+echo ('<a class="dynNav" href="/">Accueil</a><span class="dynNav"> > </span>');
+for ($i = 1; $i < count($dChunks); $i++) {
     if ($i == count($dChunks) - 1 && isset($product)) {
-        echo('<a class="dynNav" href="/');
-        for($j=1; $j<=$i; $j++ ){
-            echo($dChunks[$j]);
-            if($j!=count($dChunks)-1){ echo("/");}
+        echo ('<a class="dynNav" href="/');
+        for ($j = 1; $j <= $i; $j++) {
+            echo ($dChunks[$j]);
+            if ($j != count($dChunks) - 1) {
+                echo ("/");
+            }
         }
-        echo('">');
-        echo(str_replace("_" , " " , $product["name"]));
-        echo('</a>');
+        echo ('">');
+        echo (str_replace("_", " ", $product["name"]));
+        echo ('</a>');
     } else {
-        echo('<a class="dynNav" href="/');
-        for($j=1; $j<=$i; $j++ ){
-            echo($dChunks[$j]);
-            if($j!=count($dChunks)-1){ echo("/");}
+        echo ('<a class="dynNav" href="/');
+        for ($j = 1; $j <= $i; $j++) {
+            echo ($dChunks[$j]);
+            if ($j != count($dChunks) - 1) {
+                echo ("/");
+            }
         }
-        echo('">');
+        echo ('">');
         $prChunks = explode(".", $dChunks[$i]);
-        if ($prChunks[0] == $def) $prChunks[0] = "";
-        echo(str_replace("_" , " " , $prChunks[0]));
-        echo('</a><span class="dynNav"> > </span>');
+        if ($prChunks[0] == $def)
+            $prChunks[0] = "";
+        echo (str_replace("_", " ", $prChunks[0]));
+        echo ('</a><span class="dynNav"> > </span>');
     }
 }
 ?>
+
 
 
 <section class="section">
@@ -54,11 +60,12 @@ for($i=1; $i<count($dChunks); $i++ ){
                             <ul>
                                 <?php
                                 sliderPhotos($images, $product)
-                                ?>
+                                    ?>
                             </ul>
                         </div>
                         <div class="imageActuelle">
-                            <img class="imageMain" src="./assets/img/products/<?= $images['main'] ?>" alt="Chaise gaming">
+                            <img class="imageMain" src="./assets/img/products/<?= $images['main'] ?>"
+                                alt="Chaise gaming">
                         </div>
                         <div class="sliderDots"></div>
                     </div>
@@ -68,7 +75,8 @@ for($i=1; $i<count($dChunks); $i++ ){
                             <p class="benefitsItemText">GARANTIE</p>
                         </div>
                         <div class="benefitsItem">
-                            <img class="benefitsItemImg" src="./assets/img/product/shipped.png" alt="Car with free shipping">
+                            <img class="benefitsItemImg" src="./assets/img/product/shipped.png"
+                                alt="Car with free shipping">
                             <p class="benefitsItemText">LIVRAISON GRATUITE</p>
                         </div>
                         <div class="benefitsItem">
@@ -110,7 +118,8 @@ for($i=1; $i<count($dChunks); $i++ ){
                             <div class="productAdd">
                                 <div class="quantity">
                                     <label for="quantity">Quantité</label><br>
-                                    <input id="product_quantity" type="number" class="quantity" name="quantity" min="1" max="<?= $product["quantity"] ?>" value="1">
+                                    <input id="product_quantity" type="number" class="quantity" name="quantity" min="1"
+                                        max="<?= $product["quantity"] ?>" value="1">
                                 </div>
                                 <button id="product_basketButton" class="basketButton" type="submit">
                                     <span>Ajouter au panier</span> <img src="./assets/img/icon_panier.png" alt="">
@@ -138,8 +147,18 @@ for($i=1; $i<count($dChunks); $i++ ){
     echo '</div></section>';
     ?>
 
-
 </section>
+
+<?php
+$productId = $_GET["id"];
+$javascript = "<script> 
+        const productId = $productId;
+        </script>";
+echo $javascript
+    ?>
+
+    
+
 <section id="Commentaires">
     <div class="container">
         <h3 class="reviewTitle">Commentaires</h3>
@@ -155,7 +174,7 @@ for($i=1; $i<count($dChunks); $i++ ){
                         <label for="star-4" title="Evaluation «4»"></label>
                         <input type="radio" id="star-3" name="rating" value="3">
                         <label for="star-3" title="Evaluation «3»"></label>
-                        <input type="radio" id="star-2" name="rating" value="2">hh
+                        <input type="radio" id="star-2" name="rating" value="2">
                         <input type="radio" id="star-1" name="rating" value="1">
                         <label for="star-1" title="Evaluation «1»"></label>
                     </div>
@@ -163,118 +182,62 @@ for($i=1; $i<count($dChunks); $i++ ){
                 <textarea name="text"></textarea>
             </div>
         </form>
-        <div class="reviews">
-            <div class="reviewsItem">
-                <div class="reviewsItemName">
-                    <span>Sandrine</span>
-                    <span>CLEMENT</span>
-                </div>
-                <div class="rating-mini">
-                    <span class="active"></span>
-                    <span class="active"></span>
-                    <span class="active"></span>
-                    <span class="active"></span>
-                    <span class="active"></span>
-                </div>
-                <p>Commenté en France <span>le 3 mars 2024</span></p>
-                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                    ut
-                    labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis
-                    aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                    laborum.
-                </span>
-            </div>
-            <div class="reviewsItem">
-                <div class="reviewsItemName">
-                    <span>Sandrine</span>
-                    <span>CLEMENT</span>
-                </div>
-                <div class="rating-mini">
-                    <span class="active"></span>
-                    <span class="active"></span>
-                    <span class="active"></span>
-                    <span class="active"></span>
-                    <span class="active"></span>
-                </div>
-                <p>Commenté en France <span>le 3 mars 2024</span></p>
-                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                    ut
-                    labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis
-                    aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                    laborum.
-                </span>
-            </div>
-            <div class="toggleContButton">
-                <button id="toggleButton">Voir plus</button>
-                <span class="toggleIcon">
-                    <svg id="svg1" width="16" height="16">
-                        <polyline points="0,10 5,0 10,10" stroke="#482664" stroke-width="2" fill="none" />
-                    </svg>
-                </span>
-                <span class="toggleIcon">
-                    <svg id="svg2" width="16" height="16" style="display: none;">
-                        <polyline points="0,0 5,10 10,0" stroke="#482664" stroke-width="2" fill="none" />
-                    </svg>
-                </span>
-            </div>
 
-            <div class="toggleReviewsItem hideElement">
-                <div class="reviewsItemName">
-                    <span>Sandrine</span>
-                    <span>CLEMENT</span>
-                </div>
-                <div class="rating-mini">
-                    <span class="active"></span>
-                    <span class="active"></span>
-                    <span class="active"></span>
-                    <span class="active"></span>
-                    <span class="active"></span>
-                </div>
-                <p>Commenté en France <span>le 3 mars 2024</span></p>
-                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum
-                    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia
-                    deserunt mollit anim id est laborum.</span>
-            </div>
-            <div class="toggleReviewsItem hideElement">
-                <div class="reviewsItemName">
-                    <span>Sandrine</span>
-                    <span>CLEMENT</span>
-                </div>
-                <div class="rating-mini">
-                    <span class="active"></span>
-                    <span class="active"></span>
-                    <span class="active"></span>
-                    <span class="active"></span>
-                    <span class="active"></span>
-                </div>
-                <p>Commenté en France <span>le 3 mars 2024</span></p>
-                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum
-                    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia
-                    deserunt mollit anim id est laborum.</span>
-            </div>
-        
-        </div>
+
+        <?php
+
+        require ('../public/controller/php/classes/crudReview.class.php');
+        require ('../public/controller/php/ajax/getReviewAjaxController.php');
+
+
+        $productId = $_GET["id"];
+
+        $conn = Database::connect();
+        $reviews = (new crudReview)->readReviewsByProductId($conn, $productId);
+
+        if (empty($reviews)) {
+            echo
+                "<div id='noReviews'>
+                    <p>Il n'y pas encore de commentaire pour ce produit.</p>
+                    </div>";
+        } else {
+
+            echo
+                '<div class="reviews">';
+        }
+
+        $displayedReviews = 0;
+        foreach ($reviews as $review) {
+            $displayedReviews++;
+            $customer = new CrudUser;
+            $customerData = $customer->getAll($review->getCustomerId());
+
+            echo '
+                    <div class="reviewsItem">
+                        <div class="reviewsItemName">
+                            <span>' . $customerData["first_name"] . ' ' . $customerData["last_name"] . '</span>
+                        </div>
+                        <div class="rating-mini">
+                            <span>' . $review->getRating() . '</span>
+                        </div>
+                        <p>Commenté en France <span>le ' . date('d/m/Y', strtotime($review->getDate())) . '</span></p>
+                        <span class="reviewsText">' . $review->getText() . '</span>     
+                    </div>';
+
+        }
+        ;
+
+        ?>
+
+
+
+
+
+    </div>
+    <div class="toggleContButton">
+        <button id="toggleButton">Voir plus</button>
     </div>
 </section>
-</section>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="./assets/js/product.js?t=<?= time(); ?>"></script>

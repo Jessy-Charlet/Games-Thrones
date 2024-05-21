@@ -5,6 +5,7 @@ class crudReview
     private $customer_id;
     private $text;
     private $rating;
+    private $date;
 
     public function setProductId($newPoduct_id)
     {
@@ -24,6 +25,11 @@ class crudReview
     public function setRating($newRating)
     {
         $this->rating = $newRating;
+    }
+
+    public function setDate($newDate)
+    {
+        return $this->date = $newDate;
     }
 
     public function getProductId()
@@ -46,16 +52,22 @@ class crudReview
         return $this->rating;
     }
 
-
-    public function createReview($conn, $productId, $customerId, $text, $rating)
+    public function getDate()
     {
-        $sql = $conn->prepare("INSERT INTO review (product_id, customer_id, text, rating) VALUES (:product_id, :customer_id, :text, :rating)");
+        return $this->date;
+    }
+
+
+    public function createReview($conn, $productId, $customerId, $text, $rating, $date)
+    {
+        $sql = $conn->prepare("INSERT INTO review (product_id, customer_id, text, rating, date,) VALUES (:product_id, :customer_id, :text, :rating, :date)");
         $sql->execute(
             array(
                 ':product_id' => $productId,
                 ':customer_id' => $customerId,
                 ':text' => $text,
-                ':rating' => $rating
+                ':rating' => $rating,
+                ':date' => $date
             )
         );
     }
@@ -74,19 +86,21 @@ class crudReview
             $this->setProductId($result['product_id']);
             $this->setCustomerId($result['cusromer_id']);
             $this->setText($result['rating']);
+            $this->setDate($result['date']);
             return true;
         } else {
             return false;
         }
     }
 
-    public function updateReview($conn, $productId, $customerId, $text, $rating)
+    public function updateReview($conn, $productId, $customerId, $text, $rating, $date)
     {
-        $sql = $conn->prepare("UPDATE rewiew SET text = :text, rating = :rating WHERE product_id = :product_id AND customer_id = :customer_id");
+        $sql = $conn->prepare("UPDATE rewiew SET text = :text, rating = :rating, date = :date, WHERE product_id = :product_id AND customer_id = :customer_id");
         $sql->execute(
             array(
                 ':text' => $text,
                 ':rating' => $rating,
+                ':date' => $date,
                 ':product_id' => $productId,
                 ':customer_id' => $customerId
             )
@@ -104,21 +118,46 @@ class crudReview
         );
     }
 
-    public function getReviewsByProductId($conn, $productId)
+    public function readReviewsByProductId($conn, $productId, $limit = 3)
     {
-        $sql = $conn->prepare("SELECT * FROM review WHERE product_id = :product_id");
+        $sql = $conn->prepare("SELECT * FROM review WHERE product_id = :product_id ORDER BY date DESC LIMIT $limit");
         $sql->execute(array(':product_id' => $productId));
         $reviews = array();
         while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
-            $review = new Review();
+            $review = new crudReview();
             $review->setProductId($row['product_id']);
             $review->setCustomerId($row['customer_id']);
             $review->setText($row['text']);
             $review->setRating($row['rating']);
+            $review->setDate($row['date']);
             $reviews[] = $review;
         }
         return $reviews;
     }
+
+    public function getReviewsByProductId($conn, $productId, $limit = 3, $offset = 0)
+    {
+        $sql = $conn->prepare("SELECT * FROM review WHERE product_id = :product_id ORDER BY date DESC LIMIT $limit OFFSET $offset");
+        $sql->execute(array(':product_id' => $productId));
+        $reviews = array();
+        while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
+            $reviews[] = $row;
+        }
+        return $reviews;
+    }
+
+    public function getReviewData()
+    {
+        $data = array(
+            'poduct_id' => $this->getProductId(),
+            'customer_id' => $this->getCustomerId(),
+            'text' => $this->getText(),
+            'rating' => $this->getRating(),
+            'dete' => $this->getDate(),
+        );
+        return $data;
+    }
 }
+
 
 

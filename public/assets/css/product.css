@@ -172,7 +172,7 @@ button {
   margin-top: 0;
   font-size: 2em;
   font-weight: 500;
-  color:#482664;
+  color: #482664;
 }
 
 .productInfo {
@@ -192,7 +192,7 @@ button {
   align-items: flex-end;
   font-size: 2em;
   position: relative;
-  color:#401f5b;
+  color: #401f5b;
   font-weight: bold;
 }
 .rating-result span {
@@ -218,9 +218,9 @@ button {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  p { padding: 0.5em 0
-
-  };
+  p {
+    padding: 0.5em 0;
+  }
 }
 
 .productAdd {
@@ -256,7 +256,7 @@ button {
   gap: 1em;
   border-radius: 10px;
   transition: background-color 0.1s, box-shadow 0.1s 0.1s;
-  img{
+  img {
     height: 100%;
   }
 }
@@ -300,7 +300,7 @@ button {
 }
 
 /*** Start Card ***/
-.card {
+/*.card {
   background-color: #f2f2f2;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -336,30 +336,8 @@ button {
   justify-content: space-between;
 }
 
-.rating-mini {
-  display: flex;
-  align-items: flex-end;
-  align-items: center;
-  position: relative;
-}
 
-.rating-mini span {
-  padding: 0;
-  font-size: 16px;
-  margin: 0 3 px;
-  line-height: 0.75;
-  color: #ccc;
-  text-shadow: 1px 1px #bbb;
-}
-
-.rating-mini span::before {
-  content: "★";
-}
-
-.rating-mini > span.active {
-  color: #baa35f;
-  text-shadow: 1px 1px #482664;
-}
+}*/
 /*** End Card ***/
 
 /********** Fin Products ************/
@@ -458,6 +436,11 @@ button {
 .reviewForm textarea {
   flex: 20vh;
 }
+#noReviews{
+font-size: 1.2em;
+font-weight: 500;
+margin: 1.5em 0;
+}
 
 .reviews {
   display: flex;
@@ -472,9 +455,50 @@ button {
   padding: 2em 1em;
 }
 
-.toggleContButton {
-  display: flex;
-  align-items: center;
+.reviewsItemName {
+  font-weight: 600;
+}
+
+.reviewsItem, .toggleReviewsItem {
+  
+  .rating-mini {
+    display: flex;
+    align-items: flex-end;
+    align-items: center;
+    position: relative;
+    margin: 0.5em 0;
+  }
+
+  .rating-mini span {
+    padding: 0;
+    font-size: 16px;
+    margin: 0 3 px;
+    line-height: 0.75;
+    color: #ccc;
+    text-shadow: 1px 1px #bbb;
+  }
+
+  .rating-mini span::before {
+    content: "★";
+  }
+
+  .rating-mini > span.active {
+    color: #baa35f;
+    text-shadow: 1px 1px #482664;
+  }
+
+  .toggleContButton {
+    display: flex;
+    align-items: center;
+  }
+
+  p {
+    font-size: 0.75em;
+    font-style: italic;
+    margin: 1em 0;
+  }
+
+
 }
 
 #toggleButton {
@@ -537,7 +561,6 @@ button {
   .sliderPhoto {
     max-width: 100%;
   }
-
 
   .imageActuelle {
     order: 1;

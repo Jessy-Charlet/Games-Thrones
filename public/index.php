@@ -35,6 +35,7 @@ $router->map('GET', '/api/panier', '/basket_json', '/Ajax/panier');
 $router->map('GET', '/addProductToBasketAjaxController', '../public/controller/php/ajax/addProductToBasketAjaxController', 'addProductToBasketAjaxController');
 $router->map('GET', '/getProductDataByIdAjaxController', '../public/controller/php/ajax/getProductDataByIdAjaxController', 'getProductDataByIdAjaxController');
 $router->map('GET', '/getCartContentsAjaxController', '../public/controller/php/ajax/getCartContentsAjaxController', 'getCartContentsAjaxController');
+$router->map('GET', '/getReviewAjaxController', '../public/controller/php/ajax/getReviewAjaxController', 'getReviewAjaxController');
 
 // Routes Back Office
 $router->map('GET', '/gt-admin', '../public/backOffice/backOffice', 'backOffice');
@@ -81,4 +82,3 @@ if (is_array($match)) {
     // 404 error 
     header("location:" . $router->generate('404') . "");
 }
-?>

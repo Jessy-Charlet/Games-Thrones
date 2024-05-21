@@ -32,74 +32,7 @@ $(document).ready(function () {
   });
 });
 
-$(document).ready(function () {
-  $("#toggleButton").click(function () {
-    $("#svg1").toggle();
-    $("#svg2").toggle();
-    $(this).text($(this).text() === "Voir plus" ? "Voir moins" : "Voir plus");
-    toggleReviewsItem();
-  });
-  function toggleReviewsItem() {
-    $(".toggleReviewsItem").toggleClass("hideElement");
-  }
-});
 
-jQuery(document).ready(function () {
-  jQuery("#product_basketButton").click(function () {
-    var quantity = parseInt(jQuery("#product_quantity").val());
-    var currentTotalBottom =
-      parseInt(jQuery("#header_totalProductsQuantityBottom").text()) || 0;
-    var currentTotalTop =
-      parseInt(jQuery("#header_totalProductsQuantity").text()) || 0;
-
-    var newTotalBottom = currentTotalBottom + quantity;
-    var newTotalTop = currentTotalTop + quantity;
-
-    jQuery("#header_totalProductsQuantityBottom").text(newTotalBottom);
-    jQuery("#header_totalProductsQuantity").text(newTotalTop);
-  });
-});
-
-/*
-jQuery(document).ready(function () {
-  jQuery("product_basketButton").click(function () {
-    // Get product SKU (replace "product_sku_selector" with your actual way to get SKU)
-    var productSku = jQuery("#your_product_sku_selector").val() || "";
-
-    // Get product quantity from input
-    var quantity = parseInt(jQuery("#product_quantity").val()) || 1;
-
-    // Prepare data for fetch request
-    var data = {
-      sku: productSku,
-      quantity: quantity,
-    };
-
-    // Fetch request options
-    var options = {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    // Send fetch request
-    fetch("/addProductToBasketController.php", options)
-      .then((response) => response.json()) // Parse JSON response (if applicable)
-      .then((data) => {
-        // Handle successful response from the server (optional)
-        console.log("Success:", data);
-        // You can update UI elements here based on the response data
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        // Handle errors during the request (optional)
-        // You can display an error message to the user here
-      });
-  });
-});
-*/
 
 jQuery(document).ready(function () {
   jQuery("#product_basketButton").click(function (event) {
@@ -122,4 +55,28 @@ jQuery(document).ready(function () {
         // Handle any errors during the request (optional)
       });
   });
+});
+
+
+
+jQuery(document).ready(function () {
+  var currentPage = 2;
+
+  function fetchReviews() {
+    fetch(
+      `/getReviewAjaxController?product_id=${productId}&page=${currentPage}`
+    )
+      .then((response) => response.text())
+      .then((data) => {
+        jQuery(".reviews").append(data);
+        console.log(data.length);
+        if (data.length < 3) {
+          jQuery("#toggleButton").hide();
+        }
+      })
+      .catch((error) => console.error("Error fetching reviews", error));
+    currentPage++;
+  }
+
+  jQuery("#toggleButton").click(fetchReviews);
 });

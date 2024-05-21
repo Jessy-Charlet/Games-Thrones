@@ -12,7 +12,6 @@ class crudProduct
     private $material;
     private $brand;
     private $category_id;
-
     private $images;
 
     public function setId($newId)

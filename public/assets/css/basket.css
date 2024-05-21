@@ -197,6 +197,7 @@ h2 {
   background-color: #401f5b;
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px #401f5b;
 }
+/*
 
 .similarTitle {
   text-align: center;
@@ -269,7 +270,7 @@ h2 {
 .rating-mini > span.active {
   color: #baa35f;
   text-shadow: 1px 1px #482664;
-}
+}*/
 
 @media (max-width: 950px) {
   .panierImg {
