@@ -10,6 +10,9 @@ if(isset($_GET['option'])){
         case 'allCustomers':
             $selec = Database::getAllCustomer();
             break;
+            case 'allOrders':
+            //    $selec = Database::getAllorder();
+                break;
             default:
             $selec = 'erreur test';
             break;
