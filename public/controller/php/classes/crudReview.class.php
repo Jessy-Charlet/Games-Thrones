@@ -60,14 +60,13 @@ class crudReview
 
     public function createReview($conn, $productId, $customerId, $text, $rating, $date)
     {
-        $sql = $conn->prepare("INSERT INTO review (product_id, customer_id, text, rating, date,) VALUES (:product_id, :customer_id, :text, :rating, :date)");
+        $sql = $conn->prepare("INSERT INTO review (product_id, customer_id, text, rating) VALUES (:product_id, :customer_id, :text, :rating)");
         $sql->execute(
             array(
                 ':product_id' => $productId,
                 ':customer_id' => $customerId,
                 ':text' => $text,
-                ':rating' => $rating,
-                ':date' => $date
+                ':rating' => $rating
             )
         );
     }
@@ -118,6 +117,24 @@ class crudReview
         );
     }
 
+
+    public function readFormReviewsByProductId($conn, $productId)
+    {
+        $sql = $conn->prepare("SELECT * FROM review WHERE product_id = :product_id ");
+        $sql->execute(array(':product_id' => $productId));
+        $reviews = array();
+        while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
+            $review = new crudReview();
+            $review->setProductId($row['product_id']);
+            $review->setCustomerId($row['customer_id']);
+            $review->setText($row['text']);
+            $review->setRating($row['rating']);
+            $review->setDate($row['date']);
+            $reviews[] = $review;
+        }
+        return $reviews;
+    }
+
     public function readReviewsByProductId($conn, $productId, $limit = 3)
     {
         $sql = $conn->prepare("SELECT * FROM review WHERE product_id = :product_id ORDER BY date DESC LIMIT $limit");
@@ -134,6 +151,7 @@ class crudReview
         }
         return $reviews;
     }
+
 
     public function getReviewsByProductId($conn, $productId, $limit = 3, $offset = 0)
     {
@@ -158,6 +176,3 @@ class crudReview
         return $data;
     }
 }
-
-
-

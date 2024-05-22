@@ -8,7 +8,6 @@ $conn = Database::connect();
 $limit = 3;
 
 $product_id = intval(@$_GET["product_id"]);
-
 $page = intval(@$_GET["page"]);
 
 if (empty($page)) {

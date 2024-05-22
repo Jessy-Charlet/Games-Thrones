@@ -32,11 +32,11 @@ $(document).ready(function () {
   });
 });
 
-
+/*************** add to the cart *******************/
 
 jQuery(document).ready(function () {
   jQuery("#product_basketButton").click(function (event) {
-    event.preventDefault(); // Prevent default form submission if applicable
+    event.preventDefault();
 
     var url = window.location.href;
     var params = new URLSearchParams(url.split("?")[1]);
@@ -44,21 +44,19 @@ jQuery(document).ready(function () {
     const quantity = jQuery("#product_quantity").val();
 
     fetch(`/addProductToBasketAjaxController?id=${id}&quantity=${quantity}`)
-      .then((response) => response.json()) // Parse the response as JSON (optional)
+      .then((response) => response.json()) 
       .then((data) => {
-        console.log("Product added to cart:", data); // Optional for debugging
-        // Page refresh after successful request (not recommended)
+        console.log("Product added to cart:", data); 
         window.location.reload();
       })
       .catch((error) => {
         console.error("Error adding product to cart:", error);
-        // Handle any errors during the request (optional)
+  
       });
   });
 });
 
-
-
+/*************** "Voir plus" Button  *******************/ 
 jQuery(document).ready(function () {
   var currentPage = 2;
 
@@ -79,4 +77,43 @@ jQuery(document).ready(function () {
   }
 
   jQuery("#toggleButton").click(fetchReviews);
+});
+
+/*************** form to send a post request  *******************/
+
+jQuery(document).ready(function () {
+  jQuery(".reviewForm").submit(function (event) {
+    event.preventDefault(); 
+
+    const rating = jQuery('input[name="rating"]:checked').val();
+    const text = jQuery('textarea[name="text"]').val();
+
+    if (!rating || !text) {
+      alert("Merci de remplir tous les champs.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("rating", rating);
+    formData.append("text", text);
+    formData.append("product_id", productId);
+
+    fetch("/sendReviewFormAjaxController", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json()) 
+      .then((data) => {
+        if (data.success) {
+          alert("Votre avis a été soumis avec succès!");
+          jQuery(".reviewForm").trigger("reset");
+        } else {
+          alert(data.error); 
+        }
+      })
+      .catch((error) => {
+        console.error("Error submitting form:", error);
+        alert("Une erreur est survenue. Veuillez réessayer plus tard.");
+      });
+  });
 });

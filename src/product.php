@@ -157,13 +157,10 @@ $javascript = "<script>
 echo $javascript
     ?>
 
-    
-
 <section id="Commentaires">
     <div class="container">
         <h3 class="reviewTitle">Commentaires</h3>
-        <form class="reviewForm" method="post" action="">
-            <button class="reviewFormBtn" type="submit">Écrire un commentaire</button>
+        <form class="reviewForm" method="POST" action="">
             <div class="ratingContent">
                 <div class="ratingContentTop">
                     <span>Votre avis</span>
@@ -175,14 +172,18 @@ echo $javascript
                         <input type="radio" id="star-3" name="rating" value="3">
                         <label for="star-3" title="Evaluation «3»"></label>
                         <input type="radio" id="star-2" name="rating" value="2">
+                        <label for="star-3" title="Evaluation «2»"></label>
                         <input type="radio" id="star-1" name="rating" value="1">
                         <label for="star-1" title="Evaluation «1»"></label>
                     </div>
                 </div>
+
                 <textarea name="text"></textarea>
+                <button class="reviewFormBtn" type="submit">Écrire un commentaire</button>
+
+
             </div>
         </form>
-
 
         <?php
 

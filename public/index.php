@@ -36,6 +36,7 @@ $router->map('GET', '/addProductToBasketAjaxController', '../public/controller/p
 $router->map('GET', '/getProductDataByIdAjaxController', '../public/controller/php/ajax/getProductDataByIdAjaxController', 'getProductDataByIdAjaxController');
 $router->map('GET', '/getCartContentsAjaxController', '../public/controller/php/ajax/getCartContentsAjaxController', 'getCartContentsAjaxController');
 $router->map('GET', '/getReviewAjaxController', '../public/controller/php/ajax/getReviewAjaxController', 'getReviewAjaxController');
+$router->map('POST', '/sendReviewFormAjaxController', '../public/controller/php/ajax/sendReviewFormAjaxController', 'sendReviewFormAjaxController');
 
 // Routes Back Office
 $router->map('GET', '/gt-admin', '../public/backOffice/backOffice', 'backOffice');
