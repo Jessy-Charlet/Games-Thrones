@@ -10,6 +10,12 @@ $(document).ready(function () {
             const buttonId = $(this).attr('id');
             $('#bodybutton' + buttonId).slideUp();
             $('#headbutton' + buttonId).slideDown();
+            const addImageForm = $('.addImageForm');
+            if(addImageForm){
+                $('.formBack .annulerAddImage').remove();
+                $('.formBack .AddImageForm').remove();
+                $('.formBack .AddImageLabel').remove();
+            }
         });
     }
 
@@ -168,6 +174,8 @@ $(document).ready(function () {
         const blockHead = document.createElement('div');
         blockHead.classList.add("blockHead");
         $(blockHead).attr('id', 'headbutton' + i);
+        const productIdH = document.createElement('p');
+        productIdH.textContent = products[i]["id"]
         const nameH = document.createElement('p');
         nameH.textContent = products[i]["name"];
         const priceH = document.createElement('p');
@@ -181,6 +189,7 @@ $(document).ready(function () {
         $(updateH).attr('id', 'button' + i);
         const deleteH = document.createElement('button');
         deleteH.textContent = "X";
+        blockHead.appendChild(productIdH);
         blockHead.appendChild(nameH);
         blockHead.appendChild(priceH);
         blockHead.appendChild(quantityH);
@@ -380,35 +389,42 @@ $(document).ready(function () {
         secondaryImagePath.appendChild(secondaryImagePathForm);
 
         // Ajouter une image
-        const addImageBtn = document.createElement('button');
-        addImageBtn.setAttribute('type', 'button');
+        const addImageBtn = document.createElement('submit');
+        addImageBtn.setAttribute('type', 'submit');
         addImageBtn.textContent = "Ajouter une image";
         addImageBtn.classList.add('AddImage');
 
         let imageInputAdd = 0;
 
+        const addImageLabel = document.createElement('label');
+        const addImageForm = document.createElement('input');
+        const annulerAddImage = document.createElement('submit');
+
         addImageBtn.addEventListener('click', (event) => {
             event.preventDefault();
 
-            const addImageLabel = document.createElement('label');
             addImageLabel.setAttribute('for', 'addImageForm');
+            addImageLabel.classList.add("AddImageLabel");
             addImageLabel.textContent = "Ajouter une image";
 
-            const addImageForm = document.createElement('input');
             addImageForm.setAttribute('type', 'text');
             addImageForm.setAttribute('name', 'addImageForm');
-            addImageForm.setAttribute('id', 'newImages')
+            addImageForm.setAttribute('id', 'newImages');
+            addImageForm.classList.add("AddImageForm");
 
-            const annulerAddImage = document.createElement('button');
-            annulerAddImage.setAttribute('type', 'button');
+            annulerAddImage.setAttribute('type', 'submit');
             annulerAddImage.classList.add('annulerAddImage');
             annulerAddImage.textContent = "Annuler l'ajout d'image"
-
             
             if(imageInputAdd === 0){
+                form.removeChild(updateForm);
+                form.removeChild(resetForm);
                 form.appendChild(addImageLabel);
                 form.appendChild(addImageForm);
                 form.appendChild(annulerAddImage);
+                form.appendChild(resetForm);
+                form.appendChild(updateForm);
+                imageInputAdd++;
             }
 
             annulerAddImage.addEventListener('click', (event) => {
@@ -420,8 +436,6 @@ $(document).ready(function () {
 
                 imageInputAdd = 0;
             })
-            
-            imageInputAdd++;
         });
         
         // annuler valider
@@ -431,6 +445,9 @@ $(document).ready(function () {
         resetForm.name = 'reset';
         resetForm.id = [i];
         resetForm.textContent = 'Annuler';
+        resetForm.addEventListener('click', () => {
+            imageInputAdd = 0;
+        })
 
         const updateForm = document.createElement('button');
         updateForm.type = 'submit';
@@ -438,10 +455,10 @@ $(document).ready(function () {
         updateForm.value = products[i]["id"];
         updateForm.textContent = 'valider';
 
-        updateForm.addEventListener('submit', (event) => {
+        updateForm.addEventListener('click', (event) => {
             event.preventDefault();
-            const id = updateForm.value;
-            updateProduct(id, name, rate, price, quantity, color, material, brand, category, description, mainImageId, mainImagePath, secondaryImageId, secondaryImagePath);
+            const id = products[i]["id"];
+            updateProduct(id, nameForm.value, rateForm.value, priceForm.value, quantityForm.value, colorForm.value, materialForm.value, brandForm.value, categoryForm.value, descriptionForm.value, mainImageIdForm.value, mainImagePathForm.value, secondaryImageIdForm.value, secondaryImagePathForm.value, addImageForm.value);
         });
 
         // Ajouter les éléments à la liste
@@ -468,9 +485,7 @@ $(document).ready(function () {
         return liste;
     }
 
-    async function updateProduct(id, name, rate, price, quantity, color, material, brand, category, description, mainImageId, mainImagePath, secondaryImageId, secondaryImagePath) {
-
-
+    async function updateProduct(id, name, rate, price, quantity, color, material, brand, category, description, mainImageId, mainImagePath, secondaryImageId, secondaryImagePath, newImage) {
         const formData = new FormData();
         formData.append('id', id);
         formData.append('name', name);
@@ -487,12 +502,10 @@ $(document).ready(function () {
         formData.append('secondary_image_id', secondaryImageId);
         formData.append('secondary_image_path', secondaryImagePath);
         formData.append('request', "updateProduct");
-        if(newImageCount > 0){
-            const newImages = document.getElementById('newSecondaryImages');
-            const newImagesValue = newImages.value;
-            if(newImagesValue.length > 0){
+        if(newImage){
+            if(newImage.length > 0){
                 formData.append('newImages', 'true');
-                formData.append('newImagesPath', newImagesValue);
+                formData.append('newImagesPath', newImage);
             }else{
                 formData.append('newImages', 'false');
             }           
@@ -510,6 +523,7 @@ $(document).ready(function () {
         .then(response => response.json())
         .then(data => {
             if (data.status === "success") {
+                alert('Success')
                 location.reload();
             } else if (data.status === "error") {
                 if (data.message === "ProductAlreadyExist") {
@@ -658,6 +672,4 @@ $(document).ready(function () {
         }
     })
     
-    // Update product
-
 })

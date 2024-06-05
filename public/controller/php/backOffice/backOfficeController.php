@@ -84,7 +84,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
             $secondaryImageId = $_POST['secondary_image_id'];
             $secondaryImages = $_POST['secondary_image_path'];
             if($_POST['newImages'] == "true"){
-                if(empty($_POST['newImagesPath']) || !isset($_POST['newImagesPath'])){
+                if($_POST['newImagesPath'] == "none"){
                     $arrayNewImages = "noNewImages"; 
                 }else{
                     $arrayNewImages = $_POST['newImagesPath'];

@@ -92,7 +92,7 @@ a {
 
             .blockHead {
                 display: grid;
-                grid-template-columns: 6fr 1fr 1fr 2fr;
+                grid-template-columns: 1fr 6fr 1fr 1fr 2fr;
                 align-items: center;
 
                 div {
@@ -166,6 +166,47 @@ a {
 
                     button:hover {
                         opacity: 50%;
+                    }
+                    .AddImage{
+                        border-radius: 5px;
+                        display: grid;
+                        align-items: center;
+                        justify-content: center;
+                        height: 35px;
+                        border: none;
+                        background-color: #644081;
+                        color: white;
+                        font-weight: bold;
+                        font-size: 0.9em;
+                        grid-column: 1;
+                        cursor: default;
+                    }
+
+                    .annulerAddImage{
+                        border-radius: 5px;
+                        display: grid;
+                        align-items: center;
+                        justify-content: center;
+                        height: 35px;
+                        border: none;
+                        background-color: #814070;
+                        color: white;
+                        font-weight: bold;
+                        font-size: 0.9em;
+                        grid-column: 1;
+                        cursor: default;
+                    }
+
+                    .AddImage:hover, .annulerAddImage:hover{
+                        opacity: 50%;
+                    }
+
+                    .AddImageLabel{
+                        grid-column: 1;
+                    }
+                    .AddImageForm{
+                        margin-top: -15px;
+                        grid-column: 1;
                     }
                 }
             }
