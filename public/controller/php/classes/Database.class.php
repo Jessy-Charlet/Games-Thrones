@@ -254,6 +254,7 @@ class Database
                 return $error;
                 exit();
             }else{
+                $category = $result['id'];
                 $sql = $conn->prepare("INSERT INTO product (name, rate, price, quantity, description, color, material, brand, category_id) VALUES (:name, :rate, :price, :quantity, :description, :color, :material, :brand, :category)");
                 $sql->execute(
                     array(
@@ -291,6 +292,16 @@ class Database
                     array(
                         ':url' => $secondaryImages,
                         ':main' => 0
+                    )
+                );
+                $sql->closeCursor();
+
+                $secondaryImageId = $conn->lastInsertId();
+                $sql = $conn->prepare("INSERT INTO image_product (image_id, product_id) VALUES (:image_id, :product_id)");
+                $sql->execute(
+                    array(
+                        ':image_id' => $secondaryImageId,
+                        ':product_id' => $productId
                     )
                 );
                 $sql->closeCursor();

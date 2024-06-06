@@ -19,6 +19,8 @@ $(document).ready(function () {
         });
     }
 
+
+    // CUSTOMER
     function showCustomer(customer, i, liste) {
         // Container
         const blockBack = document.createElement('div');
@@ -164,7 +166,40 @@ $(document).ready(function () {
         liste.appendChild(blockBack);
         return liste;
     }
+    async function customer(recherche) {
+        const formData = new FormData();
+        formData.append('searching', 'customer');
 
+        const requestOptions = {
+            method: "POST",
+            Header: "Content-Type: multipart/form-data",
+            body: formData
+        }
+        const reponse = await fetch('../controller/php/botController.php', requestOptions);
+        const customer = await reponse.json();
+        if (recherche != "") {
+            const liste = document.createElement('div');
+            for (var i = 0; i < customer.length; i++) {
+                if (customer[i]["first_name"].toLowerCase().includes(recherche) == true || customer[i]["last_name"].toLowerCase().includes(recherche) == true) {
+                    showCustomer(customer, i, liste);
+                }
+            }
+            $("#contentBack").html(liste);
+            $(".blockBody").hide();
+            openClose();
+        } else {
+            const liste = document.createElement('div');
+            for (var i = 0; i < customer.length; i++) {
+                showCustomer(customer, i, liste);
+            }
+            $("#contentBack").html(liste);
+            $(".blockBody").hide();
+            openClose();
+        }
+    }
+
+
+    // PRODUCT
     function showProduct(products, i, liste) {
         // Container
         const blockBack = document.createElement('div');
@@ -498,8 +533,187 @@ $(document).ready(function () {
         form.appendChild(updateForm);
         liste.appendChild(blockBack);
         return liste;
-    }
+    }    
+    async function product(recherche) {
+        const formData = new FormData();
+        formData.append('searching', 'products');
 
+        const requestOptions = {
+            method: "POST",
+            Header: "Content-Type: multipart/form-data",
+            body: formData
+        }
+        const reponse = await fetch('../controller/php/botController.php', requestOptions);
+        const products = await reponse.json();
+
+        // ADD PRODUCT
+        const blockCreate = document.createElement('div');
+        blockCreate.classList.add('addProductContainer');
+        const addProductBtn = document.createElement('button');
+        addProductBtn.classList.add('addProductOpen');
+        addProductBtn.textContent = "Ajouter un produit";
+        blockCreate.appendChild(addProductBtn);
+        const addProductForm = document.createElement('form');
+        addProductForm.classList.add("addProductForm");
+        let addProductFormCheck = 0;
+        addProductBtn.addEventListener('click', (event)=>{
+            event.preventDefault();
+
+            addProductBtn.style.display = "none";
+
+            if(addProductFormCheck == 0){
+                let inputToCreate = [
+                    "Name",
+                    "Price",
+                    "Quantity",
+                    "Color",
+                    "Material",
+                    "Brand",
+                    "Category",
+                    "Description",
+                    "Image",
+                    "Secondary Image",
+                ];
+
+                for(let inputCount = 0; inputCount < 10; inputCount++){
+                    if(inputToCreate[inputCount] == "Description"){                        
+                        const addProductInputDiv = document.createElement('div');
+                        addProductInputDiv.setAttribute('class', "addProductInputDivDesc");
+
+                        const addProductInput = document.createElement("textarea");
+                        addProductInput.setAttribute('name', inputToCreate[inputCount]+"Name");
+                        addProductInput.setAttribute('id', 'addProduct'+inputToCreate[inputCount]+"_id");
+                        addProductInput.setAttribute('rows', 10);
+                        addProductInput.setAttribute('class', "addProductInputDesc");
+
+                        const addProductLabel = document.createElement('label');
+                        addProductLabel.setAttribute('for', inputToCreate[inputCount]+"Name");
+                        addProductLabel.setAttribute('class', "addProductLabel");
+                        addProductLabel.textContent = inputToCreate[inputCount];
+
+                        addProductInputDiv.appendChild(addProductLabel);
+                        addProductInputDiv.appendChild(addProductInput);
+
+                        addProductForm.appendChild(addProductInputDiv);
+                    }else{
+                        const addProductInputDiv = document.createElement('div');
+                        const addProductInput = document.createElement("input");
+                        addProductInput.setAttribute('type', 'text');
+                        addProductInput.setAttribute('name', inputToCreate[inputCount]+"Name");
+                        if(inputToCreate[inputCount] == "Name"){
+                            addProductInputDiv.setAttribute('class', "addProductInputDivName");
+                            addProductInput.setAttribute('class', "addProductInputName");
+                        }else{
+                            addProductInputDiv.setAttribute('class', "addProductInputDiv");
+                            addProductInput.setAttribute('class', "addProductInput");
+
+                        }
+                        addProductInput.setAttribute('id', 'addProduct'+inputToCreate[inputCount]+"_id");
+
+                        const addProductLabel = document.createElement('label');
+                        addProductLabel.setAttribute('for', inputToCreate[inputCount]+"Name");
+                        addProductLabel.setAttribute('class', "addProductLabel");
+                        addProductLabel.textContent = inputToCreate[inputCount];
+
+                        addProductInputDiv.appendChild(addProductLabel);
+                        addProductInputDiv.appendChild(addProductInput);
+
+                        addProductForm.appendChild(addProductInputDiv);
+                    }
+                }
+
+                const addProductAnnulerDiv = document.createElement('div');
+                addProductAnnulerDiv.setAttribute('class', 'addProductAnnulerDiv');
+
+                const addProductAnnuler = document.createElement('input');
+                addProductAnnuler.setAttribute('type', 'button');
+                addProductAnnuler.setAttribute('class', "addProductAnnuler");
+                addProductAnnuler.setAttribute('value', 'Annuler');
+
+                addProductAnnulerDiv.appendChild(addProductAnnuler);
+                addProductForm.appendChild(addProductAnnulerDiv);
+
+                const addProductValiderDiv = document.createElement('div');
+                addProductValiderDiv.setAttribute('class', 'addProductValiderDiv');
+
+                const addProductValider = document.createElement("input");
+                addProductValider.setAttribute('type', 'submit');
+                addProductValider.setAttribute('class', 'addProductValider');
+                addProductValider.setAttribute('value', 'Valider');
+                
+                addProductValiderDiv.appendChild(addProductValider);
+                addProductForm.appendChild(addProductValiderDiv);
+            
+                blockCreate.appendChild(addProductForm);
+
+                if(addProductValider){
+                    addProductValider.addEventListener("click", (event)=>{
+                        event.preventDefault();
+
+                        const name = document.getElementById('addProductName_id');
+                        const price = document.getElementById('addProductPrice_id');
+                        const quantity = document.getElementById('addProductQuantity_id');
+                        const description = document.getElementById('addProductDescription_id');
+                        const color = document.getElementById('addProductColor_id');
+                        const material = document.getElementById('addProductMaterial_id');
+                        const brand = document.getElementById('addProductBrand_id');
+                        const category = document.getElementById('addProductCategory_id');
+                        const images = document.getElementById('addProductImage_id');
+                        const secondaryImages = document.getElementById('addProductSecondary Image_id');
+
+                        createProduct(name.value, price.value, quantity.value, description.value, color.value, material.value, brand.value, category.value,  images.value, secondaryImages.value)
+                    });
+                }
+                
+                if(addProductAnnuler){
+                    addProductAnnuler.addEventListener("click", (event)=>{
+                        event.preventDefault();
+
+                        addProductBtn.style.display = "grid";
+
+                        for(let inputCount = 0; inputCount < 10; inputCount++){
+                            const addProductInput = document.getElementById('addProduct'+inputToCreate[inputCount]+'_id');
+                            addProductInput.value = "";
+                        }
+
+                        blockCreate.removeChild(addProductForm);
+                    });
+                }
+                addProductFormCheck = 1;
+            }else{
+                blockCreate.appendChild(addProductForm);
+            }
+        });
+
+
+        if (recherche != "") {
+            const liste = document.createElement('div');            
+            for (var i = 0; i < products.length; i++) {
+                if (products[i]["name"].toLowerCase().includes(recherche) == true) {
+                    showProduct(products, i, liste);
+                }
+            }
+
+            $("#contentBack").append(liste);
+            $(".blockBody").hide();
+            openClose();
+        } else {
+            const liste = document.createElement('div');            
+
+            for (var i = 0; i < products.length; i++) {
+                showProduct(products, i, liste);
+            }
+            $("#contentBack").append(blockCreate);
+            $("#contentBack").append(liste);
+            $(".blockBody").hide();
+            openClose();
+        }
+
+
+
+
+
+    }
     async function updateProduct(id, name, rate, price, quantity, color, material, brand, category, description, mainImageId, mainImagePath, secondaryImageId, secondaryImagePath, newImage) {
         const formData = new FormData();
         formData.append('id', id);
@@ -654,165 +868,6 @@ $(document).ready(function () {
         })
     }
 
-    async function product(recherche) {
-        const formData = new FormData();
-        formData.append('searching', 'products');
-
-        const requestOptions = {
-            method: "POST",
-            Header: "Content-Type: multipart/form-data",
-            body: formData
-        }
-        const reponse = await fetch('../controller/php/botController.php', requestOptions);
-        const products = await reponse.json();
-
-        // ADD PRODUCT
-        const blockCreate = document.createElement('div');
-        blockCreate.classList.add('addProductContainer');
-        const addProductBtn = document.createElement('button');
-        addProductBtn.classList.add('addProductOpen');
-        addProductBtn.textContent = "Ajouter un produit";
-        blockCreate.appendChild(addProductBtn);
-        const addProductForm = document.createElement('form');
-        addProductForm.classList.add("addProductForm");
-        let addProductFormCheck = 0;
-        addProductBtn.addEventListener('click', (event)=>{
-            event.preventDefault();
-            if(addProductFormCheck == 0){
-                let inputToCreate = [
-                    "Name",
-                    "Price",
-                    "Quantity",
-                    "Color",
-                    "Material",
-                    "Brand",
-                    "Category",
-                    "Description",
-                    "Image",
-                    "SecondaryImage",
-                ];
-
-                for(let inputCount = 0; inputCount < 10; inputCount++){
-                    const addProductInput = document.createElement("input");
-                    addProductInput.setAttribute('type', 'text');
-                    addProductInput.setAttribute('class', "addProduct"+inputToCreate[inputCount]);
-                    addProductInput.setAttribute('id', 'addProduct'+inputToCreate[inputCount]+"_id")
-                    addProductInput.setAttribute('placeholder', inputToCreate[inputCount]);
-                    addProductForm.appendChild(addProductInput);
-                }
-                const addProductAnnuler = document.createElement('input');
-                addProductAnnuler.setAttribute('type', 'button');
-                addProductAnnuler.setAttribute('class', "addProductAnnuler");
-                addProductAnnuler.setAttribute('value', 'Annuler');
-
-                addProductForm.appendChild(addProductAnnuler);
-
-                const addProductValider = document.createElement("input");
-                addProductValider.setAttribute('type', 'submit');
-                addProductValider.setAttribute('class', 'addProductValider');
-                addProductValider.setAttribute('value', 'Valider');
-                
-                addProductForm.appendChild(addProductValider);
-            
-                blockCreate.appendChild(addProductForm);
-
-                if(addProductValider){
-                    addProductValider.addEventListener("click", (event)=>{
-                        event.preventDefault();
-
-                        const name = document.getElementById('addProductName_id');
-                        const price = document.getElementById('addProductPrice_id');
-                        const quantity = document.getElementById('addProductQuantity_id');
-                        const description = document.getElementById('addProductDescription_id');
-                        const color = document.getElementById('addProductColor_id');
-                        const material = document.getElementById('addProductMaterial_id');
-                        const brand = document.getElementById('addProductBrand_id');
-                        const category = document.getElementById('addProductCategory_id');
-                        const images = document.getElementById('addProductImage_id');
-                        const secondaryImages = document.getElementById('addProductSecondaryImage_id');
-
-                        createProduct(name.value, price.value, quantity.value, description.value, color.value, material.value, brand.value, category.value,  images.value, secondaryImages.value)
-                    });
-                }
-                
-                if(addProductAnnuler){
-                    addProductAnnuler.addEventListener("click", (event)=>{
-                        event.preventDefault();
-
-                        for(let inputCount = 0; inputCount < 10; inputCount++){
-                            const addProductInput = document.getElementById('addProduct'+inputToCreate[inputCount]+'_id');
-                            addProductInput.value = "";
-                        }
-
-                        blockCreate.removeChild(addProductForm);
-                    });
-                }
-                addProductFormCheck = 1;
-            }else{
-                blockCreate.appendChild(addProductForm);
-            }
-        });
-
-
-        if (recherche != "") {
-            const liste = document.createElement('div');            
-            for (var i = 0; i < products.length; i++) {
-                if (products[i]["name"].toLowerCase().includes(recherche) == true) {
-                    showProduct(products, i, liste);
-                }
-            }
-
-            $("#contentBack").append(liste);
-            $(".blockBody").hide();
-            openClose();
-        } else {
-            const liste = document.createElement('div');            
-
-            for (var i = 0; i < products.length; i++) {
-                showProduct(products, i, liste);
-            }
-            $("#contentBack").append(blockCreate);
-            $("#contentBack").append(liste);
-            $(".blockBody").hide();
-            openClose();
-        }
-
-
-
-
-
-    }
-    async function customer(recherche) {
-        const formData = new FormData();
-        formData.append('searching', 'customer');
-
-        const requestOptions = {
-            method: "POST",
-            Header: "Content-Type: multipart/form-data",
-            body: formData
-        }
-        const reponse = await fetch('../controller/php/botController.php', requestOptions);
-        const customer = await reponse.json();
-        if (recherche != "") {
-            const liste = document.createElement('div');
-            for (var i = 0; i < customer.length; i++) {
-                if (customer[i]["first_name"].toLowerCase().includes(recherche) == true || customer[i]["last_name"].toLowerCase().includes(recherche) == true) {
-                    showCustomer(customer, i, liste);
-                }
-            }
-            $("#contentBack").html(liste);
-            $(".blockBody").hide();
-            openClose();
-        } else {
-            const liste = document.createElement('div');
-            for (var i = 0; i < customer.length; i++) {
-                showCustomer(customer, i, liste);
-            }
-            $("#contentBack").html(liste);
-            $(".blockBody").hide();
-            openClose();
-        }
-    }
 
     $('#rechercheBack').on('keyup', function () {
             let recherche = $(this).val();
