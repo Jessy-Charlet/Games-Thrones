@@ -189,6 +189,21 @@ $(document).ready(function () {
         $(updateH).attr('id', 'button' + i);
         const deleteH = document.createElement('button');
         deleteH.textContent = "X";
+
+        deleteH.addEventListener("click", (event)=>{
+            event.preventDefault();
+            if(window.confirm("Voulez-vous vraiment supprimer ce produit ?")){
+                const id = products[i]['id'];
+                const imageId = products[i]["0"][1];
+                let secondaryIds = [];
+                for (let j = 3; j < products[i]["0"].length; j += 2) {
+                    secondaryIds.push(products[i]["0"][j]);
+                }
+                deleteProduct(id, imageId, secondaryIds);
+            }        
+        });
+
+
         blockHead.appendChild(productIdH);
         blockHead.appendChild(nameH);
         blockHead.appendChild(priceH);
@@ -461,7 +476,7 @@ $(document).ready(function () {
             updateProduct(id, nameForm.value, rateForm.value, priceForm.value, quantityForm.value, colorForm.value, materialForm.value, brandForm.value, categoryForm.value, descriptionForm.value, mainImageIdForm.value, mainImagePathForm.value, secondaryImageIdForm.value, secondaryImagePathForm.value, addImageForm.value);
         });
 
-        // Ajouter les éléments à la liste
+        // Ajouter les éléments à la liste        
         blockBack.appendChild(blockHead);
         blockBack.appendChild(blockBody);
         blockBody.appendChild(form);
@@ -547,6 +562,97 @@ $(document).ready(function () {
             console.log(error)
         )
     }
+    async function createProduct(name, price, quantity, description, color, material, brand, category,  mainImagePath, secondaryImagePath){
+        const formData = new FormData();
+
+        if(name == ""){
+            alert("Name canno't be empty");
+            return;
+        }else if(price == ""){
+            alert("Price canno't be empty");
+            return;
+        }else if(quantity == ""){
+            alert("Quantity canno't be empty");
+            return;
+        }else if(description == ""){
+            alert("Description canno't be empty");
+            return;
+        }else if(color == ""){
+            alert("Color canno't be empty");
+            return;
+        }else if(material == ""){
+            alert("Material canno't be empty");
+            return;
+        }else if(brand == ""){
+            alert("Brand canno't be empty");
+            return;
+        }else if(category == ""){
+            alert("Category canno't be empty");
+            return;
+        }else if(mainImagePath == ""){
+            alert("Main image canno't be empty");
+            return;
+        }
+
+        let rate = 0;
+
+        formData.append("name", name);
+        formData.append("rate", rate);
+        formData.append("price", price);
+        formData.append("quantity", quantity);
+        formData.append("color", color);
+        formData.append("material", material);
+        formData.append("brand", brand);
+        formData.append("category", category);
+        formData.append("description", description);
+        formData.append("images", mainImagePath);
+        if(secondaryImagePath != "none"){
+            formData.append("secondaryImages", secondaryImagePath);
+        }
+        formData.append("request", "addProduct");
+        
+        const requestOptions = {
+            method: "POST",
+            Header: "Content-Type: multipart/form-data",
+            body: formData
+        }
+
+        fetch('http://localhost:8080/controller/php/backOffice/backOfficeController.php', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                alert('Success')
+                location.reload();
+            } else if (data.status === "error") {
+                alert(data.message)
+            }  
+        })
+    }
+    async function deleteProduct(productId, imageId, secondaryImagesId){
+        const formData = new FormData();
+
+        formData.append("productId", productId);
+        formData.append("imageId", imageId);
+        formData.append("secondaryImageId", secondaryImagesId);
+        formData.append("request", "deleteProduct");
+
+        const requestOptions = {
+            method: "POST",
+            Header: "Content-Type: multipart/form-data",
+            body: formData
+        }
+
+        fetch('http://localhost:8080/controller/php/backOffice/backOfficeController.php', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                alert('Success')
+                location.reload();
+            } else if (data.status === "error") {
+                alert(data.message)
+            }  
+        })
+    }
 
     async function product(recherche) {
         const formData = new FormData();
@@ -559,22 +665,114 @@ $(document).ready(function () {
         }
         const reponse = await fetch('../controller/php/botController.php', requestOptions);
         const products = await reponse.json();
+
+        // ADD PRODUCT
+        const blockCreate = document.createElement('div');
+        blockCreate.classList.add('addProductContainer');
+        const addProductBtn = document.createElement('button');
+        addProductBtn.classList.add('addProductOpen');
+        addProductBtn.textContent = "Ajouter un produit";
+        blockCreate.appendChild(addProductBtn);
+        const addProductForm = document.createElement('form');
+        addProductForm.classList.add("addProductForm");
+        let addProductFormCheck = 0;
+        addProductBtn.addEventListener('click', (event)=>{
+            event.preventDefault();
+            if(addProductFormCheck == 0){
+                let inputToCreate = [
+                    "Name",
+                    "Price",
+                    "Quantity",
+                    "Color",
+                    "Material",
+                    "Brand",
+                    "Category",
+                    "Description",
+                    "Image",
+                    "SecondaryImage",
+                ];
+
+                for(let inputCount = 0; inputCount < 10; inputCount++){
+                    const addProductInput = document.createElement("input");
+                    addProductInput.setAttribute('type', 'text');
+                    addProductInput.setAttribute('class', "addProduct"+inputToCreate[inputCount]);
+                    addProductInput.setAttribute('id', 'addProduct'+inputToCreate[inputCount]+"_id")
+                    addProductInput.setAttribute('placeholder', inputToCreate[inputCount]);
+                    addProductForm.appendChild(addProductInput);
+                }
+                const addProductAnnuler = document.createElement('input');
+                addProductAnnuler.setAttribute('type', 'button');
+                addProductAnnuler.setAttribute('class', "addProductAnnuler");
+                addProductAnnuler.setAttribute('value', 'Annuler');
+
+                addProductForm.appendChild(addProductAnnuler);
+
+                const addProductValider = document.createElement("input");
+                addProductValider.setAttribute('type', 'submit');
+                addProductValider.setAttribute('class', 'addProductValider');
+                addProductValider.setAttribute('value', 'Valider');
+                
+                addProductForm.appendChild(addProductValider);
+            
+                blockCreate.appendChild(addProductForm);
+
+                if(addProductValider){
+                    addProductValider.addEventListener("click", (event)=>{
+                        event.preventDefault();
+
+                        const name = document.getElementById('addProductName_id');
+                        const price = document.getElementById('addProductPrice_id');
+                        const quantity = document.getElementById('addProductQuantity_id');
+                        const description = document.getElementById('addProductDescription_id');
+                        const color = document.getElementById('addProductColor_id');
+                        const material = document.getElementById('addProductMaterial_id');
+                        const brand = document.getElementById('addProductBrand_id');
+                        const category = document.getElementById('addProductCategory_id');
+                        const images = document.getElementById('addProductImage_id');
+                        const secondaryImages = document.getElementById('addProductSecondaryImage_id');
+
+                        createProduct(name.value, price.value, quantity.value, description.value, color.value, material.value, brand.value, category.value,  images.value, secondaryImages.value)
+                    });
+                }
+                
+                if(addProductAnnuler){
+                    addProductAnnuler.addEventListener("click", (event)=>{
+                        event.preventDefault();
+
+                        for(let inputCount = 0; inputCount < 10; inputCount++){
+                            const addProductInput = document.getElementById('addProduct'+inputToCreate[inputCount]+'_id');
+                            addProductInput.value = "";
+                        }
+
+                        blockCreate.removeChild(addProductForm);
+                    });
+                }
+                addProductFormCheck = 1;
+            }else{
+                blockCreate.appendChild(addProductForm);
+            }
+        });
+
+
         if (recherche != "") {
-            const liste = document.createElement('div');
+            const liste = document.createElement('div');            
             for (var i = 0; i < products.length; i++) {
                 if (products[i]["name"].toLowerCase().includes(recherche) == true) {
                     showProduct(products, i, liste);
                 }
             }
-            $("#contentBack").html(liste);
+
+            $("#contentBack").append(liste);
             $(".blockBody").hide();
             openClose();
         } else {
-            const liste = document.createElement('div');
+            const liste = document.createElement('div');            
+
             for (var i = 0; i < products.length; i++) {
                 showProduct(products, i, liste);
             }
-            $("#contentBack").html(liste);
+            $("#contentBack").append(blockCreate);
+            $("#contentBack").append(liste);
             $(".blockBody").hide();
             openClose();
         }

@@ -230,46 +230,72 @@ class Database
     public static function addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image, $secondaryImages){
         $conn = Database::connect();
 
+        $noSecondaryImage = false;
+
+        if($secondaryImages == ""){
+            $noSecondaryImage = true;
+        }
+
         try {
             $conn->beginTransaction();
 
-            $sql = $conn->prepare("INSERT INTO product (name, rate, price, quantity, description, color, material, brand, category_id) VALUES (:name, :rate, :price, :quantity, :description, :color, :material, :brand, :category)");
+            $sql = $conn->prepare("SELECT id FROM category WHERE name = :name");
             $sql->execute(
                 array(
-                    ':name' => $name,
-                    ':rate' => $rate,
-                    ':price' => $price,
-                    ':quantity' => $quantity,
-                    ':description' => $description,
-                    ':color' => $color,
-                    ':material' => $material,
-                    ':brand' => $brand,
-                    ':category' => $category
+                    "name" => $category
                 )
             );
+            $result = $sql->fetch(PDO::FETCH_ASSOC);
             $sql->closeCursor();
-            $productId = $conn->lastInsertId();
+
+            if(!$result){
+                $conn->rollback();
+                $error = "CategoryDoesntExist";
+                return $error;
+                exit();
+            }else{
+                $sql = $conn->prepare("INSERT INTO product (name, rate, price, quantity, description, color, material, brand, category_id) VALUES (:name, :rate, :price, :quantity, :description, :color, :material, :brand, :category)");
+                $sql->execute(
+                    array(
+                        ':name' => $name,
+                        ':rate' => $rate,
+                        ':price' => $price,
+                        ':quantity' => $quantity,
+                        ':description' => $description,
+                        ':color' => $color,
+                        ':material' => $material,
+                        ':brand' => $brand,
+                        ':category' => $category
+                    )
+                );
+                $sql->closeCursor();
+    
+                $productId = $conn->lastInsertId();
+            }
+
 
             $sql = $conn->prepare("INSERT INTO image (url, main) VALUES (:url, :main)");
             $sql->execute(
                 array(
                     ':url' => $image,
-                    ':main' => 0
+                    ':main' => 1
                 )
             );
             $sql->closeCursor();
-            if ($secondaryImages !== "none") {
+            
+            $imageId = $conn->lastInsertId();
+
+            if ($noSecondaryImage == false) {
                 $sql = $conn->prepare("INSERT INTO image (url, main) VALUES (:url, :main)");
                 $sql->execute(
                     array(
                         ':url' => $secondaryImages,
-                        ':main' => 1
+                        ':main' => 0
                     )
                 );
                 $sql->closeCursor();
             }
 
-            $imageId = $conn->lastInsertId();
             $sql = $conn->prepare("INSERT INTO image_product (image_id, product_id) VALUES (:image_id, :product_id)");
             $sql->execute(
                 array(

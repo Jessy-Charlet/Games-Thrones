@@ -30,13 +30,22 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                     )
                 );
             }elseif($testInsert == "success"){
-                Database::addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image, $secondaryImages);
-                echo json_encode(
-                    array(
-                        "status" => "success",
-                        "message" => "Product added"
-                    )
-                );
+                $insert = Database::addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image, $secondaryImages);
+                if($insert == "CategoryDoesntExist"){
+                    echo json_encode(
+                        array(
+                            "status" => "error",
+                            "message" => "Category doesn't exist"
+                        )
+                    );
+                }else{
+                    echo json_encode(
+                        array(
+                            "status" => "success",
+                            "message" => "Product added"
+                        )
+                    );
+                }
             }
             
         }
