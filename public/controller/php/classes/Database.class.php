@@ -204,10 +204,11 @@ class Database
                    // Préparation de la requête SQL pour récupérer l'ensemble produits
                    $stmt = $conn->prepare("SELECT * FROM customer");
                    $stmt->execute();
-                   $stmt->closeCursor();
-       
+                   
                    // Execution de la requête SQL
                    $customer = $stmt->fetchall(PDO::FETCH_ASSOC);
+                   
+                   $stmt->closeCursor();
        
                    // Fermeture de la connection
                    $conn = null;
@@ -227,6 +228,7 @@ class Database
                }
     }
 
+    //Ajout de produit
     public static function addProduct($name, $rate, $price, $quantity, $description, $color, $material, $brand, $category, $image, $secondaryImages){
         $conn = Database::connect();
 
@@ -321,8 +323,8 @@ class Database
         }
     }
 
-    public static function testInsertProduct($name, $brand, $category)
-    {
+    //Vérification avant l'insertion du produit
+    public static function testInsertProduct($name, $brand, $category){
         $conn = Database::connect();
         $result = "success";
 
@@ -340,8 +342,8 @@ class Database
         return $result;
     }
 
-    public static function deleteProduct($id, $imageId, $secondaryImagesId)
-    {
+    //Suppression du produit
+    public static function deleteProduct($id, $imageId, $secondaryImagesId){
         $conn = Database::connect();
 
         try {
@@ -589,6 +591,78 @@ class Database
             echo "Error: " . $e->getMessage();
             $conn->rollback();
             return $return;
+        }
+    }
+
+    //Suppression du client
+    public static function deleteCustomer($id, $mail){
+        $conn = Database::connect();
+        try{
+            $conn->beginTransaction();
+
+            $sql = $conn->prepare("DELETE FROM customer WHERE id = :id AND mail = :mail");
+            $sql->execute(
+                array(
+                    'mail' => $mail,
+                    'id' => $id
+                    )
+                );
+            $sql->closeCursor();
+            $conn->commit();
+            return 'success';
+        } catch(PDOException $e){
+            $conn->rollback();
+            return 'error';
+        }
+    }
+
+    public static function getAllCategory(){
+        try {
+            // Connection à la BDD
+            $conn = Database::connect();
+
+            // Préparation de la requête SQL pour récupérer l'ensemble produits
+            $stmt = $conn->prepare("SELECT * FROM category");
+            $stmt->execute();
+            
+            // Execution de la requête SQL
+            $category = $stmt->fetchall(PDO::FETCH_ASSOC);
+            
+            $stmt->closeCursor();
+
+            // Fermeture de la connection
+            $conn = null;
+
+            return $category;
+        } catch (PDOException $e) {
+            return $e;
+        }
+    }
+
+    public static function getCategoryNameByParentId($id){
+        try {
+            // Connection à la BDD
+            $conn = Database::connect();
+
+            // Préparation de la requête SQL pour récupérer l'ensemble produits
+            $stmt = $conn->prepare("SELECT name FROM category WHERE parent_id = :id");
+            $stmt->execute(
+                array(
+                    'id' => $id
+                )
+            );
+            
+            // Execution de la requête SQL
+            $categoryName = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            $stmt->closeCursor();
+
+            // Fermeture de la connection
+            $conn = null;
+
+            return $categoryName;
+        } catch (PDOException $e) {
+            return $e;
         }
     }
 }

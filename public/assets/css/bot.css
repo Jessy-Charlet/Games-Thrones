@@ -92,12 +92,16 @@ a {
 
             .blockHead {
                 display: grid;
-                grid-template-columns: 1fr 6fr 1fr 1fr 2fr;
+                grid-template-columns: 1fr 6fr 1fr 1fr 3fr;
                 align-items: center;
 
+                .nameForm{
+                    align-items: center;
+                }
                 div {
                     width: 100%;
                     text-align: right;
+                    grid-column: 5/5;
 
                     button {
                         border-radius: 5px;
@@ -159,14 +163,24 @@ a {
                         font-weight: bold;
                         grid-column: 3/4;
                     }
-                    button:last-child {
+                    .updateForm {
                         background-color: rgb(56, 180, 56);
                         grid-column: 4/5;
                     }
-
+                    .resetForm{
+                        background-color: rgb(202, 55, 55);
+                    }
+                    .customerPart{
+                        grid-column: 4/5;
+                        height: 70%;
+                        width: 100%;
+                        justify-self: end;
+                        align-self: end;
+                    }
                     button:hover {
                         opacity: 50%;
                     }
+
                     .AddImage{
                         border-radius: 5px;
                         display: grid;
@@ -288,7 +302,8 @@ a {
                     .addProductInputDesc{
                         box-sizing: border-box;
                         border: none;
-                        border-radius: 5px;      
+                        border-radius: 5px;
+                        padding: 0.5em 0.5em;      
                         width: 100%;
                     }
                     .addProductLabel{

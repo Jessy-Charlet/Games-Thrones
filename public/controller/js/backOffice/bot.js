@@ -19,186 +19,6 @@ $(document).ready(function () {
         });
     }
 
-
-    // CUSTOMER
-    function showCustomer(customer, i, liste) {
-        // Container
-        const blockBack = document.createElement('div');
-        blockBack.classList.add("blockBack");
-
-        // header
-        const blockHead = document.createElement('div');
-        blockHead.classList.add("blockHead");
-        $(blockHead).attr('id', 'headbutton' + i);
-        const nameH = document.createElement('p');
-        nameH.textContent = customer[i]["first_name"] + " " + customer[i]["last_name"];
-        const mailH = document.createElement('p');
-        mailH.textContent = customer[i]["mail"];
-        const cityH = document.createElement('p');
-        const buttonH = document.createElement('div');
-        const updateH = document.createElement('button');
-        updateH.textContent = "Modifier";
-        updateH.classList.add("buttonBack");
-        $(updateH).attr('id', 'button' + i);
-        const deleteH = document.createElement('button');
-        deleteH.textContent = "X";
-        blockHead.appendChild(nameH);
-        blockHead.appendChild(mailH);
-        blockHead.appendChild(cityH);
-        blockHead.appendChild(buttonH);
-        buttonH.appendChild(updateH);
-        buttonH.appendChild(deleteH);
-
-        // body
-        const blockBody = document.createElement('div');
-        blockBody.classList.add("blockBody");
-        $(blockBody).attr('id', 'bodybutton' + i);
-        // formulaire
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = '';
-        form.classList.add("formBack");
-        // prénom
-        const firstName = document.createElement('div');
-        const firstNameLabel = document.createElement('label');
-        firstNameLabel.for = 'first_name';
-        firstNameLabel.textContent = 'Prénom';
-        const firstNameForm = document.createElement('input');
-        firstNameForm.type = 'TEXT';
-        firstNameForm.name = 'first_name';
-        firstNameForm.value = customer[i]["first_name"];
-        firstName.appendChild(firstNameLabel);
-        firstName.appendChild(firstNameForm);
-        // nom
-        const lastName = document.createElement('div');
-        const lastNameLabel = document.createElement('label');
-        lastNameLabel.for = 'lastName';
-        lastNameLabel.textContent = 'Nom';
-        const lastNameForm = document.createElement('input');
-        lastNameForm.type = 'TEXT';
-        lastNameForm.name = 'lastName';
-        lastNameForm.value = customer[i]["last_name"];
-        lastName.appendChild(lastNameLabel);
-        lastName.appendChild(lastNameForm);
-        // Email
-        const mail = document.createElement('div');
-        const mailLabel = document.createElement('label');
-        mailLabel.for = 'mail';
-        mailLabel.textContent = 'Email';
-        const mailForm = document.createElement('input');
-        mailForm.type = 'TEXT';
-        mailForm.name = 'mail';
-        mailForm.value = customer[i]["mail"];
-        mail.appendChild(mailLabel);
-        mail.appendChild(mailForm);
-        // adresse
-        const adresse = document.createElement('div');
-        const adresseLabel = document.createElement('label');
-        adresseLabel.for = 'adresse';
-        adresseLabel.textContent = 'Adresse';
-        const adresseForm = document.createElement('input');
-        adresseForm.type = 'TEXT';
-        adresseForm.name = 'adresse';
-        adresseForm.value = customer[i]["adresse"];
-        adresse.appendChild(adresseLabel);
-        adresse.appendChild(adresseForm);
-        // postal_code
-        const postal_code = document.createElement('div');
-        const postal_codeLabel = document.createElement('label');
-        postal_codeLabel.for = 'postal_code';
-        postal_codeLabel.textContent = 'Code postal';
-        const postal_codeForm = document.createElement('input');
-        postal_codeForm.type = 'TEXT';
-        postal_codeForm.name = 'postal_code';
-        postal_codeForm.value = customer[i]["postal_code"];
-        postal_code.appendChild(postal_codeLabel);
-        postal_code.appendChild(postal_codeForm);
-        // ville
-        const city = document.createElement('div');
-        const cityLabel = document.createElement('label');
-        cityLabel.for = 'city';
-        cityLabel.textContent = 'Ville';
-        const cityForm = document.createElement('input');
-        cityForm.type = 'TEXT';
-        cityForm.name = 'city';
-        cityForm.value = customer[i]["city"];
-        city.appendChild(cityLabel);
-        city.appendChild(cityForm);
-        // téléphone
-        const phone = document.createElement('div');
-        const phoneLabel = document.createElement('label');
-        phoneLabel.for = 'phone';
-        phoneLabel.textContent = 'Téléphone';
-        const phoneForm = document.createElement('input');
-        phoneForm.type = 'TEXT';
-        phoneForm.name = 'phone';
-        phoneForm.value = customer[i]["phone"];
-        phone.appendChild(phoneLabel);
-        phone.appendChild(phoneForm);
-
-        // annuler valider
-        const resetForm = document.createElement('button');
-        resetForm.type = 'button';
-        resetForm.classList.add("resetForm");
-        resetForm.name = 'reset';
-        resetForm.id = [i];
-        resetForm.textContent = 'Annuler';
-
-        const updateForm = document.createElement('button');
-        updateForm.type = 'submit';
-        updateForm.name = 'update';
-        updateForm.value = customer[i]["id"];
-        updateForm.textContent = 'valider';
-
-        // Ajouter les éléments à la liste
-        blockBack.appendChild(blockHead);
-        blockBack.appendChild(blockBody);
-        blockBody.appendChild(form);
-        form.appendChild(firstName);
-        form.appendChild(lastName);
-        form.appendChild(mail);
-        form.appendChild(adresse);
-        form.appendChild(postal_code);
-        form.appendChild(city);
-        form.appendChild(phone);
-        form.appendChild(resetForm);
-        form.appendChild(updateForm);
-        liste.appendChild(blockBack);
-        return liste;
-    }
-    async function customer(recherche) {
-        const formData = new FormData();
-        formData.append('searching', 'customer');
-
-        const requestOptions = {
-            method: "POST",
-            Header: "Content-Type: multipart/form-data",
-            body: formData
-        }
-        const reponse = await fetch('../controller/php/botController.php', requestOptions);
-        const customer = await reponse.json();
-        if (recherche != "") {
-            const liste = document.createElement('div');
-            for (var i = 0; i < customer.length; i++) {
-                if (customer[i]["first_name"].toLowerCase().includes(recherche) == true || customer[i]["last_name"].toLowerCase().includes(recherche) == true) {
-                    showCustomer(customer, i, liste);
-                }
-            }
-            $("#contentBack").html(liste);
-            $(".blockBody").hide();
-            openClose();
-        } else {
-            const liste = document.createElement('div');
-            for (var i = 0; i < customer.length; i++) {
-                showCustomer(customer, i, liste);
-            }
-            $("#contentBack").html(liste);
-            $(".blockBody").hide();
-            openClose();
-        }
-    }
-
-
     // PRODUCT
     function showProduct(products, i, liste) {
         // Container
@@ -504,6 +324,7 @@ $(document).ready(function () {
         updateForm.name = 'update';
         updateForm.value = products[i]["id"];
         updateForm.textContent = 'valider';
+        updateForm.classList.add('updateForm');
 
         updateForm.addEventListener('click', (event) => {
             event.preventDefault();
@@ -868,6 +689,388 @@ $(document).ready(function () {
         })
     }
 
+    // CATEGORY
+    function showCategory(category, i, liste){
+        // Container
+        const blockBack = document.createElement('div');
+        blockBack.classList.add("blockBack");
+    
+        // header
+        const blockHead = document.createElement('div');
+        blockHead.classList.add("blockHead");
+        $(blockHead).attr('id', 'headbutton' + i);
+        //Category id
+        const categoryIdH = document.createElement('p');
+        categoryIdH.textContent = category[i]["id"];
+        //Category name
+        const nameH = document.createElement('p');
+        nameH.textContent = category[i]["name"];
+
+        //buttons
+        const buttonH = document.createElement('div');
+        const updateH = document.createElement('button');
+        updateH.textContent = "Modifier";
+        updateH.classList.add("buttonBack");
+        $(updateH).attr('id', 'button' + i);
+        const deleteH = document.createElement('button');
+        deleteH.textContent = "X";
+    
+        deleteH.addEventListener("click", (event)=>{
+            event.preventDefault();
+            if(window.confirm("Voulez-vous vraiment supprimer cette category ?")){
+            }        
+        });
+
+        blockHead.appendChild(categoryIdH);
+        blockHead.appendChild(nameH);
+        //blockHead.appendChild(parentNameH);
+        blockHead.appendChild(buttonH);
+        buttonH.appendChild(updateH);
+        buttonH.appendChild(deleteH);
+        
+        
+        //body
+        const blockBody = document.createElement('div');
+        blockBody.classList.add("blockBody");
+        $(blockBody).attr('id', 'bodybutton' + i);
+        // formulaire
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '';
+        form.classList.add("formBack");
+
+        //Category id
+        const categoryId = document.createElement('div');
+        const categoryIdLabel = document.createElement('label');
+        categoryIdLabel.setAttribute('for', 'categoryIdForm');
+        categoryIdLabel.textContent = "ID";
+        const categoryIdForm = document.createElement('input');
+        categoryIdForm.value = category[i]['id'];
+        categoryIdForm.setAttribute('type', 'text');
+        categoryIdForm.setAttribute('name', 'categoryIdForm');
+        categoryIdForm.disabled = true;
+        categoryId.appendChild(categoryIdLabel);
+        categoryId.appendChild(categoryIdForm);
+
+        //Category name
+        const categoryName = document.createElement('div');
+        const categoryNameLabel = document.createElement('label');
+        categoryNameLabel.setAttribute('for', 'categoryNameForm');
+        categoryNameLabel.textContent = "name";
+        const categoryNameForm = document.createElement('input');
+        categoryNameForm.value = category[i]['name'];
+        categoryNameForm.setAttribute('type', 'text');
+        categoryNameForm.setAttribute('name', 'categoryNameForm');
+        categoryName.appendChild(categoryNameLabel);
+        categoryName.appendChild(categoryNameForm);
+
+        //Category parent name
+        const categoryParentName = document.createElement('div');
+        const categoryParentNameLabel = document.createElement('label');
+        categoryParentNameLabel.setAttribute('for', 'categoryParentNameForm');
+        categoryParentNameLabel.textContent = "parent name";
+        const categoryParentNameForm = document.createElement('input');
+        categoryParentNameForm.value = category[i]['0']['name'];
+        categoryParentNameForm.setAttribute('type', 'text');
+        categoryParentNameForm.setAttribute('name', 'categoryParentNameForm');
+        categoryParentNameForm.disabled = true;
+        categoryParentName.appendChild(categoryParentNameLabel);
+        categoryParentName.appendChild(categoryParentNameForm);
+
+        //Category parent id
+        const categoryParentId = document.createElement('div');
+        const categoryParentIdLabel = document.createElement('label');
+        categoryParentIdLabel.setAttribute('for', 'categoryParentIdForm');
+        categoryParentIdLabel.textContent = "parent id";
+        const categoryParentIdForm = document.createElement('input');
+        categoryParentIdForm.value = category[i]['parent_id'];
+        categoryParentIdForm.setAttribute('type', 'text');
+        categoryParentIdForm.setAttribute('name', 'categoryParentIdForm');
+        categoryParentId.appendChild(categoryParentIdLabel);
+        categoryParentId.appendChild(categoryParentIdForm);
+
+        const resetForm = document.createElement('button');
+        resetForm.type = 'button';
+        resetForm.classList.add("resetForm");
+        resetForm.name = 'reset';
+        resetForm.id = [i];
+        resetForm.textContent = 'Annuler';
+
+        const updateForm = document.createElement('button');
+        updateForm.type = 'submit';
+        updateForm.name = 'update';
+        updateForm.value = category[i]["id"];
+        updateForm.textContent = 'valider';
+        updateForm.classList.add('updateForm');
+
+        blockBack.appendChild(blockHead);
+        blockBack.appendChild(blockBody);
+        blockBody.appendChild(form);
+        form.appendChild(categoryId);
+        form.appendChild(categoryName);
+        form.appendChild(categoryParentId);
+        form.appendChild(categoryParentName);
+        form.appendChild(resetForm);
+        form.appendChild(updateForm);
+        liste.appendChild(blockBack);
+        return liste;
+    }
+    async function category(recherche){
+        const formData = new FormData();
+        formData.append('searching', 'category');
+
+        const requestOptions = {
+            method: "POST",
+            Header: "Content-Type: multipart/form-data",
+            body: formData
+        }
+        const reponse = await fetch('../controller/php/botController.php', requestOptions);
+        const category = await reponse.json();
+        if (recherche != "") {
+            const liste = document.createElement('div');
+            for (var i = 0; i < category.length; i++) {
+                if (category[i]["name"].toLowerCase().includes(recherche) == true) {
+                    showCategory(category, i, liste);
+                }
+            }
+            $("#contentBack").html(liste);
+            $(".blockBody").hide();
+            openClose();
+        } else {
+            const liste = document.createElement('div');
+            for (var i = 0; i < category.length; i++) {
+                showCategory(category, i, liste);
+            }
+            $("#contentBack").html(liste);
+            $(".blockBody").hide();
+            openClose();
+        }
+    }
+
+
+
+
+    // CUSTOMER
+    function showCustomer(customer, i, liste) {
+        // Container
+        const blockBack = document.createElement('div');
+        blockBack.classList.add("blockBack");
+
+        // header
+        const blockHead = document.createElement('div');
+        blockHead.classList.add("blockHead");
+        $(blockHead).attr('id', 'headbutton' + i);
+        const nameH = document.createElement('p');
+        nameH.textContent = customer[i]["id"];
+        nameH.classList.add('nameForm');
+        const mailH = document.createElement('p');
+        mailH.textContent = customer[i]["mail"];
+        mailH.classList.add('mailForm')
+        const cityH = document.createElement('p');
+        const buttonH = document.createElement('div');
+        const updateH = document.createElement('button');
+        updateH.textContent = "Voir plus";
+        updateH.classList.add("buttonBack");
+        $(updateH).attr('id', 'button' + i);
+        const deleteH = document.createElement('button');
+        deleteH.textContent = "X";
+
+        deleteH.addEventListener('click', (event)=>{
+            event.preventDefault();
+
+            const id = customer[i]['id'];
+            const mail = customer[i]['mail'];
+            if(window.confirm('Voulez-vous vraiment supprimer ce client ?')){
+                deleteCustomer(id, mail);
+            }
+        });
+
+
+        blockHead.appendChild(nameH);
+        blockHead.appendChild(mailH);
+        blockHead.appendChild(cityH);
+        blockHead.appendChild(buttonH);
+        buttonH.appendChild(updateH);
+        buttonH.appendChild(deleteH);
+
+        // body
+        const blockBody = document.createElement('div');
+        blockBody.classList.add("blockBody");
+        $(blockBody).attr('id', 'bodybutton' + i);
+        // formulaire
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '';
+        form.classList.add("formBack");
+        // prénom
+        const firstName = document.createElement('div');
+        const firstNameLabel = document.createElement('label');
+        firstNameLabel.for = 'first_name';
+        firstNameLabel.textContent = 'Prénom';
+        const firstNameForm = document.createElement('input');
+        firstNameForm.type = 'TEXT';
+        firstNameForm.name = 'first_name';
+        firstNameForm.disabled = true;
+        firstNameForm.value = customer[i]["first_name"];
+        firstName.appendChild(firstNameLabel);
+        firstName.appendChild(firstNameForm);
+        // nom
+        const lastName = document.createElement('div');
+        const lastNameLabel = document.createElement('label');
+        lastNameLabel.for = 'lastName';
+        lastNameLabel.textContent = 'Nom';
+        const lastNameForm = document.createElement('input');
+        lastNameForm.type = 'TEXT';
+        lastNameForm.name = 'lastName';
+        lastNameForm.disabled = true;
+        lastNameForm.value = customer[i]["last_name"];
+        lastName.appendChild(lastNameLabel);
+        lastName.appendChild(lastNameForm);
+        // Email
+        const mail = document.createElement('div');
+        const mailLabel = document.createElement('label');
+        mailLabel.for = 'mail';
+        mailLabel.textContent = 'Email';
+        const mailForm = document.createElement('input');
+        mailForm.type = 'TEXT';
+        mailForm.name = 'mail';
+        mailForm.disabled = true;
+        mailForm.value = customer[i]["mail"];
+        mail.appendChild(mailLabel);
+        mail.appendChild(mailForm);
+        // adresse
+        const adresse = document.createElement('div');
+        const adresseLabel = document.createElement('label');
+        adresseLabel.for = 'adresse';
+        adresseLabel.textContent = 'Adresse';
+        const adresseForm = document.createElement('input');
+        adresseForm.type = 'TEXT';
+        adresseForm.name = 'adresse';
+        adresseForm.disabled = true;
+        adresseForm.value = customer[i]["adresse"];
+        adresse.appendChild(adresseLabel);
+        adresse.appendChild(adresseForm);
+        // postal_code
+        const postal_code = document.createElement('div');
+        const postal_codeLabel = document.createElement('label');
+        postal_codeLabel.for = 'postal_code';
+        postal_codeLabel.textContent = 'Code postal';
+        const postal_codeForm = document.createElement('input');
+        postal_codeForm.type = 'TEXT';
+        postal_codeForm.name = 'postal_code';
+        postal_codeForm.disabled = true;
+        postal_codeForm.value = customer[i]["postal_code"];
+        postal_code.appendChild(postal_codeLabel);
+        postal_code.appendChild(postal_codeForm);
+        // ville
+        const city = document.createElement('div');
+        const cityLabel = document.createElement('label');
+        cityLabel.for = 'city';
+        cityLabel.textContent = 'Ville';
+        const cityForm = document.createElement('input');
+        cityForm.type = 'TEXT';
+        cityForm.name = 'city';
+        cityForm.disabled = true;
+        cityForm.value = customer[i]["city"];
+        city.appendChild(cityLabel);
+        city.appendChild(cityForm);
+        // téléphone
+        const phone = document.createElement('div');
+        const phoneLabel = document.createElement('label');
+        phoneLabel.for = 'phone';
+        phoneLabel.textContent = 'Téléphone';
+        const phoneForm = document.createElement('input');
+        phoneForm.type = 'TEXT';
+        phoneForm.name = 'phone';
+        phoneForm.disabled = true;
+        phoneForm.value = customer[i]["phone"];
+        phone.appendChild(phoneLabel);
+        phone.appendChild(phoneForm);
+
+        // annuler valider
+        const resetForm = document.createElement('button');
+        resetForm.type = 'button';
+        resetForm.classList.add("resetForm");
+        resetForm.classList.add("customerPart");
+        resetForm.name = 'reset';
+        resetForm.id = [i];
+        resetForm.textContent = 'Annuler';
+
+        // Ajouter les éléments à la liste
+        blockBack.appendChild(blockHead);
+        blockBack.appendChild(blockBody);
+        blockBody.appendChild(form);
+        form.appendChild(firstName);
+        form.appendChild(lastName);
+        form.appendChild(mail);
+        form.appendChild(adresse);
+        form.appendChild(postal_code);
+        form.appendChild(city);
+        form.appendChild(phone);
+        form.appendChild(resetForm);
+        liste.appendChild(blockBack);
+        return liste;
+    }
+    async function customer(recherche) {
+        const formData = new FormData();
+        formData.append('searching', 'customer');
+
+        const requestOptions = {
+            method: "POST",
+            Header: "Content-Type: multipart/form-data",
+            body: formData
+        }
+        const reponse = await fetch('../controller/php/botController.php', requestOptions);
+        const customer = await reponse.json();
+        if (recherche != "") {
+            const liste = document.createElement('div');
+            for (var i = 0; i < customer.length; i++) {
+                if (customer[i]["first_name"].toLowerCase().includes(recherche) == true || customer[i]["last_name"].toLowerCase().includes(recherche) == true) {
+                    showCustomer(customer, i, liste);
+                }
+            }
+            $("#contentBack").html(liste);
+            $(".blockBody").hide();
+            openClose();
+        } else {
+            const liste = document.createElement('div');
+            for (var i = 0; i < customer.length; i++) {
+                showCustomer(customer, i, liste);
+            }
+            $("#contentBack").html(liste);
+            $(".blockBody").hide();
+            openClose();
+        }
+    }
+
+    async function deleteCustomer(id, mail){
+        formData = new FormData();
+
+        formData.append('id', id);
+        formData.append('mail', mail);
+        formData.append('request', 'deleteCustomer');
+
+        const requestOptions = {
+            method: "POST",
+            Header: "Content-Type: multipart/form-data",
+            body: formData
+        }
+
+        fetch('http://localhost:8080/controller/php/backOffice/backOfficeController.php', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                alert('Success')
+                location.reload();
+            } else if (data.status === "error") {
+                alert(data.message)
+            }  
+        })
+        .catch((error) => console.log(error))
+    }
+
+
+
 
     $('#rechercheBack').on('keyup', function () {
             let recherche = $(this).val();
@@ -885,6 +1088,7 @@ $(document).ready(function () {
                 case 'bOrder':
                     break;
                 case 'bCategory':
+                    category(recherche);
                     break;
                 default:
                     break;
@@ -917,6 +1121,7 @@ $(document).ready(function () {
                 $('#bOrder').addClass('activeBack');
                 break;
             case 'bCategory':
+                category('')
                 $('#bCustomer, #bProduct, #bRate, #bReview, #bOrder, #bCategory').removeClass('activeBack');
                 $('#bCategory').addClass('activeBack');
                 break;

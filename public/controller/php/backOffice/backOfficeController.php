@@ -162,5 +162,25 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                 );
             }
         }
+
+        if($_POST['request'] == "deleteCustomer"){
+            $id = $_POST['id'];
+            $mail = $_POST['mail'];
+
+            $deleteProduct = Database::deleteCustomer($id, $mail);
+            if($deleteProduct == "success"){
+                echo json_encode(
+                    array(
+                        "status" => "success",
+                    )
+                );
+            }else{
+                echo json_encode(
+                    array(
+                        "status" => "error"
+                    )
+                );
+            }
+        }
     }
 }
